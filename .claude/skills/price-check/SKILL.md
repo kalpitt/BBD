@@ -65,6 +65,14 @@ Confirmed price for an `est: true` item → set `p`, delete `est` and `max`.
 **Safety brake:** more than 8 confirmed changes in one run is suspicious. Apply none,
 list them in the report for Kalpit.
 
+## 3b. Always: stamp the check time
+If you compared at least a few prices this run (even with no changes), set `checked` in
+`data.json` to the current IST time, e.g. `"9 Oct, 3:05 pm"` (same shape as `updated`).
+The page shows it as "Prices checked 12 min ago". Don't bump it if every source was
+blocked. If nothing else changed, commit just that line as `Price check: no changes`,
+then `git pull --rebase origin main && git push origin main`. Don't bump `updated`
+for a no-change run (it retires the Ask box's cached answers).
+
 ## 4. Apply (only if there are confirmed changes)
 1. Edit `data.json` by text replacement, one product per line (no `json.dump`).
 2. `aff: true` items: no exact ₹ amounts in `why`, `card` or `faq`.

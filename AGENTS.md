@@ -87,8 +87,9 @@ one-person project and speed matters.
   - Don't re-add the OnePlus N6 (Kalpit doesn't like it).
   - Don't add "buy second-hand" advice.
   - 2026 prices are higher than July for many models (memory costs from the AI
-    boom). Don't call anything the "lowest ever" or the "biggest drop"; frame picks
-    as best value at today's prices.
+    boom), so most picks are framed as best value at today's prices. "Lowest price" /
+    "all-time low" is fine for a specific product when price history backs it (e.g.
+    pricebefore.com). Kalpit dropped the blanket ban on 8 Oct.
 - **Only add a phone with a real price** from a cheat sheet, Kalpit, or a dated sale
   report. A model with no verified BBD price is skipped, or added as `est: true` with
   a `max` range when Kalpit wants it listed (e.g. Vivo X200T, Motorola Edge 70).

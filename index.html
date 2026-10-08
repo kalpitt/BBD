@@ -23,7 +23,7 @@
 <style>
 /* One narrow column. The budget dial is the hero; picks re-rank under it as it moves. */
 :root{
-  --night:#F1F0F8; --ink:#1B1F4B; --ink-soft:#585C86; --marigold:#A85F00; --mari-fill:#F4A51C;
+  --night:#F1F0F8; --ink:#1B1F4B; --ink-soft:#585C86; --marigold:#8F5000; --mari-fill:#F4A51C;
   --diya:#FFF1D2; --leaf:#24704F; --line:#D9D8EA; --raise:#FFFFFF; --warn:#9A3B1E;
   --display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
   --body:"Mukta","Noto Sans","Segoe UI",system-ui,sans-serif;
@@ -122,6 +122,8 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .ask .sugs button{font:400 14px var(--body);color:var(--ink-soft);background:none;border:1px dashed var(--line);border-radius:10px;padding:4px 10px;cursor:pointer;text-align:left}
 .ask .btn.go[disabled]{opacity:.5;cursor:default}
 .ask .link{all:unset;cursor:pointer;text-decoration:underline;color:var(--ink);font-weight:600}
+.ask .link:focus-visible{outline:2px solid var(--marigold);outline-offset:2px}
+.amount:has(input:focus-visible){outline:2px solid var(--marigold);outline-offset:4px;border-radius:8px}
 
 .truth{border-left:3px solid var(--mari-fill);padding-left:14px}
 .truth p{margin:0 0 8px}
@@ -146,7 +148,7 @@ dialog .acts{justify-content:flex-end}
 .err-inline{color:var(--warn);font-size:14px;min-height:1.2em}
 
 .list.moving .row{animation:slot .35s ease}
-.hero.moving{animation:slot .35s ease,orbit 6s linear infinite}
+.hero.moving{animation:slot .35s ease,orbit 6s linear 2}
 @keyframes slot{from{opacity:.35;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion: reduce){.list.moving .row,.hero.moving{animation:none}.amount{transition:none}}
 
@@ -182,11 +184,11 @@ dialog .acts{justify-content:flex-end}
 /* Lamp-glow pick card: warm glow outside, a gold light travelling round the edge */
 @property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
 .hero{position:relative;isolation:isolate;border:1.5px solid transparent;
-  background:linear-gradient(var(--diya),var(--diya)) padding-box,conic-gradient(from var(--ang),rgba(244,165,28,.18) 0 62%,#F4A51C 76%,#FFE3A0 80%,#F4A51C 84%,rgba(244,165,28,.18) 96%) border-box;animation:orbit 6s linear infinite}
+  background:linear-gradient(var(--diya),var(--diya)) padding-box,conic-gradient(from var(--ang),rgba(244,165,28,.18) 0 62%,#F4A51C 76%,#FFE3A0 80%,#F4A51C 84%,rgba(244,165,28,.18) 96%) border-box;animation:orbit 6s linear 2}
 .hero::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 44px 4px rgba(255,150,30,.32);z-index:-1;pointer-events:none;animation:glow 3s ease-in-out infinite alternate}
 @keyframes glow{from{opacity:.55}to{opacity:1}}
 @keyframes orbit{to{--ang:360deg}}
-.fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:20}
+.fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:20}
 
 /* Scratch card (only when someone opens a shared link) */
 .scratch{position:absolute;inset:-1.5px;border-radius:inherit;overflow:hidden;z-index:2;transition:opacity .6s}
@@ -225,13 +227,33 @@ dialog .acts{justify-content:flex-end}
   .feed{width:100%;max-width:720px;margin-inline:auto;padding:40px 40px 48px}
 }
 @media (min-width:980px) and (min-height:640px){.sky{position:sticky;top:0;height:100vh;overflow-y:auto;scrollbar-width:none}.sky::-webkit-scrollbar{display:none}}
-@media (prefers-reduced-motion: reduce){.diya i,.fresh .dot::after,.hero,.hero::after,.typing i{animation:none}}
+@media (prefers-reduced-motion: reduce){.diya i,.fresh .dot::after,.hero,.hero::after,.typing i{animation:none}.scratch{transition:none}}
+.sky.still .diya i{animation-play-state:paused}
+/* Stars dim behind the big budget number so the digits stay crisp */
+.sky .stars{-webkit-mask-image:radial-gradient(ellipse 55% 30% at 30% 50%,rgba(0,0,0,.2),#000 75%);mask-image:radial-gradient(ellipse 55% 30% at 30% 50%,rgba(0,0,0,.2),#000 75%)}
+/* Sideways-scrolling chip rows fade at the edge while there's more to see */
+.chips.fade{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent)}
+/* Keep space for content that arrives with data.json, so slow connections don't jump */
+#cats:empty,#uses:empty{min-height:38px}
+#ticks:empty{min-height:20px}
+.hero:empty{min-height:340px}
+/* Pick card: one offer line, secondary "send to myself" link */
+.hero .card{line-height:1.4}
+.linkbtn{background:none;border:0;padding:8px 0;font:500 15px var(--body);color:var(--ink-soft);text-decoration:underline;text-underline-offset:3px;cursor:pointer;justify-self:start}
+.rangoli{display:none}
+#stDlg img{display:block;max-width:100%;max-height:58vh;margin:0 auto;border-radius:14px}
+@media (min-width:980px){
+  .sky{padding-bottom:36px}
+  .diyas{position:relative;bottom:auto;left:auto;right:auto;justify-content:flex-start;gap:30px;padding:28px 0 0}
+  .rangoli{display:block;position:absolute;right:-110px;bottom:-110px;width:380px;height:380px;opacity:.3;z-index:-1;pointer-events:none}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
  <div class="sky" id="sky">
   <canvas class="stars" id="stars" aria-hidden="true"></canvas>
+  <canvas class="rangoli" id="rangoli" aria-hidden="true"></canvas>
   <header>
     <div class="me"><span class="mono" aria-hidden="true">KT</span><span>Kalpit's festive picks</span></div>
     <span class="fresh" id="fresh" hidden><span class="dot"></span><span id="freshText"></span></span>
@@ -247,7 +269,7 @@ dialog .acts{justify-content:flex-end}
     <label class="amount" id="amt"><span class="r">₹</span><input id="budgetText" inputmode="numeric" autocomplete="off" aria-label="Budget in rupees"></label>
     <div class="rail" id="rail"><div class="trk"><div class="fill" id="fill"></div></div><div class="dl" id="dots"></div><input id="budget" type="range" step="any" aria-label="Budget slider"></div>
     <div class="ticks" id="ticks"></div>
-    <div class="chips" id="uses" aria-label="What matters most" hidden></div>
+    <div class="chips" id="uses" aria-label="What matters most"></div>
     <p class="note" id="catNote" hidden></p>
   </section>
 
@@ -260,7 +282,8 @@ dialog .acts{justify-content:flex-end}
  </div>
 
  <main class="feed">
-  <section class="hero" id="hero" aria-live="polite"></section>
+  <section class="hero" id="hero"></section>
+  <p class="vh" id="pickSay" role="status" aria-live="polite"></p>
 
   <section class="list" id="list">
     <h3>Also good in this budget</h3>
@@ -274,7 +297,7 @@ dialog .acts{justify-content:flex-end}
     <label for="q" class="aff">Your question</label>
     <textarea id="q" maxlength="400" placeholder="Papa ke liye phone, ₹15k, bada screen aur achi battery"></textarea>
     <div class="sugs" id="sugs"></div>
-    <div class="acts"><button class="btn go" id="askBtn" type="button">Ask</button><span class="aff" id="askState"></span></div>
+    <div class="acts"><button class="btn go" id="askBtn" type="button">Ask</button><span class="aff" id="askState" aria-live="polite"></span></div>
     <p class="aff">Can't find what you need? <button type="button" class="link" id="msgKalpit">Message Kalpit on WhatsApp</button>. It tells him which page you were on.</p>
   </section>
 
@@ -302,6 +325,15 @@ dialog .acts{justify-content:flex-end}
  </main>
 </div>
 <canvas class="fx" id="fx" aria-hidden="true"></canvas>
+
+<dialog id="stDlg">
+  <form method="dialog">
+    <h3>Your Status image</h3>
+    <img id="stImg" alt="Kalpit's pick, as an image for WhatsApp Status">
+    <p>Press and hold the image to save it, then post it to your WhatsApp Status from your gallery. On a laptop, use Download.</p>
+    <div class="acts"><a class="btn save" id="stDl" download="kalpits-pick.png" href="#">Download</a><button class="btn go" value="close">Done</button></div>
+  </form>
+</dialog>
 
 <dialog id="waDlg">
   <form method="dialog" id="waForm">
@@ -392,9 +424,14 @@ function extras(x){
 function offers(x,tag){
   return [x.card,...extras(x)].filter(Boolean).map(c=>`<${tag} class="card">${esc(c)}</${tag}>`).join("");
 }
+// Top pick: store button and Share as Status side by side, "send to myself" as a quieter link
+function heroButtons(x){
+  return `<div class="acts">${links(x).map(l=>`<a class="btn go" href="${esc(l.u)}" target="_blank" rel="noopener${l.aff?" sponsored":""}">See on ${l.s}</a>`).join("")}<button class="btn save" type="button" data-status="${x.id}">Share as Status</button>${links(x).some(l=>l.aff)?`<span class="aff">Affiliate link</span>`:""}</div>
+    <button class="linkbtn" type="button" data-save="${x.id}">Send to myself on WhatsApp</button>`;
+}
 function buttons(x){
   return links(x).map(l=>`<a class="btn go" href="${esc(l.u)}" target="_blank" rel="noopener${l.aff?" sponsored":""}">See on ${l.s}</a>`).join("")
-   +`<button class="btn save" type="button" data-save="${x.id}">Save to my WhatsApp</button>`
+   +`<button class="btn save" type="button" data-save="${x.id}">Send to myself on WhatsApp</button>`
    +(links(x).some(l=>l.aff)?`<span class="aff">Affiliate link</span>`:"");
 }
 
@@ -502,13 +539,16 @@ function drawDots(c){
   dotPrices=[...new Set(pool().map(x=>x.aff?bandRange(x)[1]:x.p))].filter(p=>p>=c.min&&p<=c.max).sort((a,b)=>a-b);
   $("#dots").innerHTML=dotPrices.map(p=>`<i class="dt" data-p="${p}" style="left:calc(var(--t)/2 + (100% - var(--t))*${((p-c.min)/(c.max-c.min)).toFixed(4)})"></i>`).join("");
 }
+let pend=0;
 function setBudget(v){
-  state.budget=v;range.value=v;txt.value=v.toLocaleString("en-IN");render();
+  state.budget=v;range.value=v;txt.value=v.toLocaleString("en-IN");
+  if(!pend)pend=requestAnimationFrame(()=>{pend=0;render()}); // one render per frame while dragging
 }
 range.addEventListener("input",()=>{
   const c=conf(),raw=+range.value;
   const near=dotPrices.reduce((a,p)=>a==null||Math.abs(p-raw)<Math.abs(a-raw)?p:a,null);
-  const hit=near!=null&&Math.abs(near-raw)<=(c.max-c.min)*0.012?near:null;
+  const i=dotPrices.indexOf(near),gap=Math.min(i>0?near-dotPrices[i-1]:Infinity,i<dotPrices.length-1?dotPrices[i+1]-near:Infinity);
+  const hit=near!=null&&Math.abs(near-raw)<=Math.min((c.max-c.min)*0.012,gap*0.45)?near:null;
   if(hit&&hit!==snapped){try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}}
   snapped=hit;
   setBudget(hit||Math.min(c.max,Math.max(c.min,Math.round(raw/c.step)*c.step)));
@@ -526,7 +566,7 @@ txt.addEventListener("blur",()=>{txt.value=Number(state.budget).toLocaleString("
 txt.addEventListener("focus",()=>txt.select());
 
 /* ---------- ranking ---------- */
-let lastTop="";
+let lastTop="",lastSig="",sayT;
 function pool(){
   return P.filter(x=>x.cat===state.cat&&(!state.type||x.type===state.type)&&(!state.use||(x.tags||[]).includes(state.use))&&(!state.big||big(x)));
 }
@@ -553,19 +593,27 @@ function render(force){
     hero.innerHTML=cheapest
       ?`<span class="tag">Thoda stretch karo</span><h2>Nothing I'd pick under ${fmt(b)}</h2><p class="why">The cheapest pick here is ${esc(cheapest.n)} at ${priceText(cheapest)}. Slide right to see it.</p>`
       :`<span class="tag">Nothing here yet</span><h2>No picks for this filter</h2><p class="why">Remove the filter above to see all picks.</p>`;
-    rows.innerHTML="";lastTop="";return;
+    rows.innerHTML="";lastTop="";lastSig="";return;
   }
+  const rest=ranked.slice(1,5);
+  const stretch=all.filter(x=>x.p>b&&x.p<=b*1.2&&x.score>=top.score).sort((a,z)=>(z.score-a.score)||(a.p-z.p))[0];
+  const sig=[top.id,...rest.map(x=>x.id),stretch&&stretch.id].join("|");
+  if(!force&&sig===lastSig){
+    // Same picks as before: only the budget in the label and the stretch note change
+    hero.querySelector(".tag").firstChild.textContent=`My pick for ${fmt(b)}`;
+    const sw=rows.querySelector(".row.stretch .w");if(sw&&stretch)sw.textContent=`Worth stretching ${fmt(stretch.p-b)} more for this.`;
+    return;
+  }
+  lastSig=sig;
   const qa=(top.faq||[]).map(([q,a])=>`<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join("");
   const changed=lastTop&&top.id!==lastTop;
   hero.innerHTML=`<span class="tag">My pick for ${fmt(b)}${hot(top)}</span>
     <h2>${esc(top.n)}</h2><p class="why">${esc(top.why)}</p>
     <div class="price"><strong>${priceText(top)}</strong><span class="est">${top.est?"Expected price · "+where(top):where(top)}</span></div>
-    ${offers(top,"div")}
+    ${[top.card,...extras(top)].filter(Boolean).length?`<div class="card">${[top.card,...extras(top)].filter(Boolean).map(esc).join(" · ")}</div>`:""}
     ${how(top)}
-    <div class="acts">${buttons(top)}<button class="btn save" type="button" data-status="${top.id}">Share as Status</button></div>
+    ${heroButtons(top)}
     ${qa?`<div class="qa">${qa}</div>`:""}`;
-  const rest=ranked.slice(1,5);
-  const stretch=all.filter(x=>x.p>b&&x.p<=b*1.2&&x.score>=top.score).sort((a,z)=>(z.score-a.score)||(a.p-z.p))[0];
   let h=rest.map(x=>row(x)).join("");
   if(!rest.length)h=`<p class="empty">Bas, this is the only one I'd pick at this budget.</p>`;
   if(stretch)h+=row(stretch,`Worth stretching ${fmt(stretch.p-b)} more for this.`,"stretch");
@@ -573,6 +621,8 @@ function render(force){
   if(!reduce&&(force||top.id!==lastTop)){for(const el of [hero,$("#list")]){el.classList.remove("moving");void el.offsetWidth;el.classList.add("moving")}}
   lastTop=top.id;
   if(changed&&!force)sparks(hero);
+  // Screen readers hear a short line when the pick changes, not the whole card
+  clearTimeout(sayT);sayT=setTimeout(()=>{$("#pickSay").textContent=`Pick for ${fmt(state.budget)}: ${top.n}, ${priceText(top)}`},600);
 }
 
 /* ---------- static sections ---------- */
@@ -649,6 +699,7 @@ askBtn.addEventListener("click",async()=>{
       else{const gap=Math.min(40,2500/words.length);for(const w of words){out.textContent+=w;if(w.trim())await sleep(gap)}}
       const m=mentions(j.answer,NAMES).slice(0,4);
       if(m.length){const d=document.createElement("div");d.className="picks";d.innerHTML=m.map(x=>row(x)).join("");k.after(d)}
+      st.textContent="Answer ready";setTimeout(()=>{if(st.textContent==="Answer ready")st.textContent=""},4000);
     }
   }catch(e){fail(e.name==="AbortError"?"This is taking too long. Try again in a minute.":"Couldn't reach the answer service. Check your connection and try again.")}
   clearTimeout(timer);askBtn.disabled=false;
@@ -667,22 +718,23 @@ $("#msgKalpit").addEventListener("click",()=>{
 /* ---------- night sky: twinkling stars (paused when off screen) ---------- */
 (()=>{
   const c=$("#stars"),x=c.getContext("2d");let W=0,H=0,stars=[],on=true,last=0;
-  function size(){const r=c.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);W=r.width;H=r.height;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);
-    stars=Array.from({length:Math.round(W*H/1100)},()=>({x:Math.random()*W,y:Math.random()*H*.8,r:Math.random()*1.2+.3,ph:Math.random()*6.3,sp:.5+Math.random()*1.5}))}
-  function draw(t){x.clearRect(0,0,W,H);x.fillStyle="#FFF1D2";for(const s of stars){x.globalAlpha=reduce?.6:.3+.7*Math.abs(Math.sin(s.ph+t/1000*s.sp));x.beginPath();x.arc(s.x,s.y,s.r,0,6.283);x.fill()}x.globalAlpha=1}
-  function loop(t){if(!on||document.hidden)return;if(t-last>66){last=t;draw(t)}requestAnimationFrame(loop)}
+  // Drawn at 1x and twinkling for the first 20 s only: cheap phones were spending ~19% CPU here
+  function size(){const r=c.getBoundingClientRect();W=r.width;H=r.height;c.width=W;c.height=H;
+    stars=Array.from({length:Math.round(W*H/2600)},()=>({x:Math.random()*W,y:Math.random()*H*.85,r:Math.random()*.8+.4,ph:Math.random()*6.3,sp:.5+Math.random()*1.5}))}
+  function draw(t){x.clearRect(0,0,W,H);x.fillStyle="#FFF1D2";for(const s of stars){x.globalAlpha=reduce?.55:.25+.55*Math.abs(Math.sin(s.ph+t/1000*s.sp));x.beginPath();x.arc(s.x,s.y,s.r,0,6.283);x.fill()}x.globalAlpha=1}
+  function loop(t){if(!on||document.hidden||t>20000)return;if(t-last>66){last=t;draw(t)}requestAnimationFrame(loop)}
   size();draw(0);
   if(!reduce){
-    if("IntersectionObserver" in window)new IntersectionObserver(es=>{on=es[0].isIntersecting;if(on)requestAnimationFrame(loop)}).observe(c);
+    if("IntersectionObserver" in window)new IntersectionObserver(es=>{on=es[0].isIntersecting;$("#sky").classList.toggle("still",!on);if(on)requestAnimationFrame(loop)}).observe(c);
     document.addEventListener("visibilitychange",()=>{if(!document.hidden&&on)requestAnimationFrame(loop)});
     requestAnimationFrame(loop);
   }
   if("ResizeObserver" in window)new ResizeObserver(()=>{size();draw(performance.now())}).observe(c);
 })();
 
-/* ---------- "Prices updated 2h ago" (reads the "updated" stamp, IST) ---------- */
+/* ---------- "Prices checked 12 min ago" (reads the "checked" stamp, IST; set by every price check) ---------- */
 (()=>{
-  const m=String(D.updated).match(/(\d{1,2})\s+([A-Za-z]{3})\w*,?\s+(\d{1,2}):(\d{2})\s*(am|pm)/i);
+  const m=String(D.checked||D.updated).match(/(\d{1,2})\s+([A-Za-z]{3})\w*,?\s+(\d{1,2}):(\d{2})\s*(am|pm)/i);
   const mi=m&&["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"].indexOf(m[2].toLowerCase());
   if(!m||mi<0)return;
   const h=(+m[3]%12)+(m[5].toLowerCase()==="pm"?12:0);
@@ -690,7 +742,7 @@ $("#msgKalpit").addEventListener("click",()=>{
   function show(){
     const mins=Math.max(0,Math.round((Date.now()-when)/60000));
     const t=mins<2?"just now":mins<60?mins+" min ago":mins<24*60?Math.round(mins/60)+"h ago":m[1]+" "+m[2];
-    $("#freshText").textContent="Updated "+t;$("#fresh").setAttribute("aria-label","Prices updated "+t);
+    $("#freshText").textContent="Prices checked "+t;
     $("#fresh").classList.toggle("old",mins>=12*60);
   }
   show();$("#fresh").hidden=false;setInterval(show,60000);
@@ -747,14 +799,16 @@ document.addEventListener("click",async e=>{
   const file=new File([u8],"kalpits-pick.png",{type:"image/png"});
   const text=`Kalpit's pick for ${fmt(state.budget)}: ${x.n}. Find yours: ${location.href}`;
   if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],text})}catch(err){}return}
-  const a=document.createElement("a");a.href=url;a.download="kalpits-pick.png";document.body.appendChild(a);a.click();a.remove();
-  b.textContent="Image saved. Post it from your gallery";setTimeout(()=>b.textContent="Share as Status",3000);
+  // WhatsApp's in-app browser and laptops: show the image to press-and-hold or download
+  $("#stImg").src=url;$("#stDl").href=url;$("#stDlg").showModal();
 });
 
 /* ---------- scratch card: only when someone opens a shared link ---------- */
 function scratchCard(hero){
   const wrap=document.createElement("div");wrap.className="scratch";
   wrap.innerHTML=`<canvas aria-hidden="true"></canvas><button class="btn" type="button">Show my pick</button>`;
+  wrap.setAttribute("role","group");wrap.setAttribute("aria-label","Shared pick. Scratch or press Show my pick");
+  const hidden=[...hero.children];hidden.forEach(el=>el.inert=true);
   hero.appendChild(wrap);
   const c=wrap.querySelector("canvas"),btn=wrap.querySelector("button"),x=c.getContext("2d");
   const r=wrap.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2),W=r.width,H=r.height;
@@ -769,14 +823,38 @@ function scratchCard(hero){
   btn.style.top=(cy+40)+"px";
   x.globalCompositeOperation="destination-out";
   let down=false,moves=0;
-  const done=()=>{wrap.classList.add("done");setTimeout(()=>wrap.remove(),700)};
+  const done=()=>{hidden.forEach(el=>el.inert=false);wrap.classList.add("done");setTimeout(()=>wrap.remove(),700)};
   const check=()=>{const img=x.getImageData(0,0,c.width,c.height).data;let clear=0,n=0;for(let i=3;i<img.length;i+=80){n++;if(img[i]===0)clear++}if(clear/n>.45)done()};
-  const scratch=e=>{if(!down)return;const b=c.getBoundingClientRect();x.beginPath();x.arc(e.clientX-b.left,e.clientY-b.top,24,0,6.283);x.fill();if(++moves%10===0)check()};
+  const scratch=e=>{if(!down)return;const b=c.getBoundingClientRect();x.beginPath();x.arc(e.clientX-b.left,e.clientY-b.top,24,0,6.283);x.fill();if(++moves%30===0)check()};
   c.addEventListener("pointerdown",e=>{down=true;scratch(e)});
   c.addEventListener("pointermove",scratch);
   for(const t of ["pointerup","pointercancel","pointerleave"])c.addEventListener(t,()=>{if(down){down=false;check()}});
   btn.addEventListener("click",done);
 }
+
+/* ---------- laptop sidebar: a faint rangoli in the corner (drawn once) ---------- */
+(()=>{
+  const c=$("#rangoli");
+  function draw(){
+    const r=c.getBoundingClientRect();if(!r.width)return;
+    c.width=r.width;c.height=r.height;const x=c.getContext("2d"),cx=r.width/2,cy=r.height/2,R=r.width/2-6;
+    const petal=(a,dist,len,wid,fill)=>{x.save();x.translate(cx,cy);x.rotate(a);x.translate(0,-dist);x.beginPath();x.moveTo(0,0);x.bezierCurveTo(wid,-len*.3,wid*.6,-len*.85,0,-len);x.bezierCurveTo(-wid*.6,-len*.85,-wid,-len*.3,0,0);x.fillStyle=fill;x.fill();x.restore()};
+    const ring=(rad,n,size,col)=>{x.fillStyle=col;for(let i=0;i<n;i++){const a=i/n*6.283;x.beginPath();x.arc(cx+Math.cos(a)*rad,cy+Math.sin(a)*rad,size,0,6.283);x.fill()}};
+    for(let i=0;i<8;i++)petal(i/8*6.283,R*.42,R*.55,R*.2,"#F4A51C");
+    for(let i=0;i<8;i++)petal((i+.5)/8*6.283,R*.36,R*.36,R*.12,"#D9467A");
+    ring(R*.97,40,2.2,"#FFF1D2");ring(R*.34,16,3,"#2BB3A3");
+    for(let i=0;i<6;i++)petal(i/6*6.283,R*.08,R*.2,R*.08,"#2BB3A3");
+    x.fillStyle="#F4A51C";x.beginPath();x.arc(cx,cy,R*.1,0,6.283);x.fill();
+  }
+  draw();addEventListener("resize",()=>{clearTimeout(c.t);c.t=setTimeout(draw,200)});
+})();
+function edgeFade(el){
+  const f=()=>el.classList.toggle("fade",el.scrollWidth-el.clientWidth-el.scrollLeft>4);
+  el.addEventListener("scroll",f,{passive:true});
+  if("ResizeObserver" in window)new ResizeObserver(f).observe(el);
+  new MutationObserver(f).observe(el,{childList:true});f();
+}
+["#cats","#types","#uses"].forEach(s=>edgeFade($(s)));
 
 /* ---------- start ---------- */
 const [hc,...hp]=decodeURIComponent((location.hash||"").slice(1)).toLowerCase().split("-");
