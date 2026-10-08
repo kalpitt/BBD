@@ -381,6 +381,8 @@ function band(x){
   const [lo,hi]=bandRange(x);
   return fmt(lo)+"–"+Number(hi).toLocaleString("en-IN");
 }
+// Affiliate items: count to the top of the band, so the note never reveals the exact price
+const stretchNote=(x,b)=>x.aff?`Worth stretching up to ${fmt(bandRange(x)[1]-b)} more for this.`:`Worth stretching ${fmt(x.p-b)} more for this.`;
 const priceText=x=>x.aff?band(x):x.max?fmt(x.p)+"–"+Number(x.max).toLocaleString("en-IN"):(x.from?"From ":"")+fmt(x.p);
 const amz=(name,aff)=>"https://www.amazon.in/s?k="+encodeURIComponent(name)+(aff&&D.amazonTag?"&tag="+D.amazonTag:"");
 const fk=name=>"https://www.flipkart.com/search?q="+encodeURIComponent(name);
@@ -603,7 +605,7 @@ function render(force){
   if(!force&&sig===lastSig){
     // Same picks as before: only the budget in the label and the stretch note change
     hero.querySelector(".tag").firstChild.textContent=`My pick for ${fmt(b)}`;
-    const sw=rows.querySelector(".row.stretch .w");if(sw&&stretch)sw.textContent=`Worth stretching ${fmt(stretch.p-b)} more for this.`;
+    const sw=rows.querySelector(".row.stretch .w");if(sw&&stretch)sw.textContent=stretchNote(stretch,b);
     return;
   }
   lastSig=sig;
@@ -618,7 +620,7 @@ function render(force){
     ${qa?`<div class="qa">${qa}</div>`:""}`;
   let h=rest.map(x=>row(x)).join("");
   if(!rest.length)h=`<p class="empty">Bas, this is the only one I'd pick at this budget.</p>`;
-  if(stretch)h+=row(stretch,`Worth stretching ${fmt(stretch.p-b)} more for this.`,"stretch");
+  if(stretch)h+=row(stretch,stretchNote(stretch,b),"stretch");
   rows.innerHTML=h;
   if(!reduce&&(force||top.id!==lastTop)){for(const el of [hero,$("#list")]){el.classList.remove("moving");void el.offsetWidth;el.classList.add("moving")}}
   lastTop=top.id;

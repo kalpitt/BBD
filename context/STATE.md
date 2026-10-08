@@ -100,8 +100,16 @@ _Last updated: 8 Oct 2026, 6:45 pm IST. Overwrite this file at the end of every 
   2026 sale prices were found.
 - The AI occasionally gives one product another's price (e.g. A36 vs A56). Since 9 Oct
   the Worker's `fixPrices()` corrects these before the answer is shown (commit 19521de).
-  GitHub showed its Cloudflare build as "failure", like most builds since 8 Oct;
-  Kalpit to confirm in the Cloudflare dashboard that 19521de deployed.
+  Confirmed live: the Worker build for 0faa930 (which contains it) succeeded. GitHub
+  shows most other Worker builds as "failure" even when they deploy; treat it as noise
+  unless the Ask box misbehaves.
+- `was` now on 57 of 135 picks (8 Oct evening). Kalpit's rule: trust the tracker's 1-20 Sep
+  low for the closest same-model listing even if its sale-day price differs from ours
+  (docs/DATA.md). Not covered: washing machines (no tracker pages), new launches, est items.
+  Tracker helper: curl a pricebefore product page; daily prices sit in `dates`/`prices` arrays.
+- Kalpit's call (8 Oct): Xiaomi 17 (score 9) leads ₹60-69k, Pixel 11 (score 10) leads ₹70k+.
+- Fixed 8 Oct: the "Worth stretching ₹X more" note leaked exact affiliate prices; now
+  "up to ₹X more" to the band top.
 - Fixed 9 Oct: sub-type chip row (Watches/Tablet…) stayed visible after switching to a
   category without types (`[hidden]` was overridden by `.chips{display:flex}`).
 - When a question names a brand ("Nothing phone under 30k"), the AI can still lead with
