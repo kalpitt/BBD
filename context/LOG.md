@@ -95,3 +95,15 @@ Template:
 - Decided: keep the fallback for 24h because some ISPs cache the old nameservers.
 - Next: ~9 Oct afternoon remove `askFallback` from data.json, then Kalpit disables
   workers.dev under bbd-ask → Settings → Domains & Routes.
+
+## 2026-10-08 (4:45 pm): handoff: repo cleanup, credits, DNS move
+- Did: reviewed the repo for exposure before Kalpit shares it (no secrets found); added
+  README credits and reframed source mentions; squashed history to one commit (backup
+  bundle given to Kalpit); moved DNS to Cloudflare; Ask box on ask.kalpit.me with a 24h
+  fallback; scheduled the fallback-removal reminder.
+- Decided: picks are presented as Kalpit's own, with sources credited, not hidden.
+  The real way to retire the old Worker URL is disabling workers.dev, not editing history.
+- Gotchas: Worker custom domains need the zone on Cloudflare (Porkbun DNS couldn't do it).
+  Agents can't delete GitHub branches or change a Routine's prompt from another chat.
+  Worker builds were already failing before this session; see STATE open ask 5.
+- Next: see STATE.md "Next steps".

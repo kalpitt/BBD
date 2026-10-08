@@ -1,6 +1,6 @@
 # STATE: where BBD is right now
 
-_Last updated: 8 Oct 2026, 12:00 pm IST. Overwrite this file at the end of every session._
+_Last updated: 8 Oct 2026, 4:45 pm IST. Overwrite this file at the end of every session._
 
 ## Live
 - https://kalpit.me/BBD/ is live with 135 picks across Phones, TVs, Laptops, Home,
@@ -10,7 +10,8 @@ _Last updated: 8 Oct 2026, 12:00 pm IST. Overwrite this file at the end of every
   camera, gaming, iPhone).
 - Ask box is live at https://ask.kalpit.me (`askUrl`). Until ~9 Oct 2:30 pm IST the page
   falls back to the old workers.dev address (`askFallback`) while DNS caches update.
-  Then: delete `askFallback`, and Kalpit turns off workers.dev in Cloudflare. It leads with the
+  Then: delete `askFallback`, and Kalpit turns off workers.dev in Cloudflare. A reminder
+  is scheduled into this project's chat for 9 Oct, 2:30 pm IST. The Ask box leads with the
   shortlist's top pick, respects budget, and refuses off-list questions.
 - Share links keep the view: `kalpit.me/BBD#phones-15000-parents`, `#home-ac-36000`.
   WhatsApp shows a preview image (`og.png`).
@@ -18,15 +19,21 @@ _Last updated: 8 Oct 2026, 12:00 pm IST. Overwrite this file at the end of every
   (it's part of the cache key). No need to bump `v2` for price changes.
 - Sales: Amazon from 8 Oct, Flipkart from 9 Oct (8 Oct for Plus/Black members).
 - Kalpit's picks were cross-checked on 7 Oct against two trusted YouTube videos. See AGENTS.md →
-  "Where the picks come from" for Kalpit's standing calls.
+  "The picks are Kalpit's own" for his standing calls; sources are credited in README.
 
 - **Price-check agent:** a Routine "BBD price check (every 3h)" wakes the cloud session
   "BBD price checker (woken every 3h)" (environment BBD) to run `/price-check`. It pushes
   confirmed price changes to main and notifies Kalpit's phone. Flipkart pages are
   readable; Amazon blocks bots, so Amazon prices need two dated sale reports. Delete
-  the Routine after the sale (~20 Oct).
+  the Routine after the sale (~20 Oct). Its prompt starts with `git pull --rebase`, which is
+  safe after the 8 Oct history squash (tested). Never use plain `git pull` in an old clone.
+- **DNS:** kalpit.me is on Cloudflare DNS since 8 Oct (moved from Porkbun; registrar is
+  still Porkbun). All records DNS-only (grey cloud) so GitHub Pages HTTPS keeps working.
+  Email forwarding still runs through Porkbun (MX fwd1/fwd2.porkbun.com).
+- **Repo is clean to share:** one squashed commit (8 Oct) plus new ones, noreply author
+  email, sources credited in README → Credits.
 
-## Discount layers (built 8 Oct, on branch, needs merge to main)
+## Discount layers (live on main since 8 Oct)
 - Fields `was`, `list`, `coupon`, `bank` {name, off}; `p` stays final. Validator enforces
   `p = list − coupon − bank.off`. Docs: `docs/DATA.md` → Discount layers.
 - Big deal = card offer > 12% of pre-card price, or `p` ≤ 75% of `was`. Shows 🔥 badge,
@@ -51,6 +58,14 @@ _Last updated: 8 Oct 2026, 12:00 pm IST. Overwrite this file at the end of every
 3. Two Flipkart cheat-sheet PDFs (TVs/large appliances and Home) are image-only. Share
    them as images to firm up TV prices (TVs are `est: true`).
 4. Optional: EarnKaro links for Flipkart items.
+5. **Cloudflare Worker builds fail** since 8 Oct ~12:00 pm (before the cleanup). The live
+   Worker already runs the current `worker/worker.js` (unchanged since the last good
+   build) and a local `wrangler deploy --dry-run` passes, so the cause is on Cloudflare's
+   side. Needs Kalpit's screenshot of the build log (bbd-ask → Builds). Must be fixed
+   before any `worker/worker.js` change, or that change won't go live.
+6. After 9 Oct: turn off workers.dev for bbd-ask, and optionally delete the two leftover
+   `ccr-*` branches on GitHub (they point at the clean commit; deletion was blocked for agents).
+7. Kalpit wants a repo-wide review of improvement opportunities (deferred, not started).
 
 ## Known gaps
 - 8 Oct adds with only one source (no second report found): Sony WF-1000XM5, Bose QC
@@ -73,6 +88,10 @@ _Last updated: 8 Oct 2026, 12:00 pm IST. Overwrite this file at the end of every
   question filled in. Nothing is sent or stored by us.
 
 ## Next steps for an agent
+- 9 Oct afternoon: remove `askFallback` (data.json, docs/DATA.md, this file) once public
+  DNS shows Cloudflare nameservers; verify the Ask box on the live page; then tell Kalpit
+  to disable workers.dev.
+- Fix the Worker build once Kalpit shares the log.
 - Apply price and pick changes as Kalpit sends them (`/update-picks`).
 - On 8–9 Oct, spot-check live sale prices against data.json, especially the estimates.
 - Around 20 Oct, propose the sunset (banner, ask box off).
