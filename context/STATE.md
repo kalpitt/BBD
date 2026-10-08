@@ -8,7 +8,9 @@ _Last updated: 8 Oct 2026, 12:00 pm IST. Overwrite this file at the end of every
   (Watches / Camera & creator / Desk / Tablet & smart home). 8 Oct: Kalpit added 32 Amazon affiliate
   picks (helped by @r3dash's deal threads, credited in README); price bands tightened to ~5-8% of price; TVs now include an OLED and a 75-inch (slider to ₹1.4L). Phones cover ₹7k–₹1.6L, with use-case chips (parents, basic, battery,
   camera, gaming, iPhone).
-- Ask box is live (URL: `askUrl` in data.json). It leads with the
+- Ask box is live at https://ask.kalpit.me (`askUrl`). Until ~9 Oct 2:30 pm IST the page
+  falls back to the old workers.dev address (`askFallback`) while DNS caches update.
+  Then: delete `askFallback`, and Kalpit turns off workers.dev in Cloudflare. It leads with the
   shortlist's top pick, respects budget, and refuses off-list questions.
 - Share links keep the view: `kalpit.me/BBD#phones-15000-parents`, `#home-ac-36000`.
   WhatsApp shows a preview image (`og.png`).

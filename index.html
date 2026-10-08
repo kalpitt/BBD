@@ -475,7 +475,13 @@ askBtn.addEventListener("click",async()=>{
   askBtn.disabled=true;st.textContent="Thinking…";ans.innerHTML="";
   const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),45000);
   try{
-    const r=await fetch(D.askUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({q,cat:state.cat,type:state.type,budget:state.budget,use:state.use}),signal:ctl.signal});
+    // Try askUrl first; if it can't be reached (e.g. new DNS not seen yet), use askFallback.
+    const body=JSON.stringify({q,cat:state.cat,type:state.type,budget:state.budget,use:state.use});
+    const urls=[D.askUrl,D.askFallback].filter(Boolean);let r;
+    for(let i=0;i<urls.length;i++){
+      try{r=await fetch(urls[i],{method:"POST",headers:{"Content-Type":"application/json"},body,signal:ctl.signal});break}
+      catch(e){if(e.name==="AbortError"||i===urls.length-1)throw e}
+    }
     const j=await r.json().catch(()=>({}));
     if(j.limit){ans.innerHTML=`<p class="err">Today's AI answers are used up. Try the quick answers below, or ask again tomorrow.</p>`}
     else if(!r.ok||!j.answer){ans.innerHTML=`<p class="err">${esc(j.error||"The answer didn't come through. Try again in a minute.")}</p>`}

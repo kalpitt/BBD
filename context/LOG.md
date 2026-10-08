@@ -86,3 +86,12 @@ Template:
 - Decided: one-time history rewrite at Kalpit's request. The no-force-push rule stands.
 - Gotchas: `git pull --rebase` in an old clone is safe (it skips the rewritten commits);
   a plain `git pull` (merge) is not, since it would bring the old history back.
+
+## 8 Oct, 2:30 pm: kalpit.me moved to Cloudflare DNS; Ask box on ask.kalpit.me
+- Did: kalpit.me nameservers moved from Porkbun to Cloudflare (records copied, all
+  DNS-only; Porkbun email forwarding kept via MX). Kalpit added the Custom Domain
+  ask.kalpit.me to the Worker in the dashboard. Page now calls `askUrl` and retries
+  `askFallback` (old address) only on a network error.
+- Decided: keep the fallback for 24h because some ISPs cache the old nameservers.
+- Next: ~9 Oct afternoon remove `askFallback` from data.json, then Kalpit disables
+  workers.dev under bbd-ask → Settings → Domains & Routes.

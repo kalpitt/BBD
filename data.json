@@ -1,6 +1,7 @@
 {
   "updated": "8 Oct, 12:32 pm",
-  "askUrl": "https://bbd-ask.tiwari-kalpit.workers.dev",
+  "askUrl": "https://ask.kalpit.me",
+  "askFallback": "https://bbd-ask.tiwari-kalpit.workers.dev",
   "amazonTag": "bestdeallive-21",
   "sale": {
     "amazon": "Amazon Great Indian Festival starts 8 Oct",
