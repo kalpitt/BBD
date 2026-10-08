@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kalpit's Festive Picks 2026</title>
+<meta name="description" content="Kalpit's picks for Flipkart Big Billion Days and Amazon Great Indian Festival 2026. Set your budget, get the best buy.">
+<meta property="og:title" content="Kalpit's Festive Picks 2026">
+<meta property="og:description" content="Set your budget, get my pick. Phones, TVs, laptops, home, audio, fitness and gadgets.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kalpit.me/BBD/">
+<meta property="og:image" content="https://kalpit.me/BBD/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Kalpit's Festive Picks 2026: set your budget, get my pick">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Mukta:wght@400;500;700&display=swap">
+<style>
+/* One narrow column. The budget dial is the hero; picks re-rank under it as it moves. */
+:root{
+  --night:#F1F0F8; --ink:#1B1F4B; --ink-soft:#585C86; --marigold:#A85F00; --mari-fill:#F4A51C;
+  --diya:#FFF1D2; --leaf:#24704F; --line:#D9D8EA; --raise:#FFFFFF; --warn:#9A3B1E;
+  --display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --body:"Mukta","Noto Sans","Segoe UI",system-ui,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --night:#14173A;--ink:#FFF1D2;--ink-soft:#A9AACB;--marigold:#F4A51C;--mari-fill:#F4A51C;--diya:#262A5E;--leaf:#6FD3A3;--line:#2C3066;--raise:#1D2150;--warn:#FF9B7A;color-scheme:dark}}
+:root[data-theme="dark"]{--night:#14173A;--ink:#FFF1D2;--ink-soft:#A9AACB;--marigold:#F4A51C;--mari-fill:#F4A51C;--diya:#262A5E;--leaf:#6FD3A3;--line:#2C3066;--raise:#1D2150;--warn:#FF9B7A;color-scheme:dark}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--night);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;padding-inline:max(16px,env(safe-area-inset-left));padding-block:calc(16px + env(safe-area-inset-top,0px)) 48px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--marigold);outline-offset:2px;border-radius:6px}
+.wrap{max-width:560px;margin:0 auto;display:grid;gap:26px}
+h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.me{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--ink-soft);min-width:0}
+.mono{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--night);display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:14px;flex:none}
+.dates{font-size:14px;color:var(--ink-soft);text-align:right;line-height:1.3}
+
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding-inline:16px;padding-block:2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font:500 15px var(--body);color:var(--ink-soft);background:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer;min-height:36px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--night);border-color:var(--ink)}
+.chip.use[aria-pressed="true"]{background:var(--diya);color:var(--ink);border-color:var(--mari-fill)}
+.stack{display:grid;gap:10px}
+
+.dial{display:grid;gap:4px}
+.dial p{margin:0;font-size:19px;color:var(--ink-soft)}
+.amount{font-family:var(--display);font-weight:750;font-size:clamp(60px,18vw,104px);line-height:.95;letter-spacing:-.02em;font-variation-settings:"wdth" var(--w,100),"opsz" 96;display:flex;align-items:baseline;gap:.06em;transition:font-variation-settings .15s ease;cursor:text}
+.amount .r{font-weight:400;font-size:.55em;color:var(--marigold)}
+.amount input{all:unset;width:100%;min-width:0;font:inherit;font-variation-settings:inherit;color:inherit;font-variant-numeric:tabular-nums}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent;margin:2px 0 0;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:linear-gradient(to right,var(--mari-fill) var(--p,50%),var(--line) var(--p,50%))}
+input[type=range]::-moz-range-track{height:6px;border-radius:3px;background:linear-gradient(to right,var(--mari-fill) var(--p,50%),var(--line) var(--p,50%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;margin-top:-12px;border-radius:50%;background:var(--mari-fill);border:4px solid var(--night);box-shadow:0 0 0 1px var(--mari-fill)}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--mari-fill);border:4px solid var(--night)}
+.ticks{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.note{font-size:15px;color:var(--ink-soft);margin:0}
+
+.hero{background:var(--diya);border-radius:22px;padding:22px 20px;display:grid;gap:10px}
+.hero .tag{font-size:15px;color:var(--marigold);font-weight:700}
+.hero h2{font-weight:700;font-size:30px;line-height:1.1}
+.hero .why{margin:0}
+.price{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;font-variant-numeric:tabular-nums}
+.price strong{font-family:var(--display);font-size:28px;font-weight:700}
+.price .est{font-size:14px;color:var(--ink-soft)}
+.card{font-size:15px;color:var(--leaf);font-weight:500}
+.acts{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px}
+.btn{font:600 16px var(--body);text-decoration:none;border-radius:12px;padding:10px 16px;cursor:pointer;border:0;min-height:44px;display:inline-flex;align-items:center}
+.btn.go{background:var(--ink);color:var(--night)}
+.btn.save{background:none;color:var(--ink);border:1px solid var(--line)}
+.aff{font-size:13px;color:var(--ink-soft)}
+.qa{display:grid;gap:4px;margin-top:4px}
+.qa details{border-top:1px solid color-mix(in srgb,var(--ink) 15%,transparent);padding-top:6px}
+.qa summary{cursor:pointer;font-weight:600;list-style:none}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::before{content:"+ ";color:var(--marigold)}
+.qa details[open] summary::before{content:"− "}
+.qa p{margin:4px 0 6px}
+
+.list h3,.sec h3{font-weight:650;font-size:21px;margin-bottom:6px}
+.row{border-top:1px solid var(--line)}
+.row>summary{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:14px 0;cursor:pointer;list-style:none;align-items:baseline}
+.row>summary::-webkit-details-marker{display:none}
+.row .n{font-weight:700;font-size:18px;min-width:0}
+.row .p{font-family:var(--display);font-weight:650;font-size:19px;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.row .w{font-size:15px;color:var(--ink-soft);min-width:0}
+.row .s{font-size:14px;color:var(--ink-soft);text-align:right;white-space:nowrap}
+.row .more{display:grid;gap:8px;padding:0 0 16px}
+.row.stretch .w{color:var(--marigold);font-weight:600}
+.hot{display:inline-block;font:700 13px var(--body);color:var(--warn);background:color-mix(in srgb,var(--warn) 12%,transparent);border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:2px;white-space:nowrap}
+.hero .hot{margin-left:8px}
+.how summary{cursor:pointer;font-size:15px;font-weight:600;color:var(--ink-soft)}
+.how table{border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15px;width:100%;margin-top:4px}
+.how td{padding:3px 0;border-top:1px solid color-mix(in srgb,var(--ink) 12%,transparent)}
+.how td+td{text-align:right;padding-left:10px;white-space:nowrap}
+.how tr.big td:first-child{color:var(--warn);font-weight:600}
+.how tr.pay td{font-weight:700}
+.how s{color:var(--ink-soft)}
+.empty{color:var(--ink-soft);padding:14px 0;border-top:1px solid var(--line);margin:0}
+
+.ask{background:var(--raise);border:1px solid var(--line);border-radius:22px;padding:20px;display:grid;gap:12px}
+.ask p{margin:0}
+.ask textarea{width:100%;min-height:84px;resize:vertical;font:400 17px/1.4 var(--body);color:var(--ink);background:var(--night);border:1px solid var(--line);border-radius:14px;padding:12px}
+.ask .sugs{display:flex;flex-wrap:wrap;gap:6px}
+.ask .sugs button{font:400 14px var(--body);color:var(--ink-soft);background:none;border:1px dashed var(--line);border-radius:10px;padding:4px 10px;cursor:pointer;text-align:left}
+.ask .btn.go[disabled]{opacity:.5;cursor:default}
+.ask .link{all:unset;cursor:pointer;text-decoration:underline;color:var(--ink);font-weight:600}
+.answer:empty{display:none}
+.answer{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:12px}
+.answer .lbl{font-size:13px;color:var(--ink-soft)}
+.answer p{margin:0;white-space:pre-wrap}
+.answer .err{color:var(--warn)}
+
+.truth{border-left:3px solid var(--mari-fill);padding-left:14px}
+.truth p{margin:0 0 8px}
+.truth table{border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15px;width:100%}
+.truth td{padding:4px 0;border-top:1px solid var(--line)}
+.truth td+td{text-align:right;padding-left:10px;white-space:nowrap}
+.truth s{color:var(--ink-soft)}
+.faq details{border-top:1px solid var(--line);padding-block:10px}
+.faq summary{cursor:pointer;font-weight:600}
+.faq p{margin:6px 0 0}
+.sec ul{margin:0;padding-left:20px;display:grid;gap:6px}
+footer{font-size:13px;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:14px;display:grid;gap:6px}
+footer button{all:unset;cursor:pointer;text-decoration:underline}
+
+dialog{border:0;border-radius:20px;padding:20px;max-width:min(420px,calc(100vw - 32px));background:var(--raise);color:var(--ink)}
+dialog::backdrop{background:rgba(10,12,40,.5)}
+dialog form{display:grid;gap:12px}
+dialog h3{font-size:21px}
+dialog p{margin:0;color:var(--ink-soft);font-size:15px}
+dialog input{font:500 20px var(--body);color:var(--ink);background:var(--night);border:1px solid var(--line);border-radius:12px;padding:10px 12px;width:100%;font-variant-numeric:tabular-nums}
+dialog .acts{justify-content:flex-end}
+.err-inline{color:var(--warn);font-size:14px;min-height:1.2em}
+
+.list.moving .row,.hero.moving{animation:slot .35s ease}
+@keyframes slot{from{opacity:.35;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.list.moving .row,.hero.moving{animation:none}.amount{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="me"><span class="mono" aria-hidden="true">KT</span><span>Kalpit's festive picks</span></div>
+    <div class="dates">Amazon from 8 Oct<br>Flipkart from 9 Oct</div>
+  </header>
+
+  <div class="stack">
+    <nav class="chips" id="cats" aria-label="Category"></nav>
+    <div class="chips" id="types" aria-label="Appliance type" hidden></div>
+  </div>
+
+  <section class="dial" aria-label="Your budget">
+    <p id="lead">I want a phone under</p>
+    <label class="amount" id="amt"><span class="r">₹</span><input id="budgetText" inputmode="numeric" autocomplete="off" aria-label="Budget in rupees"></label>
+    <input id="budget" type="range" aria-label="Budget slider">
+    <div class="ticks" id="ticks"></div>
+    <div class="chips" id="uses" aria-label="What matters most" hidden></div>
+    <p class="note" id="catNote" hidden></p>
+  </section>
+
+  <section class="hero" id="hero" aria-live="polite"></section>
+
+  <section class="list" id="list">
+    <h3>Also good in this budget</h3>
+    <div id="rows"></div>
+  </section>
+
+  <section class="ask" id="askBox" aria-labelledby="askTitle">
+    <h3 id="askTitle">Still confused? Ask me</h3>
+    <p>Describe who it's for and your budget. The answer comes only from my picks on this page.</p>
+    <label for="q" class="aff">Your question</label>
+    <textarea id="q" maxlength="400" placeholder="Papa ke liye phone, ₹15k, bada screen aur achi battery"></textarea>
+    <div class="sugs" id="sugs"></div>
+    <div class="acts"><button class="btn go" id="askBtn" type="button">Ask</button><span class="aff" id="askState"></span></div>
+    <div class="answer" id="answer" aria-live="polite"></div>
+    <p class="aff">Can't find what you need? <button type="button" class="link" id="msgKalpit">Message Kalpit on WhatsApp</button>. It tells him which page you were on.</p>
+  </section>
+
+  <section class="sec faq">
+    <h3>Quick answers</h3>
+    <div id="faq"></div>
+  </section>
+
+  <section class="sec truth">
+    <h3>Ruko, ignore the "% off"</h3>
+    <p>These listings show a made-up MRP so the discount looks huge. Judge the final price.</p>
+    <table id="fake"></table>
+  </section>
+
+  <section class="sec">
+    <h3>Before you pay</h3>
+    <ul id="cards"></ul>
+  </section>
+
+  <footer>
+    <span>Picks and prices updated <span id="updated"></span>. Prices can change during the sale, so check the final price on the payment page.</span>
+    <span>Items marked "affiliate link" earn me a small commission at no extra cost to you. As an Amazon Associate I earn from qualifying purchases. All other links are plain links.</span>
+    <span><button type="button" id="changeNum">Change my WhatsApp number</button></span>
+  </footer>
+</div>
+
+<dialog id="waDlg">
+  <form method="dialog" id="waForm">
+    <h3>Save to your WhatsApp</h3>
+    <p>Enter your number once. It stays only on this phone, so next time the pick goes straight to your "Message yourself" chat.</p>
+    <label for="waNum" class="aff">Your WhatsApp number</label>
+    <input id="waNum" inputmode="tel" autocomplete="tel" placeholder="98765 43210">
+    <div class="err-inline" id="waErr"></div>
+    <div class="acts">
+      <button class="btn save" value="skip" type="button" id="waSkip">Choose contact instead</button>
+      <button class="btn go" value="ok" type="submit">Save pick</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(async function(){
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt=n=>"₹"+Number(n).toLocaleString("en-IN");
+const short=n=>n>=100000?"₹"+(n/100000).toFixed(n%100000?1:0)+"L":"₹"+Math.round(n/1000)+"k";
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let D;
+try{D=await (await fetch("data.json",{cache:"no-cache"})).json()}
+catch(e){$("#hero").innerHTML="<h2>Couldn't load the picks</h2><p class='why'>Check your connection and reload the page.</p>";return}
+
+$("#updated").textContent=D.updated;
+const P=D.products;
+const state={cat:"phones",type:null,use:null,big:false,budget:null};
+
+/* ---------- prices and links ---------- */
+function band(x){
+  const p=x.p;
+  if(p<1000)return "Under ₹1,000";
+  const step=p<2000?100:p<5000?250:p<10000?500:p<20000?1000:p<50000?2000:p<100000?5000:10000; // ~5–8% wide at every price
+  const lo=Math.floor(p/step)*step;
+  const hi=x.max?Math.ceil(x.max/step)*step:lo+step;
+  return fmt(lo)+"–"+Number(hi).toLocaleString("en-IN");
+}
+const priceText=x=>x.aff?band(x):x.max?fmt(x.p)+"–"+Number(x.max).toLocaleString("en-IN"):(x.from?"From ":"")+fmt(x.p);
+const amz=(name,aff)=>"https://www.amazon.in/s?k="+encodeURIComponent(name)+(aff&&D.amazonTag?"&tag="+D.amazonTag:"");
+const fk=name=>"https://www.flipkart.com/search?q="+encodeURIComponent(name);
+function links(x){
+  if(x.s==="Both")return [{s:"Amazon",u:amz(x.n,x.aff),aff:x.aff},{s:"Flipkart",u:fk(x.n),aff:false}];
+  if(x.s==="Amazon")return [{s:"Amazon",u:x.url||amz(x.n,x.aff),aff:x.aff}];
+  return [{s:"Flipkart",u:x.url||fk(x.n),aff:false}];
+}
+/* Discount layers: was (normal price) -> list (sale price) - coupon - bank card = p.
+   Big deal = card offer above 12% of the price before it, or p at least 25% below was.
+   Keep in sync with big() in worker/worker.js. */
+function big(x){
+  if(x.bank&&x.bank.off>0.12*(x.p+x.bank.off))return "bank";
+  if(x.was&&x.p<=0.75*x.was)return "was";
+  return "";
+}
+const hot=x=>big(x)?`<span class="hot">🔥 Big deal</span>`:"";
+const cardName=b=>b.name==="Bank"?"Bank card offer":b.name+" card offer";
+// "How you get this price". Affiliate items get labels only: Amazon doesn't allow
+// hand-typed prices next to affiliate links, so no ₹ or % for them here.
+function how(x){
+  if(!x.list&&!x.bank&&!x.was)return "";
+  const b=big(x),r=[];
+  if(x.aff){
+    if(x.was)r.push([b==="was"?"Far below its usual price":"Below its usual price","",b==="was"]);
+    if(x.list)r.push(["Sale price",""]);
+    if(x.coupon)r.push(["Coupon on the product page",""]);
+    if(x.bank)r.push([b==="bank"?"Extra "+cardName(x.bank)+", much bigger than usual":cardName(x.bank),"",b==="bank"]);
+  }else{
+    if(x.was)r.push(["Normal price",`<s>${fmt(x.was)}</s>`,b==="was"]);
+    if(x.list)r.push(["Sale price",fmt(x.list)]);
+    if(x.coupon)r.push(["Coupon","−"+fmt(x.coupon)]);
+    if(x.bank)r.push([cardName(x.bank)+(b==="bank"?", bigger than usual":""),"−"+fmt(x.bank.off),b==="bank"]);
+  }
+  r.push(["You pay",priceText(x),false,"pay"]);
+  return `<details class="how"><summary>How you get this price</summary><table>${r.map(([l,v,bg,c])=>`<tr class="${bg?"big":c||""}"><td>${esc(l)}</td><td>${v}</td></tr>`).join("")}</table></details>`;
+}
+const where=x=>x.s==="Both"?"Amazon & Flipkart":"On "+x.s;
+function extras(x){
+  const e=D.sale.extra||{};
+  return (x.s==="Both"?[e.Flipkart,e.Amazon]:[e[x.s]]).filter(Boolean);
+}
+function offers(x,tag){
+  return [x.card,...extras(x)].filter(Boolean).map(c=>`<${tag} class="card">${esc(c)}</${tag}>`).join("");
+}
+function buttons(x){
+  return links(x).map(l=>`<a class="btn go" href="${esc(l.u)}" target="_blank" rel="noopener${l.aff?" sponsored":""}">See on ${l.s}</a>`).join("")
+   +`<button class="btn save" type="button" data-save="${x.id}">Save to my WhatsApp</button>`
+   +(links(x).some(l=>l.aff)?`<span class="aff">Affiliate link</span>`:"");
+}
+
+const row=(x,note,cls)=>`<details class="row ${cls||""}"><summary><span class="n">${esc(x.n)}${hot(x)}</span><span class="p">${priceText(x)}</span><span class="w">${esc(note||x.why)}</span><span class="s">${x.est?"Expected":x.s==="Both"?"Both":x.s}</span></summary>
+   <div class="more">${note?`<span>${esc(x.why)}</span>`:""}${offers(x,"span")}${how(x)}<div class="acts">${buttons(x)}</div></div></details>`;
+
+/* ---------- WhatsApp save to self ---------- */
+let pending=null;
+function waText(items){
+  return items.map(x=>{
+    const l=links(x)[0];
+    return `${big(x)?"🔥 ":""}${x.n}: ${x.est?"expected ":""}${priceText(x)}${x.s==="Both"?"":" on "+x.s}${x.card&&!x.aff?" ("+x.card+")":""}\n${l.u}`;
+  }).join("\n\n")+"\n\nKalpit's picks: kalpit.me/BBD";
+}
+function openWa(items,num){
+  const t=encodeURIComponent(waText(items));
+  const u=num?`https://wa.me/${num}?text=${t}`:`https://wa.me/?text=${t}`;
+  const a=document.createElement("a");a.href=u;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();
+}
+function save(id){
+  const x=P.find(p=>p.id===id);if(!x)return;
+  const num=store.get("waNum");
+  if(num){openWa([x],num);return}
+  pending=[x];$("#waErr").textContent="";$("#waNum").value="";
+  $("#waDlg").showModal();
+}
+$("#waForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  let d=$("#waNum").value.replace(/\D/g,"");
+  if(d.length===10)d="91"+d;
+  if(d.length===12&&d.startsWith("0"))d=d.slice(1);
+  if(d.length<11||d.length>13){$("#waErr").textContent="Enter a 10-digit mobile number, like 98765 43210.";return}
+  store.set("waNum",d);$("#waDlg").close();openWa(pending,d);
+});
+$("#waSkip").addEventListener("click",()=>{$("#waDlg").close();openWa(pending,null)});
+$("#changeNum").addEventListener("click",()=>{store.del("waNum");$("#changeNum").textContent="Number removed. You'll be asked next time."});
+document.addEventListener("click",e=>{const b=e.target.closest("[data-save]");if(b)save(b.dataset.save)});
+
+/* ---------- category, type, use chips ---------- */
+const cat=()=>D.categories.find(c=>c.id===state.cat);
+const conf=()=>{const c=cat();return c.types?c.types.find(t=>t.id===state.type):c};
+function chip(label,pressed,cls,fn){const b=document.createElement("button");b.type="button";b.className="chip "+(cls||"");b.textContent=label;b.setAttribute("aria-pressed",pressed);b.addEventListener("click",fn);return b}
+
+function drawCats(){
+  const el=$("#cats");el.replaceChildren(...D.categories.map(c=>chip(c.label,c.id===state.cat,"",()=>{setCat(c.id)})));
+  const c=cat(),ty=$("#types");
+  ty.hidden=!c.types;
+  if(c.types)ty.replaceChildren(...c.types.map(t=>chip(t.label,t.id===state.type,"",()=>{state.type=t.id;state.big=false;state.budget=null;drawCats();setupDial()})));
+  // "Big deals" chip appears wherever this tab has at least one big deal
+  const deals=P.some(x=>x.cat===state.cat&&(!state.type||x.type===state.type)&&big(x));
+  if(!deals)state.big=false;
+  const us=$("#uses");us.hidden=!c.uses&&!deals;
+  us.replaceChildren(...(deals?[chip("🔥 Big deals",state.big,"use",()=>{state.big=!state.big;drawCats();render(true)})]:[]),
+    ...(c.uses||[]).map(u=>chip(u.label,u.id===state.use,"use",()=>{state.use=state.use===u.id?null:u.id;drawCats();render(true)})));
+  const n=$("#catNote");n.hidden=!c.note;n.textContent=c.note||"";
+}
+function setCat(id){
+  state.cat=id;state.use=null;state.big=false;state.budget=null;
+  const c=cat();state.type=c.types?c.types[0].id:null;
+  drawCats();setupDial();
+}
+// Keep the address bar shareable: #phones-15000-parents opens that exact view
+let hashT;
+function saveHash(){
+  clearTimeout(hashT);
+  hashT=setTimeout(()=>{try{history.replaceState(null,"","#"+[state.cat,state.type,state.budget,state.use,state.big&&"deals"].filter(Boolean).join("-"))}catch(e){}},300);
+}
+
+/* ---------- dial ---------- */
+const range=$("#budget"),txt=$("#budgetText"),amt=$("#amt");
+function setupDial(){
+  const c=conf();
+  range.min=c.min;range.max=c.max;range.step=c.step;
+  if(state.budget==null)state.budget=c.def;
+  range.value=state.budget;txt.value=Number(state.budget).toLocaleString("en-IN");
+  $("#lead").textContent=`I want ${c.noun} under`;
+  const t=[c.min,Math.round((c.min*2+c.max)/3/1000)*1000,Math.round((c.min+c.max*2)/3/1000)*1000,c.max];
+  $("#ticks").innerHTML=t.map(v=>`<span>${short(v)}</span>`).join("");
+  render(true);
+}
+range.addEventListener("input",()=>{state.budget=+range.value;txt.value=state.budget.toLocaleString("en-IN");render()});
+txt.addEventListener("input",()=>{const v=parseInt(txt.value.replace(/\D/g,""))||0;const c=conf();if(v>=c.min/2){state.budget=v;range.value=Math.min(c.max,Math.max(c.min,v));render()}});
+txt.addEventListener("blur",()=>{txt.value=Number(state.budget).toLocaleString("en-IN")});
+txt.addEventListener("focus",()=>txt.select());
+
+/* ---------- ranking ---------- */
+let lastTop="";
+function pool(){
+  return P.filter(x=>x.cat===state.cat&&(!state.type||x.type===state.type)&&(!state.use||(x.tags||[]).includes(state.use))&&(!state.big||big(x)));
+}
+function render(force){
+  const c=conf(),b=state.budget;
+  saveHash();
+  const pct=(Math.min(c.max,Math.max(c.min,b))-c.min)/(c.max-c.min)*100;
+  range.style.setProperty("--p",pct+"%");
+  amt.style.setProperty("--w",Math.max(75,100-Math.max(0,String(b).length-5)*8));
+  const all=pool();
+  const fit=all.filter(x=>x.p<=b);
+  // Prefer picks that use most of the budget, then the strongest verdict
+  const near70=fit.filter(x=>x.p>=b*0.7),near50=fit.filter(x=>x.p>=b*0.5);
+  const base=near70.length>=2?near70:near50.length?near50:fit;
+  const rank=x=>x.score+2*(x.p/b)+(big(x)?1:0); // big deals get a small boost
+  const ranked=base.slice().sort((a,z)=>rank(z)-rank(a));
+  const top=ranked[0];
+  const hero=$("#hero"),rows=$("#rows");
+  if(!top){
+    const cheapest=all.slice().sort((a,z)=>a.p-z.p)[0];
+    hero.innerHTML=cheapest
+      ?`<span class="tag">Thoda stretch karo</span><h2>Nothing I'd pick under ${fmt(b)}</h2><p class="why">The cheapest pick here is ${esc(cheapest.n)} at ${priceText(cheapest)}. Slide right to see it.</p>`
+      :`<span class="tag">Nothing here yet</span><h2>No picks for this filter</h2><p class="why">Remove the filter above to see all picks.</p>`;
+    rows.innerHTML="";lastTop="";return;
+  }
+  const qa=(top.faq||[]).map(([q,a])=>`<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join("");
+  hero.innerHTML=`<span class="tag">My pick for ${fmt(b)}${hot(top)}</span>
+    <h2>${esc(top.n)}</h2><p class="why">${esc(top.why)}</p>
+    <div class="price"><strong>${priceText(top)}</strong><span class="est">${top.est?"Expected price · "+where(top):where(top)}</span></div>
+    ${offers(top,"div")}
+    ${how(top)}
+    <div class="acts">${buttons(top)}</div>
+    ${qa?`<div class="qa">${qa}</div>`:""}`;
+  const rest=ranked.slice(1,5);
+  const stretch=all.filter(x=>x.p>b&&x.p<=b*1.2&&x.score>=top.score).sort((a,z)=>(z.score-a.score)||(a.p-z.p))[0];
+  let h=rest.map(x=>row(x)).join("");
+  if(!rest.length)h=`<p class="empty">Bas, this is the only one I'd pick at this budget.</p>`;
+  if(stretch)h+=row(stretch,`Worth stretching ${fmt(stretch.p-b)} more for this.`,"stretch");
+  rows.innerHTML=h;
+  if(!reduce&&(force||top.id!==lastTop)){for(const el of [hero,$("#list")]){el.classList.remove("moving");void el.offsetWidth;el.classList.add("moving")}}
+  lastTop=top.id;
+}
+
+/* ---------- static sections ---------- */
+$("#faq").innerHTML=D.faq.map(([q,a])=>`<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join("");
+$("#fake").innerHTML=D.fakeMrp.map(x=>`<tr><td>${esc(x.n)}</td><td><s>${fmt(x.mrp)}</s> ${fmt(x.p)}</td></tr>`).join("");
+$("#cards").innerHTML=D.sale.cards.map(c=>`<li>${esc(c)}</li>`).join("");
+
+/* ---------- ask box ---------- */
+const sugs=["Lava, Samsung or Moto under ₹9k? Only WhatsApp and calls","Papa ke liye phone, ₹15k, big battery and big screen","S25 or Pixel 10a for camera?","Which AC for a hot top-floor bedroom?"];
+$("#sugs").innerHTML=sugs.map(s=>`<button type="button">${esc(s)}</button>`).join("");
+$("#sugs").addEventListener("click",e=>{const b=e.target.closest("button");if(b){$("#q").value=b.textContent;$("#q").focus()}});
+const askBtn=$("#askBtn"),ans=$("#answer"),st=$("#askState");
+if(!D.askUrl){askBtn.disabled=true;st.textContent="Opens when the sale starts."}
+// Which picks the AI answer names, in order. Same rules as nameIndex()/mentions() in
+// worker/worker.js: longest name wins, and short forms two picks share match neither.
+function nameIndex(products){
+  const norm=s=>s.toLowerCase().replace(/\s+/g," ").trim();
+  const full=new Map(products.map(x=>[norm(x.n),x])),short=new Map();
+  for(const x of products){
+    const forms=[x.n,x.n.replace(/\s*\(.*\)$/,"")];
+    if(x.cat==="phones")forms.push(x.n.replace(/^\S+\s+/,""));
+    for(const f of [...forms])forms.push(f.replace(/\s+5G$/i,""));
+    for(const f of forms)for(const a of [norm(f),norm(f.replace(/[()]/g,""))]){
+      if(a.length<4||full.has(a))continue;
+      if(!short.has(a))short.set(a,new Set());
+      short.get(a).add(x);
+    }
+  }
+  const out=[...full];
+  for(const [a,xs] of short)if(xs.size===1)out.push([a,[...xs][0]]);
+  return out;
+}
+function mentions(text,names){
+  const t=String(text).toLowerCase().replace(/\s+/g," ");
+  const word=c=>/[a-z0-9]/.test(c||"");
+  const hits=[];
+  for(const [a,x] of names)for(let i=t.indexOf(a);i>=0;i=t.indexOf(a,i+1))if(!word(t[i-1])&&!word(t[i+a.length]))hits.push({i,end:i+a.length,x});
+  hits.sort((p,q)=>(q.end-q.i)-(p.end-p.i)||p.i-q.i);
+  const kept=[];
+  for(const h of hits)if(!kept.some(k=>h.i<k.end&&k.i<h.end))kept.push(h);
+  const seen=new Set();
+  return kept.sort((p,q)=>p.i-q.i).map(h=>h.x).filter(x=>!seen.has(x)&&seen.add(x));
+}
+const NAMES=nameIndex(P);
+askBtn.addEventListener("click",async()=>{
+  const q=$("#q").value.trim();
+  if(q.length<8){st.textContent="Write a little more, like who it's for and your budget.";return}
+  askBtn.disabled=true;st.textContent="Thinking…";ans.innerHTML="";
+  const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),45000);
+  try{
+    const r=await fetch(D.askUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({q,cat:state.cat,type:state.type,budget:state.budget,use:state.use}),signal:ctl.signal});
+    const j=await r.json().catch(()=>({}));
+    if(j.limit){ans.innerHTML=`<p class="err">Today's AI answers are used up. Try the quick answers below, or ask again tomorrow.</p>`}
+    else if(!r.ok||!j.answer){ans.innerHTML=`<p class="err">${esc(j.error||"The answer didn't come through. Try again in a minute.")}</p>`}
+    else{
+      const m=mentions(j.answer,NAMES).slice(0,4);
+      ans.innerHTML=`<span class="lbl">AI answer based on Kalpit's picks. Double-check before buying.</span><p>${esc(j.answer)}</p>`+
+        m.map(x=>row(x)).join("");
+    }
+  }catch(e){ans.innerHTML=e.name==="AbortError"?`<p class="err">This is taking too long. Try again in a minute.</p>`:`<p class="err">Couldn't reach the answer service. Check your connection and try again.</p>`}
+  clearTimeout(timer);askBtn.disabled=false;st.textContent="";
+});
+
+/* ---------- message Kalpit (opens WhatsApp with the page context filled in) ---------- */
+const KALPIT_WA=["91","89625","69795"].join(""); // split so simple scrapers don't pick it up
+$("#msgKalpit").addEventListener("click",()=>{
+  const c=cat(),t=c.types?c.types.find(x=>x.id===state.type):null,u=(c.uses||[]).find(x=>x.id===state.use);
+  const view=[c.label,t&&t.label].filter(Boolean).join(" › ")+", under "+fmt(state.budget)+(u?", "+u.label:"")+(state.big?", Big deals only":"");
+  const q=$("#q").value.trim();
+  const msg=`Hi Kalpit, a question from your festive picks page.\n\nI was looking at: ${view}\nYour pick there: ${lastTop?P.find(x=>x.id===lastTop).n:"none at this budget"}\n${location.href}`+(q?`\n\nI asked: ${q}`:"")+"\n\nMy question: ";
+  const a=document.createElement("a");a.href=`https://wa.me/${KALPIT_WA}?text=${encodeURIComponent(msg)}`;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();
+});
+
+/* ---------- start ---------- */
+const [hc,...hp]=decodeURIComponent((location.hash||"").slice(1)).toLowerCase().split("-");
+const hcat=D.categories.find(c=>c.id===hc);
+if(!hcat)setCat("phones");
+else{
+  state.cat=hcat.id;
+  state.type=(hcat.types||[]).some(t=>t.id===hp[0])?hp.shift():hcat.types?hcat.types[0].id:null;
+  const bud=+hp[0];
+  if(bud>=conf().min/2&&bud<=conf().max*2){state.budget=bud;hp.shift()}
+  if((hcat.uses||[]).some(u=>u.id===hp[0]))state.use=hp.shift();
+  if(hp[0]==="deals")state.big=true;
+  drawCats();setupDial();
+}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# GitHub Pages: publish only the site (index.html, data.json, bbd redirect).
+# Everything else stays off kalpit.me/BBD. It is still visible on GitHub (public repo).
+exclude:
+  - AGENTS.md
+  - CLAUDE.md
+  - README.md
+  - context
+  - docs
+  - scripts
+  - worker
+  - wrangler.toml

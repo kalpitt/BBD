@@ -1,0 +1,12 @@
+# Cloudflare deploys the "Ask me" Worker from the repo root using this file.
+# The website itself is served by GitHub Pages, not by this Worker.
+name = "bbd-ask"
+main = "worker/worker.js"
+compatibility_date = "2026-10-01"
+
+[ai]
+binding = "AI"
+
+[vars]
+DATA_URL = "https://kalpit.me/BBD/data.json"
+ALLOWED_ORIGINS = "https://kalpit.me,https://www.kalpit.me"

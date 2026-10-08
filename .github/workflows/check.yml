@@ -1,0 +1,23 @@
+# Alarm, not a gate: pushes to main are already live by the time this runs.
+# If it fails, GitHub emails Kalpit; revert the commit (docs/OPS.md → Roll back).
+name: Check data
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/check-data.mjs
