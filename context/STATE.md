@@ -85,11 +85,7 @@ _Last updated: 8 Oct 2026, 6:45 pm IST. Overwrite this file at the end of every 
 3. Two Flipkart cheat-sheet PDFs (TVs/large appliances and Home) are image-only. Share
    them as images to firm up TV prices (TVs are `est: true`).
 4. Optional: EarnKaro links for Flipkart items.
-5. **Cloudflare Worker builds fail** since 8 Oct ~12:00 pm (before the cleanup). The live
-   Worker already runs the current `worker/worker.js` (unchanged since the last good
-   build) and a local `wrangler deploy --dry-run` passes, so the cause is on Cloudflare's
-   side. Needs Kalpit's screenshot of the build log (bbd-ask → Builds). Must be fixed
-   before any `worker/worker.js` change, or that change won't go live.
+5. ~~Cloudflare Worker builds fail~~ Resolved: all builds green as of 8 Oct, 7:23 pm.
 6. After 9 Oct: turn off workers.dev for bbd-ask, and optionally delete the two leftover
    `ccr-*` branches on GitHub (they point at the clean commit; deletion was blocked for agents).
 7. Kalpit wants a repo-wide review of improvement opportunities (deferred, not started).
@@ -115,10 +111,9 @@ _Last updated: 8 Oct 2026, 6:45 pm IST. Overwrite this file at the end of every 
   question filled in. Nothing is sent or stored by us.
 
 ## Next steps for an agent
-- Worker build for 050b5d7 (the prompt change) succeeded, so it's live. The later
-  handoff-only build (3ca4d03) failed; Worker code is unchanged there, so no impact, but
-  builds are still flaky (open ask 5). Check results with:
-  `curl -s https://api.github.com/repos/kalpitt/BBD/commits/<sha>/check-runs`.
+- Worker builds are healthy: Kalpit's dashboard screenshot (8 Oct, 7:23 pm) shows every
+  build green, including 3ca4d03, which GitHub had reported as failed (it was re-run).
+  Check results with `curl -s https://api.github.com/repos/kalpitt/BBD/commits/<sha>/check-runs`.
 - Run the docs/OPS.md regression questions once the Worker build is confirmed.
 - Explore the Amazon affiliate account options (open ask 0).
 - 9 Oct afternoon: remove `askFallback` (data.json, docs/DATA.md, this file) once public
