@@ -52,7 +52,7 @@ export default {
 
     // The "updated" stamp is part of the key, so editing data.json retires old answers
     const key = await sha(q.toLowerCase().replace(/\s+/g, " ") + "|" + ctxLine + "|" + picks.data.updated);
-    const cacheKey = new Request("https://bbd-ask.cache/v3/" + key);
+    const cacheKey = new Request("https://bbd-ask.cache/v4/" + key);
     const cache = caches.default;
     const hit = body.debug ? null : await cache.match(cacheKey);
     if (hit) return json(await hit.json());
@@ -102,6 +102,7 @@ export default {
     if (limited) return json({ limit: true });
     if (!answer) return json({ error: "The answer didn't come through. Try again in a minute.", ...(body.debug ? { dbg } : {}) }, 502);
 
+    answer = fixPrices(answer, picks, dbg);
     const out = { answer, m: used.split("/").pop(), ...(body.debug ? { dbg } : {}) };
     ctx.waitUntil(cache.put(cacheKey, new Response(JSON.stringify(out), { headers: { "Cache-Control": "max-age=3600" } })));
     return json(out);
@@ -243,7 +244,12 @@ function nameIndex(products) {
 // Products named in the text, in the order they first appear. The longest name wins,
 // so "S25 Ultra" counts as the S25 Ultra only, not also the S25.
 function mentions(text, names) {
-  const t = String(text).toLowerCase().replace(/\s+/g, " ");
+  const seen = new Set();
+  return mentionHits(String(text).replace(/\s+/g, " "), names).map(h => h.x).filter(x => !seen.has(x) && seen.add(x));
+}
+// Same, but every mention with its position in the text (whitespace already collapsed)
+function mentionHits(text, names) {
+  const t = text.toLowerCase();
   const word = c => /[a-z0-9]/.test(c || "");
   const hits = [];
   for (const [a, x] of names) {
@@ -254,8 +260,51 @@ function mentions(text, names) {
   hits.sort((p, q) => (q.end - q.i) - (p.end - p.i) || p.i - q.i);
   const kept = [];
   for (const h of hits) if (!kept.some(k => h.i < k.end && k.i < h.end)) kept.push(h);
-  const seen = new Set();
-  return kept.sort((p, q) => p.i - q.i).map(h => h.x).filter(x => !seen.has(x) && seen.add(x));
+  return kept.sort((p, q) => p.i - q.i);
+}
+
+// Safety net: the model sometimes gives one product another's price, or an exact
+// number for an affiliate item. Each ₹ amount written after a product name (same
+// sentence, before the next product) must be that product's price from data.json;
+// a wrong one is replaced. Left alone: "under ₹30,000", "₹2,000 off", "₹85k".
+function priceParts(x) {
+  const fmt = n => "₹" + Number(n).toLocaleString("en-IN");
+  if (x.aff) {
+    if (x.p < 1000) return { ok: [], text: "under ₹1,000" };
+    const step = x.p < 2000 ? 100 : x.p < 5000 ? 250 : x.p < 10000 ? 500 : x.p < 20000 ? 1000 : x.p < 50000 ? 2000 : x.p < 100000 ? 5000 : 10000; // same as band() in loadPicks
+    const lo = Math.floor(x.p / step) * step, hi = x.max ? Math.ceil(x.max / step) * step : lo + step;
+    return { ok: [lo, hi], range: true, text: fmt(lo) + "–" + Number(hi).toLocaleString("en-IN") };
+  }
+  if (x.max) return { ok: [x.p, x.max], range: true, text: fmt(x.p) + "–" + Number(x.max).toLocaleString("en-IN") };
+  return { ok: [x.p], text: fmt(x.p) };
+}
+function fixPrices(answer, picks, dbg) {
+  const text = answer.replace(/[ \t]+/g, " ");
+  const hits = mentionHits(text, picks.names);
+  const AMT = /(?:₹|\brs\.?|\binr)\s?(\d[\d,]*)(?:\s?(?:–|-|to)\s?(?:₹|rs\.?)?\s?(\d[\d,]*))?(?![\d,]*\s?(?:k\b|lakh|lac|l\b))/gi;
+  const SKIP_BEFORE = /(under|below|within|upto|up to|budget|less than|more than|over|above|save|saving|extra|cheaper|costlier|kam|zyada)\s*(of\s*)?$/i;
+  const SKIP_AFTER = /^\s*(off|discount|cashback|instant|less|more|cheaper|extra|kam|zyada|tak|se kam|ke andar|budget|savings?)\b/i;
+  const edits = [];
+  hits.forEach((h, k) => {
+    const stop = Math.min(k + 1 < hits.length ? hits[k + 1].i : text.length, ...[...text.slice(h.end).matchAll(/(?<!\brs)[.!?](?=\s|$)|\n/gi)].slice(0, 1).map(m => h.end + m.index), text.length);
+    const seg = text.slice(h.end, stop);
+    const want = priceParts(h.x);
+    for (const m of seg.matchAll(AMT)) {
+      const at = h.end + m.index;
+      const before = text.slice(Math.max(0, at - 30), at), after = text.slice(at + m[0].length, at + m[0].length + 20);
+      if (SKIP_BEFORE.test(before) || SKIP_AFTER.test(after)) continue;
+      const nums = [m[1], m[2]].filter(Boolean).map(n => Number(n.replace(/,/g, "")));
+      const right = want.range ? nums.length === 2 && nums[0] === want.ok[0] && nums[1] === want.ok[1]
+        : nums.length === 1 && nums[0] === want.ok[0];
+      if (right) continue;
+      edits.push({ at, len: m[0].length, text: want.text, was: m[0], n: h.x.n });
+    }
+  });
+  if (!edits.length) return answer;
+  let out = text;
+  for (const e of edits.sort((a, z) => z.at - a.at)) out = out.slice(0, e.at) + e.text + out.slice(e.at + e.len);
+  dbg.push("price fixes: " + edits.map(e => `${e.n}: ${e.was} -> ${e.text}`).join("; "));
+  return out;
 }
 
 function clean(s) {
