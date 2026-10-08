@@ -22,7 +22,7 @@ about a minute.
 | `tags` | | Phones only: `parents`, `basic`, `battery`, `camera`, `gaming`, `iphone` |
 | `score` | ✓ | 1–10. Higher wins when picks fit the same budget |
 | `faq` | | `[["Question?", "Answer."]]`, shown under the top pick |
-| `was` | | Normal price before the sale (what it usually sells for, **not** MRP). Used for the "Big deal" check. Source: pricebefore.com history, **lowest price 1–20 Sep** (skips pre-sale price hikes), only when the tracker's sale-day price equals our `list`/`p` (proves it's the same listing). Skip listings that sat at MRP |
+| `was` | | Normal price before the sale (what it usually sells for, **not** MRP). Used for the "Big deal" check. Source: pricebefore.com history, **lowest price 1–20 Sep** (skips pre-sale price hikes), from the closest listing of the same model and store (Kalpit, 8 Oct: trust the tracker even when its sale-day price differs from our `p`, e.g. because `p` includes a card offer). Skip listings that sat at MRP |
 | `list` | | Sale price shown on the listing, before coupon and card offer. When set, `p` must equal `list − coupon − bank.off` (the validator checks) |
 | `coupon` | | Coupon amount in ₹ (mostly Amazon). Needs `list` |
 | `bank` | | Sale card instant discount: `{"name": "SBI", "off": 2000}`. Use `"name": "Bank"` if the card isn't known. Card name only, no amounts in `name` |
