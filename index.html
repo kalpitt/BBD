@@ -14,6 +14,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Kalpit's Festive Picks 2026: set your budget, get my pick">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#12143D">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,10 +35,11 @@
 
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--night);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;padding-inline:max(16px,env(safe-area-inset-left));padding-block:calc(16px + env(safe-area-inset-top,0px)) 48px}
+body{margin:0;background:var(--night);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;padding-inline:max(16px,env(safe-area-inset-left));padding-block:0 48px;--gut:max(16px,env(safe-area-inset-left))}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--marigold);outline-offset:2px;border-radius:6px}
-.wrap{max-width:560px;margin:0 auto;display:grid;gap:26px}
+.wrap,.feed{display:grid;gap:26px;min-width:0}
+.wrap{max-width:560px;margin:0 auto}
 h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
 
 header{display:flex;align-items:center;justify-content:space-between;gap:12px}
@@ -45,7 +47,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .mono{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--night);display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:14px;flex:none}
 .dates{font-size:14px;color:var(--ink-soft);text-align:right;line-height:1.3}
 
-.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding-inline:16px;padding-block:2px}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-inline:calc(-1*var(--gut));padding-inline:var(--gut);padding-block:2px}
 .chips::-webkit-scrollbar{display:none}
 .chip{flex:none;font:500 15px var(--body);color:var(--ink-soft);background:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer;min-height:36px}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--night);border-color:var(--ink)}
@@ -57,10 +59,17 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .amount{font-family:var(--display);font-weight:750;font-size:clamp(60px,18vw,104px);line-height:.95;letter-spacing:-.02em;font-variation-settings:"wdth" var(--w,100),"opsz" 96;display:flex;align-items:baseline;gap:.06em;transition:font-variation-settings .15s ease;cursor:text}
 .amount .r{font-weight:400;font-size:.55em;color:var(--marigold)}
 .amount input{all:unset;width:100%;min-width:0;font:inherit;font-variation-settings:inherit;color:inherit;font-variant-numeric:tabular-nums}
-input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent;margin:2px 0 0;cursor:pointer}
-input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:linear-gradient(to right,var(--mari-fill) var(--p,50%),var(--line) var(--p,50%))}
-input[type=range]::-moz-range-track{height:6px;border-radius:3px;background:linear-gradient(to right,var(--mari-fill) var(--p,50%),var(--line) var(--p,50%))}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;margin-top:-12px;border-radius:50%;background:var(--mari-fill);border:4px solid var(--night);box-shadow:0 0 0 1px var(--mari-fill)}
+.rail{--t:30px;position:relative;height:44px;margin-top:2px}
+.rail .trk{position:absolute;left:0;right:0;top:19px;height:6px;border-radius:3px;background:var(--line)}
+.rail .fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--mari-fill)}
+.rail .dl{position:absolute;inset:0;pointer-events:none}
+.rail .dt{position:absolute;top:22px;width:5px;height:5px;margin:-2.5px 0 0 -2.5px;border-radius:50%;background:var(--ink);opacity:.3;transition:transform .2s,opacity .2s}
+.rail .dt.in{opacity:.85}
+.rail .dt.on{transform:scale(2.2);opacity:1;background:var(--leaf)}
+input[type=range]{-webkit-appearance:none;appearance:none;position:absolute;inset:0;width:100%;height:44px;background:transparent;margin:0;cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:44px;background:transparent}
+input[type=range]::-moz-range-track{background:transparent}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:var(--t);height:var(--t);margin-top:7px;border-radius:50%;background:var(--mari-fill);border:4px solid var(--night);box-shadow:0 0 0 1px var(--mari-fill),0 4px 12px rgba(0,0,0,.3)}
 input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--mari-fill);border:4px solid var(--night)}
 .ticks{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
 .note{font-size:15px;color:var(--ink-soft);margin:0}
@@ -114,11 +123,6 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .ask .sugs button{font:400 14px var(--body);color:var(--ink-soft);background:none;border:1px dashed var(--line);border-radius:10px;padding:4px 10px;cursor:pointer;text-align:left}
 .ask .btn.go[disabled]{opacity:.5;cursor:default}
 .ask .link{all:unset;cursor:pointer;text-decoration:underline;color:var(--ink);font-weight:600}
-.answer:empty{display:none}
-.answer{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:12px}
-.answer .lbl{font-size:13px;color:var(--ink-soft)}
-.answer p{margin:0;white-space:pre-wrap}
-.answer .err{color:var(--warn)}
 
 .truth{border-left:3px solid var(--mari-fill);padding-left:14px}
 .truth p{margin:0 0 8px}
@@ -142,13 +146,93 @@ dialog input{font:500 20px var(--body);color:var(--ink);background:var(--night);
 dialog .acts{justify-content:flex-end}
 .err-inline{color:var(--warn);font-size:14px;min-height:1.2em}
 
-.list.moving .row,.hero.moving{animation:slot .35s ease}
+.list.moving .row{animation:slot .35s ease}
+.hero.moving{animation:slot .35s ease,orbit 6s linear infinite}
 @keyframes slot{from{opacity:.35;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion: reduce){.list.moving .row,.hero.moving{animation:none}.amount{transition:none}}
+
+/* ---------- Night sky panel: header, categories and the budget dial ---------- */
+.sky{--night:#12143D;--ink:#FFF1D2;--ink-soft:#B9BADB;--marigold:#F4A51C;--diya:#262A5E;--leaf:#6FD3A3;--line:#3A3F80;--raise:#1D2150;--warn:#FF9B7A;
+  --h1:#A9ACFF;--h2:#5FD6CB;--h3:#8DB4F5;--h4:#7CCBF5;--h5:#F08CC6;--h6:#7FD99B;--h7:#F4B44C;
+  color-scheme:dark;color:var(--ink);position:relative;isolation:isolate;overflow:hidden;display:grid;gap:22px;align-content:start;
+  margin-inline:calc(-1*var(--gut));padding:calc(18px + env(safe-area-inset-top,0px)) var(--gut) 78px;border-radius:0 0 28px 28px;
+  background:radial-gradient(120% 70% at 50% 0%,#272C6E,#0D0F2E 78%)}
+.sky>*{position:relative}
+.sky .stars{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
+.diyas{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:space-around;padding-inline:6%;pointer-events:none}
+.diya{position:relative;width:46px;height:42px}
+.diya i{position:absolute;display:block}
+.diya .glow{left:50%;bottom:4px;width:120px;height:120px;margin-left:-60px;border-radius:50%;background:radial-gradient(circle,rgba(255,165,40,.4),rgba(255,165,40,0) 62%);animation:breathe 2.6s ease-in-out infinite alternate;animation-delay:inherit}
+.diya .flame{left:50%;bottom:16px;width:12px;height:20px;margin-left:-6px;background:radial-gradient(ellipse at 50% 78%,#FFF 0 14%,#FFE680 32%,#FF9A1F 66%,rgba(255,120,20,0) 72%);border-radius:50% 50% 50% 50%/72% 72% 28% 28%;transform-origin:50% 100%;animation:flick 1.3s ease-in-out infinite alternate;animation-delay:inherit}
+.diya .bowl{bottom:0;left:0;right:0;height:19px;background:linear-gradient(#E07B45,#8A3517);border-radius:5px 5px 26px 26px/5px 5px 19px 19px;box-shadow:inset 0 3px 0 #F4A276}
+@keyframes flick{0%{transform:scale(1,1) rotate(-3deg)}40%{transform:scale(.9,1.1) rotate(2deg)}100%{transform:scale(1.05,.94) rotate(-1deg)}}
+@keyframes breathe{from{opacity:.7;transform:scale(.92)}to{opacity:1;transform:scale(1.06)}}
+
+/* Category icons */
+.chip svg{width:18px;height:18px;flex:none;color:var(--c,currentColor)}
+.chip.cat{display:inline-flex;align-items:center;gap:6px}
+.chip.cat[aria-pressed="true"] svg{color:var(--night)}
+
+/* Freshness */
+.fresh{display:inline-flex;align-items:center;gap:9px;justify-self:start;font-size:14px;color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:3px 12px 3px 10px}
+.fresh .dot{position:relative;width:8px;height:8px;border-radius:50%;background:var(--leaf);flex:none}
+.fresh .dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--leaf);animation:ping 1.8s cubic-bezier(0,0,.2,1) infinite}
+.fresh.old .dot{background:var(--ink-soft)}.fresh.old .dot::after{display:none}
+@keyframes ping{from{transform:scale(1);opacity:.7}to{transform:scale(3.2);opacity:0}}
+
+/* Lamp-glow pick card: warm glow outside, a gold light travelling round the edge */
+@property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
+.hero{position:relative;isolation:isolate;border:1.5px solid transparent;
+  background:linear-gradient(var(--diya),var(--diya)) padding-box,conic-gradient(from var(--ang),rgba(244,165,28,.18) 0 62%,#F4A51C 76%,#FFE3A0 80%,#F4A51C 84%,rgba(244,165,28,.18) 96%) border-box;animation:orbit 6s linear infinite}
+.hero::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 44px 4px rgba(255,150,30,.32);z-index:-1;pointer-events:none;animation:glow 3s ease-in-out infinite alternate}
+@keyframes glow{from{opacity:.55}to{opacity:1}}
+@keyframes orbit{to{--ang:360deg}}
+.fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:20}
+
+/* Scratch card (only when someone opens a shared link) */
+.scratch{position:absolute;inset:-1.5px;border-radius:inherit;overflow:hidden;z-index:2;transition:opacity .6s}
+.scratch canvas{width:100%;height:100%;display:block;touch-action:pan-y;cursor:grab}
+.scratch .btn{position:absolute;left:50%;transform:translateX(-50%);background:#1B1F4B;color:#FFF1D2}
+.scratch.done{opacity:0;pointer-events:none}
+
+/* Ask box as a chat */
+.chat{display:grid;gap:10px}
+.chat:empty{display:none}
+.bub{max-width:88%;padding:10px 14px;border-radius:18px;line-height:1.45;min-width:0}
+.bub.me{justify-self:end;background:var(--ink);color:var(--night);border-bottom-right-radius:6px;white-space:pre-wrap}
+.bub.k{justify-self:start;background:var(--diya);border-bottom-left-radius:6px}
+.bub.k .lbl{display:block;font-size:12px;font-weight:700;color:var(--marigold);margin-bottom:2px}
+.bub.k p{margin:0;white-space:pre-wrap}
+.bub.k .err{color:var(--warn)}
+.typing{display:inline-flex;gap:4px;padding:6px 0}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--ink-soft);animation:bob 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes bob{0%,60%,100%{transform:none;opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+.chat .picks{display:grid}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Tablets: the panel becomes a card */
+@media (min-width:600px){
+  body{padding-top:16px}
+  .sky{--gut:24px;margin-inline:0;border-radius:28px;padding-top:24px}
+}
+/* Laptops: dial fixed on the left, picks scroll on the right */
+@media (min-width:980px){
+  body{padding-inline:32px;padding-top:24px}
+  .wrap{max-width:1180px;grid-template-columns:minmax(380px,450px) minmax(0,1fr);gap:48px;align-items:start}
+  .sky{--gut:28px;padding:28px 28px 92px}
+  .sky .chips{flex-wrap:wrap;overflow:visible;margin-inline:0;padding-inline:0}
+  .amount{font-size:88px}
+  .feed{padding-top:4px}
+}
+@media (min-width:980px) and (min-height:700px){.sky{position:sticky;top:24px}}
+@media (prefers-reduced-motion: reduce){.diya i,.fresh .dot::after,.hero,.hero::after,.typing i{animation:none}}
 </style>
 </head>
 <body>
 <div class="wrap">
+ <div class="sky" id="sky">
+  <canvas class="stars" id="stars" aria-hidden="true"></canvas>
   <header>
     <div class="me"><span class="mono" aria-hidden="true">KT</span><span>Kalpit's festive picks</span></div>
     <div class="dates">Amazon from 8 Oct<br>Flipkart from 9 Oct</div>
@@ -162,12 +246,22 @@ dialog .acts{justify-content:flex-end}
   <section class="dial" aria-label="Your budget">
     <p id="lead">I want a phone under</p>
     <label class="amount" id="amt"><span class="r">₹</span><input id="budgetText" inputmode="numeric" autocomplete="off" aria-label="Budget in rupees"></label>
-    <input id="budget" type="range" aria-label="Budget slider">
+    <div class="rail" id="rail"><div class="trk"><div class="fill" id="fill"></div></div><div class="dl" id="dots"></div><input id="budget" type="range" step="any" aria-label="Budget slider"></div>
     <div class="ticks" id="ticks"></div>
     <div class="chips" id="uses" aria-label="What matters most" hidden></div>
     <p class="note" id="catNote" hidden></p>
   </section>
+  <span class="fresh" id="fresh" hidden><span class="dot"></span><span id="freshText"></span></span>
 
+  <div class="diyas" aria-hidden="true">
+    <div class="diya" style="animation-delay:-.2s"><i class="glow"></i><i class="flame"></i><i class="bowl"></i></div>
+    <div class="diya" style="animation-delay:-.9s"><i class="glow"></i><i class="flame"></i><i class="bowl"></i></div>
+    <div class="diya" style="animation-delay:-.5s"><i class="glow"></i><i class="flame"></i><i class="bowl"></i></div>
+    <div class="diya" style="animation-delay:-1.2s"><i class="glow"></i><i class="flame"></i><i class="bowl"></i></div>
+  </div>
+ </div>
+
+ <main class="feed">
   <section class="hero" id="hero" aria-live="polite"></section>
 
   <section class="list" id="list">
@@ -178,11 +272,11 @@ dialog .acts{justify-content:flex-end}
   <section class="ask" id="askBox" aria-labelledby="askTitle">
     <h3 id="askTitle">Still confused? Ask me</h3>
     <p>Describe who it's for and your budget. The answer comes only from my picks on this page.</p>
+    <div class="chat" id="chat"></div>
     <label for="q" class="aff">Your question</label>
     <textarea id="q" maxlength="400" placeholder="Papa ke liye phone, ₹15k, bada screen aur achi battery"></textarea>
     <div class="sugs" id="sugs"></div>
     <div class="acts"><button class="btn go" id="askBtn" type="button">Ask</button><span class="aff" id="askState"></span></div>
-    <div class="answer" id="answer" aria-live="polite"></div>
     <p class="aff">Can't find what you need? <button type="button" class="link" id="msgKalpit">Message Kalpit on WhatsApp</button>. It tells him which page you were on.</p>
   </section>
 
@@ -207,7 +301,9 @@ dialog .acts{justify-content:flex-end}
     <span>Items marked "affiliate link" earn me a small commission at no extra cost to you. As an Amazon Associate I earn from qualifying purchases. All other links are plain links.</span>
     <span><button type="button" id="changeNum">Change my WhatsApp number</button></span>
   </footer>
+ </main>
 </div>
+<canvas class="fx" id="fx" aria-hidden="true"></canvas>
 
 <dialog id="waDlg">
   <form method="dialog" id="waForm">
@@ -339,9 +435,25 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-save]");if
 const cat=()=>D.categories.find(c=>c.id===state.cat);
 const conf=()=>{const c=cat();return c.types?c.types.find(t=>t.id===state.type):c};
 function chip(label,pressed,cls,fn){const b=document.createElement("button");b.type="button";b.className="chip "+(cls||"");b.textContent=label;b.setAttribute("aria-pressed",pressed);b.addEventListener("click",fn);return b}
+// Line icons for the category tabs (24px grid, drawn with the text colour)
+const ICONS={
+  phones:'<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/>',
+  tv:'<rect x="2.5" y="4.5" width="19" height="12" rx="2"/><path d="M12 16.5v4M8 20.5h8"/>',
+  laptops:'<rect x="4.5" y="5" width="15" height="10.5" rx="1.5"/><path d="M2.5 19h19"/>',
+  home:'<rect x="2.5" y="4.5" width="19" height="8.5" rx="2"/><path d="M6 10h12M8 16c.8 1-.8 2 0 3.5M12 16c.8 1-.8 2 0 3.5M16 16c.8 1-.8 2 0 3.5"/>',
+  audio:'<path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4.5" height="6.5" rx="1.5"/><rect x="16.5" y="14" width="4.5" height="6.5" rx="1.5"/>',
+  fitness:'<path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/>',
+  gadgets:'<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8.5 7 10 4.5h4L15.5 7"/><circle cx="12" cy="13.5" r="3.5"/>'
+};
+const HUES=["--h1","--h2","--h3","--h4","--h5","--h6","--h7"];
+function catChip(c,i){
+  const b=chip(c.label,c.id===state.cat,"cat",()=>{setCat(c.id)});
+  if(ICONS[c.id]){b.insertAdjacentHTML("afterbegin",`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[c.id]}</svg>`);b.style.setProperty("--c",`var(${HUES[i%HUES.length]})`)}
+  return b;
+}
 
 function drawCats(){
-  const el=$("#cats");el.replaceChildren(...D.categories.map(c=>chip(c.label,c.id===state.cat,"",()=>{setCat(c.id)})));
+  const el=$("#cats");el.replaceChildren(...D.categories.map(catChip));
   const c=cat(),ty=$("#types");
   ty.hidden=!c.types;
   if(c.types)ty.replaceChildren(...c.types.map(t=>chip(t.label,t.id===state.type,"",()=>{state.type=t.id;state.big=false;state.budget=null;drawCats();setupDial()})));
@@ -369,7 +481,7 @@ function saveHash(){
 const range=$("#budget"),txt=$("#budgetText"),amt=$("#amt");
 function setupDial(){
   const c=conf();
-  range.min=c.min;range.max=c.max;range.step=c.step;
+  range.min=c.min;range.max=c.max;dotKey="";
   if(state.budget==null)state.budget=c.def;
   range.value=state.budget;txt.value=Number(state.budget).toLocaleString("en-IN");
   $("#lead").textContent=`I want ${c.noun} under`;
@@ -377,7 +489,34 @@ function setupDial(){
   $("#ticks").innerHTML=t.map(v=>`<span>${short(v)}</span>`).join("");
   render(true);
 }
-range.addEventListener("input",()=>{state.budget=+range.value;txt.value=state.budget.toLocaleString("en-IN");render()});
+/* Pick dots on the slider. Near a dot, the handle snaps to that exact price (with a tiny
+   vibration on Android). Elsewhere it moves in the category's normal steps. */
+let dotKey="",dotPrices=[],snapped=null;
+function drawDots(c){
+  const key=[state.cat,state.type,state.use,state.big].join("|");
+  if(key===dotKey)return;dotKey=key;
+  dotPrices=[...new Set(pool().map(x=>x.p))].filter(p=>p>=c.min&&p<=c.max).sort((a,b)=>a-b);
+  $("#dots").innerHTML=dotPrices.map(p=>`<i class="dt" data-p="${p}" style="left:calc(var(--t)/2 + (100% - var(--t))*${((p-c.min)/(c.max-c.min)).toFixed(4)})"></i>`).join("");
+}
+function setBudget(v){
+  state.budget=v;range.value=v;txt.value=v.toLocaleString("en-IN");render();
+}
+range.addEventListener("input",()=>{
+  const c=conf(),raw=+range.value;
+  const near=dotPrices.reduce((a,p)=>a==null||Math.abs(p-raw)<Math.abs(a-raw)?p:a,null);
+  const hit=near!=null&&Math.abs(near-raw)<=(c.max-c.min)*0.012?near:null;
+  if(hit&&hit!==snapped){try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}}
+  snapped=hit;
+  setBudget(hit||Math.min(c.max,Math.max(c.min,Math.round(raw/c.step)*c.step)));
+});
+range.addEventListener("keydown",e=>{
+  const c=conf(),s=+c.step,v=+range.value,k=e.key;
+  const m={ArrowRight:1,ArrowUp:1,ArrowLeft:-1,ArrowDown:-1,PageUp:10,PageDown:-10}[k];
+  if(m==null&&k!=="Home"&&k!=="End")return;
+  e.preventDefault();snapped=null;
+  const n=k==="Home"?c.min:k==="End"?c.max:m>0?Math.floor(v/s)*s+m*s:Math.ceil(v/s)*s+m*s;
+  setBudget(Math.min(c.max,Math.max(c.min,n)));
+});
 txt.addEventListener("input",()=>{const v=parseInt(txt.value.replace(/\D/g,""))||0;const c=conf();if(v>=c.min/2){state.budget=v;range.value=Math.min(c.max,Math.max(c.min,v));render()}});
 txt.addEventListener("blur",()=>{txt.value=Number(state.budget).toLocaleString("en-IN")});
 txt.addEventListener("focus",()=>txt.select());
@@ -390,8 +529,11 @@ function pool(){
 function render(force){
   const c=conf(),b=state.budget;
   saveHash();
-  const pct=(Math.min(c.max,Math.max(c.min,b))-c.min)/(c.max-c.min)*100;
-  range.style.setProperty("--p",pct+"%");
+  const f=(Math.min(c.max,Math.max(c.min,b))-c.min)/(c.max-c.min);
+  $("#fill").style.width=`calc(var(--t)/2 + (100% - var(--t))*${f})`;
+  range.setAttribute("aria-valuetext",fmt(b));
+  drawDots(c);
+  for(const d of $("#dots").children){const p=+d.dataset.p;d.classList.toggle("in",p<=b);d.classList.toggle("on",p===b)}
   amt.style.setProperty("--w",Math.max(75,100-Math.max(0,String(b).length-5)*8));
   const all=pool();
   const fit=all.filter(x=>x.p<=b);
@@ -410,12 +552,13 @@ function render(force){
     rows.innerHTML="";lastTop="";return;
   }
   const qa=(top.faq||[]).map(([q,a])=>`<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join("");
+  const changed=lastTop&&top.id!==lastTop;
   hero.innerHTML=`<span class="tag">My pick for ${fmt(b)}${hot(top)}</span>
     <h2>${esc(top.n)}</h2><p class="why">${esc(top.why)}</p>
     <div class="price"><strong>${priceText(top)}</strong><span class="est">${top.est?"Expected price · "+where(top):where(top)}</span></div>
     ${offers(top,"div")}
     ${how(top)}
-    <div class="acts">${buttons(top)}</div>
+    <div class="acts">${buttons(top)}<button class="btn save" type="button" data-status="${top.id}">Share as Status</button></div>
     ${qa?`<div class="qa">${qa}</div>`:""}`;
   const rest=ranked.slice(1,5);
   const stretch=all.filter(x=>x.p>b&&x.p<=b*1.2&&x.score>=top.score).sort((a,z)=>(z.score-a.score)||(a.p-z.p))[0];
@@ -425,6 +568,7 @@ function render(force){
   rows.innerHTML=h;
   if(!reduce&&(force||top.id!==lastTop)){for(const el of [hero,$("#list")]){el.classList.remove("moving");void el.offsetWidth;el.classList.add("moving")}}
   lastTop=top.id;
+  if(changed&&!force)sparks(hero);
 }
 
 /* ---------- static sections ---------- */
@@ -436,7 +580,7 @@ $("#cards").innerHTML=D.sale.cards.map(c=>`<li>${esc(c)}</li>`).join("");
 const sugs=["Lava, Samsung or Moto under ₹9k? Only WhatsApp and calls","Papa ke liye phone, ₹15k, big battery and big screen","S25 or Pixel 10a for camera?","Which AC for a hot top-floor bedroom?"];
 $("#sugs").innerHTML=sugs.map(s=>`<button type="button">${esc(s)}</button>`).join("");
 $("#sugs").addEventListener("click",e=>{const b=e.target.closest("button");if(b){$("#q").value=b.textContent;$("#q").focus()}});
-const askBtn=$("#askBtn"),ans=$("#answer"),st=$("#askState");
+const askBtn=$("#askBtn"),chat=$("#chat"),st=$("#askState");
 if(!D.askUrl){askBtn.disabled=true;st.textContent="Opens when the sale starts."}
 // Which picks the AI answer names, in order. Same rules as nameIndex()/mentions() in
 // worker/worker.js: longest name wins, and short forms two picks share match neither.
@@ -469,10 +613,18 @@ function mentions(text,names){
   return kept.sort((p,q)=>p.i-q.i).map(h=>h.x).filter(x=>!seen.has(x)&&seen.add(x));
 }
 const NAMES=nameIndex(P);
+let lastQ="";
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 askBtn.addEventListener("click",async()=>{
   const q=$("#q").value.trim();
   if(q.length<8){st.textContent="Write a little more, like who it's for and your budget.";return}
-  askBtn.disabled=true;st.textContent="Thinking…";ans.innerHTML="";
+  askBtn.disabled=true;st.textContent="";lastQ=q;$("#q").value="";
+  // Keep the last three questions in the thread
+  while(chat.children.length>=6)chat.firstElementChild.remove();
+  const me=document.createElement("div");me.className="bub me";me.textContent=q;
+  const k=document.createElement("div");k.className="bub k";k.innerHTML=`<span class="lbl">Kalpit's picks</span><span class="typing" role="status" aria-label="Thinking"><i></i><i></i><i></i></span>`;
+  chat.append(me,k);
+  const fail=msg=>{k.innerHTML=`<span class="lbl">Kalpit's picks</span><p class="err">${msg}</p>`};
   const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),45000);
   try{
     // Try askUrl first; if it can't be reached (e.g. new DNS not seen yet), use askFallback.
@@ -483,15 +635,19 @@ askBtn.addEventListener("click",async()=>{
       catch(e){if(e.name==="AbortError"||i===urls.length-1)throw e}
     }
     const j=await r.json().catch(()=>({}));
-    if(j.limit){ans.innerHTML=`<p class="err">Today's AI answers are used up. Try the quick answers below, or ask again tomorrow.</p>`}
-    else if(!r.ok||!j.answer){ans.innerHTML=`<p class="err">${esc(j.error||"The answer didn't come through. Try again in a minute.")}</p>`}
+    if(j.limit)fail("Today's AI answers are used up. Try the quick answers below, or ask again tomorrow.");
+    else if(!r.ok||!j.answer)fail(esc(j.error||"The answer didn't come through. Try again in a minute."));
     else{
+      // Screen readers get the whole answer at once; the visible copy appears word by word
+      k.innerHTML=`<span class="lbl">AI answer based on Kalpit's picks. Double-check before buying.</span><p><span class="vh">${esc(j.answer)}</span><span aria-hidden="true"></span></p>`;
+      const out=k.querySelector("[aria-hidden]"),words=j.answer.split(/(\s+)/);
+      if(reduce)out.textContent=j.answer;
+      else{const gap=Math.min(40,2500/words.length);for(const w of words){out.textContent+=w;if(w.trim())await sleep(gap)}}
       const m=mentions(j.answer,NAMES).slice(0,4);
-      ans.innerHTML=`<span class="lbl">AI answer based on Kalpit's picks. Double-check before buying.</span><p>${esc(j.answer)}</p>`+
-        m.map(x=>row(x)).join("");
+      if(m.length){const d=document.createElement("div");d.className="picks";d.innerHTML=m.map(x=>row(x)).join("");k.after(d)}
     }
-  }catch(e){ans.innerHTML=e.name==="AbortError"?`<p class="err">This is taking too long. Try again in a minute.</p>`:`<p class="err">Couldn't reach the answer service. Check your connection and try again.</p>`}
-  clearTimeout(timer);askBtn.disabled=false;st.textContent="";
+  }catch(e){fail(e.name==="AbortError"?"This is taking too long. Try again in a minute.":"Couldn't reach the answer service. Check your connection and try again.")}
+  clearTimeout(timer);askBtn.disabled=false;
 });
 
 /* ---------- message Kalpit (opens WhatsApp with the page context filled in) ---------- */
@@ -499,10 +655,124 @@ const KALPIT_WA=["91","89625","69795"].join(""); // split so simple scrapers don
 $("#msgKalpit").addEventListener("click",()=>{
   const c=cat(),t=c.types?c.types.find(x=>x.id===state.type):null,u=(c.uses||[]).find(x=>x.id===state.use);
   const view=[c.label,t&&t.label].filter(Boolean).join(" › ")+", under "+fmt(state.budget)+(u?", "+u.label:"")+(state.big?", Big deals only":"");
-  const q=$("#q").value.trim();
+  const q=$("#q").value.trim()||lastQ;
   const msg=`Hi Kalpit, a question from your festive picks page.\n\nI was looking at: ${view}\nYour pick there: ${lastTop?P.find(x=>x.id===lastTop).n:"none at this budget"}\n${location.href}`+(q?`\n\nI asked: ${q}`:"")+"\n\nMy question: ";
   const a=document.createElement("a");a.href=`https://wa.me/${KALPIT_WA}?text=${encodeURIComponent(msg)}`;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();
 });
+
+/* ---------- night sky: twinkling stars (paused when off screen) ---------- */
+(()=>{
+  const c=$("#stars"),x=c.getContext("2d");let W=0,H=0,stars=[],on=true,last=0;
+  function size(){const r=c.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);W=r.width;H=r.height;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);
+    stars=Array.from({length:Math.round(W*H/1100)},()=>({x:Math.random()*W,y:Math.random()*H*.8,r:Math.random()*1.2+.3,ph:Math.random()*6.3,sp:.5+Math.random()*1.5}))}
+  function draw(t){x.clearRect(0,0,W,H);x.fillStyle="#FFF1D2";for(const s of stars){x.globalAlpha=reduce?.6:.3+.7*Math.abs(Math.sin(s.ph+t/1000*s.sp));x.beginPath();x.arc(s.x,s.y,s.r,0,6.283);x.fill()}x.globalAlpha=1}
+  function loop(t){if(!on||document.hidden)return;if(t-last>66){last=t;draw(t)}requestAnimationFrame(loop)}
+  size();draw(0);
+  if(!reduce){
+    if("IntersectionObserver" in window)new IntersectionObserver(es=>{on=es[0].isIntersecting;if(on)requestAnimationFrame(loop)}).observe(c);
+    document.addEventListener("visibilitychange",()=>{if(!document.hidden&&on)requestAnimationFrame(loop)});
+    requestAnimationFrame(loop);
+  }
+  if("ResizeObserver" in window)new ResizeObserver(()=>{size();draw(performance.now())}).observe(c);
+})();
+
+/* ---------- "Prices updated 2h ago" (reads the "updated" stamp, IST) ---------- */
+(()=>{
+  const m=String(D.updated).match(/(\d{1,2})\s+([A-Za-z]{3})\w*,?\s+(\d{1,2}):(\d{2})\s*(am|pm)/i);
+  const mi=m&&["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"].indexOf(m[2].toLowerCase());
+  if(!m||mi<0)return;
+  const h=(+m[3]%12)+(m[5].toLowerCase()==="pm"?12:0);
+  const when=Date.UTC(new Date().getUTCFullYear(),mi,+m[1],h,+m[4])-330*60000;
+  function show(){
+    const mins=Math.max(0,Math.round((Date.now()-when)/60000));
+    const t=mins<2?"just now":mins<60?mins+" min ago":mins<24*60?Math.round(mins/60)+"h ago":m[1]+" "+m[2];
+    $("#freshText").textContent="Prices updated "+t;
+    $("#fresh").classList.toggle("old",mins>=12*60);
+  }
+  show();$("#fresh").hidden=false;setInterval(show,60000);
+})();
+
+/* ---------- sparks when the slider lands on a new pick ---------- */
+const sparks=(()=>{
+  const c=$("#fx"),x=c.getContext("2d");let ps=[],raf=0,lastBurst=0;
+  function loop(){x.clearRect(0,0,innerWidth,innerHeight);ps=ps.filter(p=>p.life>0);
+    for(const p of ps){p.vy+=.12;p.x+=p.vx;p.y+=p.vy;p.life--;x.globalAlpha=Math.max(0,p.life/70);x.strokeStyle=p.c;x.lineWidth=p.r;x.beginPath();x.moveTo(p.x,p.y);x.lineTo(p.x-p.vx*2.2,p.y-p.vy*2.2);x.stroke()}
+    x.globalAlpha=1;raf=ps.length?requestAnimationFrame(loop):0}
+  return el=>{
+    const now=performance.now();if(reduce||now-lastBurst<300)return;lastBurst=now;
+    const r=el.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;
+    if(!raf){const d=Math.min(devicePixelRatio||1,2);c.width=innerWidth*d;c.height=innerHeight*d;x.setTransform(d,0,0,d,0,0)}
+    const cols=["#FFC94D","#FFE680","#FF9A1F","#F4A51C"];
+    for(let i=0;i<40&&ps.length<160;i++){const a=-Math.PI/2+(Math.random()-.5)*1.6,v=2.5+Math.random()*4.5;
+      ps.push({x:r.left+Math.random()*r.width,y:r.top+2,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:40+Math.random()*30,r:1+Math.random()*1.6,c:cols[i%4]})}
+    if(!raf)raf=requestAnimationFrame(loop);
+  };
+})();
+
+/* ---------- Share as Status: a 1080×1920 image of the current pick ---------- */
+// Prices on the image use priceText(), so affiliate items show a band, never an exact ₹.
+function statusImage(x){
+  const W=1080,H=1920,c=document.createElement("canvas");c.width=W;c.height=H;const g=c.getContext("2d");
+  const bg=g.createRadialGradient(W/2,0,100,W/2,300,1700);bg.addColorStop(0,"#272C6E");bg.addColorStop(1,"#0D0F2E");g.fillStyle=bg;g.fillRect(0,0,W,H);
+  let seed=7;const rnd=()=>(seed=(seed*9301+49297)%233280)/233280;
+  g.fillStyle="#FFF1D2";for(let i=0;i<180;i++){g.globalAlpha=.3+rnd()*.6;g.beginPath();g.arc(rnd()*W,rnd()*H*.6,rnd()*2.6+.6,0,6.283);g.fill()}g.globalAlpha=1;
+  // marigold garland
+  const ball=(bx,by,r,y)=>{const gg=g.createRadialGradient(bx-r*.3,by-r*.3,2,bx,by,r);gg.addColorStop(0,y?"#FFF3B0":"#FFD27A");gg.addColorStop(.6,y?"#FFC531":"#F7931E");gg.addColorStop(1,y?"#D99400":"#C65A00");g.fillStyle=gg;g.beginPath();g.arc(bx,by,r,0,6.283);g.fill()};
+  const rope=gx=>40+50*(1-Math.pow(2*gx/W-1,2));
+  for(let s=0;s<7;s++){const sx=W/14+s*W/7;for(let j=1;j<=(s%2?5:3);j++)ball(sx,rope(sx)+j*36,17,j%2)}
+  for(let i=0;i<=40;i++){const gx=i*W/40;ball(gx,rope(gx),20,i%2)}
+  const glow=g.createRadialGradient(W/2,H-120,10,W/2,H-120,520);glow.addColorStop(0,"rgba(255,160,40,.5)");glow.addColorStop(1,"rgba(255,160,40,0)");g.fillStyle=glow;g.fillRect(0,H-700,W,700);
+  const wrap=(t,y,lh,font,col,max)=>{g.font=font;g.fillStyle=col;let line="",n=0;for(const w of t.split(" ")){const tt=line?line+" "+w:w;if(g.measureText(tt).width>W-180&&line){if(++n===max){g.fillText(line+"…",90,y);return y+lh}g.fillText(line,90,y);y+=lh;line=w}else line=tt}if(line){g.fillText(line,90,y);y+=lh}return y};
+  g.textAlign="left";
+  g.font='500 54px Mukta,sans-serif';g.fillStyle="#B9BADB";g.fillText("Kalpit's pick for",90,560);
+  g.font='800 170px "Bricolage Grotesque",sans-serif';g.fillStyle="#FFC94D";g.fillText(fmt(state.budget),82,730);
+  let y=wrap(x.n,930,120,'750 104px "Bricolage Grotesque",sans-serif',"#FFF1D2",3);
+  g.font='750 84px "Bricolage Grotesque",sans-serif';g.fillStyle="#FFF1D2";g.fillText(priceText(x),90,y+40);
+  g.font='500 46px Mukta,sans-serif';g.fillStyle="#B9BADB";g.fillText((x.est?"Expected price · ":"")+where(x),90,y+110);
+  wrap(x.why,y+230,66,'400 50px Mukta,sans-serif',"#FFF1D2",4);
+  const bw=720,bh=120,bx=(W-bw)/2,by=H-300;g.fillStyle="#FFC94D";g.beginPath();g.roundRect?g.roundRect(bx,by,bw,bh,60):g.rect(bx,by,bw,bh);g.fill();
+  g.fillStyle="#1B1F4B";g.textAlign="center";g.font='700 54px "Bricolage Grotesque",sans-serif';g.fillText("Find yours: kalpit.me/BBD",W/2,by+78);
+  return c.toDataURL("image/png");
+}
+document.addEventListener("click",async e=>{
+  const b=e.target.closest("[data-status]");if(!b)return;
+  const x=P.find(p=>p.id===b.dataset.status);if(!x)return;
+  // Draw and convert synchronously so the share sheet still counts as a tap
+  const url=statusImage(x),bin=atob(url.split(",")[1]),u8=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++)u8[i]=bin.charCodeAt(i);
+  const file=new File([u8],"kalpits-pick.png",{type:"image/png"});
+  const text=`Kalpit's pick for ${fmt(state.budget)}: ${x.n}. Find yours: ${location.href}`;
+  if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],text})}catch(err){}return}
+  const a=document.createElement("a");a.href=url;a.download="kalpits-pick.png";document.body.appendChild(a);a.click();a.remove();
+  b.textContent="Image saved. Post it from your gallery";setTimeout(()=>b.textContent="Share as Status",3000);
+});
+
+/* ---------- scratch card: only when someone opens a shared link ---------- */
+function scratchCard(hero){
+  const wrap=document.createElement("div");wrap.className="scratch";
+  wrap.innerHTML=`<canvas aria-hidden="true"></canvas><button class="btn" type="button">Show my pick</button>`;
+  hero.appendChild(wrap);
+  const c=wrap.querySelector("canvas"),btn=wrap.querySelector("button"),x=c.getContext("2d");
+  const r=wrap.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2),W=r.width,H=r.height;
+  c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);
+  const g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,"#B8860B");g.addColorStop(.35,"#FFD76A");g.addColorStop(.6,"#E2A72E");g.addColorStop(1,"#FFE9A8");
+  x.fillStyle=g;x.fillRect(0,0,W,H);
+  for(let i=0;i<W*H/150;i++){x.fillStyle=`rgba(255,255,255,${Math.random()*.35})`;x.fillRect(Math.random()*W,Math.random()*H,1.5,1.5)}
+  const cy=Math.min(H/2,150);
+  x.fillStyle="rgba(27,31,75,.88)";x.textAlign="center";
+  x.font='700 24px "Bricolage Grotesque",sans-serif';x.fillText("Kalpit's pick for "+fmt(state.budget),W/2,cy-10);
+  x.font='500 16px Mukta,sans-serif';x.fillText("Scratch to reveal",W/2,cy+16);
+  btn.style.top=(cy+40)+"px";
+  x.globalCompositeOperation="destination-out";
+  let down=false,moves=0;
+  const done=()=>{wrap.classList.add("done");setTimeout(()=>wrap.remove(),700)};
+  const check=()=>{const img=x.getImageData(0,0,c.width,c.height).data;let clear=0,n=0;for(let i=3;i<img.length;i+=80){n++;if(img[i]===0)clear++}if(clear/n>.45)done()};
+  const scratch=e=>{if(!down)return;const b=c.getBoundingClientRect();x.beginPath();x.arc(e.clientX-b.left,e.clientY-b.top,24,0,6.283);x.fill();if(++moves%10===0)check()};
+  c.addEventListener("pointerdown",e=>{down=true;scratch(e)});
+  c.addEventListener("pointermove",scratch);
+  for(const t of ["pointerup","pointercancel","pointerleave"])c.addEventListener(t,()=>{if(down){down=false;check()}});
+  btn.addEventListener("click",done);
+}
 
 /* ---------- start ---------- */
 const [hc,...hp]=decodeURIComponent((location.hash||"").slice(1)).toLowerCase().split("-");
@@ -516,6 +786,9 @@ else{
   if((hcat.uses||[]).some(u=>u.id===hp[0]))state.use=hp.shift();
   if(hp[0]==="deals")state.big=true;
   drawCats();setupDial();
+  const nav=(performance.getEntriesByType&&performance.getEntriesByType("navigation")[0]||{}).type;
+  let seen=false;try{seen=!!sessionStorage.getItem("bbd-scratched");sessionStorage.setItem("bbd-scratched","1")}catch(e){}
+  if(lastTop&&!seen&&nav!=="reload")document.fonts.ready.then(()=>{if($("#hero").isConnected)scratchCard($("#hero"))});
 }
 })();
 </script>
