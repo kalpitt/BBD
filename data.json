@@ -1,5 +1,5 @@
 {
-  "updated": "8 Oct, 8:11 pm",
+  "updated": "8 Oct, 8:13 pm",
   "checked": "8 Oct, 12:32 pm",
   "askUrl": "https://ask.kalpit.me",
   "askFallback": "https://bbd-ask.tiwari-kalpit.workers.dev",
@@ -103,9 +103,9 @@
     {"id": "mivi1", "cat": "phones", "n": "Mivi One 5G", "p": 11999, "s": "Flipkart", "card": "Includes offers", "why": "Clean Android with no bloatware, a decent camera and a 6000 mAh battery.", "tags": ["basic", "battery"], "score": 6, "url": "https://www.flipkart.com/mivi-one-5g-green-128-gb/p/itm596121720eed0?pid=MOBHR3ZPGHBTGAUG"},
     {"id": "f07", "cat": "phones", "n": "Samsung Galaxy F07", "p": 11999, "s": "Flipkart", "card": "", "why": "Basic Samsung for calls, WhatsApp and YouTube.", "tags": ["parents", "basic"], "score": 6},
     {"id": "vibe2", "cat": "phones", "n": "HMD Vibe2 5G", "p": 10499, "was": 14999, "s": "Flipkart", "card": "Includes bank offer", "why": "Entry-level 5G for basic use, from the Nokia makers.", "tags": ["basic", "parents"], "score": 6, "url": "https://www.flipkart.com/hmd-vibe2-5g-nordic-blue-128-gb/p/itm71c3ae6df2a26?pid=MOBHN6XYNGZQCBWB"},
-    {"id": "sparkgo3", "cat": "phones", "n": "Tecno Spark Go 3", "p": 10999, "s": "Flipkart", "card": "", "why": "Fine for calls and WhatsApp.", "tags": ["basic"], "score": 4},
+    {"id": "sparkgo3", "cat": "phones", "n": "Tecno Spark Go 3", "p": 10999, "was": 12499, "s": "Flipkart", "card": "", "why": "Fine for calls and WhatsApp.", "tags": ["basic"], "score": 4},
     {"id": "viratv1", "cat": "phones", "n": "Lava Virat V1", "p": 8999, "was": 9999, "s": "Flipkart", "card": "Includes bank offer", "why": "Under ₹9k with Lava's home service.", "tags": ["basic", "parents"], "score": 5},
-    {"id": "pulse2", "cat": "phones", "n": "Ai+ Pulse 2", "p": 8999, "s": "Flipkart", "card": "", "why": "Basic phone from a new Indian brand.", "tags": ["basic"], "score": 3},
+    {"id": "pulse2", "cat": "phones", "n": "Ai+ Pulse 2", "p": 8999, "was": 10999, "s": "Flipkart", "card": "", "why": "Basic phone from a new Indian brand.", "tags": ["basic"], "score": 3},
     {"id": "lavan4l", "cat": "phones", "n": "Lava Bold N4 Lite", "p": 7649, "s": "Amazon", "card": "Includes bank offer", "why": "Cheapest sensible phone for calls and WhatsApp.", "tags": ["basic", "parents"], "score": 6},
     {"id": "zeno100l", "cat": "phones", "n": "itel Zeno 100 Lite", "p": 7199, "s": "Amazon", "card": "Includes bank offer", "why": "Bare basics, lowest price.", "tags": ["basic"], "score": 4},
     {"id": "lg55", "cat": "tv", "n": "LG 55-inch NU87 4K TV", "p": 39990, "max": 45990, "est": true, "aff": true, "s": "Amazon", "card": "Expected sale range. Early deals on Amazon sit at the top of it", "why": "The safe 55-inch pick from a trusted brand.", "tags": [], "score": 8},
