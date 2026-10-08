@@ -45,7 +45,6 @@ h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
 header{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .me{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--ink-soft);min-width:0}
 .mono{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--night);display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:14px;flex:none}
-.dates{font-size:14px;color:var(--ink-soft);text-align:right;line-height:1.3}
 
 .chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-inline:calc(-1*var(--gut));padding-inline:var(--gut);padding-block:2px}
 .chips::-webkit-scrollbar{display:none}
@@ -54,9 +53,9 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .chip.use[aria-pressed="true"]{background:var(--diya);color:var(--ink);border-color:var(--mari-fill)}
 .stack{display:grid;gap:10px}
 
-.dial{display:grid;gap:4px}
+.dial{display:grid;gap:2px}
 .dial p{margin:0;font-size:19px;color:var(--ink-soft)}
-.amount{font-family:var(--display);font-weight:750;font-size:clamp(60px,18vw,104px);line-height:.95;letter-spacing:-.02em;font-variation-settings:"wdth" var(--w,100),"opsz" 96;display:flex;align-items:baseline;gap:.06em;transition:font-variation-settings .15s ease;cursor:text}
+.amount{font-family:var(--display);font-weight:750;font-size:clamp(56px,16vw,96px);line-height:.95;letter-spacing:-.02em;font-variation-settings:"wdth" var(--w,100),"opsz" 96;display:flex;align-items:baseline;gap:.06em;transition:font-variation-settings .15s ease;cursor:text}
 .amount .r{font-weight:400;font-size:.55em;color:var(--marigold)}
 .amount input{all:unset;width:100%;min-width:0;font:inherit;font-variation-settings:inherit;color:inherit;font-variant-numeric:tabular-nums}
 .rail{--t:30px;position:relative;height:44px;margin-top:2px}
@@ -154,17 +153,17 @@ dialog .acts{justify-content:flex-end}
 /* ---------- Night sky panel: header, categories and the budget dial ---------- */
 .sky{--night:#12143D;--ink:#FFF1D2;--ink-soft:#B9BADB;--marigold:#F4A51C;--diya:#262A5E;--leaf:#6FD3A3;--line:#3A3F80;--raise:#1D2150;--warn:#FF9B7A;
   --h1:#A9ACFF;--h2:#5FD6CB;--h3:#8DB4F5;--h4:#7CCBF5;--h5:#F08CC6;--h6:#7FD99B;--h7:#F4B44C;
-  color-scheme:dark;color:var(--ink);position:relative;isolation:isolate;overflow:hidden;display:grid;gap:22px;align-content:start;
-  margin-inline:calc(-1*var(--gut));padding:calc(18px + env(safe-area-inset-top,0px)) var(--gut) 78px;border-radius:0 0 28px 28px;
+  color-scheme:dark;color:var(--ink);position:relative;isolation:isolate;overflow:hidden;display:grid;gap:16px;align-content:start;
+  margin-inline:calc(-1*var(--gut));padding:calc(14px + env(safe-area-inset-top,0px)) var(--gut) 50px;border-radius:0 0 28px 28px;
   background:radial-gradient(120% 70% at 50% 0%,#272C6E,#0D0F2E 78%)}
 .sky>*{position:relative}
 .sky .stars{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
-.diyas{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:space-around;padding-inline:6%;pointer-events:none}
-.diya{position:relative;width:46px;height:42px}
+.diyas{position:absolute;left:0;right:0;bottom:6px;display:flex;justify-content:space-around;padding-inline:6%;pointer-events:none}
+.diya{position:relative;width:34px;height:32px}
 .diya i{position:absolute;display:block}
-.diya .glow{left:50%;bottom:4px;width:120px;height:120px;margin-left:-60px;border-radius:50%;background:radial-gradient(circle,rgba(255,165,40,.4),rgba(255,165,40,0) 62%);animation:breathe 2.6s ease-in-out infinite alternate;animation-delay:inherit}
-.diya .flame{left:50%;bottom:16px;width:12px;height:20px;margin-left:-6px;background:radial-gradient(ellipse at 50% 78%,#FFF 0 14%,#FFE680 32%,#FF9A1F 66%,rgba(255,120,20,0) 72%);border-radius:50% 50% 50% 50%/72% 72% 28% 28%;transform-origin:50% 100%;animation:flick 1.3s ease-in-out infinite alternate;animation-delay:inherit}
-.diya .bowl{bottom:0;left:0;right:0;height:19px;background:linear-gradient(#E07B45,#8A3517);border-radius:5px 5px 26px 26px/5px 5px 19px 19px;box-shadow:inset 0 3px 0 #F4A276}
+.diya .glow{left:50%;bottom:4px;width:90px;height:90px;margin-left:-45px;border-radius:50%;background:radial-gradient(circle,rgba(255,165,40,.4),rgba(255,165,40,0) 62%);animation:breathe 2.6s ease-in-out infinite alternate;animation-delay:inherit}
+.diya .flame{left:50%;bottom:12px;width:9px;height:15px;margin-left:-4.5px;background:radial-gradient(ellipse at 50% 78%,#FFF 0 14%,#FFE680 32%,#FF9A1F 66%,rgba(255,120,20,0) 72%);border-radius:50% 50% 50% 50%/72% 72% 28% 28%;transform-origin:50% 100%;animation:flick 1.3s ease-in-out infinite alternate;animation-delay:inherit}
+.diya .bowl{bottom:0;left:0;right:0;height:14px;background:linear-gradient(#E07B45,#8A3517);border-radius:5px 5px 26px 26px/5px 5px 19px 19px;box-shadow:inset 0 3px 0 #F4A276}
 @keyframes flick{0%{transform:scale(1,1) rotate(-3deg)}40%{transform:scale(.9,1.1) rotate(2deg)}100%{transform:scale(1.05,.94) rotate(-1deg)}}
 @keyframes breathe{from{opacity:.7;transform:scale(.92)}to{opacity:1;transform:scale(1.06)}}
 
@@ -174,7 +173,7 @@ dialog .acts{justify-content:flex-end}
 .chip.cat[aria-pressed="true"] svg{color:var(--night)}
 
 /* Freshness */
-.fresh{display:inline-flex;align-items:center;gap:9px;justify-self:start;font-size:14px;color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:3px 12px 3px 10px}
+.fresh{display:inline-flex;align-items:center;gap:8px;flex:none;white-space:nowrap;font-size:13px;color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:3px 12px 3px 10px}
 .fresh .dot{position:relative;width:8px;height:8px;border-radius:50%;background:var(--leaf);flex:none}
 .fresh .dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--leaf);animation:ping 1.8s cubic-bezier(0,0,.2,1) infinite}
 .fresh.old .dot{background:var(--ink-soft)}.fresh.old .dot::after{display:none}
@@ -216,16 +215,16 @@ dialog .acts{justify-content:flex-end}
   body{padding-top:16px}
   .sky{--gut:24px;margin-inline:0;border-radius:28px;padding-top:24px}
 }
-/* Laptops: dial fixed on the left, picks scroll on the right */
+/* Laptops: the night panel becomes a full-height sidebar on the left edge; picks beside it */
 @media (min-width:980px){
-  body{padding-inline:32px;padding-top:24px}
-  .wrap{max-width:1180px;grid-template-columns:minmax(380px,450px) minmax(0,1fr);gap:48px;align-items:start}
-  .sky{--gut:28px;padding:28px 28px 92px}
+  body{padding:0}
+  .wrap{max-width:none;grid-template-columns:minmax(380px,34vw) minmax(0,1fr);gap:0;align-items:start}
+  .sky{--gut:32px;margin:0;border-radius:0 32px 32px 0;padding:32px 32px 80px;min-height:100vh}
   .sky .chips{flex-wrap:wrap;overflow:visible;margin-inline:0;padding-inline:0}
-  .amount{font-size:88px}
-  .feed{padding-top:4px}
+  .amount{font-size:clamp(72px,6.5vw,96px)}
+  .feed{width:100%;max-width:720px;margin-inline:auto;padding:40px 40px 48px}
 }
-@media (min-width:980px) and (min-height:700px){.sky{position:sticky;top:24px}}
+@media (min-width:980px) and (min-height:640px){.sky{position:sticky;top:0;height:100vh;overflow-y:auto;scrollbar-width:none}.sky::-webkit-scrollbar{display:none}}
 @media (prefers-reduced-motion: reduce){.diya i,.fresh .dot::after,.hero,.hero::after,.typing i{animation:none}}
 </style>
 </head>
@@ -235,7 +234,7 @@ dialog .acts{justify-content:flex-end}
   <canvas class="stars" id="stars" aria-hidden="true"></canvas>
   <header>
     <div class="me"><span class="mono" aria-hidden="true">KT</span><span>Kalpit's festive picks</span></div>
-    <div class="dates">Amazon from 8 Oct<br>Flipkart from 9 Oct</div>
+    <span class="fresh" id="fresh" hidden><span class="dot"></span><span id="freshText"></span></span>
   </header>
 
   <div class="stack">
@@ -251,7 +250,6 @@ dialog .acts{justify-content:flex-end}
     <div class="chips" id="uses" aria-label="What matters most" hidden></div>
     <p class="note" id="catNote" hidden></p>
   </section>
-  <span class="fresh" id="fresh" hidden><span class="dot"></span><span id="freshText"></span></span>
 
   <div class="diyas" aria-hidden="true">
     <div class="diya" style="animation-delay:-.2s"><i class="glow"></i><i class="flame"></i><i class="bowl"></i></div>
@@ -297,7 +295,7 @@ dialog .acts{justify-content:flex-end}
   </section>
 
   <footer>
-    <span>Picks and prices updated <span id="updated"></span>. Prices can change during the sale, so check the final price on the payment page.</span>
+    <span>Sale dates: Amazon from 8 Oct, Flipkart from 9 Oct (8 Oct for Plus and Black members). Picks and prices updated <span id="updated"></span>. Prices can change during the sale, so check the final price on the payment page.</span>
     <span>Items marked "affiliate link" earn me a small commission at no extra cost to you. As an Amazon Associate I earn from qualifying purchases. All other links are plain links.</span>
     <span><button type="button" id="changeNum">Change my WhatsApp number</button></span>
   </footer>
@@ -686,7 +684,7 @@ $("#msgKalpit").addEventListener("click",()=>{
   function show(){
     const mins=Math.max(0,Math.round((Date.now()-when)/60000));
     const t=mins<2?"just now":mins<60?mins+" min ago":mins<24*60?Math.round(mins/60)+"h ago":m[1]+" "+m[2];
-    $("#freshText").textContent="Prices updated "+t;
+    $("#freshText").textContent="Updated "+t;$("#fresh").setAttribute("aria-label","Prices updated "+t);
     $("#fresh").classList.toggle("old",mins>=12*60);
   }
   show();$("#fresh").hidden=false;setInterval(show,60000);
