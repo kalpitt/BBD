@@ -115,8 +115,10 @@ _Last updated: 8 Oct 2026, 6:45 pm IST. Overwrite this file at the end of every 
   question filled in. Nothing is sent or stored by us.
 
 ## Next steps for an agent
-- Confirm the Worker build for commit 050b5d7 succeeded (builds were failing earlier, see
-  open ask 5). If not, the "never one number for affiliate items" prompt line isn't live yet.
+- Worker build for 050b5d7 (the prompt change) succeeded, so it's live. The later
+  handoff-only build (3ca4d03) failed; Worker code is unchanged there, so no impact, but
+  builds are still flaky (open ask 5). Check results with:
+  `curl -s https://api.github.com/repos/kalpitt/BBD/commits/<sha>/check-runs`.
 - Run the docs/OPS.md regression questions once the Worker build is confirmed.
 - Explore the Amazon affiliate account options (open ask 0).
 - 9 Oct afternoon: remove `askFallback` (data.json, docs/DATA.md, this file) once public
