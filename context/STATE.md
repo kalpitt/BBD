@@ -1,6 +1,6 @@
 # STATE: where BBD is right now
 
-_Last updated: 8 Oct 2026, 4:45 pm IST. Overwrite this file at the end of every session._
+_Last updated: 8 Oct 2026, 6:45 pm IST. Overwrite this file at the end of every session._
 
 ## Live
 - https://kalpit.me/BBD/ is live with 135 picks across Phones, TVs, Laptops, Home,
@@ -33,6 +33,30 @@ _Last updated: 8 Oct 2026, 4:45 pm IST. Overwrite this file at the end of every 
 - **Repo is clean to share:** one squashed commit (8 Oct) plus new ones, noreply author
   email, sources credited in README → Credits.
 
+## Design refresh (live on main since 8 Oct, ~6:40 pm IST)
+- Night-sky panel (stars, 4 diyas) holds header, category tabs (cream line icons) and the
+  budget dial. Laptops (≥980px): full-height sticky sidebar on the left edge, picks in a
+  centred column, faint rangoli in the sidebar corner.
+- Slider shows a dot per pick and snaps onto it (tiny vibration on Android). **Affiliate
+  dots sit at the TOP of their price band, never the exact price** (snapping to an exact
+  affiliate price would print it in the budget box, hash and Status image).
+- Pick card: warm glow + gold edge light (runs twice per new pick), sparks on pick change,
+  one merged offer line, "See on <store>" + "Share as Status", "Send to myself on WhatsApp" link.
+- Share as Status: 1080×1920 image ("Kalpit's pick under ₹X", band for affiliate items).
+  Uses the share sheet where files can be shared; elsewhere (WhatsApp in-app browser,
+  laptops) a popup to press-and-hold or Download.
+- Shared links (#hash) open with a scratch card over the pick (once per tab, not on reload;
+  "Show my pick" button; vertical swipes still scroll).
+- Ask box is a chat thread (typing dots, word-by-word answer, screen readers get it whole).
+- "Prices checked 12 min ago" pill reads new `checked` stamp (falls back to `updated`).
+  The price-check skill now bumps `checked` on every run that compares prices, and
+  commits "Price check: no changes" when nothing else changed.
+- Worker context: banded (affiliate) items get the band + "tap the link to see today's
+  price on Amazon", never one number. Cache key bumped to v3.
+- Review panel (visual, mobile perf, a11y, trust, personas) ran on 8 Oct; fixes applied.
+  Skipped by Kalpit's call: bigger chips/text for older users, quick-budget buttons.
+- Design samples artifact (private): https://claude.ai/artifact/1fXdY27ydww37VbnzL7rdc
+
 ## Discount layers (live on main since 8 Oct)
 - Fields `was`, `list`, `coupon`, `bank` {name, off}; `p` stays final. Validator enforces
   `p = list − coupon − bank.off`. Docs: `docs/DATA.md` → Discount layers.
@@ -52,6 +76,9 @@ _Last updated: 8 Oct 2026, 4:45 pm IST. Overwrite this file at the end of every 
 - Still to do: `was` and layers for phones/Flipkart items, and the one-time review of every affiliate band vs plain link (Kalpit's call).
 
 ## Open asks (waiting on Kalpit)
+0. **Amazon affiliate account is old:** explore (in a new chat) what it allows, e.g.
+   Amazon's product API for live prices next to affiliate links, eligibility rules,
+   and where the key would live (Cloudflare secret, never the repo).
 1. Merge `add-bbd-redirect` in the Kalpit.me repo so lowercase `/bbd` survives
    main-site deploys: https://github.com/kalpitt/Kalpit.me/pull/new/add-bbd-redirect
 2. Real BBD prices for **Vivo X200T** and **Motorola Edge 70** (listed as expected ranges).
@@ -88,6 +115,10 @@ _Last updated: 8 Oct 2026, 4:45 pm IST. Overwrite this file at the end of every 
   question filled in. Nothing is sent or stored by us.
 
 ## Next steps for an agent
+- Confirm the Worker build for commit 050b5d7 succeeded (builds were failing earlier, see
+  open ask 5). If not, the "never one number for affiliate items" prompt line isn't live yet.
+- Run the docs/OPS.md regression questions once the Worker build is confirmed.
+- Explore the Amazon affiliate account options (open ask 0).
 - 9 Oct afternoon: remove `askFallback` (data.json, docs/DATA.md, this file) once public
   DNS shows Cloudflare nameservers; verify the Ask box on the live page; then tell Kalpit
   to disable workers.dev.

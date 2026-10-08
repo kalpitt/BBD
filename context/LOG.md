@@ -107,3 +107,23 @@ Template:
   Agents can't delete GitHub branches or change a Routine's prompt from another chat.
   Worker builds were already failing before this session; see STATE open ask 5.
 - Next: see STATE.md "Next steps".
+
+## 2026-10-08 (6:45 pm): design refresh, review panel, live
+- Did: built a live design-samples page; Kalpit picked night sky + diyas, sparks, glowing
+  pick card, slider pick dots, laptop sidebar layout, category icons, freshness pill,
+  scratch card on shared links, Share as Status image, chat-style Ask box. Built it on a
+  branch, ran a 5-reviewer panel (visual, mobile perf, a11y, trust/compliance, shopper
+  personas), applied fixes, then fast-forwarded main on Kalpit's "push to main".
+- Decided: experience for ordinary visitors wins over a11y extras (no bigger chips/text);
+  no quick-budget buttons; cream icons; "pick under ₹X" on the Status image; new
+  `checked` stamp so "Prices checked" is honest; "lowest price" wording allowed per
+  product when price history backs it (blanket ban dropped); Ask box never states one
+  number for affiliate items (Kalpit approved the prompt change).
+- Gotchas: snapping the slider to an affiliate item's exact price leaked that price into
+  the budget box, URL and Status image; dots now use the band top. The star canvas cost
+  ~19% CPU on a throttled phone until drawn at 1x, thinned and stopped after 20 s. A CSS
+  `scale` animation on a box-shadow layer drew a visible frame around the card; animate
+  opacity only. `.hero.moving{animation:slot}` silently replaced the orbit animation, so
+  both must be listed together. WhatsApp's in-app browser often can't share files or
+  download, hence the press-and-hold popup.
+- Next: confirm the Worker build; explore the old Amazon affiliate account in a new chat.
