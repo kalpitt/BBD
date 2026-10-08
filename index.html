@@ -235,6 +235,8 @@ dialog .acts{justify-content:flex-end}
 .chips.fade{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent)}
 /* Keep space for content that arrives with data.json, so slow connections don't jump */
 #cats:empty,#uses:empty{min-height:38px}
+/* .chips sets display:flex, which would override the hidden attribute */
+[hidden]{display:none!important}
 #ticks:empty{min-height:20px}
 .hero:empty{min-height:340px}
 /* Pick card: one offer line, secondary "send to myself" link */
@@ -494,7 +496,8 @@ function drawCats(){
   const el=$("#cats");el.replaceChildren(...D.categories.map(catChip));
   const c=cat(),ty=$("#types");
   ty.hidden=!c.types;
-  if(c.types)ty.replaceChildren(...c.types.map(t=>chip(t.label,t.id===state.type,"",()=>{state.type=t.id;state.big=false;state.budget=null;drawCats();setupDial()})));
+  if(!c.types)ty.replaceChildren();
+  else ty.replaceChildren(...c.types.map(t=>chip(t.label,t.id===state.type,"",()=>{state.type=t.id;state.big=false;state.budget=null;drawCats();setupDial()})));
   // "Big deals" chip appears wherever this tab has at least one big deal
   const deals=P.some(x=>x.cat===state.cat&&(!state.type||x.type===state.type)&&big(x));
   if(!deals)state.big=false;
