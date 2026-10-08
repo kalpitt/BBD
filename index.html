@@ -335,12 +335,16 @@ const P=D.products;
 const state={cat:"phones",type:null,use:null,big:false,budget:null};
 
 /* ---------- prices and links ---------- */
-function band(x){
+function bandRange(x){
   const p=x.p;
-  if(p<1000)return "Under ₹1,000";
+  if(p<1000)return [0,1000];
   const step=p<2000?100:p<5000?250:p<10000?500:p<20000?1000:p<50000?2000:p<100000?5000:10000; // ~5–8% wide at every price
   const lo=Math.floor(p/step)*step;
-  const hi=x.max?Math.ceil(x.max/step)*step:lo+step;
+  return [lo,x.max?Math.ceil(x.max/step)*step:lo+step];
+}
+function band(x){
+  if(x.p<1000)return "Under ₹1,000";
+  const [lo,hi]=bandRange(x);
   return fmt(lo)+"–"+Number(hi).toLocaleString("en-IN");
 }
 const priceText=x=>x.aff?band(x):x.max?fmt(x.p)+"–"+Number(x.max).toLocaleString("en-IN"):(x.from?"From ":"")+fmt(x.p);
@@ -493,7 +497,9 @@ let dotKey="",dotPrices=[],snapped=null;
 function drawDots(c){
   const key=[state.cat,state.type,state.use,state.big].join("|");
   if(key===dotKey)return;dotKey=key;
-  dotPrices=[...new Set(pool().map(x=>x.p))].filter(p=>p>=c.min&&p<=c.max).sort((a,b)=>a-b);
+  // Affiliate items sit at the top of their price band, never at their exact price: the
+  // handle snaps to the dot and the budget box would otherwise show the exact ₹ (AGENTS rule 1).
+  dotPrices=[...new Set(pool().map(x=>x.aff?bandRange(x)[1]:x.p))].filter(p=>p>=c.min&&p<=c.max).sort((a,b)=>a-b);
   $("#dots").innerHTML=dotPrices.map(p=>`<i class="dt" data-p="${p}" style="left:calc(var(--t)/2 + (100% - var(--t))*${((p-c.min)/(c.max-c.min)).toFixed(4)})"></i>`).join("");
 }
 function setBudget(v){
