@@ -98,8 +98,12 @@ _Last updated: 8 Oct 2026, 6:45 pm IST. Overwrite this file at the end of every 
   27 Sep). No 32-inch or 43-inch TVs yet, because no confirmed 2026 sale prices.
 - Laptops: everyday/office only (incl. MacBook Neo, est.). No gaming laptops yet, because no
   2026 sale prices were found.
-- The AI occasionally gives one product another's price (e.g. A36 vs A56; seen again
-  on 8 Oct). The cards under each answer show the correct price.
+- The AI occasionally gives one product another's price (e.g. A36 vs A56). Since 9 Oct
+  the Worker's `fixPrices()` corrects these before the answer is shown (commit 19521de).
+  GitHub showed its Cloudflare build as "failure", like most builds since 8 Oct;
+  Kalpit to confirm in the Cloudflare dashboard that 19521de deployed.
+- Fixed 9 Oct: sub-type chip row (Watches/Tablet…) stayed visible after switching to a
+  category without types (`[hidden]` was overridden by `.chips{display:flex}`).
 - When a question names a brand ("Nothing phone under 30k"), the AI can still lead with
   the shortlist's top pick (A36) instead of that brand's pick (Nothing 4b). Not a bug in
   budget handling; consider boosting brand matches in `bestMatches()` if Kalpit wants.
