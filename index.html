@@ -154,7 +154,6 @@ dialog .acts{justify-content:flex-end}
 
 /* ---------- Night sky panel: header, categories and the budget dial ---------- */
 .sky{--night:#12143D;--ink:#FFF1D2;--ink-soft:#B9BADB;--marigold:#F4A51C;--diya:#262A5E;--leaf:#6FD3A3;--line:#3A3F80;--raise:#1D2150;--warn:#FF9B7A;
-  --h1:#A9ACFF;--h2:#5FD6CB;--h3:#8DB4F5;--h4:#7CCBF5;--h5:#F08CC6;--h6:#7FD99B;--h7:#F4B44C;
   color-scheme:dark;color:var(--ink);position:relative;isolation:isolate;overflow:hidden;display:grid;gap:16px;align-content:start;
   margin-inline:calc(-1*var(--gut));padding:calc(14px + env(safe-area-inset-top,0px)) var(--gut) 50px;border-radius:0 0 28px 28px;
   background:radial-gradient(120% 70% at 50% 0%,#272C6E,#0D0F2E 78%)}
@@ -172,7 +171,8 @@ dialog .acts{justify-content:flex-end}
 /* Category icons */
 .chip svg{width:18px;height:18px;flex:none;color:var(--c,currentColor)}
 .chip.cat{display:inline-flex;align-items:center;gap:6px}
-.chip.cat[aria-pressed="true"] svg{color:var(--night)}
+.chip.cat svg{opacity:.75}
+.chip.cat[aria-pressed="true"] svg{color:var(--night);opacity:1}
 
 /* Freshness */
 .fresh{display:inline-flex;align-items:center;gap:8px;flex:none;white-space:nowrap;font-size:13px;color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:3px 12px 3px 10px}
@@ -484,10 +484,9 @@ const ICONS={
   fitness:'<path d="M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5M6.5 12h11"/>',
   gadgets:'<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8.5 7 10 4.5h4L15.5 7"/><circle cx="12" cy="13.5" r="3.5"/>'
 };
-const HUES=["--h1","--h2","--h3","--h4","--h5","--h6","--h7"];
-function catChip(c,i){
+function catChip(c){
   const b=chip(c.label,c.id===state.cat,"cat",()=>{setCat(c.id)});
-  if(ICONS[c.id]){b.insertAdjacentHTML("afterbegin",`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[c.id]}</svg>`);b.style.setProperty("--c",`var(${HUES[i%HUES.length]})`)}
+  if(ICONS[c.id])b.insertAdjacentHTML("afterbegin",`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[c.id]}</svg>`);
   return b;
 }
 
@@ -780,7 +779,7 @@ function statusImage(x){
   const glow=g.createRadialGradient(W/2,H-120,10,W/2,H-120,520);glow.addColorStop(0,"rgba(255,160,40,.5)");glow.addColorStop(1,"rgba(255,160,40,0)");g.fillStyle=glow;g.fillRect(0,H-700,W,700);
   const wrap=(t,y,lh,font,col,max)=>{g.font=font;g.fillStyle=col;let line="",n=0;for(const w of t.split(" ")){const tt=line?line+" "+w:w;if(g.measureText(tt).width>W-180&&line){if(++n===max){g.fillText(line+"…",90,y);return y+lh}g.fillText(line,90,y);y+=lh;line=w}else line=tt}if(line){g.fillText(line,90,y);y+=lh}return y};
   g.textAlign="left";
-  g.font='500 54px Mukta,sans-serif';g.fillStyle="#B9BADB";g.fillText("Kalpit's pick for",90,560);
+  g.font='500 54px Mukta,sans-serif';g.fillStyle="#B9BADB";g.fillText("Kalpit's pick under",90,560);
   g.font='800 170px "Bricolage Grotesque",sans-serif';g.fillStyle="#FFC94D";g.fillText(fmt(state.budget),82,730);
   let y=wrap(x.n,930,120,'750 104px "Bricolage Grotesque",sans-serif',"#FFF1D2",3);
   g.font='750 84px "Bricolage Grotesque",sans-serif';g.fillStyle="#FFF1D2";g.fillText(priceText(x),90,y+40);
@@ -797,7 +796,7 @@ document.addEventListener("click",async e=>{
   const url=statusImage(x),bin=atob(url.split(",")[1]),u8=new Uint8Array(bin.length);
   for(let i=0;i<bin.length;i++)u8[i]=bin.charCodeAt(i);
   const file=new File([u8],"kalpits-pick.png",{type:"image/png"});
-  const text=`Kalpit's pick for ${fmt(state.budget)}: ${x.n}. Find yours: ${location.href}`;
+  const text=`Kalpit's pick under ${fmt(state.budget)}: ${x.n}. Find yours: ${location.href}`;
   if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],text})}catch(err){}return}
   // WhatsApp's in-app browser and laptops: show the image to press-and-hold or download
   $("#stImg").src=url;$("#stDl").href=url;$("#stDlg").showModal();
@@ -818,7 +817,7 @@ function scratchCard(hero){
   for(let i=0;i<W*H/150;i++){x.fillStyle=`rgba(255,255,255,${Math.random()*.35})`;x.fillRect(Math.random()*W,Math.random()*H,1.5,1.5)}
   const cy=Math.min(H/2,150);
   x.fillStyle="rgba(27,31,75,.88)";x.textAlign="center";
-  x.font='700 24px "Bricolage Grotesque",sans-serif';x.fillText("Kalpit's pick for "+fmt(state.budget),W/2,cy-10);
+  x.font='700 24px "Bricolage Grotesque",sans-serif';x.fillText("Kalpit's pick under "+fmt(state.budget),W/2,cy-10);
   x.font='500 16px Mukta,sans-serif';x.fillText("Scratch to reveal",W/2,cy+16);
   btn.style.top=(cy+40)+"px";
   x.globalCompositeOperation="destination-out";

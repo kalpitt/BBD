@@ -52,7 +52,7 @@ export default {
 
     // The "updated" stamp is part of the key, so editing data.json retires old answers
     const key = await sha(q.toLowerCase().replace(/\s+/g, " ") + "|" + ctxLine + "|" + picks.data.updated);
-    const cacheKey = new Request("https://bbd-ask.cache/v2/" + key);
+    const cacheKey = new Request("https://bbd-ask.cache/v3/" + key);
     const cache = caches.default;
     const hit = body.debug ? null : await cache.match(cacheKey);
     if (hit) return json(await hit.json());
@@ -213,7 +213,7 @@ function bestMatches(picks, q, body) {
   const list = (near.length >= 2 ? near : pool).sort((a, z) => (z.score + 2 * z.p / b + (big(z) ? 1 : 0)) - (a.score + 2 * a.p / b + (big(a) ? 1 : 0))).slice(0, 4);
   const cap = Math.round(b).toLocaleString("en-IN");
   if (!list.length) return null;
-  return { b, top: list[0].n, text: list.map(x => picks.byName[x.n]).join("\n") + `\nKALPIT'S TOP PICK for this question: ${list[0].n}. Lead with it as the main pick unless the question names a different product or need.\nEvery product in these lines costs ₹${cap} or less. A price band like "₹15,000–16,000" means the real price is at the low end of the band and within this budget; never call these over budget.\nVISITOR'S BUDGET: ₹${cap}. Your main pick MUST cost ₹${cap} or less. Anything above ₹${cap} may only appear as a single "if you can stretch" mention.` };
+  return { b, top: list[0].n, text: list.map(x => picks.byName[x.n]).join("\n") + `\nKALPIT'S TOP PICK for this question: ${list[0].n}. Lead with it as the main pick unless the question names a different product or need.\nEvery product in these lines costs ₹${cap} or less. A price band like "₹15,000–16,000" means the item is within this budget; never call these over budget. For a banded item, never state a single exact price: give the band and say "tap the link to see today's price on Amazon".\nVISITOR'S BUDGET: ₹${cap}. Your main pick MUST cost ₹${cap} or less. Anything above ₹${cap} may only appear as a single "if you can stretch" mention.` };
 }
 
 // Product names the AI may write, mapped to one product each. Besides the full name:
