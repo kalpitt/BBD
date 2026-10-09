@@ -55,6 +55,11 @@ Change `p` only when ALL of these hold:
 - For `aff: true` items, only change `p` if the page's band would change (see
   `band()` in `index.html`). Otherwise leave it.
 
+**Exchange picks:** when `card` mentions "exchange", `p` includes an exchange bonus the
+listing can't show. Compare against the listing's price after bank offer and expect it
+to sit a little above `p`. Don't flag that gap; report only if the listing price itself
+moves by ₹500 or more since the last run.
+
 Anything else (one report only, unclear variant, card offer unclear, out of stock,
 price outside the category slider range) → **don't edit, put it in the report**.
 Never remove a pick, never add one, never change `score` or verdicts on your own,
