@@ -1,6 +1,6 @@
 # STATE: where BBD is right now
 
-_Last updated: 8 Oct 2026, 6:45 pm IST. Overwrite this file at the end of every session._
+_Last updated: 9 Oct 2026, 10:05 pm IST. Overwrite this file at the end of every session._
 
 ## Live
 - https://kalpit.me/BBD/ is live with 135 picks across Phones, TVs, Laptops, Home,
@@ -82,15 +82,18 @@ _Last updated: 8 Oct 2026, 6:45 pm IST. Overwrite this file at the end of every 
 0. **Amazon affiliate account is old:** explore (in a new chat) what it allows, e.g.
    Amazon's product API for live prices next to affiliate links, eligibility rules,
    and where the key would live (Cloudflare secret, never the repo).
-1. Merge `add-bbd-redirect` in the Kalpit.me repo so lowercase `/bbd` survives
-   main-site deploys: https://github.com/kalpitt/Kalpit.me/pull/new/add-bbd-redirect
+1. Lowercase `/bbd` redirects to `/BBD/` live (checked 9 Oct, 10 pm). Confirm
+   `add-bbd-redirect` is merged in the Kalpit.me repo so it survives main-site deploys:
+   https://github.com/kalpitt/Kalpit.me/pull/new/add-bbd-redirect
 2. Real BBD prices for **Vivo X200T** and **Motorola Edge 70** (listed as expected ranges).
+   Also still `est`: Lenovo IdeaPad Slim 3, ASUS Vivobook 15 and the three 55-inch TVs.
 3. Two Flipkart cheat-sheet PDFs (TVs/large appliances and Home) are image-only. Share
    them as images to firm up TV prices (TVs are `est: true`).
 4. Optional: EarnKaro links for Flipkart items.
 5. ~~Cloudflare Worker builds fail~~ Resolved: all builds green as of 8 Oct, 7:23 pm.
-6. Turn off workers.dev (safe since 9 Oct) for bbd-ask, and optionally delete the two leftover
-   `ccr-*` branches on GitHub (they point at the clean commit; deletion was blocked for agents).
+6. Turn off workers.dev for bbd-ask (still answering on 9 Oct, 10 pm; nothing uses it
+   since `askFallback` was removed), and optionally delete the five leftover `ccr-*`
+   branches on GitHub (all old copies of main; deletion was blocked for agents).
 7. Kalpit wants a repo-wide review of improvement opportunities (deferred, not started).
 
 ## Known gaps
@@ -131,7 +134,9 @@ _Last updated: 8 Oct 2026, 6:45 pm IST. Overwrite this file at the end of every 
   Check results with `curl -s https://api.github.com/repos/kalpitt/BBD/commits/<sha>/check-runs`.
 - Run the docs/OPS.md regression questions once the Worker build is confirmed.
 - Explore the Amazon affiliate account options (open ask 0).
-- Fix the Worker build once Kalpit shares the log.
 - Apply price and pick changes as Kalpit sends them (`/update-picks`).
-- On 8–9 Oct, spot-check live sale prices against data.json, especially the estimates.
+- Watch the first deal-scout suggestions (from 9 Oct, 11:31 pm). If they're noisy, tune
+  `RULES`/`SKIP` in scripts/deal-scout.mjs or drop a channel.
+- The scout's channels post dated 32/43-inch TV and gaming-laptop prices: a way to fill
+  those gaps (Known gaps) if Kalpit wants them.
 - Around 20 Oct, propose the sunset (banner, ask box off).
