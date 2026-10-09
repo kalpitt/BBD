@@ -104,9 +104,10 @@ data.json           ALL content: picks, prices, verdicts, quick answers. Most ed
 worker/worker.js    ask-box Worker (Cloudflare). Fetches live data.json
 wrangler.toml       Worker config (name bbd-ask, AI binding, vars). Used by Cloudflare's build
 scripts/check-data.mjs  validator: run before every push
+scripts/deal-scout.mjs  lists new deals from public deal channels (used by price-check)
 docs/DATA.md        every data.json field, with worked examples
 docs/OPS.md         preview, verify deploys, rollback, ask-box testing, symptom → fix
 context/STATE.md    live snapshot: read first, update at the end
 context/LOG.md      append-only session log (newest at the bottom)
-.claude/skills/     orient, handoff, update-picks, price-check (scheduled every 3h)
+.claude/skills/     orient, handoff, update-picks, price-check (scheduled every 3h, incl. deal scout)
 ```

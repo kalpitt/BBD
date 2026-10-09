@@ -1,5 +1,5 @@
 ---
-description: Scheduled price check for kalpit.me/BBD during the sale. Compares data.json prices with live Amazon/Flipkart prices and pushes only confirmed changes. Runs every 3 hours from a Routine; can also be run by hand ("check prices").
+description: Scheduled price check for kalpit.me/BBD during the sale. Compares data.json prices with live Amazon/Flipkart prices and pushes only confirmed changes, then scouts deal channels for new products worth suggesting. Runs every 3 hours from a Routine; can also be run by hand ("check prices", "scout deals").
 ---
 
 # Price check (scheduled agent)
@@ -89,11 +89,38 @@ for a no-change run (it retires the Ask box's cached answers).
 
 Never spend ask-box questions. Never write friends' names or anything private.
 
-## 5. Final message (max ~8 lines)
+## 4b. Deal scout (suggestions only, never edits)
+Kalpit wants new products and special deals flagged, including kinds the site doesn't
+list yet (9 Oct). Run it every time, after the price work:
+1. `node scripts/deal-scout.mjs` reads public deal channels (last 3.5 h) and prints
+   electronics/appliance posts with category, price, store and a link to the post.
+2. Choose **at most 3** for Kalpit. A good one:
+   - is one real product from a known brand (not a category-wide sale or a round-up);
+   - is sold on Amazon or Flipkart (the only stores the site links to);
+   - fits a category on the site, or is a kind he could add (`new type?` /
+     `new category?`, e.g. air purifier, printer);
+   - is genuinely cheap: the lowest price on pricebefore.com for the closest listing
+     (check if quick), or a card/coupon offer above ~12%, or clearly better value than
+     the picks already on the site at that price. "% off MRP" alone means nothing;
+     MRPs are often inflated (see `fakeMrp` in data.json);
+   - wasn't suggested in an earlier run of this session.
+   None good → say nothing about the scout.
+3. `maybe on site` lines mention current picks. Treat each as one dated sale report for
+   step 3 (never enough on its own).
+4. Never add a pick and never copy the post's shop link (it carries the poster's
+   affiliate tag). Kalpit replies "add X" in a chat, which uses `/update-picks`. If he
+   adds one, credit that channel in README → Credits.
+5. If the script prints "Couldn't read", list those channels under "Couldn't check".
+
+## 5. Final message (max ~11 lines)
 ```
 Price check, 9 Oct 3 pm
 Changed (live): S25 ₹59,999 → ₹57,999 (Flipkart listing)
 Needs you: Edge 70 one report says ₹31,999, not confirmed
 Couldn't check: Amazon blocked / captcha
+New deals (reply "add X" to list one):
+- <product> ₹<price>, <store>; <why: e.g. under its Sep low ₹X, or 15% SBI offer> (<category, or "new type: air purifier">) <post link>
 ```
-If nothing changed and nothing needs Kalpit, say exactly: "Price check: no changes."
+Exact prices are fine here: this message only goes to Kalpit's phone, not the site.
+If nothing changed, nothing needs Kalpit and no deal made the cut, say exactly:
+"Price check: no changes."

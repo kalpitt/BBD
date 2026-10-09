@@ -69,6 +69,18 @@ revert first and fix after.
   "₹X tak" and "₹85k"-style amounts. The cards under each answer still show the
   `data.json` price.
 
+## Deal scout
+`node scripts/deal-scout.mjs [--hours 6]` lists recent electronics/appliance posts from
+public deal channels. The price check runs it every 3 hours and sends Kalpit up to 3
+suggestions; it never edits picks.
+- **Sources:** public Telegram channels in `CHANNELS` at the top of the script. Their
+  `t.me/s/<name>` page shows recent posts without logging in. X, Reddit and most deal
+  websites block automated reads from the cloud (tested 9 Oct).
+- **Add a channel:** open `https://t.me/s/<name>`. If it lists posts with prices, add
+  the name to `CHANNELS` and run the script once. A small page saying "Contact @name"
+  means no public preview.
+- **Wrong category or junk getting through:** edit `RULES` (first match wins) or `SKIP`.
+
 ## Symptom → fix
 | Symptom | Likely cause | Fix |
 |---|---|---|
