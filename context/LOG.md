@@ -146,3 +146,5 @@ Template:
   kinds the site doesn't list yet.
 - Next: watch the first few notifications; if they're noisy, tighten `RULES`/`SKIP` or
   drop a channel. Possible add: pricehistory.app category lows (see docs/OPS.md).
+
+- 10 Oct 2:35 am (price check): HMD Vibe2 5G 10,499 → 11,399 (Flipkart listing, after bank offer, steady for a day).

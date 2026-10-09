@@ -1,6 +1,6 @@
 {
-  "updated": "9 Oct, 9:58 pm",
-  "checked": "9 Oct, 11:33 pm",
+  "updated": "10 Oct, 2:35 am",
+  "checked": "10 Oct, 2:33 am",
   "askUrl": "https://ask.kalpit.me",
   "amazonTag": "bestdeallive-21",
   "sale": {
@@ -101,7 +101,7 @@
     {"id": "g06p", "cat": "phones", "n": "Motorola G06 Power", "p": 13999, "was": 15999, "s": "Flipkart", "card": "Includes bank offer", "why": "Big battery, big screen, simple Android. Great for parents.", "tags": ["parents", "battery", "basic"], "score": 7},
     {"id": "mivi1", "cat": "phones", "n": "Mivi One 5G", "p": 11999, "s": "Flipkart", "card": "Includes offers", "why": "Clean Android with no bloatware, a decent camera and a 6000 mAh battery.", "tags": ["basic", "battery"], "score": 6, "url": "https://www.flipkart.com/mivi-one-5g-green-128-gb/p/itm596121720eed0?pid=MOBHR3ZPGHBTGAUG"},
     {"id": "f07", "cat": "phones", "n": "Samsung Galaxy F07", "p": 11999, "s": "Flipkart", "card": "", "why": "Basic Samsung for calls, WhatsApp and YouTube.", "tags": ["parents", "basic"], "score": 6},
-    {"id": "vibe2", "cat": "phones", "n": "HMD Vibe2 5G", "p": 10499, "was": 14999, "s": "Flipkart", "card": "Includes bank offer", "why": "Entry-level 5G for basic use, from the Nokia makers.", "tags": ["basic", "parents"], "score": 6, "url": "https://www.flipkart.com/hmd-vibe2-5g-nordic-blue-128-gb/p/itm71c3ae6df2a26?pid=MOBHN6XYNGZQCBWB"},
+    {"id": "vibe2", "cat": "phones", "n": "HMD Vibe2 5G", "p": 11399, "was": 14999, "s": "Flipkart", "card": "Includes bank offer", "why": "Entry-level 5G for basic use, from the Nokia makers.", "tags": ["basic", "parents"], "score": 6, "url": "https://www.flipkart.com/hmd-vibe2-5g-nordic-blue-128-gb/p/itm71c3ae6df2a26?pid=MOBHN6XYNGZQCBWB"},
     {"id": "sparkgo3", "cat": "phones", "n": "Tecno Spark Go 3", "p": 10999, "was": 12499, "s": "Flipkart", "card": "", "why": "Fine for calls and WhatsApp.", "tags": ["basic"], "score": 4},
     {"id": "viratv1", "cat": "phones", "n": "Lava Virat V1", "p": 8999, "was": 9999, "s": "Flipkart", "card": "Includes bank offer", "why": "Under ₹9k with Lava's home service.", "tags": ["basic", "parents"], "score": 5},
     {"id": "pulse2", "cat": "phones", "n": "Ai+ Pulse 2", "p": 8999, "was": 10999, "s": "Flipkart", "card": "", "why": "Basic phone from a new Indian brand.", "tags": ["basic"], "score": 3},
