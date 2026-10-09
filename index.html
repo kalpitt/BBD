@@ -422,6 +422,7 @@ function how(x){
 }
 const where=x=>x.s==="Both"?"Amazon & Flipkart":"On "+x.s;
 function extras(x){
+  if(x.noExtra)return [];
   const e=D.sale.extra||{};
   return (x.s==="Both"?[e.Flipkart,e.Amazon]:[e[x.s]]).filter(Boolean);
 }
