@@ -1,5 +1,5 @@
 {
-  "updated": "10 Oct, 2:35 am",
+  "updated": "10 Oct, 4:55 am",
   "checked": "10 Oct, 2:33 am",
   "askUrl": "https://ask.kalpit.me",
   "amazonTag": "bestdeallive-21",
@@ -34,7 +34,8 @@
       {"id": "ac", "label": "AC", "noun": "an AC", "min": 28000, "max": 60000, "step": 500, "def": 36000},
       {"id": "microwave", "label": "Microwave", "noun": "a microwave", "min": 4000, "max": 18000, "step": 250, "def": 15000},
       {"id": "chimney", "label": "Chimney", "noun": "a chimney", "min": 6000, "max": 20000, "step": 250, "def": 15000},
-      {"id": "dishwasher", "label": "Dishwasher", "noun": "a dishwasher", "min": 30000, "max": 60000, "step": 500, "def": 45000}
+      {"id": "dishwasher", "label": "Dishwasher", "noun": "a dishwasher", "min": 30000, "max": 60000, "step": 500, "def": 45000},
+      {"id": "vacuum", "label": "Robot vacuum", "noun": "a robot vacuum", "min": 10000, "max": 40000, "step": 500, "def": 16000}
     ]},
     {"id": "audio", "label": "Audio & chargers", "noun": "", "types": [
       {"id": "earbuds", "label": "Earbuds", "noun": "earbuds", "min": 900, "max": 16000, "step": 100, "def": 3000},
@@ -45,7 +46,7 @@
     {"id": "gadgets", "label": "Gadgets", "noun": "", "types": [
       {"id": "watches", "label": "Watches", "noun": "a watch", "min": 8000, "max": 30000, "step": 500, "def": 16000},
       {"id": "creator", "label": "Camera & creator", "noun": "camera or creator gear", "min": 4000, "max": 22000, "step": 500, "def": 16000},
-      {"id": "desk", "label": "Desk", "noun": "a monitor or mouse", "min": 5000, "max": 20000, "step": 500, "def": 18000},
+      {"id": "desk", "label": "Desk", "noun": "a monitor or mouse", "min": 4000, "max": 20000, "step": 500, "def": 18000},
       {"id": "hometech", "label": "Tablet & smart home", "noun": "a tablet or smart home device", "min": 3000, "max": 32000, "step": 500, "def": 30000}
     ]}
   ],
@@ -112,7 +113,7 @@
     {"id": "tcl55", "cat": "tv", "n": "TCL 55-inch QD-Mini LED TV", "p": 54990, "max": 62990, "est": true, "aff": true, "s": "Amazon", "card": "Expected sale range. Early deals on Amazon sit at the top of it", "why": "Best picture quality per rupee if you watch a lot of movies.", "tags": [], "score": 7},
     {"id": "ideapad3", "cat": "laptops", "n": "Lenovo IdeaPad Slim 3", "p": 32990, "max": 36990, "est": true, "aff": true, "s": "Both", "card": "Estimate before card offers", "why": "Everyday laptop for students and office work.", "tags": [], "score": 7},
     {"id": "gb4i3", "cat": "laptops", "n": "Samsung Galaxy Book4 (Core i3)", "p": 47990, "was": 53990, "s": "Flipkart", "card": "Reported sale price", "why": "Light, good screen. i3 is fine for browsing and Office.", "tags": [], "score": 5},
-    {"id": "vivo15", "cat": "laptops", "n": "ASUS Vivobook 15", "p": 49990, "max": 54990, "est": true, "aff": true, "s": "Both", "card": "Estimate before card offers", "why": "Bigger screen and more power for work.", "tags": [], "score": 6},
+    {"id": "vivo15", "cat": "laptops", "n": "ASUS Vivobook 15 (Core 3, 8GB/512GB)", "p": 41740, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Bigger screen and more power for work.", "tags": [], "score": 6},
     {"id": "gb4i5", "cat": "laptops", "n": "Samsung Galaxy Book4 (Core i5)", "p": 54990, "s": "Flipkart", "card": "Reported sale price", "why": "The sweet spot of the Book4 range. Pairs well with Samsung phones.", "tags": [], "score": 8},
     {"id": "mbneo", "cat": "laptops", "n": "Apple MacBook Neo (256 GB)", "p": 64990, "aff": true, "s": "Amazon", "card": "Includes bank offer", "why": "The cheapest MacBook. Long battery and a great screen for students and office work.", "tags": [], "score": 8},
     {"id": "gb4i7", "cat": "laptops", "n": "Samsung Galaxy Book4 (Core i7)", "p": 64990, "s": "Flipkart", "card": "Reported sale price", "why": "Only if you do heavy work like Excel models or light editing.", "tags": [], "score": 5},
@@ -145,6 +146,7 @@
     {"id": "dw-hafele13", "cat": "home", "type": "dishwasher", "n": "Hafele 13 place setting", "p": 34490, "was": 38999, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "Lowest-priced dishwasher worth buying.", "tags": [], "score": 6},
     {"id": "dw-bosch14", "cat": "home", "type": "dishwasher", "n": "Bosch 14 place setting", "p": 40750, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "Bosch is the safe choice for Indian utensils.", "tags": [], "score": 8},
     {"id": "dw-bosch13", "cat": "home", "type": "dishwasher", "n": "Bosch 13 place setting", "p": 41590, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "Quiet and reliable.", "tags": [], "score": 6},
+    {"id": "vac-ecovacs-n30", "cat": "home", "type": "vacuum", "n": "ECOVACS DEEBOT N30 robot vacuum & mop", "p": 15999, "aff": true, "s": "Amazon", "card": "After bank offer", "why": "Vacuums and mops in one go. Handy for daily dust on hard floors.", "tags": [], "score": 7},
     {"id": "urbn10", "cat": "audio", "n": "Urbn 10000 mAh MagSafe power bank", "p": 999, "was": 1299, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Snaps on to iPhones. Great price.", "tags": [], "score": 6, "type": "chargers"},
     {"id": "ambrane10", "cat": "audio", "n": "Ambrane 10000 mAh MagSafe power bank", "p": 1399, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Wireless power bank from a reliable brand.", "tags": [], "score": 5, "type": "chargers"},
     {"id": "bulletsz3", "cat": "audio", "n": "OnePlus Bullets Z3 neckband", "p": 1499, "was": 1688, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Neckband for calls and gym.", "tags": [], "score": 6, "type": "earbuds"},
@@ -155,6 +157,8 @@
     {"id": "buds4pro", "cat": "audio", "n": "OnePlus Nord Buds 4 Pro", "p": 3999, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Proper noise cancelling for cheap.", "tags": [], "score": 8, "type": "earbuds"},
     {"id": "lgc6", "cat": "tv", "n": "LG C6 55-inch OLED evo TV", "p": 131990, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Waiting for an OLED? This is the one. Insane value for an OLED.", "tags": [], "score": 8},
     {"id": "hisense75", "cat": "tv", "n": "Hisense 75-inch E75Q QLED TV (75E75Q)", "p": 64249, "was": 79990, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Huge 75-inch QLED at its lowest price. Great panel for the money.", "tags": [], "score": 7},
+    {"id": "xiaomi65xpro", "cat": "tv", "n": "Xiaomi 65-inch X Pro 4K QLED TV", "p": 45003, "aff": true, "s": "Amazon", "card": "After SBI card offer", "why": "A 65-inch QLED for about the price of a good 55-inch. Big SBI card discount.", "tags": [], "score": 7},
+    {"id": "iffalcon65", "cat": "tv", "n": "iFFALCON 65-inch 4K TV", "p": 35999, "aff": true, "s": "Amazon", "card": "After SBI card offer", "why": "Cheapest 65-inch here, from TCL's budget brand. Basic picture, huge screen.", "tags": [], "score": 6},
     {"id": "dell15", "cat": "laptops", "n": "Dell 15 (Core Ultra 5 225H, 16GB/512GB)", "p": 74990, "list": 82490, "bank": {"name": "SBI", "off": 7500}, "aff": true, "s": "Amazon", "card": "Includes SBI card offer", "why": "The only laptop deal worth flagging. New Intel chip, 16 GB RAM and Office included.", "tags": [], "score": 7},
     {"id": "wfxm5", "cat": "audio", "type": "earbuds", "n": "Sony WF-1000XM5", "p": 14999, "was": 16989, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Still some of the best noise-cancelling earbuds, at an all-time low.", "tags": [], "score": 8},
     {"id": "boseqcbuds", "cat": "audio", "type": "earbuds", "n": "Bose QuietComfort Earbuds", "p": 8999, "list": 9999, "bank": {"name": "Bank", "off": 1000}, "aff": true, "s": "Amazon", "card": "Includes bank offer", "why": "A steal for Bose noise cancelling.", "tags": [], "score": 8},
@@ -181,7 +185,7 @@
     {"id": "sandisk128", "cat": "gadgets", "type": "creator", "n": "SanDisk Extreme PRO 128GB microSD", "p": 4399, "aff": true, "s": "Amazon", "card": "Sale price", "why": "The card for your action cam or drone. Lowest price it's been.", "tags": [], "score": 7},
     {"id": "t7shield", "cat": "gadgets", "type": "creator", "n": "Samsung T7 Shield 1TB portable SSD", "p": 16199, "list": 17999, "bank": {"name": "SBI", "off": 1800}, "aff": true, "s": "Amazon", "card": "Includes SBI card offer", "why": "Rugged, fast and at its all-time low.", "tags": [], "score": 7},
     {"id": "lg27us500", "cat": "gadgets", "type": "desk", "n": "LG 27US500 27-inch 4K monitor", "p": 17399, "was": 19999, "list": 18899, "bank": {"name": "SBI", "off": 1500}, "aff": true, "s": "Amazon", "card": "Includes SBI card offer", "why": "27-inch 4K IPS with sharp text. Easiest desk upgrade.", "tags": [], "score": 8},
-    {"id": "mxmaster3s", "cat": "gadgets", "type": "desk", "n": "Logitech MX Master 3S", "p": 5795, "was": 7995, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Best productivity mouse, near its lowest price ever.", "tags": [], "score": 8},
+    {"id": "mxmaster3s", "cat": "gadgets", "type": "desk", "n": "Logitech MX Master 3S", "p": 4416, "was": 7995, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Best productivity mouse, near its lowest price ever.", "tags": [], "score": 8},
     {"id": "oppad2", "cat": "gadgets", "type": "hometech", "n": "OnePlus Pad 2 (12GB/256GB)", "p": 29999, "list": 31999, "bank": {"name": "SBI", "off": 2000}, "aff": true, "s": "Amazon", "card": "Includes SBI card offer", "why": "Great screen and great speakers. SBI card knocks it down further.", "tags": [], "score": 8},
     {"id": "echodot5", "cat": "gadgets", "type": "hometech", "n": "Amazon Echo Dot (5th Gen)", "p": 4499, "was": 5499, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Cheapest way to get Alexa in a room.", "tags": [], "score": 6},
     {"id": "firestick4ks", "cat": "gadgets", "type": "hometech", "n": "Amazon Fire TV Stick 4K Select", "p": 3499, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Makes any TV smart with 4K streaming, at a good price.", "tags": [], "score": 6}

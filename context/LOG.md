@@ -148,3 +148,4 @@ Template:
   drop a channel. Possible add: pricehistory.app category lows (see docs/OPS.md).
 
 - 10 Oct 2:35 am (price check): HMD Vibe2 5G 10,499 → 11,399 (Flipkart listing, after bank offer, steady for a day).
+- 10 Oct 4:55 am: added Xiaomi 65" X Pro QLED, iFFALCON 65", ECOVACS N30 (new Home type: Robot vacuum), from deal-channel posts. MX Master 3S 5,795 → 4,416; Vivobook 15 firmed at 41,740 (Core 3, 8GB/512GB, Amazon). Desk slider min 4,000.
