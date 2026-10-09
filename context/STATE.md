@@ -8,10 +8,8 @@ _Last updated: 8 Oct 2026, 6:45 pm IST. Overwrite this file at the end of every 
   (Watches / Camera & creator / Desk / Tablet & smart home). 8 Oct: Kalpit added 32 Amazon affiliate
   picks (helped by @r3dash's deal threads, credited in README); price bands tightened to ~5-8% of price; TVs now include an OLED and a 75-inch (slider to ₹1.4L). Phones cover ₹7k–₹1.6L, with use-case chips (parents, basic, battery,
   camera, gaming, iPhone).
-- Ask box is live at https://ask.kalpit.me (`askUrl`). Until ~9 Oct 2:30 pm IST the page
-  falls back to the old workers.dev address (`askFallback`) while DNS caches update.
-  Then: delete `askFallback`, and Kalpit turns off workers.dev in Cloudflare. A reminder
-  is scheduled into this project's chat for 9 Oct, 2:30 pm IST. The Ask box leads with the
+- Ask box is live at https://ask.kalpit.me (`askUrl`). The old workers.dev fallback was
+  removed on 9 Oct. It leads with the
   shortlist's top pick, respects budget, and refuses off-list questions.
 - Share links keep the view: `kalpit.me/BBD#phones-15000-parents`, `#home-ac-36000`.
   WhatsApp shows a preview image (`og.png`).
@@ -86,7 +84,7 @@ _Last updated: 8 Oct 2026, 6:45 pm IST. Overwrite this file at the end of every 
    them as images to firm up TV prices (TVs are `est: true`).
 4. Optional: EarnKaro links for Flipkart items.
 5. ~~Cloudflare Worker builds fail~~ Resolved: all builds green as of 8 Oct, 7:23 pm.
-6. After 9 Oct: turn off workers.dev for bbd-ask, and optionally delete the two leftover
+6. Turn off workers.dev (safe since 9 Oct) for bbd-ask, and optionally delete the two leftover
    `ccr-*` branches on GitHub (they point at the clean commit; deletion was blocked for agents).
 7. Kalpit wants a repo-wide review of improvement opportunities (deferred, not started).
 
@@ -128,9 +126,6 @@ _Last updated: 8 Oct 2026, 6:45 pm IST. Overwrite this file at the end of every 
   Check results with `curl -s https://api.github.com/repos/kalpitt/BBD/commits/<sha>/check-runs`.
 - Run the docs/OPS.md regression questions once the Worker build is confirmed.
 - Explore the Amazon affiliate account options (open ask 0).
-- 9 Oct afternoon: remove `askFallback` (data.json, docs/DATA.md, this file) once public
-  DNS shows Cloudflare nameservers; verify the Ask box on the live page; then tell Kalpit
-  to disable workers.dev.
 - Fix the Worker build once Kalpit shares the log.
 - Apply price and pick changes as Kalpit sends them (`/update-picks`).
 - On 8–9 Oct, spot-check live sale prices against data.json, especially the estimates.

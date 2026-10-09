@@ -127,3 +127,10 @@ Template:
   both must be listed together. WhatsApp's in-app browser often can't share files or
   download, hence the press-and-hold popup.
 - Next: confirm the Worker build; explore the old Amazon affiliate account in a new chat.
+
+## 2026-10-09: Ask box fallback removed
+- Did: public DNS (Google, Cloudflare) shows Cloudflare nameservers and resolves
+  ask.kalpit.me, so `askFallback` was removed from data.json and the notes.
+- Decided: the page's retry loop stays (it's harmless with one URL, and reusable if a
+  backup address is ever needed).
+- Next: Kalpit turns off workers.dev for bbd-ask.
