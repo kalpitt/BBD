@@ -74,8 +74,14 @@ revert first and fix after.
 public deal channels. The price check runs it every 3 hours and sends Kalpit up to 3
 suggestions; it never edits picks.
 - **Sources:** public Telegram channels in `CHANNELS` at the top of the script. Their
-  `t.me/s/<name>` page shows recent posts without logging in. X, Reddit and most deal
-  websites block automated reads from the cloud (tested 9 Oct).
+  `t.me/s/<name>` page shows recent posts without logging in. Posts for other shops
+  (Croma, Zepto…) are dropped; the site links only Amazon and Flipkart.
+- **Tested 9 Oct, not wired in yet:** readable websites with price history:
+  pricehistory.app/offers/<category> (low/high/today), pricebefore.com/<category>/?price-drop=week,
+  desidime.com/groups/<category>, dealsmagnet.com/new. Blocked from the cloud: X, Reddit,
+  Smartprix, 91mobiles, MySmartPrice, Gadgets360, IndiaFreeStuff, DealsFreak. No public
+  Telegram preview: FreeKaaMaal, DealsFreak. Mostly fashion/beauty: DealsMagnet and
+  GrabOn channels.
 - **Add a channel:** open `https://t.me/s/<name>`. If it lists posts with prices, add
   the name to `CHANNELS` and run the script once. A small page saying "Contact @name"
   means no public preview.

@@ -26,7 +26,7 @@ _Last updated: 8 Oct 2026, 6:45 pm IST. Overwrite this file at the end of every 
   the Routine after the sale (~20 Oct). Its prompt starts with `git pull --rebase`, which is
   safe after the 8 Oct history squash (tested). Never use plain `git pull` in an old clone.
 - **Deal scout (since 9 Oct):** each price-check run also runs `scripts/deal-scout.mjs`
-  (public Telegram deal channels, last 3.5 h) and adds up to 3 new-product suggestions
+  (7 public Telegram deal channels, last 3.5 h) and adds up to 3 new-product suggestions
   to the phone notification, including kinds the site doesn't list yet. Suggestions
   only; Kalpit replies "add X". X, Reddit and most deal websites block cloud reads
   (tested 9 Oct); Telegram's public `t.me/s/` pages work. See docs/OPS.md → Deal scout.

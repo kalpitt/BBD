@@ -11,7 +11,7 @@ import { execFileSync } from "node:child_process";
 
 // Public Telegram channels: t.me/s/<handle> shows recent posts without logging in.
 // Add a handle only after checking its t.me/s page lists posts (see docs/OPS.md).
-const CHANNELS = ["desidime", "dealsheaven"];
+const CHANNELS = ["DealsAndDrops", "telugutechtvdeals", "desidime", "lootalerts", "lootping", "realearnkaro", "dealsheaven"];
 
 const hoursArg = process.argv.indexOf("--hours");
 const HOURS = hoursArg > 0 ? Number(process.argv[hoursArg + 1]) : 3.5;
@@ -45,7 +45,9 @@ function readChannel(handle) {
       minId = Math.min(minId, id);
       if (!Number.isFinite(time)) continue;
       oldest = Math.min(oldest, time);
-      if (text && time >= since) posts.push({ src: handle, link: `t.me/${handle}/${id}`, time, text: decode(text) });
+      // The shop is often only in the link (amzn.to, fkrt.it), which decode() drops.
+      const hrefs = text ? [...text.matchAll(/href="([^"]+)"/g)].map(m => m[1]).join(" ") : "";
+      if (text && time >= since) posts.push({ src: handle, link: `t.me/${handle}/${id}`, time, text: decode(text), hrefs });
     }
     if (oldest < since || !Number.isFinite(minId)) break;
     before = `?before=${minId}`;
@@ -88,11 +90,14 @@ const titleOf = t => {
   return head.length >= 20 ? head : t;
 };
 
+// "Deal price: ₹X" / "Current price: ₹X" beats the first amount ("₹1,170 dropped!").
 const price = t => {
-  const m = t.match(/(?:₹|rs\.?|inr|@|💰|\bat(?= ?\d))\s?(?:deal\s?)?(\d[\d,]*)/i);
+  const m = t.match(/(?:current|deal|offer) price\s?:?\s?₹?\s?(\d[\d,]*)/i) || t.match(/(?:₹|rs\.?|inr|@|💰|\bat(?= ?\d))\s?(?:deal\s?)?(\d[\d,]*)/i);
   return m ? Number(m[1].replace(/,/g, "")) : null;
 };
-const STORE = /amazon|flipkart|croma|reliance digital|vijay sales|tata cliq|jiomart|zepto|blinkit|myntra|ajio/i;
+const STORES = [["Amazon", /amazon|amzn/i], ["Flipkart", /flipkart|fkrt/i], ["Croma", /croma/i], ["Reliance Digital", /reliance ?digital/i],
+  ["Vijay Sales", /vijay ?sales/i], ["Tata CLiQ", /tata ?cliq/i], ["JioMart", /jiomart/i], ["Zepto", /zepto/i], ["Blinkit", /blinkit/i]];
+const storeOf = p => (STORES.find(([, re]) => re.test(p.text + " " + p.hrefs)) || ["store?"])[0];
 const off = t => (t.match(/(\d{2})\s?%\s?off/i) || [])[1];
 
 // Picks already on the site, to tell new deals from price news about current picks.
@@ -111,13 +116,21 @@ for (const h of CHANNELS) {
   try { all.push(...readChannel(h)); } catch (e) { failed.push(`${h} (${e.message.split("\n")[0].slice(0, 80)})`); }
 }
 
+// Shorter lines for the agent to read: no emoji or channel boilerplate.
+const tidy = t => t
+  .replace(/available on #?\w+|prices? & promotions subject to change\.?|grab this deal -?|read more -?|buy now:? -?|view all [\w ]+ deals/gi, "")
+  .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}\u{2060}]/gu, "")
+  .replace(/\s+/g, " ").trim();
+
+const NOISE = new Set(["loot", "looot", "lowest", "grab", "deal", "deals", "price", "best", "offer", "on", "at", "off", "upto", "up", "to", "flat", "massive", "good", "sale", "new", "the", "for", "with", "fast"]);
 const seen = new Set(), fresh = [], known = [];
 let dropped = 0;
 for (const p of all.sort((a, b) => b.time - a.time)) {
   const lower = p.text.toLowerCase();
   const rule = RULES.find(([re]) => re.test(titleOf(lower)));
   const rs = price(p.text);
-  const key = tok(p.text).slice(0, 6).join(" ");
+  // Same product reposted by several channels: compare the first words of the name.
+  const key = tok(titleOf(p.text)).filter(w => !NOISE.has(w)).slice(0, 5).join(" ");
   // No price = a category-wide sale, not a product we could list.
   if (!rule || SKIP.test(lower) || rs === null || rs < 1000 || seen.has(key)) { dropped++; continue; }
   seen.add(key);
@@ -125,8 +138,11 @@ for (const p of all.sort((a, b) => b.time - a.time)) {
   const label = cat === "new" ? "new category?" : type === null ? `${cat}: new type?` : type ? `${cat}/${type}` : cat;
   const pick = onSite(titleOf(p.text));
   const when = new Date(p.time).toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata", hour: "numeric", minute: "2-digit" });
-  const line = `- [${pick ? `${label} → maybe on site: ${pick}` : label}] ${p.text.slice(0, 150)}` +
-    ` | ₹${rs.toLocaleString("en-IN")}${off(p.text) ? `, ${off(p.text)}% off` : ""} | ${(p.text.match(STORE) || ["store?"])[0]} | ${p.src} ${when} | ${p.link}`;
+  const store = storeOf(p);
+  // The site links only to Amazon and Flipkart.
+  if (store !== "Amazon" && store !== "Flipkart" && store !== "store?") { dropped++; continue; }
+  const line = `- [${pick ? `${label} → maybe on site: ${pick}` : label}] ${tidy(p.text).slice(0, 110)}` +
+    ` | ₹${rs.toLocaleString("en-IN")}${off(p.text) ? `, ${off(p.text)}% off` : ""} | ${store} | ${p.src} ${when} | ${p.link}`;
   (pick ? known : fresh).push(line);
 }
 

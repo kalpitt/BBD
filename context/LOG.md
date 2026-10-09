@@ -134,3 +134,15 @@ Template:
 - Decided: the page's retry loop stays (it's harmless with one URL, and reusable if a
   backup address is ever needed).
 - Next: Kalpit turns off workers.dev for bbd-ask.
+
+## 2026-10-09 (10 pm): deal scout added to the price check
+- Did: tested whether an agent can watch social media for deals. X needs login or a paid
+  API (~$0.005 per post read), and Reddit blocks cloud reads and needs API approval.
+  Most deal websites block cloud reads too. Public Telegram previews (`t.me/s/<name>`) work and are
+  minutes fresh. Built `scripts/deal-scout.mjs` (7 channels, category tags, store from
+  links, repost dedupe) and step 4b in the price-check skill: up to 3 suggestions per run
+  in the phone notification, including new kinds of product. Never edits picks.
+- Decided (Kalpit): new products only, same notification as the price check, include
+  kinds the site doesn't list yet.
+- Next: watch the first few notifications; if they're noisy, tighten `RULES`/`SKIP` or
+  drop a channel. Possible add: pricehistory.app category lows (see docs/OPS.md).
