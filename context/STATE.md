@@ -16,12 +16,8 @@ under 50 lines. Round-3 review and what shipped: docs/IDEAS.md → Product revie
 - Price check: Routine "BBD price check, Sonnet (9:05 am to 12:05 am, every 3h)" wakes the
   Sonnet session "BBD price checker, Sonnet". Old Opus Routine and a fresh-session test
   Routine are paused (fresh sessions can't push). Details: AGENTS.md → Why things are.
-- Visit counts (10 Oct): daily visitors (no id), store taps per pick, tabs, shares, AI
-  answers in the private D1 `bbd-stats`; read via Kalpit's Cloudflare connector
-  (docs/OPS.md → Traffic). Kalpit: `?nostats` on his devices.
-- Cloudflare: Web Analytics live (filter path `/BBD`); Email Routing on kalpit.me
-  (Porkbun MX/SPF removed); Worker rebuilds only when `worker/*` or `wrangler.toml` change.
-
+- Visit counts: private D1 `bbd-stats` (docs/OPS.md → Traffic). Kalpit: `?nostats` on his devices.
+- Cloudflare: Web Analytics (path `/BBD`), Email Routing; Worker rebuilds only on `worker/*`/`wrangler.toml`.
 - Ask box (11 Oct): slim prompt via `planAnswer()` (~1/3 size), typed budget = cap, named
   products compared, affiliate prices forced to bands in `fixPrices()`. 10 regression Qs pass.
 - Price-check alarm: Worker cron emails Kalpit once a day if `checked` > 10.5 h (stops after 8 Nov).
@@ -46,14 +42,10 @@ under 50 lines. Round-3 review and what shipped: docs/IDEAS.md → Product revie
 - Laptops: under ₹40k only the Acer Aspire One 14; no gaming laptop.
 - 7 picks added 8 Oct have one source only (Sony WF-1000XM5, Bose QC Earbuds, Sennheiser
   IE 200, Echo Dot 5th Gen, Fire TV Stick 4K Select, Spinnaker Bradner, Cadola Lydden Hill).
-- `was` on 60 of 168 picks; gift prices are plain listing prices (bank offers unchecked).
+- `was` on 60 of 182 picks; gift prices are plain listing prices (bank offers unchecked).
 - "Send to Kalpit" rate limit (3/day/visitor) is per Worker instance, best effort.
-
 - Amazon links: 95 picks still open a search. Add a `/dp/` link only when an amazon.in
   listing title confirms model and variant; never open amazon.in with tools.
-
 ## Next steps for an agent
-1. Check the Sonnet price checker's first runs (3:05 pm onward) pushed or reported cleanly.
-2. After a day of counts, read `bbd-stats` (docs/OPS.md → Traffic) and tell Kalpit what
-   it says: picks nobody taps, popular tabs with thin picks, where visitors come from.
-3. Ideas still open in docs/IDEAS.md: G15 weekly question.
+1. Read `bbd-stats` after a day of counts and tell Kalpit what it says (docs/OPS.md → Traffic).
+2. Ideas still open in docs/IDEAS.md: G15 weekly question, R17 later ideas.
