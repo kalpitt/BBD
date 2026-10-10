@@ -281,3 +281,17 @@ Template:
   allows that). The page ignores hash-only URL changes (reload to test a #view).
   The alt cards sit outside the scratch card, so a shared link shows them before the reveal.
 - Next: STATE.md "Next steps".
+
+## 2026-10-10 (11:35 am): Kalpit's answers; gifts tab, share button, Diwali sunset
+- Decided (Kalpit): yes to Diwali gifts tab (A3, new tab, up to ~8 new gifts), "Share
+  with family" button (C2), one dated report moves an affiliate band (G6). Site and
+  price check stay on through Diwali, 8 Nov (AGENTS rule 6). Unknown phone frames are
+  plastic (Redmi Note 15 Pro+, Redmi Note 17 Pro, Vivo T5 Pro, Nord CE6 Lite, iQOO Z11xa).
+- Did: gifts tab (`gifts` category, `gift: true` pulls picks from other tabs; twin code
+  in index.html, worker.js, check-data.mjs). 8 Flipkart gifts, prices read on the
+  listings (no bank offer checked). Share button: top 3 + tab link, no store links.
+  `was` for Eureka S2, Philips AC1711, Samsung 43". Worker: gift questions → gifts
+  tab; all 7 regression questions pass (new #7 gift question).
+- Gotchas: pricebefore's catalogue is thin for 2026 models; most new picks have no
+  Sep history. Gift picks are not `auto` (Kalpit OK'd the batch), but he can still veto.
+- Next: STATE.md "Next steps".
