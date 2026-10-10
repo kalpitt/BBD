@@ -93,6 +93,9 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
 7. **Twin code:** `nameIndex()`/`mentions()`, `big()` and the ranking exist in both
    `index.html` and `worker/worker.js` (ranking also in `scripts/check-data.mjs`).
    Change all copies or none.
+8. **Videos (Kalpit, 10 Oct):** every video follows John Lasseter's animation principles
+   and the same price honesty (real picks, bands for affiliate items, real AI answers,
+   no count-ups). Use `/promo-video` (`.claude/skills/promo-video/`).
 
 ## Why things are the way they are
 - **Price bands on affiliate items:** Amazon Associates doesn't allow showing hand-typed
@@ -160,5 +163,6 @@ docs/PICKS.md       what makes a good pick; who may add what; auto-add limits
 docs/IDEAS.md       improvement ideas from the 10 Oct strategy review, with status
 context/STATE.md    live snapshot (≤ 50 lines): read first, overwrite at the end
 context/LOG.md      append-only session log (newest at the bottom)
-.claude/skills/     orient, handoff, update-picks, price-check (scheduled every 3h, incl. deal scout)
+.claude/skills/     orient, handoff, update-picks, price-check (scheduled every 3h, incl. deal scout),
+                    promo-video (code-made promo video + its source in src/)
 ```
