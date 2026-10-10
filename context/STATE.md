@@ -39,7 +39,6 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
   IE 200, Echo Dot 5th Gen, Fire TV Stick 4K Select, Spinnaker Bradner, Cadola Lydden Hill).
 - `was` on 60 of 163 picks. pricebefore has no Sep history for 11 of the 15 picks added
   10 Oct (or the 8 gifts). HP OmniBook skipped: flat ₹1,22,990 looks like list price.
-- Ask box can lead with the shortlist's top pick when a question names a brand (IDEAS A6).
 - Not added (no BBD price found): Poco M8, Oppo K13 / K13 Turbo Pro, Realme P4 Pro.
 - Echo/Fire TV commission rate isn't in Amazon's table (assumed under ₹250, exact price).
 - Price helpers: pricebefore.com pages have `dates`/`prices` arrays; Flipkart pages
