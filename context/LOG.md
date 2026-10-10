@@ -413,3 +413,13 @@ Template:
   minus our one test visit). Added daily visitors without an id (`visit` new/back: the
   browser keeps only the date of its last visit), `?nostats=off`, and a footer note when
   a browser isn't counted. Kalpit chose no tracking cookies (trust, DPDP/GDPR).
+
+## 2026-10-10 (9:45 pm): handoff for the visit-counts session
+- Decided: counts stay private (no public endpoint, AGENTS rule 5); no tracking cookies
+  or visitor ids (trust first; DPDP/GDPR would need notices and consent).
+- Gotchas: creating Cloudflare resources through the connector needs Kalpit's explicit OK
+  (the safety check blocks it otherwise). `wrangler dev` here needs a copy of the config
+  without the AI binding (AI needs a login). Background servers in the cloud container can
+  die between commands: restart them before a test. A Durable Object class can't just be
+  removed: `wrangler.toml` keeps the v1 migration plus a v2 `deleted_classes`.
+- Next: STATE.md "Next steps".

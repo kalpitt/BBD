@@ -1,6 +1,6 @@
 # STATE: where BBD is right now
 
-_Last updated: 10 Oct 2026, 5:25 pm IST. Overwrite at the end of every session; keep it
+_Last updated: 10 Oct 2026, 9:45 pm IST. Overwrite at the end of every session; keep it
 under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 
 ## Live
@@ -32,7 +32,8 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 1. Nothing (4a) Pro: launch ₹39,999, Jun low ₹44,999 (pricebefore); ₹49,999 now. Keep?
 2. `add-bbd-redirect` in Kalpit.me: he'll merge it first thing in that repo.
 3. Optional: EarnKaro links for Flipkart items; Amazon product API (explore in a new chat).
-4. Reach ideas C4 (WhatsApp Channel button, needs his channel link) and C5 (price-drop
+4. Open kalpit.me/BBD/?nostats once on each of his devices (his own visits skew counts).
+5. Reach ideas C4 (WhatsApp Channel button, needs his channel link) and C5 (price-drop
    post line in the price-check notification): he says yes, an agent builds them.
 
 ## Known gaps
@@ -48,4 +49,6 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 ## Next steps for an agent
 1. Check the Sonnet price checker's first runs (3:05 pm onward) pushed or reported cleanly.
 2. Price-check Routine prompt: can only be edited from its own session (skill now says "write to you").
-3. Ideas still open in docs/IDEAS.md: G15 weekly question.
+3. After a day of counts, read `bbd-stats` (docs/OPS.md → Traffic) and tell Kalpit what
+   it says: picks nobody taps, popular tabs with thin picks, where visitors come from.
+4. Ideas still open in docs/IDEAS.md: G15 weekly question.
