@@ -21,3 +21,16 @@ jobs:
         with:
           node-version: 20
       - run: node scripts/check-data.mjs
+
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # Playwright drives the runner's preinstalled Chrome (no browser download)
+      - run: npm install -g playwright@1.56.1
+      - run: node scripts/smoke.mjs

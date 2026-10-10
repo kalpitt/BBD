@@ -49,8 +49,8 @@ is **not** a layer: it's an alternative card, not stacked on the bank offer.
 Other top-level keys: `updated` (shown in the footer; **change it on every
 edit**, in IST and exactly this shape, e.g. `"9 Oct, 2:15 pm"`), `checked` (same shape; the
 last time the price checker compared prices, even with no changes. The page shows it as
-"Prices checked 12 min ago", falling back to `updated` if `checked` is missing), `askUrl` (Ask box address, `https://ask.kalpit.me`), `amazonTag` (don't change), `sale` (dates, `extra` = the year-round 5% co-branded card line per store, and card
-offers), `categories` (slider ranges), `fakeMrp` (the "ignore the % off" table) and
+"Prices checked 12 min ago", falling back to `updated` if `checked` is missing), `askUrl` (Ask box address), `amazonTag` (don't change), `sale` (dates, `extra` = the year-round 5% co-branded card line per store, and card
+offers), `categories` (slider ranges), `fakeMrp` (the "ignore the % off" table), `removed` (names Kalpit took off; agents must not re-add them, the validator checks) and
 `faq` (quick answers).
 
 ## Worked examples

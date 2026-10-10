@@ -9,8 +9,16 @@ description: Change prices, add/remove picks, or edit verdicts and quick answers
    - `aff: true` items never get exact ₹ amounts in `why`, `card` or `faq`.
    - Don't invent prices. If Kalpit's message is ambiguous (which variant? card price
      or not?), ask one short question first.
-   - "keep X" / "keep all": delete `"auto": true` from those picks (agent-added picks
-     he has now approved). "remove X": delete the pick.
+   - **A price from Kalpit is final.** Don't second-guess it against listings. Commit
+     it as `Prices: ...` so the price check knows it's his.
+   - **"add X"**: you need store, exact model and price. Missing any? Ask once: "Which
+     store, exact model, and price?" Use an existing category and type (a new tab or
+     type: confirm with him first), copy a neighbouring pick's fields, no `auto` (it's
+     his pick), and lower the tab's `min` if the price sits below it.
+   - **"keep"** (no name) = every pick the validator lists as auto; "keep X" = that one:
+     delete `"auto": true`. **"remove X"** / "remove the auto ones": delete the pick(s)
+     and add each name to `removed` in data.json. Name the picks in your reply.
+     Rules for agent-added picks: `docs/PICKS.md`.
    - Bump `updated` to the current IST time, e.g. `"9 Oct, 2:15 pm"`.
 3. `node scripts/check-data.mjs` must print ✓. Read the warnings and fix any that matter.
 4. Optional for layout changes: preview with `python3 -m http.server 8765`.

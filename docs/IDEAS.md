@@ -18,6 +18,15 @@ Status: ✅ done · 🔜 next · 💬 needs Kalpit · ⏸ later / only if data s
 | G3 | **Worker builds only when Worker code changes.** Today every push (even "Price check: no changes") rebuilds the ask-box Worker | 💬 Cloudflare dashboard → Workers & Pages → bbd-ask → Settings → Build → Build watch paths: include `worker/*` and `wrangler.toml` |
 | G4 | **Test page and Worker code before it goes live.** `scripts/smoke.mjs` opens the page in a headless browser and checks picks render with no errors; the validator now also syntax-checks `index.html`'s scripts | ✅ |
 | G5 | **One branch rule:** cloud sessions are handed `ccr-*` branches, which pile up. AGENTS.md now says push to `main` only | ✅ (leftover branches: 💬 delete in GitHub → Branches) |
+| G7 | **Goals at the top of AGENTS.md**; affiliate never a reason | ✅ (round 2, 10 Oct) |
+| G8 | **"Good pick" definition and who-decides-what table** in `docs/PICKS.md`; AGENTS.md just points to it | ✅ |
+| G9 | **Validator enforces the auto-add limits**: max 4 waiting, 2 new per change, can't be top pick where one of Kalpit's would lead (sweeps every budget), no `est`, not in `removed`. Plus: affiliate price text is an error (₹, Rs, INR, 1,23,499), exact store hosts, no foreign `tag`/`affid`/`utm` params, `updated`/`checked` format, near-duplicate names, phone numbers or tokens in notes | ✅ |
+| G10 | **Smoke test** covers lowest/highest budget and the shared-link scratch card, and runs in GitHub after each push | ✅ |
+| G11 | Price check: top picks and `est` first; Kalpit's own prices are final; `checked` stamp at most every 6 h; no LOG lines. Optional: run the Routine only 8 am–11 pm | ✅ skill · 💬 schedule |
+| G12 | Clearer replies: "add X", bare "keep", "remove X" (adds to `removed`), "undo" | ✅ |
+| G13 | "Done" checks are GET-only; a real ask-box question only after Worker changes | ✅ |
+| G14 | A Claude hook that runs the validator before every `git push` (project `.claude/settings.json`) | 💬 changes every session's setup |
+| G15 | Weekly one-liner to Kalpit: "What did people ask you about on WhatsApp this week?" Feeds picks and FAQ with no tracking | 🔜 |
 | G6 | Amazon evidence bar: affiliate prices need two dated reports, so the 78 banded items rarely get rechecked. Option: let one dated source move a band (bands are ~5–8% wide anyway) | 💬 |
 
 ## Helping friends and family (goal a)

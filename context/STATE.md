@@ -1,27 +1,26 @@
 # STATE: where BBD is right now
 
-_Last updated: 10 Oct 2026, 8:30 am IST. Overwrite at the end of every session; keep it
+_Last updated: 10 Oct 2026, 10:30 am IST. Overwrite at the end of every session; keep it
 under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 
 ## Live
-- https://kalpit.me/BBD/: 138 picks in Phones, TVs, Laptops, Home, Audio & chargers,
-  Fitness, Gadgets. Ask box at https://ask.kalpit.me (`askUrl`). Sales: Amazon from
-  8 Oct, Flipkart from 9 Oct.
+- https://kalpit.me/BBD/: picks in Phones, TVs, Laptops, Home, Audio & chargers,
+  Fitness, Gadgets. Ask box at `askUrl`. Sales: Amazon from 8 Oct, Flipkart from 9 Oct.
 - Price check: Routine "BBD price check (every 3h)" runs `/price-check` in the cloud
   session "BBD price checker", pushes confirmed price changes and notifies Kalpit's
   phone. It also runs the deal scout (public Telegram channels). Delete it after the sale.
 - DNS on Cloudflare (DNS-only records; registrar and email forwarding still Porkbun).
 
-## New since 10 Oct (governance review, see docs/IDEAS.md)
-- **Veto, not approve:** agents and the price check may add up to 2 picks per run
-  under strict rules (AGENTS.md → Adding picks), marked `auto: true`. Kalpit replies
-  "keep" or "remove X". The validator lists picks still marked `auto`.
-- `scripts/smoke.mjs` (headless page check) before pushing `index.html`/Worker changes;
-  the validator now syntax-checks `index.html`'s scripts too.
-- Cloud sessions push to `main` only, never their side branch.
+## New since 10 Oct (two governance reviews; details in docs/IDEAS.md → Governance)
+- Goals now head AGENTS.md. Adding picks: veto, not approve, rules in `docs/PICKS.md`,
+  limits enforced by the validator (max 4 waiting, 2 per run, can't take the top spot).
+- Safety nets: validator blocks affiliate prices, foreign tracking links, near-duplicate
+  names, re-adding `removed` picks, phone numbers or tokens in notes. Smoke test also
+  runs in GitHub after each push. Price check stamps `checked` at most every 6 h.
 
 ## Open asks (waiting on Kalpit)
 1. Cloudflare: set bbd-ask build watch paths to `worker/*` and `wrangler.toml` (IDEAS G3).
+   Optional: change the price-check Routine to every 3 h from 8 am to 11 pm IST only (G11).
 2. Turn on Cloudflare Web Analytics for kalpit.me and share the snippet (IDEAS C1).
 3. Decide: Diwali gift tab (A3), WhatsApp self-send link without the affiliate tag (A5),
    one dated source enough to move an affiliate band (G6).

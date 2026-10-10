@@ -4,6 +4,12 @@
 > `@AGENTS.md` in CLAUDE.md. Start with `/orient`; end with `/handoff`. Price or pick
 > changes: use `/update-picks`.
 
+## Goals, in order (Kalpit, 10 Oct)
+1. **Help friends and family buy well.** Trust is everything.
+2. **Reach people beyond his circle.**
+Affiliate income is a side effect, never a reason to add, rank or reword a pick. When
+two choices conflict, pick the one a first-time buyer would thank you for.
+
 ## What this repo is
 **kalpit.me/BBD**: Kalpit's festive-sale recommendations for friends and family
 (Amazon Great Indian Festival from 8 Oct 2026, Flipkart Big Billion Days from 9 Oct).
@@ -38,31 +44,24 @@ one-person project and speed matters.
   then `node scripts/check-data.mjs`. It must print ✓. Never push on ✖.
 - **Changed `index.html` or `worker/worker.js`?** Also run `node scripts/smoke.mjs`
   (opens the page in a headless browser). It must print ✓. `data.json`-only edits skip it.
+  No Playwright in your tool? Say so in your reply and keep the change small.
+- **Kalpit says "undo"**: revert his or your last change (not a `Price check:` commit)
+  with `git revert`, push, and tell him what came back.
 - **Never** force-push, amend pushed commits, or rewrite history. (One exception, at
   Kalpit's request: history was squashed to one clean commit on 8 Oct.)
 - **Something broke after a push?** Roll back first, investigate second:
   `git revert <sha> && git push`. See `docs/OPS.md`.
-- **Done means live-checked:** https://kalpit.me/BBD/ returns 200, `data.json` loads,
-  and the Worker answers one question with `"debug": true` (that skips the cache).
-- `.github/workflows/check.yml` re-runs the validator after each push and emails Kalpit
-  if it fails. It's an alarm, not a gate: the bad version is already live, so revert.
+- **Done means live-checked** per `docs/OPS.md` → Verify (GET requests only). Send a
+  real `"debug": true` question only after changing `worker/worker.js` (it spends the
+  free AI allowance).
+- `.github/workflows/check.yml` re-runs the validator and the smoke test after each push
+  and emails Kalpit if either fails. It's an alarm, not a gate: the bad version is
+  already live, so revert.
 
 ## Adding picks: veto, not approve (since 10 Oct)
-Kalpit's call: speed matters more than sign-off during the sale. Agents (chat sessions
-and the 3-hourly price check) may **add** a pick without asking, then tell him. He
-replies "remove X" to undo, or "keep" to approve. All of these must hold:
-- It fits an **existing** category and type. New tabs or types still need Kalpit.
-- Price confirmed like the price check's rule: seen on the Flipkart listing itself, or
-  two independent dated (8 Oct 2026 or later) sale reports agree. Exact model and variant.
-- Not banned by his standing calls below (OnePlus N6, second-hand, iPhone push).
-- Mark it `"auto": true` (he hasn't looked yet). `aff: true` items get a band, as always.
-- **It must not take the top spot** from his own picks: give it a `score` at least 1
-  below the best pick within ±20% of its price in that tab. Only if that slot is empty
-  (e.g. 32-inch TVs) may it lead, with a normal score.
-- At most **2 adds per run or chat** without Kalpit; more needs his OK.
-- `why` is a plain one-line reason in his voice, no hype. Credit a new source in README.
-Agents never remove picks or change his scores or verdicts on their own.
-When he says "keep", delete `auto`. The validator lists picks still marked `auto`.
+Agents (chat and the price check) may add a pick without asking, then tell Kalpit; he
+replies "keep" or "remove X". What makes a good pick, who decides what, and the exact
+limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the limits.
 
 ## Rules
 1. **Price honesty.**
@@ -80,8 +79,13 @@ When he says "keep", delete `auto`. The validator lists picks still marked `auto
    Cloudflare or GitHub token to the repo.
 5. **Privacy:** a visitor's WhatsApp number lives only in their own browser
    (localStorage). Never log or collect it.
-6. **Sunset:** after the sale (around 20 Oct), propose a "Sale's over" banner and turning
-   the ask box off. Kalpit decides.
+6. **Sunset:** the sale ends on **20 Oct** unless a later end date has been checked and
+   written here (Amazon's festival may run to Diwali, 8 Nov). Around 18 Oct, check the
+   real end dates and propose to Kalpit: keep the site on through Diwali with a daily
+   price check, or a "Sale's over" banner and the ask box off. Kalpit decides.
+7. **Twin code:** `nameIndex()`/`mentions()`, `big()` and the ranking exist in both
+   `index.html` and `worker/worker.js` (ranking also in `scripts/check-data.mjs`).
+   Change all copies or none.
 
 ## Why things are the way they are
 - **Price bands on affiliate items:** Amazon Associates doesn't allow showing hand-typed
@@ -129,6 +133,7 @@ scripts/smoke.mjs   headless-browser check of the page: run before pushing index
 scripts/deal-scout.mjs  lists new deals from public deal channels (used by price-check)
 docs/DATA.md        every data.json field, with worked examples
 docs/OPS.md         preview, verify deploys, rollback, ask-box testing, symptom → fix
+docs/PICKS.md       what makes a good pick; who may add what; auto-add limits
 docs/IDEAS.md       improvement ideas from the 10 Oct strategy review, with status
 context/STATE.md    live snapshot (≤ 50 lines): read first, overwrite at the end
 context/LOG.md      append-only session log (newest at the bottom)

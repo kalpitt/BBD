@@ -6,7 +6,7 @@ description: Get oriented on the BBD repo (kalpit.me/BBD festive picks) before d
 
 1. `git pull --rebase origin main` so you see Kalpit's phone edits.
 2. Read `context/STATE.md` and the last entry of `context/LOG.md`. Compare STATE with
-   `git log --oneline -10`. If commits landed that STATE doesn't mention, say so.
+   `git log --oneline -10`. If commits landed that STATE doesn't mention, say so (ignore `Price check:` commits).
 3. Health check (GET only; never spend AI questions):
    - First set `ASK=$(grep -o '"askUrl": "[^"]*"' data.json | cut -d'"' -f4)` (the Worker URL)
    - `curl -s -o /dev/null -w "%{http_code}" https://kalpit.me/BBD/` → 200

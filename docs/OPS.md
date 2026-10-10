@@ -83,7 +83,7 @@ revert first and fix after.
 ## Deal scout
 `node scripts/deal-scout.mjs [--hours 6]` lists recent electronics/appliance posts from
 public deal channels. The price check runs it every 3 hours and sends Kalpit up to 3
-suggestions; it never edits picks.
+suggestions, and may add up to 2 picks under `docs/PICKS.md`.
 - **Sources:** public Telegram channels in `CHANNELS` at the top of the script. Their
   `t.me/s/<name>` page shows recent posts without logging in. Posts for other shops
   (Croma, Zepto…) are dropped; the site links only Amazon and Flipkart.

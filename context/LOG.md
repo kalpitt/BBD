@@ -165,3 +165,18 @@ Template:
   that same shell when the pattern appears in the command.
 - Next: Kalpit's dashboard steps (watch paths, Web Analytics); then 32/43-inch TVs and
   seasonal picks (IDEAS A1, A2).
+
+## 2026-10-10 (10:30 am): governance review round 2, four reviewers
+- Did: four parallel reviews (agent workflow, risk, goal fit, tooling). Applied: goals
+  at the top of AGENTS.md; new docs/PICKS.md (good pick, who decides, auto-add limits);
+  validator enforces those limits plus affiliate-price, link, stamp, duplicate-name and
+  leak checks; smoke test covers slider ends and the scratch card and runs in CI;
+  update-picks handles "add X", "keep", "remove X", "undo"; price check focuses on top
+  picks, respects Kalpit's prices, stamps `checked` at most every 6 h, no LOG lines.
+- Decided: auto picks capped at 4 waiting (tightens Kalpit's 2-per-run rule; trust
+  first). Not done without Kalpit: Routine schedule, a git-push hook in
+  `.claude/settings.json`, the WhatsApp affiliate link (A5).
+- Gotchas: the written "±20% score" rule was looser than the page's real ranking; the
+  validator now replays the ranking at every budget. A reload skips the scratch card,
+  so smoke tests it on a fresh page.
+- Next: Kalpit's dashboard steps; 32/43-inch TVs.
