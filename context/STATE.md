@@ -1,6 +1,6 @@
 # STATE: where BBD is right now
 
-_Last updated: 10 Oct 2026, 4:53 pm IST. Overwrite at the end of every session; keep it
+_Last updated: 10 Oct 2026, 5:25 pm IST. Overwrite at the end of every session; keep it
 under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 
 ## Live
@@ -29,6 +29,8 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 1. Nothing (4a) Pro: launch ₹39,999, Jun low ₹44,999 (pricebefore); ₹49,999 now. Keep?
 2. `add-bbd-redirect` in Kalpit.me: he'll merge it first thing in that repo.
 3. Optional: EarnKaro links for Flipkart items; Amazon product API (explore in a new chat).
+4. Reach ideas C4 (WhatsApp Channel button, needs his channel link) and C5 (price-drop
+   post line in the price-check notification): he says yes, an agent builds them.
 
 ## Known gaps
 - OnePlus 13s is no longer top or "Best camera" anywhere (Kalpit: weak camera). Fine.

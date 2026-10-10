@@ -388,3 +388,13 @@ Template:
   the session it posts into, so it was left as is; the skill carries the rule.
 - 3:55 pm, Kalpit: product specs are researched by Haiku subagents only (CLAUDE.md,
   update-picks and price-check skills). The main session checks the answer and writes `spec`.
+
+## 2026-10-10 (5:25 pm): go-to-market planning
+- Did: planned with Kalpit how to share the site beyond his circle (the plan stays out of
+  this public repo). Added reach ideas C4 (WhatsApp Channel "Get price drops" button) and
+  C5 (ready-to-post price-drop line in the price-check notification) to docs/IDEAS.md.
+- Decided: nothing new yet. Posting rules in the plan follow AGENTS.md: link only to
+  kalpit.me/BBD, exact ₹ only where the page shows an exact price.
+- Gotchas: neither sale has announced an end date yet (checked 10 Oct). Diwali is Sun
+  8 Nov, Dhanteras Fri 6 Nov.
+- Next: build C4 and C5 if Kalpit says yes.
