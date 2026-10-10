@@ -1,5 +1,5 @@
 {
-  "updated": "10 Oct, 5:40 am",
+  "updated": "10 Oct, 10:10 am",
   "checked": "10 Oct, 8:32 am",
   "askUrl": "https://ask.kalpit.me",
   "amazonTag": "bestdeallive-21",
@@ -26,7 +26,7 @@
       {"id": "gaming", "label": "Gaming"},
       {"id": "iphone", "label": "iPhone"}
     ]},
-    {"id": "tv", "label": "TVs", "noun": "a TV", "min": 35000, "max": 140000, "step": 1000, "def": 50000},
+    {"id": "tv", "label": "TVs", "noun": "a TV", "min": 10000, "max": 140000, "step": 1000, "def": 50000},
     {"id": "laptops", "label": "Laptops", "noun": "a laptop", "min": 30000, "max": 85000, "step": 1000, "def": 55000, "note": "Everyday and office laptops only. No gaming laptops yet, because no confirmed sale prices."},
     {"id": "home", "label": "Home", "noun": "", "types": [
       {"id": "washing", "label": "Washing machine", "noun": "a washing machine", "min": 12000, "max": 70000, "step": 500, "def": 25000},
@@ -124,6 +124,7 @@
     {"id": "wm-haier9", "cat": "home", "type": "washing", "n": "Haier 9 kg 5-star AI-DBT", "p": 34240, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "Quieter direct-drive motor.", "tags": [], "score": 5},
     {"id": "wm-lg95", "cat": "home", "type": "washing", "n": "LG 9 kg / 5 kg washer dryer", "p": 49740, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "Washer and dryer in one. Good for monsoon and small flats.", "tags": [], "score": 6},
     {"id": "fr-ifb241", "cat": "home", "type": "fridge", "n": "IFB 241 L 3-star convertible", "p": 24490, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "10-in-1 convertible modes at a low price.", "tags": [], "score": 7},
+    {"id": "fr-bosch302", "cat": "home", "type": "fridge", "n": "Bosch 302 L triple-door frost-free", "p": 22240, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Big triple-door fridge for the price of a small double-door. Bosch build quality.", "tags": [], "score": 8},
     {"id": "fr-sam236", "cat": "home", "type": "fridge", "n": "Samsung 236 L 3-star inverter", "p": 27240, "was": 28490, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "Right size for 2–3 people. Samsung service.", "tags": [], "score": 8},
     {"id": "fr-sam256", "cat": "home", "type": "fridge", "n": "Samsung 256 L 3-star inverter", "p": 30490, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "A little more space for 3–4 people.", "tags": [], "score": 8},
     {"id": "fr-haier325", "cat": "home", "type": "fridge", "n": "Haier 325 L 2-star", "p": 32890, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "Biggest double door in this price range.", "tags": [], "score": 6},
@@ -159,6 +160,7 @@
     {"id": "hisense75", "cat": "tv", "n": "Hisense 75-inch E75Q QLED TV (75E75Q)", "p": 64249, "was": 79990, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Huge 75-inch QLED at its lowest price. Great panel for the money.", "tags": [], "score": 7},
     {"id": "xiaomi65xpro", "cat": "tv", "n": "Xiaomi 65-inch X Pro 4K QLED TV", "p": 45003, "aff": true, "s": "Amazon", "card": "After SBI card offer", "why": "A 65-inch QLED for about the price of a good 55-inch. Big SBI card discount.", "tags": [], "score": 7},
     {"id": "iffalcon65", "cat": "tv", "n": "iFFALCON 65-inch 4K TV", "p": 35999, "aff": true, "s": "Amazon", "card": "After SBI card offer", "why": "Cheapest 65-inch here, from TCL's budget brand. Basic picture, huge screen.", "tags": [], "score": 6},
+    {"id": "xiaomi55qled", "cat": "tv", "n": "Xiaomi 55-inch 4K QLED TV", "p": 29987, "list": 35499, "coupon": 500, "bank": {"name": "SBI", "off": 5012}, "aff": true, "s": "Amazon", "card": "After coupon and SBI card offer", "why": "A 55-inch QLED at an entry-level price. Great for a bedroom or a first big TV.", "tags": [], "score": 7},
     {"id": "dell15", "cat": "laptops", "n": "Dell 15 (Core Ultra 5 225H, 16GB/512GB)", "p": 74990, "list": 82490, "bank": {"name": "SBI", "off": 7500}, "aff": true, "s": "Amazon", "card": "Includes SBI card offer", "why": "The only laptop deal worth flagging. New Intel chip, 16 GB RAM and Office included.", "tags": [], "score": 7},
     {"id": "wfxm5", "cat": "audio", "type": "earbuds", "n": "Sony WF-1000XM5", "p": 14999, "was": 16989, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Still some of the best noise-cancelling earbuds, at an all-time low.", "tags": [], "score": 8},
     {"id": "boseqcbuds", "cat": "audio", "type": "earbuds", "n": "Bose QuietComfort Earbuds", "p": 8999, "list": 9999, "bank": {"name": "Bank", "off": 1000}, "aff": true, "s": "Amazon", "card": "Includes bank offer", "why": "A steal for Bose noise cancelling.", "tags": [], "score": 8},

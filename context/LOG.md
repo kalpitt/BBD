@@ -204,3 +204,4 @@ Template:
 - Gotchas: TV and sale-date research was started and stopped unfinished at Kalpit's
   request; nothing from it was used. Redo it in the next chat.
 - Next: STATE.md "Next steps".
+- 10 Oct 10:10 am: added Xiaomi 55" 4K QLED (29,987 after coupon + SBI) and Bosch 302 L triple-door fridge (22,240), from deal-channel posts. TV slider min 35k → 10k.

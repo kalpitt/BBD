@@ -21,6 +21,7 @@ inspiration and for checking prices:
 - The official Flipkart Big Billion Days and Amazon Great Indian Festival sale cheat sheets
 - Two YouTube sale recommendation videos
 - [pricebefore.com](https://pricebefore.com) for pre-sale price history
-- Public Telegram deal channels [@telugutechtvdeals](https://t.me/telugutechtvdeals) and
-  [@dealsheaven](https://t.me/dealsheaven) for spotting sale deals
+- Public Telegram deal channels [@telugutechtvdeals](https://t.me/telugutechtvdeals),
+  [@dealsheaven](https://t.me/dealsheaven), [@desidime](https://t.me/desidime) and
+  [@lootalerts](https://t.me/lootalerts) for spotting sale deals
 - Built with help from [Claude](https://claude.ai)
