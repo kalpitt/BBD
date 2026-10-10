@@ -49,11 +49,34 @@ Status: ✅ done · 🔜 next · 💬 needs Kalpit · ⏸ later / only if data s
 | C1 | **Cookie-free analytics** (Cloudflare Web Analytics): visits, top tabs, where people come from. Plus click counts per pick (counts only, no personal data) | Today there's no tracking at all, so every other choice is a guess | ✅ 10 Oct: live via Cloudflare's automatic setup (kalpit.me is proxied). Per-pick click counts, tabs, shares, AI answers: own counter since 10 Oct (private D1 `bbd-stats`, docs/OPS.md → Traffic), incl. daily visitors without an id |
 | C2 | **"Share this list with family" button** per tab: opens WhatsApp with the tab link (`kalpit.me/BBD#tv-50000`), no affiliate link | Turns each happy visitor into a sharer | ✅ 10 Oct: one button under "Also good": top 3 picks + tab link, no store links |
 | C3 | Gift lists (A3) double as shareable content | Reach | ✅ via C2 on the gifts tab |
-| C4 | **"Get price drops on WhatsApp" button** linking to a WhatsApp Channel Kalpit creates (followers can't see his number, he can't see theirs) | Visitors have no way back after Diwali; a channel keeps them for the next big sale | 💬 needs his channel link |
-| C5 | **Ready-to-post price-drop line in the price-check notification**, for Status, Stories or the channel: exact ₹ only where the page shows one, band otherwise, link only kalpit.me/BBD | Every price change becomes a post with no extra work | 💬 |
+| C4 | **"Get sale updates on WhatsApp" button** linking to a WhatsApp Channel Kalpit creates (followers can't see his number, he can't see theirs). "Updates", not "price drops": Amazon policy item 31 bars price alerts on affiliate sites | Visitors have no way back after Diwali; a channel keeps them for the next big sale | ✅ button built 11 Oct, hidden until `channel` is set; 💬 needs his channel link |
+| C5 | **Ready-to-post price-drop line in the price-check notification**, for Status, Stories or the channel: exact ₹ only where the page shows one, link only kalpit.me/BBD. Skip Amazon affiliate items (policy item 31) | Every price change becomes a post with no extra work | 💬 |
 
 ## Affiliate (side benefit)
 | # | Idea | Status |
 |---|---|---|
 | F1 | EarnKaro links for the 37 Flipkart picks (they earn nothing today) | 💬 |
 | F2 | Amazon product API for live prices next to affiliate links (needs an eligible Associates account; key lives in Cloudflare, never the repo) | 💬 STATE open ask |
+
+## Product review, round 3 (10–11 Oct)
+Six specialist reviews (page, picks, AI box, trust, engineering, growth). Kalpit ticked what to build.
+| # | Idea | Status |
+|---|---|---|
+| R1 | **Exact product links** instead of store searches (132 of 168 opened a search) | ✅ 11 Oct: 73 of 168 now open the product; the rest stay on search until a link is confirmed (never by opening amazon.in) |
+| R2 | **AI box fixes:** the slider was a hard cap even for "S25 or Pixel 10a?"; off-list questions got the tab's picks; "3 L" read as ₹3 lakh; AI ranking differed from the page; the price fixer rewrote offer amounts; cached answers used up the rate limit | ✅ 11 Oct |
+| R3 | **Slim AI prompt:** nearby picks + names of the rest, about a third of the old size (~3× more free questions a day) | ✅ 11 Oct (Kalpit OK'd) |
+| R4 | **Name the card under the price** ("Includes SBI card offer") and "Without this card, expect up to about 10% more" | ✅ 11 Oct |
+| R5 | **One-tap budget chips** under the slider (`quick`), replacing the ₹58k / ₹1.1L tick labels | ✅ 11 Oct |
+| R6 | **Quick answers and chat suggestions follow the tab** (no "iPhone 4G or 5G?" on TVs) | ✅ 11 Oct |
+| R7 | **Price-check alarm:** the Worker emails Kalpit once a day if `checked` is over 10.5 h old | ✅ 11 Oct |
+| R8 | **Family link check** (`FAM_HASH`): a crafted `?f=` link could set a stranger as "Kalpit's WhatsApp" | ✅ built 11 Oct; 💬 needs his family link once to switch on |
+| R9 | **Broken links** (`#%E0%A4%A`) blanked the page; typed budgets under the slider did nothing; form said "only Kalpit sees it" | ✅ 11 Oct |
+| R10 | **Twin-code check** in the validator (page vs Worker vs validator ranking) | ✅ 11 Oct |
+| R11 | **New types** (room heater, tablet, speakers & soundbars) and gap picks (budget washer and fridge, everyday chargers, budget headphones) | 🔜 11 Oct, Kalpit: add, he vetoes |
+| R12 | **Better phones above ₹1L** (Kalpit: keep expensive phones, add others) so the ₹1.3–1.6L top pick isn't the Fold7 / iPhone 18 Pro | 🔜 |
+| R13 | Trust line, prominent affiliate note, privacy note (drafts in the review doc) | ⏸ Kalpit left unticked |
+| R14 | Move the Gmail-draft step out of the session that can push | ⏸ Kalpit left unticked |
+| R15 | Cut list (18 weak picks) and folding the Fitness tab | ⏸ Kalpit left unticked |
+| R16 | Ask Amazon Associates India in writing: exact prices next to plain links, and the updates channel | 💬 Kalpit sends (draft in the review doc) |
+| R17 | Later ideas: "Deals I'd skip" + "Before you pay" card, cheat-sheet image per budget, family wishlist link, "My card" chips, real-price calculator, no-AI answers for simple questions, Hindi, parent mode | ⏸ |
+

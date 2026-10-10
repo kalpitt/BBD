@@ -22,7 +22,12 @@ for (const k of ["updated", "amazonTag", "sale", "categories", "products", "fake
 if (d.amazonTag !== "bestdeallive-21") err(`amazonTag must be "bestdeallive-21" (got ${JSON.stringify(d.amazonTag)})`);
 if (d.askUrl && !/^https:\/\//.test(d.askUrl)) err("askUrl must start with https://");
 if (!d.sale || !isStr(d.sale.amazon) || !isStr(d.sale.flipkart) || !Array.isArray(d.sale.cards) || !d.sale.cards.every(isStr)) err("sale needs amazon, flipkart (text) and cards (list of text)");
-if (!Array.isArray(d.faq) || !d.faq.every(f => Array.isArray(f) && f.length === 2 && f.every(isStr))) err("faq must be a list of [question, answer] pairs");
+// A quick answer may name the tabs it shows on: ["Is it 4G or 5G?", "...", ["phones"]]
+const catIds = new Set((d.categories || []).map(c => c.id));
+if (!Array.isArray(d.faq) || !d.faq.every(f => Array.isArray(f) && isStr(f[0]) && isStr(f[1]) && (f.length === 2 || (f.length === 3 && Array.isArray(f[2]) && f[2].length && f[2].every(c => catIds.has(c)))))) err("faq must be a list of [question, answer] pairs, optionally with a list of tab ids: [q, a, [\"phones\"]]");
+if (d.sale && d.sale.bankCard != null && !(typeof d.sale.bankCard === "object" && Object.entries(d.sale.bankCard).every(([k, v]) => ["Flipkart", "Amazon"].includes(k) && isStr(v) && !/\d/.test(v)))) err('sale.bankCard must be like {"Flipkart": "Axis or ICICI", "Amazon": "SBI"} (card names only, no amounts)');
+// WhatsApp Channel for "Get sale updates" (IDEAS C4). Updates, not price alerts: Amazon's policy item 31
+if (d.channel != null && !/^https:\/\/(www\.)?whatsapp\.com\/channel\/[A-Za-z0-9]+$/.test(d.channel)) err("channel must be a WhatsApp Channel link like https://whatsapp.com/channel/0029Va...");
 if (d.removed != null && !(Array.isArray(d.removed) && d.removed.every(isStr))) err("removed must be a list of product names");
 // Same pattern the page uses for the "Prices checked" pill; a stamp it can't read hides the pill
 const stamp = /(\d{1,2})\s+([A-Za-z]{3})\w*,?\s+(\d{1,2}):(\d{2})\s*(am|pm)/i;
@@ -36,11 +41,13 @@ const checkDial = (c, where) => {
   if (![c.min, c.max, c.step, c.def].every(isNum)) return err(`${where}: min, max, step, def must be numbers`);
   if (!(c.min < c.def && c.def < c.max)) err(`${where}: needs min < def < max`);
   if (c.step <= 0) err(`${where}: step must be > 0`);
+  if (c.quick != null && !(Array.isArray(c.quick) && c.quick.length <= 6 && c.quick.every((v, i) => isNum(v) && v >= c.min && v <= c.max && (!i || v > c.quick[i - 1])))) err(`${where}: quick must be up to 6 rising budgets within min–max`);
 };
 for (const c of d.categories || []) {
   if (!isStr(c.id) || !isStr(c.label)) { err("category missing id/label"); continue; }
   if (cats.has(c.id)) err(`duplicate category id ${c.id}`);
   cats.set(c.id, c);
+  if (c.ask != null && !(Array.isArray(c.ask) && c.ask.length <= 6 && c.ask.every(q => isStr(q) && q.length <= 90))) err(`category ${c.id}: ask must be up to 6 suggested questions (90 characters each)`);
   for (const a of c.alts || []) if (!isStr(a.label) || !(c.uses || []).some(u => u.id === a.use)) err(`category ${c.id}: alts entry ${JSON.stringify(a)} needs a label and a use from its uses`);
   if (c.types) for (const t of c.types) checkDial(t, `category ${c.id} / type ${t.id}`);
   else checkDial(c, `category ${c.id}`);
@@ -100,7 +107,8 @@ for (const [i, x] of (d.products || []).entries()) {
   for (const t of x.tags || []) if (!uses.includes(t)) err(`${at}: tag "${t}" isn't one of ${c.id}'s uses (${uses.join(", ") || "none"})`);
 
   if (x.url) {
-    if (x.aff) err(`${at}: aff:true with a url drops the affiliate tag. Remove url (search link with tag is used)`);
+    // Affiliate items: the clean product page only; the page adds the tag itself
+    if (x.aff && !/^https:\/\/www\.amazon\.in\/dp\/[A-Z0-9]{10}$/.test(x.url)) err(`${at}: an affiliate item's url must be exactly https://www.amazon.in/dp/<10-character ASIN> (the page adds the tag)`);
     if (x.s === "Both") err(`${at}: url is ignored when s is Both. Remove it`);
     const u = (() => { try { return new URL(x.url); } catch { return null; } })();
     const on = dom => u && (u.hostname === dom || u.hostname.endsWith("." + dom));
@@ -140,6 +148,33 @@ try {
     catch (e) { err(`index.html script ${i + 1} has a syntax error: ${e.message}`); }
   }
 } catch (e) { err("couldn't read index.html: " + e.message); }
+
+// ---- twin code (AGENTS rule 7): the page and the Worker must rank, badge, name and label alike ----
+try {
+  const html = readFileSync(new URL("../index.html", import.meta.url), "utf8"), wk = readFileSync(new URL("../worker/worker.js", import.meta.url), "utf8");
+  const fn = (src, name) => { const m = src.match(new RegExp("function " + name + "\\([^)]*\\)\\s*\\{[\\s\\S]*?\\n\\}")); return m ? m[0] : ""; };
+  const norm = f => f.replace(/\/\/[^\n]*/g, "").replace(/\s+/g, "");
+  for (const name of ["rankAt", "big", "nameIndex", "cardText"]) {
+    const a = fn(html, name), b = fn(wk, name);
+    if (!a || !b) err(`twin code: function ${name}() is missing from ${a ? "worker/worker.js" : "index.html"}`);
+    else if (norm(a) !== norm(b)) err(`twin code: ${name}() differs between index.html and worker/worker.js. Change both the same way`);
+  }
+  // The validator's own ranking (topAt, below) must pick the same top pick as the page at every dial step
+  const pageRank = new Function(fn(html, "big") + "\n" + fn(html, "rankAt") + "\nreturn rankAt;")();
+  const topAtV = (pool, b) => {
+    const fit = pool.filter(x => x.p <= b), n70 = fit.filter(x => x.p >= b * 0.7), n50 = fit.filter(x => x.p >= b * 0.5);
+    const big = x => (x.bank && x.bank.off > 0.12 * (x.p + x.bank.off)) || (x.was && x.p <= 0.75 * x.was);
+    const base = n70.length >= 2 ? n70 : n50.length ? n50 : fit, rank = x => x.score + 2 * (x.p / b) + (big(x) ? 1 : 0);
+    return base.slice().sort((a, z) => rank(z) - rank(a))[0];
+  };
+  let off = 0;
+  for (const c of d.categories || []) for (const t of c.types || [c]) {
+    if (!isNum(t.min)) continue;
+    const pool = (d.products || []).filter(x => (x.cat === c.id || (c.id === "gifts" && x.gift)) && (!c.types || x.type === t.id));
+    for (let b = t.min; b <= t.max; b += t.step) if ((pageRank(pool, b)[0] || {}).id !== (topAtV(pool, b) || {}).id) off++;
+  }
+  if (off) err(`twin code: the validator's ranking and index.html's rankAt() disagree at ${off} dial step(s)`);
+} catch (e) { err("twin code check failed to run: " + e.message); }
 
 // ---- picks agents added that Kalpit hasn't looked at yet (AGENTS.md → Adding picks) ----
 const auto = (d.products || []).filter(x => x.auto).map(x => x.n);

@@ -75,6 +75,12 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
    - `aff: true` items (Amazon affiliate, tag `bestdeallive-21`) show a **price band only**.
      Never write an exact ₹ amount in their `why`, `card` or `faq`.
    - Estimates carry `est: true`.
+   - Store buttons open the exact product when `url` is set (Kalpit, 11 Oct): affiliate items use a
+     clean `amazon.in/dp/<ASIN>` link and the page adds the tag. Add a link only when the model and
+     variant are confirmed; otherwise the button opens a store search.
+   - **Never open amazon.in with tools** (curl, WebFetch, a browser): Amazon's Associates policy
+     item 27 bars software sessions on its site. Item 31 bars price alerts on affiliate sites, so
+     the WhatsApp Channel is for sale updates, and price-drop posts skip Amazon affiliate items.
    - Never invent prices, specs or offers. If a price is unverified, say so to Kalpit.
 2. **The AI box recommends only from `data.json`.** Keep the budget cap, the
    over-budget self-correction and the off-list refusal. After any change to
@@ -92,9 +98,9 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
 6. **Sunset (Kalpit, 10 Oct):** the site stays live **through Diwali, 8 Nov 2026**, with
    the 3-hourly price check running until then. On 9 Nov, ask Kalpit: a "Sale's over"
    banner and the ask box off, or take the site down.
-7. **Twin code:** `nameIndex()`/`mentions()`, `big()` and the ranking exist in both
+7. **Twin code:** `nameIndex()`/`mentions()`, `big()`, `cardText()` and the ranking (`rankAt()`) exist in both
    `index.html` and `worker/worker.js` (ranking also in `scripts/check-data.mjs`).
-   Change all copies or none.
+   Change all copies or none. The validator compares them and fails if they drift.
 8. **Videos (Kalpit, 10 Oct):** every video follows John Lasseter's animation principles
    and the same price honesty (real picks, bands for affiliate items, real AI answers,
    no count-ups). Use `/promo-video` (`.claude/skills/promo-video/`).
@@ -146,6 +152,18 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
   push access to this repo (tested 10 Oct), so don't switch to that. The old Opus Routine is
   paused, not deleted. If the Sonnet session's context grows past ~300k tokens, start a new
   session with the repo attached and point a new Routine at it.
+- **The ask box sends only the picks that fit (11 Oct, Kalpit OK'd):** `planAnswer()` gives the AI
+  the picks near the budget (or the products the question names) plus the names of the rest,
+  about a third of the old prompt, so the free tier covers roughly 3× more questions. A budget
+  typed in the question is a hard cap; a question naming products ("S25 or Pixel 10a?") is
+  answered as asked; an unclear question gets the visitor's tab as context with no forced pick.
+  The SYSTEM prompt now sends outsiders to "Message Kalpit", not the WhatsApp group.
+- **Price-check alarm (11 Oct):** the ask Worker runs every 3 hours (`wrangler.toml` `[triggers]`)
+  and emails Kalpit (`MSG_TO`, subject "BBD alarm") once a day if `checked` is over 10.5 hours old.
+- **Family link check (11 Oct):** `?f=` is accepted only if it matches `FAM_HASH` in `index.html`
+  (a slow hash, so the page doesn't reveal the code). Until Kalpit sets it, any valid code works
+  as before. To set it: `node scripts/fam-hash.mjs "<his family link>"`, run by him or in a private
+  chat; never write the link or code in the repo.
 - **Flipkart has no affiliate setup yet.** EarnKaro was suggested. If Kalpit sends
   converted links, put them in `url` on Flipkart items.
 
@@ -159,6 +177,7 @@ wrangler.toml       Worker config (name bbd-ask, AI binding, vars). Used by Clou
 scripts/check-data.mjs  validator: run before every push
 scripts/smoke.mjs   headless-browser check of the page: run before pushing index.html/worker changes
 scripts/deal-scout.mjs  lists new deals from public deal channels (used by price-check)
+scripts/fam-hash.mjs    turns Kalpit's family link into FAM_HASH for index.html (link never in the repo)
 docs/DATA.md        every data.json field, with worked examples
 docs/OPS.md         preview, verify deploys, rollback, ask-box testing, symptom → fix
 docs/PICKS.md       what makes a good pick; who may add what; auto-add limits

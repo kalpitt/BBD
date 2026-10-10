@@ -12,6 +12,11 @@ binding = "AI"
 [[send_email]]
 name = "MAIL"
 
+# Price-check alarm: every 3 hours the Worker reads data.json and emails Kalpit (MSG_TO) once
+# a day if "checked" is over 10.5 hours old, i.e. the scheduled price check has stopped.
+[triggers]
+crons = ["17 */3 * * *"]
+
 [vars]
 DATA_URL = "https://kalpit.me/BBD/data.json"
 ALLOWED_ORIGINS = "https://kalpit.me,https://www.kalpit.me"

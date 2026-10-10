@@ -24,14 +24,14 @@ about a minute.
 | `spec` | | Phones: checked facts shown on the card, `{"chip": "Snapdragon 8 Elite", "ip": "IP68/IP69" or "none", "frame": "metal" or "plastic"}`. Leave `frame` out if no source names it. Never guess |
 | `score` | ✓ | 1–10. Higher wins when picks fit the same budget |
 | `altScore` | | Phones: score for the "Best camera" / "Lasts longest" cards only, e.g. `{"camera": 9}`. Use when Kalpit wants a phone as the camera card but not as the main pick (Nothing Phone (4a) Pro, 10 Oct). The main ranking and the ask box ignore it |
-| `faq` | | `[["Question?", "Answer."]]`, shown under the top pick |
+| `faq` | | `[["Question?", "Answer."]]`, shown under the top pick and passed to the ask box |
 | `was` | | Normal price before the sale (what it usually sells for, **not** MRP). Used for the "Big deal" check. Source: pricebefore.com history, **lowest price 1–20 Sep** (skips pre-sale price hikes), from the closest listing of the same model and store (Kalpit, 8 Oct: trust the tracker even when its sale-day price differs from our `p`, e.g. because `p` includes a card offer). Skip listings that sat at MRP |
 | `list` | | Sale price shown on the listing, before coupon and card offer. When set, `p` must equal `list − coupon − bank.off` (the validator checks) |
 | `coupon` | | Coupon amount in ₹ (mostly Amazon). Needs `list` |
 | `bank` | | Sale card instant discount: `{"name": "SBI", "off": 2000}`. Use `"name": "Bank"` if the card isn't known. Card name only, no amounts in `name` |
 | `gift` | | `true` = also show this pick in the Diwali gifts tab (Kalpit, 10 Oct). For picks from other tabs priced within the gifts slider (max ₹5,000). Picks with `cat: "gifts"` don't need it |
 | `auto` | | `true` = an agent added this pick and Kalpit hasn't said "keep" yet (AGENTS.md → Adding picks). Not shown on the page. Delete it when he approves |
-| `url` | | Direct product link. Not allowed with `aff` (it would drop the affiliate tag) or with `s: "Both"` |
+| `url` | | Exact product page, so "See on …" opens the product, not a store search (Kalpit, 11 Oct). Flipkart: `https://www.flipkart.com/<slug>/p/<itm id>?pid=<PID>`. Amazon: `https://www.amazon.in/dp/<ASIN>`; `aff` items must use exactly this form, and the page adds the affiliate tag itself. No tracking or affiliate parameters. Not with `s: "Both"`. Only add a link whose model and variant you confirmed (Flipkart page, or an amazon.in listing title in search results); never open amazon.in with tools (Associates policy item 27). No link = store search |
 
 ### Discount layers and "Big deal"
 `was → list → coupon → bank` explain how `p` is reached. All optional; `p` stays the
@@ -54,7 +54,13 @@ edit**, in IST and exactly this shape, e.g. `"9 Oct, 2:15 pm"`), `checked` (same
 last time the price checker compared prices, even with no changes. The page shows it as
 "Prices checked 12 min ago", falling back to `updated` if `checked` is missing), `askUrl` (Ask box address), `amazonTag` (don't change), `sale` (dates, `extra` = the year-round 5% co-branded card line per store, and card
 offers), `categories` (slider ranges; phones also has `alts`, the extra "Best camera" / "Lasts longest" cards shown under the main pick when no filter is chosen, each the top-ranked pick with that tag), `fakeMrp` (the "ignore the % off" table), `removed` (names Kalpit took off; agents must not re-add them, the validator checks) and
-`faq` (quick answers).
+`faq` (quick answers; a third item limits one to some tabs: `["Is it 4G or 5G?", "…", ["phones"]]`).
+Also: `sale.bankCard` (the card each store's sale price assumes, e.g. `{"Flipkart": "Axis or ICICI", "Amazon": "SBI"}`:
+the page turns "Includes bank offer" into "Includes SBI card offer" and adds "Without this card, expect to pay up to
+about 10% more"), `channel` (WhatsApp Channel link for the "Get sale updates on WhatsApp" button; leave out to hide
+it; updates, never price alerts: Amazon policy item 31), and per category or type `ask` (up to 6 suggested chat
+questions for that tab) and `quick` (up to 6 one-tap budgets under the slider; without it the page picks round
+amounts where the top pick changes).
 
 ## Which Amazon items are affiliate
 Kalpit, 10 Oct: show exact prices on most items; keep the affiliate band only where the
@@ -91,11 +97,12 @@ then bump `updated`.
  "tags": ["camera"], "score": 7}
 ```
 
-**Add an Amazon affiliate appliance.** Set `aff: true` and leave out `url`:
+**Add an Amazon affiliate appliance.** Set `aff: true`; `url` is the clean `/dp/` link (or leave it out for a search):
 ```json
 {"id": "wm-ifb7", "cat": "home", "type": "washing", "n": "IFB 7 kg front load",
  "p": 24990, "aff": true, "s": "Amazon", "card": "After bank and coupon offer",
- "why": "Trusted front loader for small families.", "tags": [], "score": 6}
+ "why": "Trusted front loader for small families.", "score": 6,
+ "url": "https://www.amazon.in/dp/B0XXXXXXXX"}
 ```
 
 **Remove a pick** (out of stock or bad deal): delete its whole `{...}` entry. Keep the
