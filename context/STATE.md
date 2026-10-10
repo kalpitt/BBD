@@ -24,6 +24,11 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 - Kalpit prefers Amazon outside phones (service; ties go to Amazon). Agents can't read
   Amazon pages: Amazon prices need his screenshot or two dated reports.
 
+## Contact (10 Oct)
+- Kalpit's WhatsApp is off the page. 👎 in the ask chat shows a "Send to Kalpit" form, emailed by
+  the Worker from bbd@kalpit.me to the `MSG_TO` secret. Family use his private `?f=` link
+  (he has it; never in the repo). Docs: AGENTS.md (public repo section), docs/OPS.md.
+
 ## Open asks (waiting on Kalpit)
 1. Nothing new. (Laptop under ₹40k: Kalpit sent Acer Aspire One 14 and Dell 15 Core 3.)
 2. `add-bbd-redirect` in Kalpit.me: he'll merge it first thing in that repo.

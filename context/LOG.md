@@ -357,3 +357,5 @@ Template:
   through his private `?f=` link (stored on their phone, stripped from the address bar).
   Email Routing on kalpit.me done by Kalpit (Porkbun MX/SPF records removed). Waiting on him
   to add the `MSG_TO` Worker secret (his Gmail) before the form can send.
+- 2:55 pm: Kalpit added the `MSG_TO` secret. Test message sent through the live form
+  (Worker replied ok). Asked him to confirm it landed in Gmail (check Spam too).
