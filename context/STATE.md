@@ -13,14 +13,12 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
   `/price-check` in the cloud session "BBD price checker" (prices + deal scout).
 - Cloudflare: Web Analytics live (filter path `/BBD`). Worker rebuilds only when
   `worker/*` or `wrangler.toml` change.
-- GitHub: only `main` exists. CI runs the validator and the smoke test after each push.
 
 ## Governance (10 Oct; details in docs/IDEAS.md → Governance)
 - Goals head AGENTS.md: (a) friends and family buy well, (c) reach; affiliate is a side effect.
 - Adding picks: veto, not approve. Rules in `docs/PICKS.md`; the validator enforces the
   limits (max 4 auto picks waiting, 2 per run, never the top pick over Kalpit's own).
 - "Send to myself on WhatsApp" links only to kalpit.me/BBD views, no store links.
-- Guide Kalpit through dashboards with direct links, then numbered taps.
 
 ## Open asks (waiting on Kalpit)
 0. "keep"/"remove X" on the 15 picks added 10 Oct 11 am (his ask, so no `auto` tag):
