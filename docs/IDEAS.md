@@ -15,7 +15,7 @@ Status: ✅ done · 🔜 next · 💬 needs Kalpit · ⏸ later / only if data s
 |---|---|---|
 | G1 | **Veto, not approve:** agents (chat and the price check) add picks that meet strict rules, then tell Kalpit; he replies "remove X" to undo. New picks carry `auto: true` until he's looked | ✅ AGENTS.md → Adding picks |
 | G2 | **Short STATE:** STATE.md had grown to 142 lines of history. Cut to a snapshot (≤ 50 lines); history moved to LOG | ✅ |
-| G3 | **Worker builds only when Worker code changes.** Today every push (even "Price check: no changes") rebuilds the ask-box Worker | 💬 Cloudflare dashboard → Workers & Pages → bbd-ask → Settings → Build → Build watch paths: include `worker/*` and `wrangler.toml` |
+| G3 | **Worker builds only when Worker code changes.** Today every push (even "Price check: no changes") rebuilds the ask-box Worker | ✅ 10 Oct (Kalpit set the build watch paths) |
 | G4 | **Test page and Worker code before it goes live.** `scripts/smoke.mjs` opens the page in a headless browser and checks picks render with no errors; the validator now also syntax-checks `index.html`'s scripts | ✅ |
 | G5 | **One branch rule:** cloud sessions are handed `ccr-*` branches, which pile up. AGENTS.md now says push to `main` only | ✅ (leftover branches: 💬 delete in GitHub → Branches) |
 | G7 | **Goals at the top of AGENTS.md**; affiliate never a reason | ✅ (round 2, 10 Oct) |
@@ -44,7 +44,7 @@ Status: ✅ done · 🔜 next · 💬 needs Kalpit · ⏸ later / only if data s
 ## Reach beyond the circle (goal c)
 | # | Idea | Why | Status |
 |---|---|---|---|
-| C1 | **Cookie-free analytics** (Cloudflare Web Analytics): visits, top tabs, where people come from. Plus click counts per pick (counts only, no personal data) | Today there's no tracking at all, so every other choice is a guess | 💬 enable in Cloudflare → Analytics & Logs → Web Analytics, then an agent adds the snippet |
+| C1 | **Cookie-free analytics** (Cloudflare Web Analytics): visits, top tabs, where people come from. Plus click counts per pick (counts only, no personal data) | Today there's no tracking at all, so every other choice is a guess | ✅ 10 Oct: live via Cloudflare's automatic setup (kalpit.me is proxied). Per-pick click counts still to do |
 | C2 | **"Share this list with family" button** per tab: opens WhatsApp with the tab link (`kalpit.me/BBD#tv-50000`), no affiliate link | Turns each happy visitor into a sharer | 🔜 |
 | C3 | Gift lists (A3) double as shareable content | Reach | 🔜 |
 

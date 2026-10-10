@@ -16,7 +16,8 @@ two choices conflict, pick the one a first-time buyer would thank you for.
 A budget dial ranks picks per category; an "Ask me" box answers follow-up questions
 with AI, using only these picks. Kalpit sends change requests by message, often
 from his phone. He is a first-time developer: explain terms in plain language,
-keep replies short, and lead with what changed.
+keep replies short, and lead with what changed. When guiding him through a dashboard
+(Cloudflare, GitHub), give direct links where possible, then numbered taps.
 
 ## ⚠ Pushing to `main` publishes, twice, within about a minute
 1. **GitHub Pages** serves `index.html` + `data.json` at https://kalpit.me/BBD/

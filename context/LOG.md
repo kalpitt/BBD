@@ -188,3 +188,7 @@ Template:
 - Decided (Kalpit): prices change at midnight, so keep a 12:05 am run; kalpit.me/BBD
   covers everything, so no Amazon or Flipkart links in WhatsApp; no pre-push hook.
 - Next: Kalpit's Cloudflare steps (build watch paths, Web Analytics snippet).
+- 10 Oct 10:05 am: Kalpit set the Worker build watch paths, turned off workers.dev
+  (now 404; ask.kalpit.me answers), and found Web Analytics already live for kalpit.me
+  via automatic setup (site is now proxied through Cloudflare). He prefers direct links
+  when guided through dashboards (AGENTS.md).

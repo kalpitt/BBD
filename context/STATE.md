@@ -10,7 +10,10 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
   12:05 am run catches midnight price changes. Runs `/price-check` in the cloud
   session "BBD price checker", pushes confirmed price changes and notifies Kalpit's
   phone. It also runs the deal scout (public Telegram channels). Delete it after the sale.
-- DNS on Cloudflare (DNS-only records; registrar and email forwarding still Porkbun).
+- DNS on Cloudflare; kalpit.me is now proxied (responses say `server: cloudflare`).
+  Registrar and email forwarding still Porkbun.
+- Cloudflare Web Analytics is live for all of kalpit.me (automatic setup injects the
+  beacon; nothing in the repo). Filter by path `/BBD` for this site. Cookie-free.
 
 ## New since 10 Oct (two governance reviews; details in docs/IDEAS.md → Governance)
 - Goals now head AGENTS.md. Adding picks: veto, not approve, rules in `docs/PICKS.md`,
@@ -20,10 +23,8 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
   runs in GitHub after each push. Price check stamps `checked` at most every 6 h.
 
 ## Open asks (waiting on Kalpit)
-1. Cloudflare: set bbd-ask build watch paths to `worker/*` and `wrangler.toml` (IDEAS G3).
-2. Turn on Cloudflare Web Analytics for kalpit.me and share the snippet (IDEAS C1).
 3. Decide: Diwali gift tab (A3), one dated source enough to move an affiliate band (G6).
-4. Turn off workers.dev for bbd-ask; delete the leftover `ccr-*` branches on GitHub.
+4. Delete the leftover `ccr-*` branches on GitHub (workers.dev is off since 10 Oct).
 5. Confirm `add-bbd-redirect` is merged in the Kalpit.me repo (lowercase /bbd works now).
 6. Real prices for Vivo X200T, Motorola Edge 70 (still `est`), plus Lenovo IdeaPad
    Slim 3 and the 55-inch TVs. Image versions of the two Flipkart TV/Home cheat sheets help.
