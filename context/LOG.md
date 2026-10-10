@@ -323,3 +323,12 @@ Template:
 
 ## 2026-10-10 (12:05 pm): two Amazon laptops from Kalpit
 - Prices (Kalpit, screenshots): Acer Aspire One 14 Ryzen 3 7320U 8/256 (list 39,490, coupon 3,000, SBI 4,250 = 32,240) and Dell 15 Core 3 100U 8/512 + Office (list 49,990, SBI 6,500 = 43,490; card offer >12%, so a big deal). Both `aff`. The Dell shows as the "stretch" row under the Acer.
+
+## 2026-10-10: ask box becomes a chat (Kalpit's UX brainstorm)
+- Floating "💬 Confused? Ask Kalpit's AI" button (hides while the "Still confused?" card at
+  the end of the picks is on screen). Opens a full-screen chat on phones (Back button closes
+  it) and a right-side panel on laptops (picks stay usable). Shows "You're looking at: …".
+- Under each answer: "Did this help? 👍 / 👎". The "Message Kalpit on WhatsApp" card shows
+  after a 👎, a 2nd question, or an error/limit. "WhatsApp Kalpit" button always in the header.
+- The WhatsApp message now includes the first ~200 characters of the AI's last answer.
+- smoke.mjs now also opens the chat (phone: Back closes it; laptop: side panel, Esc closes).

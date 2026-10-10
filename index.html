@@ -126,14 +126,44 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .empty{color:var(--ink-soft);padding:14px 0;border-top:1px solid var(--line);margin:0}
 
 .share{display:flex;justify-content:center}
-.ask{background:var(--raise);border:1px solid var(--line);border-radius:22px;padding:20px;display:grid;gap:12px}
-.ask p{margin:0}
-.ask textarea{width:100%;min-height:84px;resize:vertical;font:400 17px/1.4 var(--body);color:var(--ink);background:var(--night);border:1px solid var(--line);border-radius:14px;padding:12px}
-.ask .sugs{display:flex;flex-wrap:wrap;gap:6px}
-.ask .sugs button{font:400 14px var(--body);color:var(--ink-soft);background:none;border:1px dashed var(--line);border-radius:10px;padding:4px 10px;cursor:pointer;text-align:left}
-.ask .btn.go[disabled]{opacity:.5;cursor:default}
-.ask .link{all:unset;cursor:pointer;text-decoration:underline;color:var(--ink);font-weight:600}
-.ask .link:focus-visible{outline:2px solid var(--marigold);outline-offset:2px}
+.link{all:unset;cursor:pointer;text-decoration:underline;color:var(--ink);font-weight:600}
+.link:focus-visible{outline:2px solid var(--marigold);outline-offset:2px}
+/* Ask: a short card at the end of the picks, a floating button, and the chat itself */
+.askTeaser{background:var(--raise);border:1px solid var(--line);border-radius:22px;padding:20px;display:grid;gap:10px}
+.askTeaser p{margin:0}
+.fab{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;display:inline-flex;align-items:center;gap:8px;font:700 16px var(--body);color:#1B1F4B;background:#F4A51C;border:0;border-radius:999px;padding:12px 18px;min-height:48px;box-shadow:0 6px 20px rgba(10,12,40,.35);cursor:pointer;transition:opacity .2s,transform .2s}
+.fab.away,.fab.open{opacity:0;transform:translateY(16px);pointer-events:none}
+.feed{padding-bottom:72px}
+/* Phones: full screen, like a WhatsApp chat. Laptops: a panel on the right, picks still usable */
+.askdlg{position:fixed;inset:0;margin:0;padding:0;width:100%;max-width:none;height:100%;height:100dvh;max-height:none;border-radius:0;flex-direction:column;z-index:40}
+.askdlg[open]{display:flex}
+.askdlg p{color:var(--ink);font-size:inherit}
+html:has(.askdlg:modal){overflow:hidden}
+.askhead{display:flex;align-items:center;gap:8px;padding:calc(10px + env(safe-area-inset-top,0px)) 8px 10px 16px;border-bottom:1px solid var(--line)}
+.askhead>div{flex:1;min-width:0;display:grid}
+.askhead h3{font-size:19px}
+.ctx{justify-self:start;font-size:14px;font-weight:600;color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:3px 12px}
+.wapill{font:600 14px var(--body);color:#fff;background:#1F7A45;border:0;border-radius:999px;padding:6px 12px;min-height:36px;cursor:pointer;white-space:nowrap;flex:none}
+.x{all:unset;flex:none;width:44px;height:44px;display:grid;place-items:center;font-size:22px;cursor:pointer;border-radius:12px;color:var(--ink-soft)}
+.x:focus-visible{outline:2px solid var(--marigold)}
+.askbody{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:16px;display:grid;gap:14px;align-content:start}
+.askbody .intro{margin:0;color:var(--ink-soft)}
+.sugs{display:grid;gap:8px}
+.sugs button{font:400 15px var(--body);color:var(--ink);background:none;border:1px dashed var(--line);border-radius:12px;padding:8px 12px;cursor:pointer;text-align:left;min-height:40px}
+.wacard{border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:10px;background:var(--diya)}
+.wacard p{margin:0}
+.btn.wa{background:#1F7A45;color:#fff;justify-self:start}
+.fb{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:14px;color:var(--ink-soft)}
+.fb button{font:500 14px var(--body);color:var(--ink);background:none;border:1px solid var(--line);border-radius:999px;padding:6px 12px;min-height:36px;cursor:pointer}
+.askfoot{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
+.askfoot textarea{width:100%;min-height:48px;max-height:30vh;resize:none;font:400 17px/1.4 var(--body);color:var(--ink);background:var(--night);border:1px solid var(--line);border-radius:14px;padding:11px 12px}
+.askfoot .btn{min-height:48px}
+.askfoot .btn.go[disabled]{opacity:.5;cursor:default}
+.askfoot #askState{grid-column:1/-1}
+.askfoot #askState:empty{display:none}
+@media (min-width:980px){
+  .askdlg{left:auto;width:440px;border-left:1px solid var(--line);box-shadow:-12px 0 40px rgba(10,12,40,.25)}
+}
 .amount:has(input:focus-visible){outline:2px solid var(--marigold);outline-offset:4px;border-radius:8px}
 
 .truth{border-left:3px solid var(--mari-fill);padding-left:14px}
@@ -208,7 +238,7 @@ dialog .acts{justify-content:flex-end}
 .scratch.done{opacity:0;pointer-events:none}
 
 /* Ask box as a chat */
-.chat{display:grid;gap:10px}
+.chat,.turn{display:grid;gap:10px}
 .chat:empty{display:none}
 .bub{max-width:88%;padding:10px 14px;border-radius:18px;line-height:1.45;min-width:0}
 .bub.me{justify-self:end;background:var(--ink);color:var(--night);border-bottom-right-radius:6px;white-space:pre-wrap}
@@ -306,15 +336,10 @@ dialog .acts{justify-content:flex-end}
 
   <div class="share"><button class="btn save" id="shareTab" type="button">Share this list with family</button></div>
 
-  <section class="ask" id="askBox" aria-labelledby="askTitle">
-    <h3 id="askTitle">Still confused? Ask me</h3>
-    <p>Describe who it's for and your budget. The answer comes only from my picks on this page.</p>
-    <div class="chat" id="chat"></div>
-    <label for="q" class="aff">Your question</label>
-    <textarea id="q" maxlength="400" placeholder="Papa ke liye phone, ₹15k, bada screen aur achi battery"></textarea>
-    <div class="sugs" id="sugs"></div>
-    <div class="acts"><button class="btn go" id="askBtn" type="button">Ask</button><span class="aff" id="askState" aria-live="polite"></span></div>
-    <p class="aff">Can't find what you need? <button type="button" class="link" id="msgKalpit">Message Kalpit on WhatsApp</button>. It tells him which page you were on.</p>
+  <section class="askTeaser" id="askTeaser" aria-labelledby="askTeaserTitle">
+    <h3 id="askTeaserTitle">Still confused? Ask me</h3>
+    <p>Tell my AI who it's for and your budget. It answers only from my picks on this page.</p>
+    <div class="acts"><button class="btn go" type="button" data-ask>Ask Kalpit's AI</button><button type="button" class="link msgK">Or message me on WhatsApp</button></div>
   </section>
 
   <section class="sec faq">
@@ -362,6 +387,32 @@ dialog .acts{justify-content:flex-end}
       <button class="btn save" value="skip" type="button" id="waSkip">Choose contact instead</button>
       <button class="btn go" value="ok" type="submit">Save pick</button>
     </div>
+  </form>
+</dialog>
+
+<button class="fab" id="askFab" type="button" data-ask hidden><span aria-hidden="true">💬</span> Confused? Ask Kalpit's AI</button>
+
+<dialog id="askDlg" class="askdlg" aria-labelledby="askTitle">
+  <div class="askhead">
+    <div><h3 id="askTitle">Ask Kalpit's AI</h3></div>
+    <button type="button" class="wapill msgK">WhatsApp Kalpit</button>
+    <button type="button" class="x" id="askClose" aria-label="Close chat">✕</button>
+  </div>
+  <div class="askbody" id="askBody">
+    <div class="ctx" id="askCtx"></div>
+    <p class="intro">Describe who it's for and your budget. The answer comes only from my picks on this page.</p>
+    <div class="chat" id="chat"></div>
+    <div class="wacard" id="waCard" hidden>
+      <p><strong>Still unsure?</strong> Message Kalpit on WhatsApp. He'll reply himself.</p>
+      <button class="btn wa msgK" type="button">Message Kalpit</button>
+    </div>
+    <div class="sugs" id="sugs"></div>
+  </div>
+  <form class="askfoot" id="askForm">
+    <label for="q" class="vh">Your question</label>
+    <textarea id="q" rows="2" maxlength="400" placeholder="Papa ke liye phone, ₹15k, bada screen aur achi battery"></textarea>
+    <button class="btn go" id="askBtn" type="submit">Ask</button>
+    <span class="aff" id="askState" aria-live="polite"></span>
   </form>
 </dialog>
 
@@ -626,6 +677,7 @@ function rankAt(list,b){
 function render(force){
   const c=conf(),b=state.budget;
   saveHash();
+  document.dispatchEvent(new Event("bbd:render"));
   const f=(Math.min(c.max,Math.max(c.min,b))-c.min)/(c.max-c.min);
   $("#fill").style.width=`calc(var(--t)/2 + (100% - var(--t))*${f})`;
   range.setAttribute("aria-valuetext",fmt(b));
@@ -695,7 +747,7 @@ $("#cards").innerHTML=D.sale.cards.map(c=>`<li>${esc(c)}</li>`).join("");
 /* ---------- ask box ---------- */
 const sugs=["Lava, Samsung or Moto under ₹9k? Only WhatsApp and calls","Papa ke liye phone, ₹15k, big battery and big screen","S25 or Pixel 10a for camera?","Which AC for a hot top-floor bedroom?"];
 $("#sugs").innerHTML=sugs.map(s=>`<button type="button">${esc(s)}</button>`).join("");
-$("#sugs").addEventListener("click",e=>{const b=e.target.closest("button");if(b){$("#q").value=b.textContent;$("#q").focus()}});
+$("#sugs").addEventListener("click",e=>{const b=e.target.closest("button");if(b){$("#q").value=b.textContent;grow();$("#q").focus()}});
 const askBtn=$("#askBtn"),chat=$("#chat"),st=$("#askState");
 if(!D.askUrl){askBtn.disabled=true;st.textContent="Opens when the sale starts."}
 // Which picks the AI answer names, in order. Same rules as nameIndex()/mentions() in
@@ -729,17 +781,27 @@ function mentions(text,names){
   return kept.sort((p,q)=>p.i-q.i).map(h=>h.x).filter(x=>!seen.has(x)&&seen.add(x));
 }
 const NAMES=nameIndex(P);
-let lastQ="";
+let lastQ="",lastA="",asked=0;
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-askBtn.addEventListener("click",async()=>{
+// "Message Kalpit" card: after a 👎, a second question, or an answer that didn't come
+const offerKalpit=()=>{$("#waCard").hidden=false};
+const grow=()=>{const t=$("#q");t.style.height="auto";t.style.height=t.scrollHeight+2+"px"};
+$("#q").addEventListener("input",grow);
+// Laptops: Enter sends, Shift+Enter is a new line. Phones keep Enter as a new line.
+$("#q").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey&&matchMedia("(pointer:fine)").matches){e.preventDefault();$("#askForm").requestSubmit()}});
+$("#askForm").addEventListener("submit",async e=>{
+  e.preventDefault();if(askBtn.disabled)return;
   const q=$("#q").value.trim();
   if(q.length<8){st.textContent="Write a little more, like who it's for and your budget.";return}
-  askBtn.disabled=true;st.textContent="";lastQ=q;$("#q").value="";
+  askBtn.disabled=true;st.textContent="";lastQ=q;lastA="";$("#q").value="";grow();$("#sugs").hidden=true;asked++;
   // Keep the last three questions in the thread
-  while(chat.children.length>=6)chat.firstElementChild.remove();
+  while(chat.children.length>=3)chat.firstElementChild.remove();
+  const turn=document.createElement("div");turn.className="turn";
   const me=document.createElement("div");me.className="bub me";me.textContent=q;
   const k=document.createElement("div");k.className="bub k";k.innerHTML=`<span class="lbl">Kalpit's picks</span><span class="typing" role="status" aria-label="Thinking"><i></i><i></i><i></i></span>`;
-  chat.append(me,k);
+  turn.append(me,k);chat.append(turn);
+  me.scrollIntoView({block:"start",behavior:reduce?"auto":"smooth"});
+  let ok=false;
   const fail=msg=>{k.innerHTML=`<span class="lbl">Kalpit's picks</span><p class="err">${msg}</p>`};
   const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),45000);
   try{
@@ -761,19 +823,58 @@ askBtn.addEventListener("click",async()=>{
       else{const gap=Math.min(40,2500/words.length);for(const w of words){out.textContent+=w;if(w.trim())await sleep(gap)}}
       const m=mentions(j.answer,NAMES).slice(0,4);
       if(m.length){const d=document.createElement("div");d.className="picks";d.innerHTML=m.map(x=>row(x)).join("");k.after(d)}
+      const fb=document.createElement("div");fb.className="fb";
+      fb.innerHTML=`<span>Did this help?</span><button type="button" data-fb="y">👍 Yes</button><button type="button" data-fb="n">👎 Not really</button>`;
+      turn.append(fb);ok=true;lastA=j.answer;
       st.textContent="Answer ready";setTimeout(()=>{if(st.textContent==="Answer ready")st.textContent=""},4000);
     }
   }catch(e){fail(e.name==="AbortError"?"This is taking too long. Try again in a minute.":"Couldn't reach the answer service. Check your connection and try again.")}
   clearTimeout(timer);askBtn.disabled=false;
+  if(!ok||asked>=2)offerKalpit();
 });
+chat.addEventListener("click",e=>{
+  const b=e.target.closest("[data-fb]");if(!b)return;
+  const fb=b.parentElement;
+  if(b.dataset.fb==="y"){fb.innerHTML="<span>Glad it helped 🙏</span>";return}
+  fb.innerHTML="<span>Sorry about that. Kalpit can help you himself 👇</span>";
+  offerKalpit();$("#waCard").scrollIntoView({block:"nearest",behavior:reduce?"auto":"smooth"});
+});
+
+/* ---------- ask: floating button opens the chat (full screen on phones, side panel on laptops) ---------- */
+const askDlg=$("#askDlg"),fab=$("#askFab"),wide=matchMedia("(min-width:980px)");
+let askPushed=false;
+function viewText(){
+  const c=cat(),t=c.types?c.types.find(x=>x.id===state.type):null,u=(c.uses||[]).find(x=>x.id===state.use);
+  return [c.label,t&&t.label].filter(Boolean).join(" › ")+", under "+fmt(state.budget)+(u?", "+u.label:"")+(state.big?", Big deals only":"");
+}
+const askCtx=()=>{$("#askCtx").textContent="You're looking at: "+viewText()};
+document.addEventListener("bbd:render",()=>{if(askDlg.open)askCtx()});
+function openAsk(){
+  if(askDlg.open)return;
+  askCtx();fab.classList.add("open");
+  if(wide.matches){askDlg.show();$("#q").focus()}
+  else{
+    askDlg.showModal();$("#askClose").focus(); // not the text box: the keyboard would cover the suggestions
+    // The phone's Back button closes the chat instead of leaving the page
+    try{history.pushState({ask:1},"");askPushed=true}catch(e){}
+  }
+}
+document.addEventListener("click",e=>{if(e.target.closest("[data-ask]"))openAsk()});
+$("#askClose").addEventListener("click",()=>askDlg.close());
+askDlg.addEventListener("keydown",e=>{if(e.key==="Escape"&&!askDlg.matches(":modal")&&!document.querySelector("dialog:modal"))askDlg.close()});
+askDlg.addEventListener("close",()=>{fab.classList.remove("open");if(askPushed){askPushed=false;history.back()}});
+addEventListener("popstate",()=>{if(askPushed){askPushed=false;askDlg.close()}});
+fab.hidden=false;
+// The floating button steps aside while the "Still confused?" card is on screen
+if("IntersectionObserver" in window)new IntersectionObserver(es=>fab.classList.toggle("away",es[0].isIntersecting)).observe($("#askTeaser"));
 
 /* ---------- message Kalpit (opens WhatsApp with the page context filled in) ---------- */
 const KALPIT_WA=["91","89625","69795"].join(""); // split so simple scrapers don't pick it up
-$("#msgKalpit").addEventListener("click",()=>{
-  const c=cat(),t=c.types?c.types.find(x=>x.id===state.type):null,u=(c.uses||[]).find(x=>x.id===state.use);
-  const view=[c.label,t&&t.label].filter(Boolean).join(" › ")+", under "+fmt(state.budget)+(u?", "+u.label:"")+(state.big?", Big deals only":"");
+document.addEventListener("click",e=>{
+  if(!e.target.closest(".msgK"))return;
   const q=$("#q").value.trim()||lastQ;
-  const msg=`Hi Kalpit, a question from your festive picks page.\n\nI was looking at: ${view}\nYour pick there: ${lastTop?P.find(x=>x.id===lastTop).n:"none at this budget"}\n${location.href}`+(q?`\n\nI asked: ${q}`:"")+"\n\nMy question: ";
+  const ai=lastA?`\n\nThe AI said: ${lastA.length>200?lastA.slice(0,200).trim()+"…":lastA}`:"";
+  const msg=`Hi Kalpit, a question from your festive picks page.\n\nI was looking at: ${viewText()}\nYour pick there: ${lastTop?P.find(x=>x.id===lastTop).n:"none at this budget"}\n${location.href}`+(q?`\n\nI asked: ${q}`:"")+ai+"\n\nMy question: ";
   const a=document.createElement("a");a.href=`https://wa.me/${KALPIT_WA}?text=${encodeURIComponent(msg)}`;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();
 });
 

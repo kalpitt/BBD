@@ -77,8 +77,42 @@ try {
     }
     await page.close();
   }
+  // Ask chat: the floating button opens it full screen; the phone's Back button closes it
+  if (!problems.length) {
+    const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    page.on("pageerror", e => problems.push(`ask chat: script error: ${e.message}`));
+    await page.route(u => !u.href.startsWith(base), r => r.abort());
+    await page.goto(base + "#phones");
+    await page.reload();
+    await heroText(page);
+    const fab = page.locator("#askFab");
+    if (!(await fab.isVisible())) problems.push("ask chat: floating button not visible");
+    else {
+      await fab.click();
+      if (!(await page.locator("#askDlg[open] #q").isVisible())) problems.push("ask chat: tapping the floating button didn't open the chat");
+      await page.goBack();
+      if (await page.waitForFunction(() => !document.querySelector("#askDlg").open, null, { timeout: 3000 }).then(() => false, () => true)) problems.push("ask chat: Back button didn't close the chat");
+      if (!page.url().startsWith(base)) problems.push("ask chat: Back button left the page");
+    }
+    await page.close();
+  }
+  // Laptop: the chat opens as a side panel
+  if (!problems.length) {
+    const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+    page.on("pageerror", e => problems.push(`ask panel: script error: ${e.message}`));
+    await page.route(u => !u.href.startsWith(base), r => r.abort());
+    await page.goto(base + "#phones");
+    await page.reload();
+    await heroText(page);
+    await page.locator("#askFab").click();
+    const w = await page.evaluate(() => document.querySelector("#askDlg").getBoundingClientRect().width);
+    if (!(w > 300 && w < 600)) problems.push(`ask panel: expected a side panel on laptops, got width ${w}`);
+    await page.keyboard.press("Escape");
+    if (await page.evaluate(() => document.querySelector("#askDlg").open)) problems.push("ask panel: Escape didn't close it");
+    await page.close();
+  }
 } finally { await browser.close(); server.close(); }
 
 for (const p of problems) console.log("✖ " + p);
-console.log(problems.length ? `\n✖ ${problems.length} problem(s). Do not push.` : `✓ Page OK: ${views.length} tabs at default, lowest and highest budget, phone and laptop size, shared-link scratch card, no script errors.`);
+console.log(problems.length ? `\n✖ ${problems.length} problem(s). Do not push.` : `✓ Page OK: ${views.length} tabs at default, lowest and highest budget, phone and laptop size, shared-link scratch card, ask chat (phone + laptop), no script errors.`);
 process.exit(problems.length ? 1 : 0);
