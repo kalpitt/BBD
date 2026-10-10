@@ -241,3 +241,12 @@ Template:
   RTX 3050 only, skipped as poor value. Amazon blocks scripted /dp/ pages; /gp/aw/d/<ASIN>
   with an iPhone UA sometimes works. LG C5 OLED's sale listing sat above its Sept price.
 - Next: STATE.md "Next steps".
+
+## 2026-10-10 (11:10 am): docs after the portfolio fill
+- Did: IDEAS A1 (32/43" TVs) and A2 (purifiers, geysers) marked done, A7 notes why no
+  gaming laptop; PICKS.md examples moved off filled slots; laptop tab note now says
+  "everyday, office and premium". STATE notes the phone cards commit (cc130d8) from
+  another chat that landed during this one.
+- Gotchas: the previous entry's "11:15 am" was a guess; the real time was about 11:00 am.
+  Check `TZ=Asia/Kolkata date` before stamping.
+- Next: STATE.md "Next steps".

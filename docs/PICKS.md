@@ -6,7 +6,7 @@ Read this before adding a pick (chat or price check). Price-only edits don't nee
 1. A model a family member could name and find: a known brand with working service in India.
 2. The best choice **for its job at its price**, not just the cheapest.
 3. One plain reason a non-expert understands, in one line (`why`), in Kalpit's voice, no hype.
-4. Fills a gap before crowding a slot: a missing size or price range (e.g. 32-inch TVs)
+4. Fills a gap before crowding a slot: a missing size or price range (e.g. a 512GB laptop under ₹35k)
    beats a fifth pick within ±10% of an existing one. Add a near-duplicate only if it's
    clearly better.
 5. Amazon wins ties (service). Respect his standing calls in AGENTS.md (no OnePlus N6,
@@ -17,7 +17,7 @@ Unsure? Suggest it to Kalpit instead of adding it.
 | Agents may, then tell Kalpit | Only Kalpit |
 |---|---|
 | Add a pick under the rules below (`auto: true`) | Remove a pick (agents only on his "remove X") |
-| Lower a category or type `min` so a pick fits (never raise it) | New tabs or types (e.g. air purifiers) |
+| Lower a category or type `min` so a pick fits (never raise it) | New tabs or types (e.g. room heaters) |
 | Fix prices, `est` → real, discount layers | Scores and verdicts (`why`) on his picks |
 | | Anything in the "Don't touch" list (AGENTS rule 3) |
 
@@ -32,7 +32,7 @@ replies "keep" or "remove X". All must hold (the validator enforces the starred 
 - ★ **Doesn't take the top spot** from Kalpit's picks: at no budget (or filter) may it
   become the top pick where one of his picks would otherwise lead. Start with a score
   2 below the picks near its price; the validator sweeps every budget and says if it's
-  still too high. In an empty slot (e.g. 32-inch TVs) it may lead.
+  still too high. In an empty slot (e.g. room heaters, once Kalpit adds the type) it may lead.
 - ★ At most **4 auto picks waiting** at any time, and at most **2 added per run or chat**.
   At 4, only suggest.
 - Amazon picks get `aff: true` only at about ₹250+ commission per sale (`docs/DATA.md`);

@@ -1,5 +1,5 @@
 {
-  "updated": "10 Oct, 11:05 am",
+  "updated": "10 Oct, 11:08 am",
   "checked": "10 Oct, 8:32 am",
   "askUrl": "https://ask.kalpit.me",
   "amazonTag": "bestdeallive-21",
@@ -32,7 +32,7 @@
       {"use": "lasts", "label": "Lasts longest"}
     ]},
     {"id": "tv", "label": "TVs", "noun": "a TV", "min": 10000, "max": 140000, "step": 1000, "def": 50000},
-    {"id": "laptops", "label": "Laptops", "noun": "a laptop", "min": 30000, "max": 130000, "step": 1000, "def": 55000, "note": "Everyday and office laptops only. No gaming laptops yet, because no confirmed sale prices."},
+    {"id": "laptops", "label": "Laptops", "noun": "a laptop", "min": 30000, "max": 130000, "step": 1000, "def": 55000, "note": "Everyday, office and premium laptops. No gaming laptops yet: the confirmed sale prices were poor value."},
     {"id": "home", "label": "Home", "noun": "", "types": [
       {"id": "washing", "label": "Washing machine", "noun": "a washing machine", "min": 12000, "max": 70000, "step": 500, "def": 25000},
       {"id": "fridge", "label": "Fridge", "noun": "a fridge", "min": 20000, "max": 80000, "step": 500, "def": 32000},

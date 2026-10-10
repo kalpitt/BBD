@@ -32,13 +32,13 @@ Status: ✅ done · 🔜 next · 💬 needs Kalpit · ⏸ later / only if data s
 ## Helping friends and family (goal a)
 | # | Idea | Why | Status |
 |---|---|---|---|
-| A1 | **32" and 43" TVs**, and lower the TV slider (now starts at ₹35k) | India's best-selling sizes; most TV buyers find nothing today. The deal scout already sees dated prices | 🔜 (G1 lets agents add them) |
-| A2 | **Seasonal picks:** air purifiers (Oct–Nov pollution), geysers and room heaters (winter) | What families actually buy this month | 💬 new Home types need his OK; then agents fill them |
+| A1 | **32" and 43" TVs**, and lower the TV slider (now starts at ₹35k) | India's best-selling sizes; most TV buyers find nothing today. The deal scout already sees dated prices | ✅ 10 Oct: Samsung 32", Xiaomi and Samsung 43", plus Sony and Samsung 65" for ₹65k–1.3L; slider starts at ₹10k |
+| A2 | **Seasonal picks:** air purifiers (Oct–Nov pollution), geysers and room heaters (winter) | What families actually buy this month | ✅ 10 Oct (Kalpit OK'd): Air purifier (3 Philips) and Geyser (AO Smith 15 L, Havells 3 L) types. Room heaters not yet |
 | A3 | **Diwali gifts under ₹1k / ₹2k / ₹5k** (new tab or chips) | Diwali is 8 Nov; gift lists are the most-shared thing | 🔜 💬 (new tab = his call) |
 | A4 | **Check the sale end dates before the 20 Oct sunset** | Amazon's festival often runs until Diwali. Switching off early wastes the best weeks | 🔜 |
 | A5 | **WhatsApp "Send to myself" text carries the Amazon affiliate link**; with no saved number it opens a contact picker, so it can go to any chat. Send the `kalpit.me/BBD#…` link instead | Matches his "no affiliate traffic through WhatsApp" call; avoids an Amazon rules risk | ✅ 10 Oct: all items link to kalpit.me/BBD (Kalpit: "kalpit.me/BBD covers everything") |
 | A6 | Ask box: when a question names a brand ("Nothing phone under 30k"), lead with that brand's pick | Answers what people actually asked | ⏸ |
-| A7 | Gaming laptops | Gap, but small audience among family | ⏸ |
+| A7 | Gaming laptops | Gap, but small audience among family | ⏸ 10 Oct: only RTX 3050 models had confirmed prices at ≤₹85k, skipped as poor value. Premium laptops (₹97k, ₹1.24L) added |
 | A8 | Ask-box capacity: free limit is ~80–120 questions a day. Workers paid plan is $5/month for the sale | Only if analytics (C1) show it running out | ⏸ |
 
 ## Reach beyond the circle (goal c)

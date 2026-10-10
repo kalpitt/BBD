@@ -1,17 +1,18 @@
 # STATE: where BBD is right now
 
-_Last updated: 10 Oct 2026, 11:15 am IST. Overwrite at the end of every session; keep it
+_Last updated: 10 Oct 2026, 11:10 am IST. Overwrite at the end of every session; keep it
 under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 
 ## Live
 - https://kalpit.me/BBD/: 155 picks, 7 tabs (Home now has Air purifier, Geyser). Ask box
-  at `askUrl`. Sales: Amazon from 8 Oct, Flipkart from 9 Oct.
+  at `askUrl`. Sales: Amazon from 8 Oct, Flipkart from 9 Oct. Phones (cc130d8, another
+  chat): "Best camera"/"Lasts longest" cards, "Lasts long" filter, `spec` on phones ≥ ₹20k.
 - Affiliate cut-off (10 Oct): Amazon `aff: true` only at ~₹250+ commission per sale
   (docs/DATA.md, official rate table); 59 affiliate (band), 96 exact-price picks.
 - Price check: Routine "BBD price check (9:05 am to 12:05 am, every 3h)", IST, runs
   `/price-check` in the cloud session "BBD price checker" (prices + deal scout).
-- Cloudflare: kalpit.me is proxied; Web Analytics live for all of kalpit.me (automatic
-  setup; filter path `/BBD`). Worker rebuilds only when `worker/*` or `wrangler.toml` change.
+- Cloudflare: Web Analytics live (filter path `/BBD`). Worker rebuilds only when
+  `worker/*` or `wrangler.toml` change.
 - GitHub: only `main` exists. CI runs the validator and the smoke test after each push.
 
 ## Governance (10 Oct; details in docs/IDEAS.md → Governance)
