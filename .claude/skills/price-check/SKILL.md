@@ -65,7 +65,8 @@ moves by ₹500 or more since the last run.
 
 Anything else (one report only, unclear variant, card offer unclear, out of stock,
 price outside the category slider range) → **don't edit, put it in the report**.
-Never remove a pick, never add one, never change `score` or verdicts on your own,
+Never remove a pick, never add one (except under step 4b's veto rule), never change
+`score` or verdicts on your own,
 except to fix a `why`/`card` sentence whose ₹ amount the new price makes wrong.
 
 Confirmed price for an `est: true` item → set `p`, delete `est` and `max`.
@@ -97,7 +98,7 @@ for a no-change run (it retires the Ask box's cached answers).
 
 Never spend ask-box questions. Never write friends' names or anything private.
 
-## 4b. Deal scout (suggestions only, never edits)
+## 4b. Deal scout (suggest, and add at most 2 under the veto rule)
 Kalpit wants new products and special deals flagged, including kinds the site doesn't
 list yet (9 Oct). Run it every time, after the price work:
 1. `node scripts/deal-scout.mjs` reads public deal channels (last 3.5 h) and prints
@@ -115,9 +116,14 @@ list yet (9 Oct). Run it every time, after the price work:
    None good → say nothing about the scout.
 3. `maybe on site` lines mention current picks. Treat each as one dated sale report for
    step 3 (never enough on its own).
-4. Never add a pick and never copy the post's shop link (it carries the poster's
-   affiliate tag). Kalpit replies "add X" in a chat, which uses `/update-picks`. If he
-   adds one, credit that channel in README → Credits.
+4. **Add it yourself** (max 2 per run) only if it meets every rule in AGENTS.md →
+   "Adding picks: veto, not approve": existing category/type, `"auto": true`, a score
+   that doesn't take the top spot, and a confirmed price. The post is only one dated
+   report: you also need the Flipkart listing itself or a second independent dated
+   report. Edit, validate and push like step 4, commit `Auto-add: <name> <price>`, and
+   credit a new channel in README → Credits. Everything else stays a suggestion
+   (Kalpit replies "add X" in a chat). Never copy the post's shop link (it carries the
+   poster's affiliate tag).
 5. If the script prints "Couldn't read", list those channels under "Couldn't check".
 
 ## 5. Final message (max ~11 lines)
@@ -126,6 +132,7 @@ Price check, 9 Oct 3 pm
 Changed (live): S25 ₹59,999 → ₹57,999 (Flipkart listing)
 Needs you: Edge 70 one report says ₹31,999, not confirmed
 Couldn't check: Amazon blocked / captcha
+Added (reply "remove X" to undo): <product> ₹<price>, <store>; <why>
 New deals (reply "add X" to list one):
 - <product> ₹<price>, <store>; <why: e.g. under its Sep low ₹X, or 15% SBI offer> (<category, or "new type: air purifier">) <post link>
 ```

@@ -7,6 +7,14 @@ python3 -m http.server 8765    # from the repo root, then open http://localhost:
 The ask box will show an error locally. That's expected: the Worker only answers
 requests from kalpit.me.
 
+## Smoke test (before pushing index.html or worker changes)
+```bash
+node scripts/smoke.mjs     # headless browser: every tab, phone and laptop size
+```
+Prints ✓ when every tab shows a pick with no script errors. It never calls the ask box.
+Needs Playwright + Chromium (preinstalled in Claude cloud sessions). The validator
+(`check-data.mjs`) also syntax-checks `index.html`'s scripts and `worker/worker.js`.
+
 ## Share links
 The address bar keeps the current view, so links open exactly that view:
 `kalpit.me/BBD#phones-15000-parents` (category, budget, filter) or
@@ -22,6 +30,9 @@ curl -s https://kalpit.me/BBD/data.json | grep -o '"updated": "[^"]*"'     # exp
 curl -s "$ASK"                           # expect {"error":"Send a POST request..."}
 ```
 - GitHub Pages usually updates within 1 minute. With `gh`: `gh api repos/kalpitt/BBD/pages/builds/latest`.
+- The Worker should rebuild only when `worker/*` or `wrangler.toml` change (Cloudflare
+  dashboard → bbd-ask → Settings → Build → Build watch paths). If every push still
+  shows a "Workers Builds" check, that setting isn't on yet.
 - Cloudflare's build result appears as a check on the commit:
   `gh api repos/kalpitt/BBD/commits/<sha>/check-runs`. Kalpit can also see it in the
   Cloudflare dashboard under Workers & Pages → bbd-ask → Deployments.

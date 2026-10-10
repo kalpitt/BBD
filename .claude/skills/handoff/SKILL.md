@@ -7,7 +7,8 @@ description: End-of-session ritual for the BBD repo. Update the living memory so
 The repo is public: write no names, numbers, chat content or personal plans.
 
 1. Overwrite `context/STATE.md`: what's live, open asks, known gaps, and the next
-   1–3 steps. Update the date at the top.
+   1–3 steps. Update the date at the top. **Keep it under 50 lines**: it's a snapshot,
+   not a history. Settled details go in LOG or the docs, not STATE.
 2. Append one entry to the bottom of `context/LOG.md` (template at its top). Note
    decisions and gotchas, not just tasks.
 3. `git pull --rebase origin main`, then `node scripts/check-data.mjs`, then commit

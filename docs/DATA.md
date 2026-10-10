@@ -27,6 +27,7 @@ about a minute.
 | `list` | | Sale price shown on the listing, before coupon and card offer. When set, `p` must equal `list − coupon − bank.off` (the validator checks) |
 | `coupon` | | Coupon amount in ₹ (mostly Amazon). Needs `list` |
 | `bank` | | Sale card instant discount: `{"name": "SBI", "off": 2000}`. Use `"name": "Bank"` if the card isn't known. Card name only, no amounts in `name` |
+| `auto` | | `true` = an agent added this pick and Kalpit hasn't said "keep" yet (AGENTS.md → Adding picks). Not shown on the page. Delete it when he approves |
 | `url` | | Direct product link. Not allowed with `aff` (it would drop the affiliate tag) or with `s: "Both"` |
 
 ### Discount layers and "Big deal"

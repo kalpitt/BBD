@@ -1,142 +1,49 @@
 # STATE: where BBD is right now
 
-_Last updated: 9 Oct 2026, 10:05 pm IST. Overwrite this file at the end of every session._
+_Last updated: 10 Oct 2026, 8:30 am IST. Overwrite at the end of every session; keep it
+under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 
 ## Live
-- https://kalpit.me/BBD/ is live with 135 picks across Phones, TVs, Laptops, Home,
-  Audio & chargers (Earbuds / Headphones & speakers / Chargers tabs), Fitness and Gadgets
-  (Watches / Camera & creator / Desk / Tablet & smart home). 8 Oct: Kalpit added 32 Amazon affiliate
-  picks (helped by @r3dash's deal threads, credited in README); price bands tightened to ~5-8% of price; TVs now include an OLED and a 75-inch (slider to ₹1.4L). Phones cover ₹7k–₹1.6L, with use-case chips (parents, basic, battery,
-  camera, gaming, iPhone).
-- Ask box is live at https://ask.kalpit.me (`askUrl`). The old workers.dev fallback was
-  removed on 9 Oct. It leads with the
-  shortlist's top pick, respects budget, and refuses off-list questions.
-- Share links keep the view: `kalpit.me/BBD#phones-15000-parents`, `#home-ac-36000`.
-  WhatsApp shows a preview image (`og.png`).
-- Ask-box answers refresh within ~5 min of any data.json edit that bumps `updated`
-  (it's part of the cache key). No need to bump `v2` for price changes.
-- Sales: Amazon from 8 Oct, Flipkart from 9 Oct (8 Oct for Plus/Black members).
-- Kalpit's picks were cross-checked on 7 Oct against two trusted YouTube videos. See AGENTS.md →
-  "The picks are Kalpit's own" for his standing calls; sources are credited in README.
+- https://kalpit.me/BBD/: 138 picks in Phones, TVs, Laptops, Home, Audio & chargers,
+  Fitness, Gadgets. Ask box at https://ask.kalpit.me (`askUrl`). Sales: Amazon from
+  8 Oct, Flipkart from 9 Oct.
+- Price check: Routine "BBD price check (every 3h)" runs `/price-check` in the cloud
+  session "BBD price checker", pushes confirmed price changes and notifies Kalpit's
+  phone. It also runs the deal scout (public Telegram channels). Delete it after the sale.
+- DNS on Cloudflare (DNS-only records; registrar and email forwarding still Porkbun).
 
-- **Price-check agent:** a Routine "BBD price check (every 3h)" wakes the cloud session
-  "BBD price checker (woken every 3h)" (environment BBD) to run `/price-check`. It pushes
-  confirmed price changes to main and notifies Kalpit's phone. Flipkart pages are
-  readable; Amazon blocks bots, so Amazon prices need two dated sale reports. Delete
-  the Routine after the sale (~20 Oct). Its prompt starts with `git pull --rebase`, which is
-  safe after the 8 Oct history squash (tested). Never use plain `git pull` in an old clone.
-- **Deal scout (since 9 Oct):** each price-check run also runs `scripts/deal-scout.mjs`
-  (7 public Telegram deal channels, last 3.5 h) and adds up to 3 new-product suggestions
-  to the phone notification, including kinds the site doesn't list yet. Suggestions
-  only; Kalpit replies "add X". X, Reddit and most deal websites block cloud reads
-  (tested 9 Oct); Telegram's public `t.me/s/` pages work. See docs/OPS.md → Deal scout.
-- **DNS:** kalpit.me is on Cloudflare DNS since 8 Oct (moved from Porkbun; registrar is
-  still Porkbun). All records DNS-only (grey cloud) so GitHub Pages HTTPS keeps working.
-  Email forwarding still runs through Porkbun (MX fwd1/fwd2.porkbun.com).
-- **Repo is clean to share:** one squashed commit (8 Oct) plus new ones, noreply author
-  email, sources credited in README → Credits.
-
-## Design refresh (live on main since 8 Oct, ~6:40 pm IST)
-- Night-sky panel (stars, 4 diyas) holds header, category tabs (cream line icons) and the
-  budget dial. Laptops (≥980px): full-height sticky sidebar on the left edge, picks in a
-  centred column, faint rangoli in the sidebar corner.
-- Slider shows a dot per pick and snaps onto it (tiny vibration on Android). **Affiliate
-  dots sit at the TOP of their price band, never the exact price** (snapping to an exact
-  affiliate price would print it in the budget box, hash and Status image).
-- Pick card: warm glow + gold edge light (runs twice per new pick), sparks on pick change,
-  one merged offer line, "See on <store>" + "Share as Status", "Send to myself on WhatsApp" link.
-- Share as Status: 1080×1920 image ("Kalpit's pick under ₹X", band for affiliate items).
-  Uses the share sheet where files can be shared; elsewhere (WhatsApp in-app browser,
-  laptops) a popup to press-and-hold or Download.
-- Shared links (#hash) open with a scratch card over the pick (once per tab, not on reload;
-  "Show my pick" button; vertical swipes still scroll).
-- Ask box is a chat thread (typing dots, word-by-word answer, screen readers get it whole).
-- "Prices checked 12 min ago" pill reads new `checked` stamp (falls back to `updated`).
-  The price-check skill now bumps `checked` on every run that compares prices, and
-  commits "Price check: no changes" when nothing else changed.
-- Worker context: banded (affiliate) items get the band + "tap the link to see today's
-  price on Amazon", never one number. Cache key bumped to v3.
-- Review panel (visual, mobile perf, a11y, trust, personas) ran on 8 Oct; fixes applied.
-  Skipped by Kalpit's call: bigger chips/text for older users, quick-budget buttons.
-- Design samples artifact (private): https://claude.ai/artifact/1fXdY27ydww37VbnzL7rdc
-
-## Discount layers (live on main since 8 Oct)
-- Fields `was`, `list`, `coupon`, `bank` {name, off}; `p` stays final. Validator enforces
-  `p = list − coupon − bank.off`. Docs: `docs/DATA.md` → Discount layers.
-- Big deal = card offer > 12% of pre-card price, or `p` ≤ 75% of `was`. Shows 🔥 badge,
-  "Big deals" chip (only in tabs that have one), +1 ranking boost (page + Worker), and
-  "BIG DEAL" in the Ask box product lines. Affiliate breakdowns are labels only.
-- Backfilled list + bank for 13 items (prices from @r3dash's threads), and `was` for 9 items from
-  pricebefore.com (lowest 1–20 Sep, Amazon listing confirmed by matching sale-day price).
-  Big deals: Ray-Ban Meta, WalkPad-2 (card offer); Sony XM5, Bose QC, MX Master 3S (vs Sep).
-- No `was` found / skipped: Ray-Ban (no drop vs Sep), T7 Shield (sat at MRP), Dell 15,
-  Garmin 265, Edifier, Momentum 4, Bose QC buds, OnePlus Pad 2, Ring AIR, G-Shock, Mic Mini,
-  SanDisk, Fire TV Stick, MacBook Neo, LG C6 (no matching listing).
-- Phones: `was` for 8 (Fold7, S25 Ultra, 13s, Nord CE6, M17e, G06 Power, Vibe2, Virat V1).
-  HMD Vibe2 is a 🔥 big deal (₹14,999 all Aug–Sep, now ₹10,499). Skipped M47 (no drop),
-  Narzo 100 Lite (cheaper in Sep). Most Flipkart phones had no Flipkart listing on the
-  tracker; retry after 9 Oct or with direct Flipkart URLs.
-- Still to do: `was` and layers for phones/Flipkart items, and the one-time review of every affiliate band vs plain link (Kalpit's call).
+## New since 10 Oct (governance review, see docs/IDEAS.md)
+- **Veto, not approve:** agents and the price check may add up to 2 picks per run
+  under strict rules (AGENTS.md → Adding picks), marked `auto: true`. Kalpit replies
+  "keep" or "remove X". The validator lists picks still marked `auto`.
+- `scripts/smoke.mjs` (headless page check) before pushing `index.html`/Worker changes;
+  the validator now syntax-checks `index.html`'s scripts too.
+- Cloud sessions push to `main` only, never their side branch.
 
 ## Open asks (waiting on Kalpit)
-0. **Amazon affiliate account is old:** explore (in a new chat) what it allows, e.g.
-   Amazon's product API for live prices next to affiliate links, eligibility rules,
-   and where the key would live (Cloudflare secret, never the repo).
-1. Lowercase `/bbd` redirects to `/BBD/` live (checked 9 Oct, 10 pm). Confirm
-   `add-bbd-redirect` is merged in the Kalpit.me repo so it survives main-site deploys:
-   https://github.com/kalpitt/Kalpit.me/pull/new/add-bbd-redirect
-2. Real BBD prices for **Vivo X200T** and **Motorola Edge 70** (listed as expected ranges).
-   Also still `est`: Lenovo IdeaPad Slim 3, ASUS Vivobook 15 and the three 55-inch TVs.
-3. Two Flipkart cheat-sheet PDFs (TVs/large appliances and Home) are image-only. Share
-   them as images to firm up TV prices (TVs are `est: true`).
-4. Optional: EarnKaro links for Flipkart items.
-5. ~~Cloudflare Worker builds fail~~ Resolved: all builds green as of 8 Oct, 7:23 pm.
-6. Turn off workers.dev for bbd-ask (still answering on 9 Oct, 10 pm; nothing uses it
-   since `askFallback` was removed), and optionally delete the five leftover `ccr-*`
-   branches on GitHub (all old copies of main; deletion was blocked for agents).
-7. Kalpit wants a repo-wide review of improvement opportunities (deferred, not started).
+1. Cloudflare: set bbd-ask build watch paths to `worker/*` and `wrangler.toml` (IDEAS G3).
+2. Turn on Cloudflare Web Analytics for kalpit.me and share the snippet (IDEAS C1).
+3. Decide: Diwali gift tab (A3), WhatsApp self-send link without the affiliate tag (A5),
+   one dated source enough to move an affiliate band (G6).
+4. Turn off workers.dev for bbd-ask; delete the leftover `ccr-*` branches on GitHub.
+5. Confirm `add-bbd-redirect` is merged in the Kalpit.me repo (lowercase /bbd works now).
+6. Real prices for Vivo X200T, Motorola Edge 70 (still `est`), plus Lenovo IdeaPad
+   Slim 3 and the 55-inch TVs. Image versions of the two Flipkart TV/Home cheat sheets help.
+7. Optional: EarnKaro links for Flipkart items; Amazon product API (explore in a new chat).
 
 ## Known gaps
-- 8 Oct adds with only one source (no second report found): Sony WF-1000XM5, Bose QC
-  Earbuds, Sennheiser IE 200, Echo Dot 5th Gen, Fire TV Stick 4K Select, Spinnaker Bradner,
-  Cadola Lydden Hill. Kalpit approved publishing them; spot-check if possible.
-- TVs: only 55-inch picks, with expected ranges (top of range = Amazon early-deal price,
-  27 Sep). No 32-inch or 43-inch TVs yet, because no confirmed 2026 sale prices.
-- Laptops: everyday/office only (incl. MacBook Neo, est.). No gaming laptops yet, because no
-  2026 sale prices were found.
-- The AI occasionally gives one product another's price (e.g. A36 vs A56). Since 9 Oct
-  the Worker's `fixPrices()` corrects these before the answer is shown (commit 19521de).
-  Confirmed live: the Worker build for 0faa930 (which contains it) succeeded. GitHub
-  shows most other Worker builds as "failure" even when they deploy; treat it as noise
-  unless the Ask box misbehaves.
-- `was` now on 57 of 135 picks (8 Oct evening). Kalpit's rule: trust the tracker's 1-20 Sep
-  low for the closest same-model listing even if its sale-day price differs from ours
-  (docs/DATA.md). Not covered: washing machines (no tracker pages), new launches, est items.
-  Tracker helper: curl a pricebefore product page; daily prices sit in `dates`/`prices` arrays.
-- Kalpit's call (8 Oct): Xiaomi 17 (score 9) leads ₹60-69k, Pixel 11 (score 10) leads ₹70k+.
-- Fixed 8 Oct: the "Worth stretching ₹X more" note leaked exact affiliate prices; now
-  "up to ₹X more" to the band top.
-- Fixed 9 Oct: sub-type chip row (Watches/Tablet…) stayed visible after switching to a
-  category without types (`[hidden]` was overridden by `.chips{display:flex}`).
-- When a question names a brand ("Nothing phone under 30k"), the AI can still lead with
-  the shortlist's top pick (A36) instead of that brand's pick (Nothing 4b). Not a bug in
-  budget handling; consider boosting brand matches in `bestMatches()` if Kalpit wants.
+- No 32/43-inch TVs, air purifiers, geysers or gaming laptops yet (IDEAS A1, A2, A7).
+- 7 picks added 8 Oct have one source only (Sony WF-1000XM5, Bose QC Earbuds, Sennheiser
+  IE 200, Echo Dot 5th Gen, Fire TV Stick 4K Select, Spinnaker Bradner, Cadola Lydden Hill).
+- `was` on 57 of 138 picks; missing for most Flipkart phones and washing machines.
+- Ask box can lead with the shortlist's top pick when a question names a brand (IDEAS A6).
 - Not added (no BBD price found): Poco M8, Oppo K13 / K13 Turbo Pro, Realme P4 Pro.
-
-## Roadmap
-- **Message Kalpit from the site:** done 8 Oct. "Message Kalpit on WhatsApp" link under
-  the Ask box opens wa.me to his number with the page view, top pick, link and any typed
-  question filled in. Nothing is sent or stored by us.
+- pricebefore.com helper: curl a product page; daily prices sit in `dates`/`prices` arrays.
+- GitHub often shows Worker builds as "failure" even when they deploy; noise unless the
+  Ask box misbehaves.
 
 ## Next steps for an agent
-- Worker builds are healthy: Kalpit's dashboard screenshot (8 Oct, 7:23 pm) shows every
-  build green, including 3ca4d03, which GitHub had reported as failed (it was re-run).
-  Check results with `curl -s https://api.github.com/repos/kalpitt/BBD/commits/<sha>/check-runs`.
-- Run the docs/OPS.md regression questions once the Worker build is confirmed.
-- Explore the Amazon affiliate account options (open ask 0).
-- Apply price and pick changes as Kalpit sends them (`/update-picks`).
-- Watch the first deal-scout suggestions (from 9 Oct, 11:31 pm). If they're noisy, tune
-  `RULES`/`SKIP` in scripts/deal-scout.mjs or drop a channel.
-- The scout's channels post dated 32/43-inch TV and gaming-laptop prices: a way to fill
-  those gaps (Known gaps) if Kalpit wants them.
-- Around 20 Oct, propose the sunset (banner, ask box off).
+1. Add 32/43-inch TVs under the veto rule (lower the TV slider `min` if needed). Seasonal
+   picks (A2) need new Home types, so ask Kalpit first.
+2. Check the real sale end dates before proposing the 20 Oct sunset (IDEAS A4).
+3. Build C2 ("Share this list with family" button) once Kalpit OKs it.

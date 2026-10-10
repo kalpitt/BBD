@@ -150,3 +150,18 @@ Template:
 - 10 Oct 2:35 am (price check): HMD Vibe2 5G 10,499 → 11,399 (Flipkart listing, after bank offer, steady for a day).
 - 10 Oct 4:55 am: added Xiaomi 65" X Pro QLED, iFFALCON 65", ECOVACS N30 (new Home type: Robot vacuum), from deal-channel posts. MX Master 3S 5,795 → 4,416; Vivobook 15 firmed at 41,740 (Core 3, 8GB/512GB, Amazon). Desk slider min 4,000.
 - 10 Oct 5:40 am (price check): HMD Vibe2 11,399 → 11,999. Fix: 11,399 was listing minus the co-branded 5%, which the page shows separately.
+
+## 2026-10-10: strategy review, governance first
+- Did: strategy review of the site and the way it's run; all ideas saved in
+  docs/IDEAS.md with status. Governance changes: "veto, not approve" rule for adding
+  picks (AGENTS.md, price-check 4b, `auto` field); `scripts/smoke.mjs` headless page
+  check; validator syntax-checks `index.html`; push to `main` only from cloud sessions;
+  STATE cut from 142 to under 50 lines (old version stays in git history).
+- Decided (Kalpit): goals are (a) help friends and family buy well, then (c) reach
+  beyond his circle; affiliate income is a side benefit. Agents and the price check may
+  add up to 2 picks per run without asking, then tell him.
+- Gotchas: every push, even "Price check: no changes", rebuilds the Worker until build
+  watch paths are set in Cloudflare. `pkill -f <pattern>` inside a Bash call can kill
+  that same shell when the pattern appears in the command.
+- Next: Kalpit's dashboard steps (watch paths, Web Analytics); then 32/43-inch TVs and
+  seasonal picks (IDEAS A1, A2).

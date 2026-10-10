@@ -9,6 +9,8 @@ description: Change prices, add/remove picks, or edit verdicts and quick answers
    - `aff: true` items never get exact ₹ amounts in `why`, `card` or `faq`.
    - Don't invent prices. If Kalpit's message is ambiguous (which variant? card price
      or not?), ask one short question first.
+   - "keep X" / "keep all": delete `"auto": true` from those picks (agent-added picks
+     he has now approved). "remove X": delete the pick.
    - Bump `updated` to the current IST time, e.g. `"9 Oct, 2:15 pm"`.
 3. `node scripts/check-data.mjs` must print ✓. Read the warnings and fix any that matter.
 4. Optional for layout changes: preview with `python3 -m http.server 8765`.

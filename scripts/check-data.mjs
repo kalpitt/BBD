@@ -1,10 +1,11 @@
 #!/usr/bin/env node
-// Validates data.json (and the Worker's syntax) before anything is pushed.
+// Validates data.json (and the syntax of the Worker and index.html's scripts) before anything is pushed.
 // Pushing to main publishes immediately, so run this first:  node scripts/check-data.mjs
 // Exit code 1 = errors (do not push). Warnings are printed but don't block.
 
 import { readFileSync } from "node:fs";
 import { execSync } from "node:child_process";
+import { Script } from "node:vm";
 
 const errors = [], warns = [];
 const err = m => errors.push(m), warn = m => warns.push(m);
@@ -65,6 +66,7 @@ for (const [i, x] of (d.products || []).entries()) {
   } else if (x.coupon != null) err(`${at}: coupon needs list (the sale price before the coupon)`);
   if (x.was != null && isNum(x.p) && !(x.was > (x.list || x.p))) err(`${at}: was (normal price) must be higher than the sale price`);
   if ((x.list != null || x.bank != null || x.was != null) && x.est) warn(`${at}: discount layers on an estimate. Remove them or firm up the price`);
+  if (x.auto != null && x.auto !== true) err(`${at}: auto must be true or left out`);
   if (x.faq && !(Array.isArray(x.faq) && x.faq.every(f => Array.isArray(f) && f.length === 2 && f.every(isStr)))) err(`${at}: faq must be [question, answer] pairs`);
 
   const c = cats.get(x.cat);
@@ -104,6 +106,20 @@ try {
 // ---- Worker syntax ----
 try { execSync("node --input-type=module --check < worker/worker.js", { cwd: new URL("..", import.meta.url), stdio: "pipe", shell: "/bin/sh" }); }
 catch (e) { err("worker/worker.js has a syntax error: " + String(e.stderr || e.message).split("\n").slice(0, 3).join(" ")); }
+
+// ---- index.html scripts: syntax only (a typo there blanks the page for everyone) ----
+try {
+  const html = readFileSync(new URL("../index.html", import.meta.url), "utf8");
+  const blocks = [...html.matchAll(/<script(?![^>]*\bsrc=)(?![^>]*type="application\/(?:ld\+)?json")[^>]*>([\s\S]*?)<\/script>/g)];
+  for (const [i, m] of blocks.entries()) {
+    try { new Script(m[1], { filename: `index.html script ${i + 1}` }); }
+    catch (e) { err(`index.html script ${i + 1} has a syntax error: ${e.message}`); }
+  }
+} catch (e) { err("couldn't read index.html: " + e.message); }
+
+// ---- picks agents added that Kalpit hasn't looked at yet (AGENTS.md → Adding picks) ----
+const auto = (d.products || []).filter(x => x.auto).map(x => x.n);
+if (auto.length) console.log(`ℹ Added by agents, waiting for Kalpit's "keep" or "remove": ${auto.join(", ")}`);
 
 for (const w of warns) console.log("⚠ " + w);
 for (const e of errors) console.log("✖ " + e);
