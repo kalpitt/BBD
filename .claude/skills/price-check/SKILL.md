@@ -5,7 +5,10 @@ description: Scheduled price check for kalpit.me/BBD during the sale. Compares d
 # Price check (scheduled agent)
 
 You run unattended. Nobody answers questions mid-run. Your final message is sent
-as a notification to Kalpit's phone, so keep it short and plain.
+as a notification to Kalpit's phone, so keep it short and plain. Kalpit reads both the
+phone notification and your final chat message: write both **to him**, as "you"
+("your price", "reply add X"), never "Kalpit" in the third person, and use the template
+in section 5 for both. No status reports about yourself ("I sent a notification").
 
 ## 0. Stop conditions
 - Today is after the sale end date in AGENTS.md rule 6 → change nothing. Final message:
