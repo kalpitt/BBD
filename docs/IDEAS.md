@@ -72,8 +72,8 @@ Six specialist reviews (page, picks, AI box, trust, engineering, growth). Kalpit
 | R8 | **Family link check** (`FAM_HASH`): a crafted `?f=` link could set a stranger as "Kalpit's WhatsApp" | ✅ built 11 Oct; 💬 needs his family link once to switch on |
 | R9 | **Broken links** (`#%E0%A4%A`) blanked the page; typed budgets under the slider did nothing; form said "only Kalpit sees it" | ✅ 11 Oct |
 | R10 | **Twin-code check** in the validator (page vs Worker vs validator ranking) | ✅ 11 Oct |
-| R11 | **New types** (room heater, tablet, speakers & soundbars) and gap picks (budget washer and fridge, everyday chargers, budget headphones) | 🔜 11 Oct, Kalpit: add, he vetoes |
-| R12 | **Better phones above ₹1L** (Kalpit: keep expensive phones, add others) so the ₹1.3–1.6L top pick isn't the Fold7 / iPhone 18 Pro | 🔜 |
+| R11 | **New types** (room heater, tablet, speakers & soundbars) and gap picks (budget washer and fridge, everyday chargers, budget headphones) | ✅ 11 Oct: 13 picks added (Kalpit vetoes); types Room heater, Tablet, Speakers & soundbars |
+| R12 | **Better phones above ₹1L** (Kalpit: keep expensive phones, add others) so the ₹1.3–1.6L top pick isn't the Fold7 / iPhone 18 Pro | ✅ 11 Oct: Galaxy S26 Ultra leads ₹1.25–1.6L, Pixel 11 Pro added |
 | R13 | Trust line, prominent affiliate note, privacy note (drafts in the review doc) | ⏸ Kalpit left unticked |
 | R14 | Move the Gmail-draft step out of the session that can push | ⏸ Kalpit left unticked |
 | R15 | Cut list (18 weak picks) and folding the Fitness tab | ⏸ Kalpit left unticked |
