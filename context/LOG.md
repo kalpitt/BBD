@@ -348,3 +348,4 @@ Template:
   (chip/IP unchecked). New field `altScore` ({"camera": 9}) makes it the "Best camera"
   card at ₹50k–55k while the S25 FE stays the main pick. OnePlus 13s lost its `camera`
   tag ("not a very good camera").
+- 10 Oct 1:45 pm: added (Kalpit) LG 251 L fridge 19,633, Haier 540 L side-by-side 43,640, Whirlpool 8 kg washer 22,990, from deal-channel posts.
