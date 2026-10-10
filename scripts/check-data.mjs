@@ -94,6 +94,7 @@ for (const [i, x] of (d.products || []).entries()) {
 
   // Checked specs: chip, IP rating (or "none"), frame (optional). "Lasts long" needs a strong chip and a water rating (Kalpit, 10 Oct)
   if (x.spec != null && !(isStr(x.spec.chip) && /^(none|IP\d[\dX]K?(\/IP\d\dK?)*)$/.test(x.spec.ip || "") && (x.spec.frame == null || ["metal", "plastic"].includes(x.spec.frame)))) err(`${at}: spec must be {"chip": "...", "ip": "IP68" or "none", "frame": "metal" or "plastic" (leave out if unknown)}`);
+  if (x.altScore != null && !(typeof x.altScore === "object" && Object.entries(x.altScore).every(([t, v]) => (x.tags || []).includes(t) && Number.isFinite(v) && v >= 1 && v <= 10))) err(`${at}: altScore must be like {"camera": 9}: a tag this pick has, score 1–10`);
   if ((x.tags || []).includes("lasts") && !(x.spec && x.spec.ip && x.spec.ip !== "none")) err(`${at}: "lasts" needs a checked spec with an IP rating`);
   const uses = (c.uses || []).map(u => u.id);
   for (const t of x.tags || []) if (!uses.includes(t)) err(`${at}: tag "${t}" isn't one of ${c.id}'s uses (${uses.join(", ") || "none"})`);

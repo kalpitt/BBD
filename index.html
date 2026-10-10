@@ -702,7 +702,8 @@ function render(force){
   // If the main pick wins one of them too, the main card says so instead.
   const alts=[],topAlso=[];
   if(!state.use)for(const a of cat().alts||[]){
-    const w=rankAt(all.filter(x=>(x.tags||[]).includes(a.use)),b)[0];
+    // altScore (data.json): Kalpit's score for this card only, e.g. his camera pick
+    const w=rankAt(all.filter(x=>(x.tags||[]).includes(a.use)).map(x=>x.altScore&&x.altScore[a.use]?{...x,score:x.altScore[a.use]}:x),b)[0];
     if(!w)continue;
     if(w.id===top.id)topAlso.push(a.label);
     else{const same=alts.find(y=>y.x.id===w.id);if(same)same.labels.push(a.label);else alts.push({x:w,labels:[a.label]})}

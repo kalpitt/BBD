@@ -343,3 +343,8 @@ Template:
 - Ask chat: removed the header "WhatsApp Kalpit" button and the teaser's WhatsApp link.
   The "Message Kalpit" card now shows only after a 👎 (not on a 2nd question or errors),
   so a viral day or a used-up AI limit doesn't flood his WhatsApp.
+- 1:40 pm, Kalpit: added Nothing Phone (4a) Pro, Flipkart ₹49,999 (his screenshot; the
+  ₹2,973 Flipkart Axis offer is the co-branded card the page already notes). No spec yet
+  (chip/IP unchecked). New field `altScore` ({"camera": 9}) makes it the "Best camera"
+  card at ₹50k–55k while the S25 FE stays the main pick. OnePlus 13s lost its `camera`
+  tag ("not a very good camera").
