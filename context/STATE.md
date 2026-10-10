@@ -16,6 +16,8 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
   Sonnet session "BBD price checker, Sonnet". Old Opus Routine and a fresh-session test
   Routine are paused (fresh sessions can't push). Details: AGENTS.md → Why things are.
 - Sunset (Kalpit, 10 Oct): site + price check stay on through Diwali, 8 Nov. Ask on 9 Nov.
+- Visit counts (10 Oct): store taps per pick, tabs, shares, AI answers at
+  `ask.kalpit.me/stats?days=7` (docs/OPS.md → Traffic). Kalpit: `?nostats` on his devices.
 - Cloudflare: Web Analytics live (filter path `/BBD`); Email Routing on kalpit.me
   (Porkbun MX/SPF removed); Worker rebuilds only when `worker/*` or `wrangler.toml` change.
 
@@ -45,4 +47,4 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 ## Next steps for an agent
 1. Check the Sonnet price checker's first runs (3:05 pm onward) pushed or reported cleanly.
 2. Price-check Routine prompt: can only be edited from its own session (skill now says "write to you").
-3. Ideas still open in docs/IDEAS.md: G15 weekly question, C1 per-pick click counts.
+3. Ideas still open in docs/IDEAS.md: G15 weekly question.
