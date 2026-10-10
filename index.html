@@ -157,6 +157,7 @@ html:has(.askdlg:modal){overflow:hidden}
 .wacard{border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:10px;background:var(--diya)}
 .wacard p{margin:0}
 .btn.wa{background:#1F7A45;color:#fff;justify-self:start}
+.wapill{font:600 14px var(--body);color:var(--night);background:var(--ink);border:0;border-radius:999px;padding:6px 12px;min-height:36px;cursor:pointer;white-space:nowrap;flex:none}
 .msgf{display:grid;gap:6px}
 .msgf textarea,.msgf input:not(.vh){width:100%;font:400 16px/1.4 var(--body);color:var(--ink);background:var(--raise);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
 .msgf textarea{resize:vertical;min-height:72px}
@@ -348,7 +349,7 @@ dialog .acts{justify-content:flex-end}
   <section class="askTeaser" id="askTeaser" aria-labelledby="askTeaserTitle">
     <h3 id="askTeaserTitle">Still confused? Ask me</h3>
     <p>Tell my AI who it's for and your budget. It answers only from my picks on this page.</p>
-    <div class="acts"><button class="btn go" type="button" data-ask>Ask Kalpit's AI</button></div>
+    <div class="acts"><button class="btn go" type="button" data-ask>Ask Kalpit's AI</button><button type="button" class="link toK">Or message me</button></div>
   </section>
 
   <section class="sec faq">
@@ -404,6 +405,7 @@ dialog .acts{justify-content:flex-end}
 <dialog id="askDlg" class="askdlg" aria-labelledby="askTitle">
   <div class="askhead">
     <div><h3 id="askTitle">Ask Kalpit's AI</h3></div>
+    <button type="button" class="wapill toK">Message Kalpit</button>
     <button type="button" class="x" id="askClose" aria-label="Close chat">✕</button>
   </div>
   <div class="askbody" id="askBody">
@@ -798,9 +800,10 @@ function mentions(text,names){
   return kept.sort((p,q)=>p.i-q.i).map(h=>h.x).filter(x=>!seen.has(x)&&seen.add(x));
 }
 const NAMES=nameIndex(P);
-let lastQ="",lastA="";
+let lastQ="",lastA="",asked=0;
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-// "Message Kalpit" card: only after a 👎, so a busy day doesn't flood Kalpit's WhatsApp
+// "Message Kalpit" card (email form; WhatsApp on his family link): after a 👎, a second
+// question or a failed answer, or any time from the header button / "Or message me" link
 const offerKalpit=()=>{$("#waCard").hidden=false};
 const grow=()=>{const t=$("#q");t.style.height="auto";t.style.height=t.scrollHeight+2+"px"};
 $("#q").addEventListener("input",grow);
@@ -810,7 +813,7 @@ $("#askForm").addEventListener("submit",async e=>{
   e.preventDefault();if(askBtn.disabled)return;
   const q=$("#q").value.trim();
   if(q.length<8){st.textContent="Write a little more, like who it's for and your budget.";return}
-  askBtn.disabled=true;st.textContent="";lastQ=q;lastA="";$("#q").value="";grow();$("#sugs").hidden=true;
+  askBtn.disabled=true;st.textContent="";lastQ=q;lastA="";$("#q").value="";grow();$("#sugs").hidden=true;asked++;
   // Keep the last three questions in the thread
   while(chat.children.length>=3)chat.firstElementChild.remove();
   const turn=document.createElement("div");turn.className="turn";
@@ -818,6 +821,7 @@ $("#askForm").addEventListener("submit",async e=>{
   const k=document.createElement("div");k.className="bub k";k.innerHTML=`<span class="lbl">Kalpit's picks</span><span class="typing" role="status" aria-label="Thinking"><i></i><i></i><i></i></span>`;
   turn.append(me,k);chat.append(turn);
   me.scrollIntoView({block:"start",behavior:reduce?"auto":"smooth"});
+  let ok=false;
   const fail=msg=>{k.innerHTML=`<span class="lbl">Kalpit's picks</span><p class="err">${msg}</p>`};
   const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),45000);
   try{
@@ -841,11 +845,12 @@ $("#askForm").addEventListener("submit",async e=>{
       if(m.length){const d=document.createElement("div");d.className="picks";d.innerHTML=m.map(x=>row(x)).join("");k.after(d)}
       const fb=document.createElement("div");fb.className="fb";
       fb.innerHTML=`<span>Did this help?</span><button type="button" data-fb="y">👍 Yes</button><button type="button" data-fb="n">👎 Not really</button>`;
-      turn.append(fb);lastA=j.answer;
+      turn.append(fb);ok=true;lastA=j.answer;
       st.textContent="Answer ready";setTimeout(()=>{if(st.textContent==="Answer ready")st.textContent=""},4000);
     }
   }catch(e){fail(e.name==="AbortError"?"This is taking too long. Try again in a minute.":"Couldn't reach the answer service. Check your connection and try again.")}
   clearTimeout(timer);askBtn.disabled=false;
+  if(!ok||asked>=2)offerKalpit();
 });
 chat.addEventListener("click",e=>{
   const b=e.target.closest("[data-fb]");if(!b)return;
@@ -875,6 +880,13 @@ function openAsk(){
   }
 }
 document.addEventListener("click",e=>{if(e.target.closest("[data-ask]"))openAsk()});
+// "Message Kalpit" / "Or message me": open the chat and jump to the form
+document.addEventListener("click",e=>{
+  if(!e.target.closest(".toK"))return;
+  openAsk();offerKalpit();
+  $("#waCard").scrollIntoView({block:"nearest",behavior:reduce?"auto":"smooth"});
+  if(!$("#msgForm").hidden&&wide.matches)$("#mText").focus();
+});
 $("#askClose").addEventListener("click",()=>askDlg.close());
 askDlg.addEventListener("keydown",e=>{if(e.key==="Escape"&&!askDlg.matches(":modal")&&!document.querySelector("dialog:modal"))askDlg.close()});
 askDlg.addEventListener("close",()=>{fab.classList.remove("open");if(askPushed){askPushed=false;history.back()}});

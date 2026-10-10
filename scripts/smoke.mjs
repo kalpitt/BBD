@@ -104,6 +104,10 @@ try {
     await page.goto(base + "#phones");
     await heroText(page);
     if (await page.evaluate(() => document.querySelector("#msgForm").hidden || !document.querySelector("#famWa").hidden)) problems.push("message Kalpit: a normal visitor should get the form, not WhatsApp");
+    await page.locator("#askTeaser .toK").click();
+    if (!(await page.locator("#askDlg[open] #mText").isVisible())) problems.push('message Kalpit: "Or message me" didn\'t open the chat at the form');
+    await page.locator("#askClose").click();
+    await page.waitForTimeout(300); // closing steps the browser history back once
     await page.goto(base + "?f=ai8j5mmb#phones");
     await page.reload();
     await heroText(page);

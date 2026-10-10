@@ -359,3 +359,6 @@ Template:
   to add the `MSG_TO` Worker secret (his Gmail) before the form can send.
 - 2:55 pm: Kalpit added the `MSG_TO` secret. Test message sent through the live form
   (Worker replied ok). Asked him to confirm it landed in Gmail (check Spam too).
+- 3:10 pm, Kalpit: email arrived. "Message Kalpit" made obvious again (it's email now, not his
+  WhatsApp): header button in the chat, "Or message me" on the teaser card, and the form shows
+  after a 👎, a 2nd question or a failed answer.
