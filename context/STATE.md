@@ -26,7 +26,7 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 - Amazon prices need his screenshot or two dated reports (agents can't read Amazon pages).
 
 ## Open asks (waiting on Kalpit)
-1. Nothing Phone (4a) Pro: chip / IP / frame unchecked (no `spec` line yet).
+1. Nothing (4a) Pro: launch ₹39,999, Jun low ₹44,999 (pricebefore); ₹49,999 now. Keep?
 2. `add-bbd-redirect` in Kalpit.me: he'll merge it first thing in that repo.
 3. Optional: EarnKaro links for Flipkart items; Amazon product API (explore in a new chat).
 
@@ -42,5 +42,5 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 
 ## Next steps for an agent
 1. Check the Sonnet price checker's first runs (3:05 pm onward) pushed or reported cleanly.
-2. Find a checked spec for the Nothing Phone (4a) Pro (chip, IP rating, frame).
+2. Price-check Routine prompt: can only be edited from its own session (skill now says "write to you").
 3. Ideas still open in docs/IDEAS.md: G15 weekly question, C1 per-pick click counts.

@@ -380,3 +380,9 @@ Template:
   history.back(), so tests must wait before the next goto. The family code must never be in
   the repo (smoke test uses a dummy number).
 - Next: STATE.md "Next steps".
+- 3:45 pm: Nothing Phone (4a) Pro spec added (Snapdragon 7 Gen 4, IP65, aluminium frame;
+  Beebom compare page plus agreeing snippets, Haiku research). pricebefore: launch ₹39,999,
+  low ₹44,999 (1 Jun), now ₹49,999, so not a deal; flagged to Kalpit. Price-check skill now
+  says to write the final message and notification to Kalpit as "you" (the 3 pm Sonnet run
+  wrote about him in the third person). The Routine's own prompt can only be edited from
+  the session it posts into, so it was left as is; the skill carries the rule.

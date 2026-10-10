@@ -1,5 +1,5 @@
 {
-  "updated": "10 Oct, 1:45 pm",
+  "updated": "10 Oct, 4:57 pm",
   "checked": "10 Oct, 1:30 pm",
   "askUrl": "https://ask.kalpit.me",
   "amazonTag": "bestdeallive-21",
@@ -85,7 +85,7 @@
     {"id": "x8pro", "cat": "phones", "n": "Poco X8 Pro", "p": 33999, "was": 39999, "s": "Flipkart", "card": "Includes bank offer", "why": "Gaming pick under ₹35k.", "tags": ["gaming", "lasts"], "spec": {"chip": "Dimensity 8500 Ultra", "ip": "IP68/IP69K", "frame": "metal"}, "score": 5},
     {"id": "t5pro", "cat": "phones", "n": "Vivo T5 Pro", "p": 33499, "s": "Flipkart", "card": "Includes bank offer", "why": "Slim and reliable mid-ranger.", "tags": ["camera"], "spec": {"chip": "Snapdragon 7s Gen 4", "ip": "IP68/IP69", "frame": "plastic"}, "score": 4},
     {"id": "n4a", "cat": "phones", "n": "Nothing Phone (4a)", "p": 30998, "was": 42999, "s": "Flipkart", "card": "Includes bank offer", "why": "3.5x zoom camera, clean software and no bloatware. Best camera under ₹35k.", "tags": ["camera"], "spec": {"chip": "Snapdragon 7s Gen 4", "ip": "IP64", "frame": "plastic"}, "score": 8, "url": "https://www.flipkart.com/nothing-phone-4a-white-128-gb/p/itm47712249513d4?pid=MOBHQENAHHRMSET2"},
-    {"id": "n4ap", "cat": "phones", "n": "Nothing Phone (4a) Pro", "p": 49999, "s": "Flipkart", "why": "Kalpit's camera pick around ₹50k, with Nothing's clean, bloat-free software. Buy the S25 FE instead if you want Samsung's wider service.", "tags": ["camera"], "score": 7, "altScore": {"camera": 9}},
+    {"id": "n4ap", "cat": "phones", "n": "Nothing Phone (4a) Pro", "p": 49999, "s": "Flipkart", "why": "Kalpit's camera pick around ₹50k, with Nothing's clean, bloat-free software. Buy the S25 FE instead if you want Samsung's wider service.", "tags": ["camera"], "spec": {"chip": "Snapdragon 7 Gen 4", "ip": "IP65", "frame": "metal"}, "score": 7, "altScore": {"camera": 9}},
     {"id": "a56", "cat": "phones", "n": "Samsung Galaxy A56 5G", "p": 31999, "was": 44197, "from": true, "s": "Amazon", "card": "Includes coupon offer", "why": "Samsung's best mid-range camera, with long updates.", "tags": ["camera", "parents"], "spec": {"chip": "Exynos 1580", "ip": "IP67", "frame": "metal"}, "score": 7},
     {"id": "p4power", "cat": "phones", "n": "realme P4 Power 5G", "p": 26099, "was": 32999, "s": "Flipkart", "card": "Includes bank offer", "why": "10,000 mAh battery that doubles as a power bank. Two to three days per charge.", "tags": ["battery", "gaming"], "spec": {"chip": "Dimensity 7400 Ultra", "ip": "IP69", "frame": "plastic"}, "score": 7, "url": "https://www.flipkart.com/realme-p4-power-5g-charger-box-transsilver-128-gb/p/itm756857550aae6?pid=MOBHN7A8E2QAXYCZ"},
     {"id": "x8power", "cat": "phones", "n": "Poco X8 Power", "p": 29999, "s": "Flipkart", "card": "Includes bank offer", "why": "Battery monster under ₹30k.", "tags": ["battery", "gaming"], "spec": {"chip": "Snapdragon 6 Gen 5", "ip": "IP68/IP69K", "frame": "plastic"}, "score": 5},
