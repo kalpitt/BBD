@@ -250,3 +250,13 @@ Template:
 - Gotchas: the previous entry's "11:15 am" was a guess; the real time was about 11:00 am.
   Check `TZ=Asia/Kolkata date` before stamping.
 - Next: STATE.md "Next steps".
+## 2026-10-10 (11:10 am): Best camera / Lasts longest cards, Lasts long filter (Kalpit)
+- Did: phones show two more cards under the main pick when no filter is chosen ("Best
+  camera", "Lasts longest"; `alts` on the phones category). New `lasts` tag and filter:
+  flagship-class chip + any IP rating + wide service (Samsung, Apple, Vivo/iQOO,
+  Xiaomi/Redmi/Poco), metal a plus. 13 phones tagged. `spec` (chip, IP, frame) on all 37
+  phones from ₹20k, from GSMArena/brand pages; frame left out for 5 with no source.
+  Pixel 10a score 9 → 6, verdict names heat and thin service, `parents` removed.
+  Worker: `lasts` use hint + specs in the product lines. All 6 regression questions pass.
+- My calls, for Kalpit to veto: no `lasts` for OnePlus (thinner service), Motorola, Pixel,
+  Nothing, or the Fold7 (IP48, hinge).
