@@ -78,7 +78,10 @@ const RULES = [
   [/microwave|\botg\b/, "home", "microwave"],
   [/chimney/, "home", "chimney"],
   [/dishwasher/, "home", "dishwasher"],
-  [/air purifier|water purifier|vacuum|robot (vacuum|cleaner)|air fryer|geyser|water heater|mixer grinder|cooler|ceiling fan|bldc/, "home", null],
+  [/air purifier/, "home", "purifier"],
+  [/geyser|water heater/, "home", "geyser"],
+  [/vacuum|robot (vacuum|cleaner)/, "home", "vacuum"],
+  [/water purifier|air fryer|mixer grinder|cooler|ceiling fan|bldc/, "home", null],
   [/echo|alexa|smart plug|smart bulb|router|mesh wi-?fi/, "gadgets", "hometech"],
   [/iphone|smartphone|\bmobile\b|(?<![\d.])5g\b|galaxy|redmi|poco|pixel|oneplus|nothing phone|cmf phone|iqoo|vivo|oppo|realme|motorola|\bmoto\b|tecno|infinix|\blava\b|narzo|honor/, "phones", ""],
 ];

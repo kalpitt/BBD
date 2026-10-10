@@ -9,7 +9,7 @@ about a minute.
 |---|---|---|
 | `id` | ✓ | Unique, lowercase letters, digits and dashes (e.g. `s25`, `wm-bosch8`) |
 | `cat` | ✓ | `phones`, `tv`, `laptops`, `home`, `audio`, `fitness` or `gadgets` |
-| `type` | home, audio, gadgets | home: `washing`, `fridge`, `ac`, `microwave`, `chimney`, `dishwasher`; audio: `earbuds`, `headphones`, `chargers`; gadgets: `watches`, `creator`, `desk`, `hometech` |
+| `type` | home, audio, gadgets | home: `washing`, `fridge`, `ac`, `microwave`, `chimney`, `dishwasher`, `vacuum`, `purifier`, `geyser`; audio: `earbuds`, `headphones`, `chargers`; gadgets: `watches`, `creator`, `desk`, `hometech` |
 | `n` | ✓ | Name shown on the page. Must be unique (the ask box matches by name) |
 | `p` | ✓ | Price in rupees, whole number: the sale price **including** the sale's normal card offer (Flipkart Axis/ICICI, Amazon SBI). Not the extra 5% co-branded card offer |
 | `max` | | Top of a price range. With `est: true`, non-affiliate items show "₹X–Y" |

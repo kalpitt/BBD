@@ -190,6 +190,8 @@ function bestMatches(picks, q, body) {
   const catHint = /\b(ac|air ?condition(er)?)\b/.test(ql) ? ["home", "ac"] : /washing/.test(ql) ? ["home", "washing"]
     : /fridge|refrigerator/.test(ql) ? ["home", "fridge"] : /microwave|oven/.test(ql) ? ["home", "microwave"]
     : /chimney/.test(ql) ? ["home", "chimney"] : /dishwasher/.test(ql) ? ["home", "dishwasher"]
+    : /air ?purifier|\baqi\b|pollution/.test(ql) ? ["home", "purifier"] : /geyser|water ?heater/.test(ql) ? ["home", "geyser"]
+    : /vacuum|robot ?(cleaner|mop)/.test(ql) ? ["home", "vacuum"]
     : /fire ?(tv|stick)|\becho\b|alexa|tablet|\bipad\b|\bpad\b/.test(ql) ? ["gadgets", "hometech"]
     : /\btv\b|television|\boled\b|qled/.test(ql) ? ["tv"] : /laptop|macbook|notebook/.test(ql) ? ["laptops"]
     : /treadmill|walk ?pad|fitness|\bring\b|garmin|ultrahuman|running/.test(ql) ? ["fitness"]
