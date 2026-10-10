@@ -334,3 +334,12 @@ Template:
 - smoke.mjs now also opens the chat (phone: Back closes it; laptop: side panel, Esc closes).
 - Follow-up (Kalpit): the floating button is a round 💬 icon near the top, so it doesn't
   cover the main pick. Its full label slides out once "Also good in this budget" scrolls into view.
+
+## 2026-10-10 (1:14 pm): phone ranking fix, fewer WhatsApp prompts
+- Ranking (Kalpit): S25 Ultra score 8 → 10 (top from ₹85k until the Fold at ₹1.3L; Pixel 11
+  was winning ₹85k–1L and ₹1.17L+). S25 FE 7 → 8 (top from ₹45k; Moto Edge 70 Pro held
+  ₹37k–53k). Side effect: OnePlus 13s is no longer top anywhere (was ₹53k–55k).
+- "Nothing Phone (4a) Pro best camera at ₹50k": not in data.json. Asked Kalpit for store + price.
+- Ask chat: removed the header "WhatsApp Kalpit" button and the teaser's WhatsApp link.
+  The "Message Kalpit" card now shows only after a 👎 (not on a 2nd question or errors),
+  so a viral day or a used-up AI limit doesn't flood his WhatsApp.
