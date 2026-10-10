@@ -153,3 +153,7 @@ Two sources, they complement each other:
 - Limits: 3 messages per visitor per day, hidden bot field, kalpit.me origin only.
 - Test (sends Kalpit a real email, so tell him): open the chat, ask, tap 👎, send the form.
 - Family link: Kalpit has it. It carries his WhatsApp number as a code; never put it in the repo.
+- Replies: the 3-hourly price check drafts them in his Gmail (price-check skill → 4c); he sends
+  them from bbd@kalpit.me. That needs Gmail "Send mail as" bbd@kalpit.me (SMTP smtp.gmail.com,
+  port 587, his Gmail address + an app password) and `include:_spf.google.com` in kalpit.me's
+  SPF record (Cloudflare DNS), or replies may land in spam.
