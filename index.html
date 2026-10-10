@@ -104,6 +104,16 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .row .s{font-size:14px;color:var(--ink-soft);text-align:right;white-space:nowrap}
 .row .more{display:grid;gap:8px;padding:0 0 16px}
 .row.stretch .w{color:var(--marigold);font-weight:600}
+/* "Best camera" / "Lasts longest" cards under the main pick (category "alts" in data.json) */
+.alts{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.alts:empty{display:none}
+.alt{border:1px solid var(--line);border-radius:18px;padding:16px;display:grid;gap:8px;align-content:start;min-width:0}
+.alt .tag{font-size:14px;color:var(--marigold);font-weight:700}
+.alt h3{font-weight:700;font-size:22px;line-height:1.15}
+.alt .why{margin:0}
+.alt .price strong{font-size:22px}
+.facts{font-size:14px;color:var(--ink-soft);margin:0}
+.hero .bf{font-size:14px;color:var(--ink-soft);font-weight:600;margin-top:-6px}
 .hot{display:inline-block;font:700 13px var(--body);color:var(--warn);background:color-mix(in srgb,var(--warn) 12%,transparent);border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:2px;white-space:nowrap}
 .hero .hot{margin-left:8px}
 .how summary{cursor:pointer;font-size:15px;font-weight:600;color:var(--ink-soft)}
@@ -147,10 +157,10 @@ dialog input{font:500 20px var(--body);color:var(--ink);background:var(--night);
 dialog .acts{justify-content:flex-end}
 .err-inline{color:var(--warn);font-size:14px;min-height:1.2em}
 
-.list.moving .row{animation:slot .35s ease}
+.list.moving .row,.alts.moving .alt{animation:slot .35s ease}
 .hero.moving{animation:slot .35s ease,orbit 6s linear 2}
 @keyframes slot{from{opacity:.35;transform:translateY(6px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion: reduce){.list.moving .row,.hero.moving{animation:none}.amount{transition:none}}
+@media (prefers-reduced-motion: reduce){.list.moving .row,.alts.moving .alt,.hero.moving{animation:none}.amount{transition:none}}
 
 /* ---------- Night sky panel: header, categories and the budget dial ---------- */
 .sky{--night:#12143D;--ink:#FFF1D2;--ink-soft:#B9BADB;--marigold:#F4A51C;--diya:#262A5E;--leaf:#6FD3A3;--line:#3A3F80;--raise:#1D2150;--warn:#FF9B7A;
@@ -286,6 +296,7 @@ dialog .acts{justify-content:flex-end}
  <main class="feed">
   <section class="hero" id="hero"></section>
   <p class="vh" id="pickSay" role="status" aria-live="polite"></p>
+  <section class="alts" id="alts" aria-label="Best for camera and long life"></section>
 
   <section class="list" id="list">
     <h3>Also good in this budget</h3>
@@ -421,6 +432,14 @@ function how(x){
   return `<details class="how"><summary>How you get this price</summary><table>${r.map(([l,v,bg,c])=>`<tr class="${bg?"big":c||""}"><td>${esc(l)}</td><td>${v}</td></tr>`).join("")}</table></details>`;
 }
 const where=x=>x.s==="Both"?"Amazon & Flipkart":"On "+x.s;
+// Checked specs ("spec" in data.json): chip, water rating, frame (when known)
+function facts(x){
+  const s=x.spec;if(!s)return "";
+  // IP second digit: 7 or more = survives a dunk, below 7 = splashes only
+  const wet=s.ip==="none"?0:Math.max(...s.ip.match(/IP\d\d/g).map(r=>+r[3]));
+  const ip=s.ip==="none"?"No water rating":s.ip+(wet>=7?" water resistant":" splash resistant");
+  return `<p class="facts">${esc([s.chip,ip,s.frame&&(s.frame==="metal"?"Metal frame":"Plastic frame")].filter(Boolean).join(" · "))}</p>`;
+}
 function extras(x){
   if(x.noExtra)return [];
   const e=D.sale.extra||{};
@@ -441,7 +460,7 @@ function buttons(x){
 }
 
 const row=(x,note,cls)=>`<details class="row ${cls||""}"><summary><span class="n">${esc(x.n)}${hot(x)}</span><span class="p">${priceText(x)}</span><span class="w">${esc(note||x.why)}</span><span class="s">${x.est?"Expected":x.s==="Both"?"Both":x.s}</span></summary>
-   <div class="more">${note?`<span>${esc(x.why)}</span>`:""}${offers(x,"span")}${how(x)}<div class="acts">${buttons(x)}</div></div></details>`;
+   <div class="more">${note?`<span>${esc(x.why)}</span>`:""}${facts(x)}${offers(x,"span")}${how(x)}<div class="acts">${buttons(x)}</div></div></details>`;
 
 /* ---------- WhatsApp save to self ---------- */
 let pending=null;
@@ -577,6 +596,15 @@ let lastTop="",lastSig="",sayT;
 function pool(){
   return P.filter(x=>x.cat===state.cat&&(!state.type||x.type===state.type)&&(!state.use||(x.tags||[]).includes(state.use))&&(!state.big||big(x)));
 }
+// Prefer picks that use most of the budget, then the strongest verdict.
+// Same ranking in worker/worker.js and scripts/check-data.mjs (AGENTS rule 7).
+function rankAt(list,b){
+  const fit=list.filter(x=>x.p<=b);
+  const near70=fit.filter(x=>x.p>=b*0.7),near50=fit.filter(x=>x.p>=b*0.5);
+  const base=near70.length>=2?near70:near50.length?near50:fit;
+  const rank=x=>x.score+2*(x.p/b)+(big(x)?1:0); // big deals get a small boost
+  return base.slice().sort((a,z)=>rank(z)-rank(a));
+}
 function render(force){
   const c=conf(),b=state.budget;
   saveHash();
@@ -587,24 +615,28 @@ function render(force){
   for(const d of $("#dots").children){const p=+d.dataset.p;d.classList.toggle("in",p<=b);d.classList.toggle("on",p===b)}
   amt.style.setProperty("--w",Math.max(75,100-Math.max(0,String(b).length-5)*8));
   const all=pool();
-  const fit=all.filter(x=>x.p<=b);
-  // Prefer picks that use most of the budget, then the strongest verdict
-  const near70=fit.filter(x=>x.p>=b*0.7),near50=fit.filter(x=>x.p>=b*0.5);
-  const base=near70.length>=2?near70:near50.length?near50:fit;
-  const rank=x=>x.score+2*(x.p/b)+(big(x)?1:0); // big deals get a small boost
-  const ranked=base.slice().sort((a,z)=>rank(z)-rank(a));
+  const ranked=rankAt(all,b);
   const top=ranked[0];
-  const hero=$("#hero"),rows=$("#rows");
+  const hero=$("#hero"),rows=$("#rows"),altBox=$("#alts");
   if(!top){
     const cheapest=all.slice().sort((a,z)=>a.p-z.p)[0];
     hero.innerHTML=cheapest
       ?`<span class="tag">Thoda stretch karo</span><h2>Nothing I'd pick under ${fmt(b)}</h2><p class="why">The cheapest pick here is ${esc(cheapest.n)} at ${priceText(cheapest)}. Slide right to see it.</p>`
       :`<span class="tag">Nothing here yet</span><h2>No picks for this filter</h2><p class="why">Remove the filter above to see all picks.</p>`;
-    rows.innerHTML="";lastTop="";lastSig="";return;
+    rows.innerHTML="";altBox.innerHTML="";lastTop="";lastSig="";return;
   }
-  const rest=ranked.slice(1,5);
+  // No filter picked: the best camera phone and the longest-lasting one get their own cards.
+  // If the main pick wins one of them too, the main card says so instead.
+  const alts=[],topAlso=[];
+  if(!state.use)for(const a of cat().alts||[]){
+    const w=rankAt(all.filter(x=>(x.tags||[]).includes(a.use)),b)[0];
+    if(!w)continue;
+    if(w.id===top.id)topAlso.push(a.label);
+    else{const same=alts.find(y=>y.x.id===w.id);if(same)same.labels.push(a.label);else alts.push({x:w,labels:[a.label]})}
+  }
+  const rest=ranked.slice(1).filter(x=>!alts.some(y=>y.x.id===x.id)).slice(0,4);
   const stretch=all.filter(x=>x.p>b&&x.p<=b*1.2&&x.score>=top.score).sort((a,z)=>(z.score-a.score)||(a.p-z.p))[0];
-  const sig=[top.id,...rest.map(x=>x.id),stretch&&stretch.id].join("|");
+  const sig=[top.id,topAlso.join(),...alts.map(y=>y.x.id+y.labels.join()),...rest.map(x=>x.id),stretch&&stretch.id].join("|");
   if(!force&&sig===lastSig){
     // Same picks as before: only the budget in the label and the stretch note change
     hero.querySelector(".tag").firstChild.textContent=`My pick for ${fmt(b)}`;
@@ -615,7 +647,8 @@ function render(force){
   const qa=(top.faq||[]).map(([q,a])=>`<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join("");
   const changed=lastTop&&top.id!==lastTop;
   hero.innerHTML=`<span class="tag">My pick for ${fmt(b)}${hot(top)}</span>
-    <h2>${esc(top.n)}</h2><p class="why">${esc(top.why)}</p>
+    ${topAlso.length?`<span class="bf">Also: ${esc(topAlso.join(" · "))}</span>`:""}
+    <h2>${esc(top.n)}</h2><p class="why">${esc(top.why)}</p>${facts(top)}
     <div class="price"><strong>${priceText(top)}</strong><span class="est">${top.est?"Expected price · "+where(top):where(top)}</span></div>
     ${[top.card,...extras(top)].filter(Boolean).length?`<div class="card">${[top.card,...extras(top)].filter(Boolean).map(esc).join(" · ")}</div>`:""}
     ${how(top)}
@@ -625,7 +658,11 @@ function render(force){
   if(!rest.length)h=`<p class="empty">Bas, this is the only one I'd pick at this budget.</p>`;
   if(stretch)h+=row(stretch,stretchNote(stretch,b),"stretch");
   rows.innerHTML=h;
-  if(!reduce&&(force||top.id!==lastTop)){for(const el of [hero,$("#list")]){el.classList.remove("moving");void el.offsetWidth;el.classList.add("moving")}}
+  altBox.innerHTML=alts.map(({x,labels})=>`<article class="alt"><span class="tag">${esc(labels.join(" · "))}${hot(x)}</span>
+    <h3>${esc(x.n)}</h3><p class="why">${esc(x.why)}</p>${facts(x)}
+    <div class="price"><strong>${priceText(x)}</strong><span class="est">${x.est?"Expected price · "+where(x):where(x)}</span></div>
+    ${offers(x,"span")}<div class="acts">${buttons(x)}</div></article>`).join("");
+  if(!reduce&&(force||top.id!==lastTop)){for(const el of [hero,altBox,$("#list")]){el.classList.remove("moving");void el.offsetWidth;el.classList.add("moving")}}
   lastTop=top.id;
   if(changed&&!force)sparks(hero);
   // Screen readers hear a short line when the pick changes, not the whole card

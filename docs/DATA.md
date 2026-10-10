@@ -20,7 +20,8 @@ about a minute.
 | `card` | | Offer note in green, e.g. `"Includes bank offer"`. Don't put the extra 5% co-branded card price here: the page adds that line itself from `sale.extra`. No ₹ amounts if `aff` |
 | `noExtra` | | `true` = hide the page-wide 5% co-branded card line for this pick (when `card` already names its own card cashback) |
 | `why` | ✓ | One-line verdict in Kalpit's voice. No ₹ amounts if `aff` |
-| `tags` | | Phones only: `parents`, `basic`, `battery`, `camera`, `gaming`, `iphone` |
+| `tags` | | Phones only: `parents`, `basic`, `battery`, `camera`, `gaming`, `lasts`, `iphone`. `lasts` (Kalpit, 10 Oct) = flagship-class chip + any IP rating + a brand with wide service in small towns (Samsung, Apple, Vivo/iQOO, Xiaomi/Redmi/Poco); metal frame is a plus. Not Pixel (Tensor runs hot, thin service), not foldables. Needs `spec` (validator) |
+| `spec` | | Phones: checked facts shown on the card, `{"chip": "Snapdragon 8 Elite", "ip": "IP68/IP69" or "none", "frame": "metal" or "plastic"}`. Leave `frame` out if no source names it. Never guess |
 | `score` | ✓ | 1–10. Higher wins when picks fit the same budget |
 | `faq` | | `[["Question?", "Answer."]]`, shown under the top pick |
 | `was` | | Normal price before the sale (what it usually sells for, **not** MRP). Used for the "Big deal" check. Source: pricebefore.com history, **lowest price 1–20 Sep** (skips pre-sale price hikes), from the closest listing of the same model and store (Kalpit, 8 Oct: trust the tracker even when its sale-day price differs from our `p`, e.g. because `p` includes a card offer). Skip listings that sat at MRP |
@@ -50,7 +51,7 @@ Other top-level keys: `updated` (shown in the footer; **change it on every
 edit**, in IST and exactly this shape, e.g. `"9 Oct, 2:15 pm"`), `checked` (same shape; the
 last time the price checker compared prices, even with no changes. The page shows it as
 "Prices checked 12 min ago", falling back to `updated` if `checked` is missing), `askUrl` (Ask box address), `amazonTag` (don't change), `sale` (dates, `extra` = the year-round 5% co-branded card line per store, and card
-offers), `categories` (slider ranges), `fakeMrp` (the "ignore the % off" table), `removed` (names Kalpit took off; agents must not re-add them, the validator checks) and
+offers), `categories` (slider ranges; phones also has `alts`, the extra "Best camera" / "Lasts longest" cards shown under the main pick when no filter is chosen, each the top-ranked pick with that tag), `fakeMrp` (the "ignore the % off" table), `removed` (names Kalpit took off; agents must not re-add them, the validator checks) and
 `faq` (quick answers).
 
 ## Which Amazon items are affiliate

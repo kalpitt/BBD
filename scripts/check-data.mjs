@@ -41,6 +41,7 @@ for (const c of d.categories || []) {
   if (!isStr(c.id) || !isStr(c.label)) { err("category missing id/label"); continue; }
   if (cats.has(c.id)) err(`duplicate category id ${c.id}`);
   cats.set(c.id, c);
+  for (const a of c.alts || []) if (!isStr(a.label) || !(c.uses || []).some(u => u.id === a.use)) err(`category ${c.id}: alts entry ${JSON.stringify(a)} needs a label and a use from its uses`);
   if (c.types) for (const t of c.types) checkDial(t, `category ${c.id} / type ${t.id}`);
   else checkDial(c, `category ${c.id}`);
 }
@@ -89,6 +90,9 @@ for (const [i, x] of (d.products || []).entries()) {
   } else if (x.type) err(`${at}: category ${c.id} has no types; remove "type"`);
   used.add(c.id + "/" + (x.type || ""));
 
+  // Checked specs: chip, IP rating (or "none"), frame (optional). "Lasts long" needs a strong chip and a water rating (Kalpit, 10 Oct)
+  if (x.spec != null && !(isStr(x.spec.chip) && /^(none|IP\d[\dX]K?(\/IP\d\dK?)*)$/.test(x.spec.ip || "") && (x.spec.frame == null || ["metal", "plastic"].includes(x.spec.frame)))) err(`${at}: spec must be {"chip": "...", "ip": "IP68" or "none", "frame": "metal" or "plastic" (leave out if unknown)}`);
+  if ((x.tags || []).includes("lasts") && !(x.spec && x.spec.ip && x.spec.ip !== "none")) err(`${at}: "lasts" needs a checked spec with an IP rating`);
   const uses = (c.uses || []).map(u => u.id);
   for (const t of x.tags || []) if (!uses.includes(t)) err(`${at}: tag "${t}" isn't one of ${c.id}'s uses (${uses.join(", ") || "none"})`);
 

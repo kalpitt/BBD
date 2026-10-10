@@ -136,7 +136,7 @@ async function loadPicks(url) {
   const lines = d.products.map(x => {
     const price = x.aff ? band(x) : x.max ? fmt(x.p) + "–" + Number(x.max).toLocaleString("en-IN") : (x.from ? "from " : "") + fmt(x.p);
     const where = x.s === "Both" ? "Amazon and Flipkart" : x.s;
-    return byName[x.n] = `- ${x.n} | ${x.cat}${x.type ? "/" + x.type : ""} | ${x.est ? "expected " : ""}${price} | ${where}${x.card ? " | " + x.card : ""}${layers(x)} | ${x.why}${x.tags && x.tags.length ? " | good for: " + x.tags.join(", ") : ""}`;
+    return byName[x.n] = `- ${x.n} | ${x.cat}${x.type ? "/" + x.type : ""} | ${x.est ? "expected " : ""}${price} | ${where}${x.card ? " | " + x.card : ""}${layers(x)} | ${x.why}${x.spec ? " | " + x.spec.chip + ", " + (x.spec.ip === "none" ? "no water rating" : x.spec.ip) + (x.spec.frame ? ", " + x.spec.frame + " frame" : "") : ""}${x.tags && x.tags.length ? " | good for: " + x.tags.map(t => t === "lasts" ? "lasting for years" : t).join(", ") : ""}`;
   });
   const extra = [
     "Card offers: " + d.sale.cards.join(" "),
@@ -208,7 +208,8 @@ function bestMatches(picks, q, body) {
   const [cat, type] = catHint || [body.cat, body.type];
   const useHint = /papa|mummy|mom|dad|parent|maa|mother|father|nani|dadi/.test(ql) ? "parents"
     : /whatsapp|calls only|only calls|basic/.test(ql) ? "basic" : /battery/.test(ql) ? "battery"
-    : /camera|photo/.test(ql) ? "camera" : /gam(e|ing)|bgmi/.test(ql) ? "gaming" : body.use;
+    : /camera|photo/.test(ql) ? "camera" : /gam(e|ing)|bgmi/.test(ql) ? "gaming"
+    : /\blast(s|ing)? (long|for|years)|long[- ]?(term|life|lasting)|durable|reliab|saalon/.test(ql) ? "lasts" : body.use;
   let pool = d.products.filter(x => x.cat === cat && (!type || x.type === type) && x.p <= b);
   const tagged = pool.filter(x => (x.tags || []).includes(useHint));
   if (tagged.length) pool = tagged;
