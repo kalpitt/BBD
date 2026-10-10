@@ -132,6 +132,11 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .askTeaser{background:var(--raise);border:1px solid var(--line);border-radius:22px;padding:20px;display:grid;gap:10px}
 .askTeaser p{margin:0}
 .fab{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;display:inline-flex;align-items:center;gap:8px;font:700 16px var(--body);color:#1B1F4B;background:#F4A51C;border:0;border-radius:999px;padding:12px 18px;min-height:48px;box-shadow:0 6px 20px rgba(10,12,40,.35);cursor:pointer;transition:opacity .2s,transform .2s}
+.fab .fl{display:inline-block;max-width:16em;overflow:hidden;white-space:nowrap;transition:max-width .25s ease,opacity .2s}
+/* Near the top it's just a round chat icon, so it doesn't cover the main pick */
+.fab.mini{padding:12px;width:52px;height:52px;justify-content:center;gap:0;font-size:22px}
+.fab.mini .fl{max-width:0;opacity:0}
+@media (prefers-reduced-motion: reduce){.fab,.fab .fl{transition:none}}
 .fab.away,.fab.open{opacity:0;transform:translateY(16px);pointer-events:none}
 .feed{padding-bottom:72px}
 /* Phones: full screen, like a WhatsApp chat. Laptops: a panel on the right, picks still usable */
@@ -390,7 +395,7 @@ dialog .acts{justify-content:flex-end}
   </form>
 </dialog>
 
-<button class="fab" id="askFab" type="button" data-ask hidden><span aria-hidden="true">💬</span> Confused? Ask Kalpit's AI</button>
+<button class="fab" id="askFab" type="button" data-ask hidden><span aria-hidden="true">💬</span><span class="fl">Confused? Ask Kalpit's AI</span></button>
 
 <dialog id="askDlg" class="askdlg" aria-labelledby="askTitle">
   <div class="askhead">
@@ -866,7 +871,12 @@ askDlg.addEventListener("close",()=>{fab.classList.remove("open");if(askPushed){
 addEventListener("popstate",()=>{if(askPushed){askPushed=false;askDlg.close()}});
 fab.hidden=false;
 // The floating button steps aside while the "Still confused?" card is on screen
-if("IntersectionObserver" in window)new IntersectionObserver(es=>fab.classList.toggle("away",es[0].isIntersecting)).observe($("#askTeaser"));
+if("IntersectionObserver" in window){
+  new IntersectionObserver(es=>fab.classList.toggle("away",es[0].isIntersecting)).observe($("#askTeaser"));
+  // Shows its full label once the "Also good in this budget" list scrolls into view
+  fab.classList.add("mini");
+  new IntersectionObserver(es=>fab.classList.toggle("mini",es[0].boundingClientRect.top>innerHeight)).observe($("#list"));
+}
 
 /* ---------- message Kalpit (opens WhatsApp with the page context filled in) ---------- */
 const KALPIT_WA=["91","89625","69795"].join(""); // split so simple scrapers don't pick it up

@@ -332,3 +332,5 @@ Template:
   after a 👎, a 2nd question, or an error/limit. "WhatsApp Kalpit" button always in the header.
 - The WhatsApp message now includes the first ~200 characters of the AI's last answer.
 - smoke.mjs now also opens the chat (phone: Back closes it; laptop: side panel, Esc closes).
+- Follow-up (Kalpit): the floating button is a round 💬 icon near the top, so it doesn't
+  cover the main pick. Its full label slides out once "Also good in this budget" scrolls into view.
