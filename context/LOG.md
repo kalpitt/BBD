@@ -266,3 +266,6 @@ Template:
 - Decided (Kalpit): "keep" on all 15 picks from the portfolio fill. They had no `auto`
   tag, so data.json is unchanged; only the open ask is cleared from STATE.
 - Next: STATE.md "Next steps".
+- 11:14 am follow-up (Kalpit): OnePlus counts as wide service (Oppo merger), IP48 is fine
+  for a foldable: `lasts` added to OnePlus 13s, Nord 6, Fold7. Edge 70 Pro stays the pick;
+  its verdict now names thin Moto service and the S25 FE stretch.

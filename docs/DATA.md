@@ -20,7 +20,7 @@ about a minute.
 | `card` | | Offer note in green, e.g. `"Includes bank offer"`. Don't put the extra 5% co-branded card price here: the page adds that line itself from `sale.extra`. No ₹ amounts if `aff` |
 | `noExtra` | | `true` = hide the page-wide 5% co-branded card line for this pick (when `card` already names its own card cashback) |
 | `why` | ✓ | One-line verdict in Kalpit's voice. No ₹ amounts if `aff` |
-| `tags` | | Phones only: `parents`, `basic`, `battery`, `camera`, `gaming`, `lasts`, `iphone`. `lasts` (Kalpit, 10 Oct) = flagship-class chip + any IP rating + a brand with wide service in small towns (Samsung, Apple, Vivo/iQOO, Xiaomi/Redmi/Poco); metal frame is a plus. Not Pixel (Tensor runs hot, thin service), not foldables. Needs `spec` (validator) |
+| `tags` | | Phones only: `parents`, `basic`, `battery`, `camera`, `gaming`, `lasts`, `iphone`. `lasts` (Kalpit, 10 Oct) = flagship-class chip + any IP rating + a brand with wide service in small towns (Samsung, Apple, Vivo/iQOO, Xiaomi/Redmi/Poco, OnePlus via Oppo service); metal frame is a plus; IP48 on a foldable counts. Not Pixel (Tensor runs hot, thin service), Motorola or Nothing (thin service). Needs `spec` (validator) |
 | `spec` | | Phones: checked facts shown on the card, `{"chip": "Snapdragon 8 Elite", "ip": "IP68/IP69" or "none", "frame": "metal" or "plastic"}`. Leave `frame` out if no source names it. Never guess |
 | `score` | ✓ | 1–10. Higher wins when picks fit the same budget |
 | `faq` | | `[["Question?", "Answer."]]`, shown under the top pick |
