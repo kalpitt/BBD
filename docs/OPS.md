@@ -109,3 +109,14 @@ suggestions, and may add up to 2 picks under `docs/PICKS.md`.
 | Ask box: 403 | Request not from kalpit.me (e.g. local preview) | Expected outside kalpit.me |
 | Old price in AI answer | `updated` wasn't bumped, or the edit is under 5 min old | Bump `updated`; or bump `v2` in worker.js |
 | Worker change not live | Cloudflare build failed | Check the commit's check-runs, or ask Kalpit for a screenshot of the build log |
+
+## "Send to Kalpit" form (since 10 Oct)
+- Page posts to `askUrl + "/msg"`; `sendMsg()` in `worker/worker.js` emails Kalpit from
+  bbd@kalpit.me through the `MAIL` send_email binding (`wrangler.toml`).
+- Needs: Cloudflare Email Routing on kalpit.me (Compute → Email Service → Email Routing), his
+  inbox verified as a destination address, and the Worker secret `MSG_TO` = that inbox
+  (Workers & Pages → bbd-ask → Settings → Variables and Secrets). Without `MSG_TO` the form
+  says "Messages aren't switched on yet".
+- Limits: 3 messages per visitor per day, hidden bot field, kalpit.me origin only.
+- Test (sends Kalpit a real email, so tell him): open the chat, ask, tap 👎, send the form.
+- Family link: Kalpit has it. It carries his WhatsApp number as a code; never put it in the repo.

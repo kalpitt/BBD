@@ -7,6 +7,11 @@ compatibility_date = "2026-10-01"
 [ai]
 binding = "AI"
 
+# "Message Kalpit" form: sends email from bbd@kalpit.me (Cloudflare Email Routing).
+# The inbox it goes to is the MSG_TO secret, set in the Cloudflare dashboard, not here.
+[[send_email]]
+name = "MAIL"
+
 [vars]
 DATA_URL = "https://kalpit.me/BBD/data.json"
 ALLOWED_ORIGINS = "https://kalpit.me,https://www.kalpit.me"

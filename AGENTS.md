@@ -28,8 +28,11 @@ keep replies short, and lead with what changed. When guiding him through a dashb
 Anyone can read every file on GitHub, including `context/` and `docs/`. Never write
 friends' names, group names or details, phone numbers, chat excerpts, personal plans,
 or secrets anywhere in the repo.
-One deliberate exception: Kalpit's own WhatsApp number in `index.html` (`KALPIT_WA`)
-for the "Message Kalpit" button. He chose this on 8 Oct, knowing it's public. The WhatsApp chat export never enters the repo.
+Kalpit's WhatsApp number is no longer on the page (10 Oct, in case the site spreads). Family get
+it through his private family link (`?f=<code>`, see `KALPIT_WA` in `index.html`); everyone else
+gets a "Send to Kalpit" form that the ask Worker emails to him from bbd@kalpit.me (inbox = the
+`MSG_TO` secret in Cloudflare, never in the repo). Never write the family code or his number in the
+repo (older commits still hold the number; leave history alone). The WhatsApp chat export never enters the repo.
 (`_config.yml` keeps docs off the website, but GitHub still shows them.)
 
 ## How to work: intentional differences from Kalpit's other repos
@@ -81,7 +84,9 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
 4. **No secrets needed, none allowed.** Workers AI needs no API key. Never add a
    Cloudflare or GitHub token to the repo.
 5. **Privacy:** a visitor's WhatsApp number lives only in their own browser
-   (localStorage). Never log or collect it.
+   (localStorage). Never log or collect it. The one exception is the reply contact a visitor
+   types into the "Send to Kalpit" form on purpose: it goes only into the email to Kalpit.
+   The Worker never logs or stores it.
 6. **Sunset (Kalpit, 10 Oct):** the site stays live **through Diwali, 8 Nov 2026**, with
    the 3-hourly price check running until then. On 9 Nov, ask Kalpit: a "Sale's over"
    banner and the ask box off, or take the site down.

@@ -96,6 +96,22 @@ try {
     }
     await page.close();
   }
+  // "Message Kalpit": everyone gets the form; a family link (?f=code; dummy number 911234567890 here) gets WhatsApp and leaves the address bar
+  if (!problems.length) {
+    const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    page.on("pageerror", e => problems.push(`message Kalpit: script error: ${e.message}`));
+    await page.route(u => !u.href.startsWith(base), r => r.abort());
+    await page.goto(base + "#phones");
+    await heroText(page);
+    if (await page.evaluate(() => document.querySelector("#msgForm").hidden || !document.querySelector("#famWa").hidden)) problems.push("message Kalpit: a normal visitor should get the form, not WhatsApp");
+    await page.goto(base + "?f=ai8j5mmb#phones");
+    await page.reload();
+    await heroText(page);
+    const st = await page.evaluate(() => ({ wa: !document.querySelector("#famWa").hidden, form: !document.querySelector("#msgForm").hidden, url: location.href }));
+    if (!st.wa || st.form) problems.push("message Kalpit: the family link didn't switch the card to WhatsApp");
+    if (/[?&]f=/.test(st.url)) problems.push("message Kalpit: the family code stayed in the address bar");
+    await page.close();
+  }
   // Laptop: the chat opens as a side panel
   if (!problems.length) {
     const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
@@ -114,5 +130,5 @@ try {
 } finally { await browser.close(); server.close(); }
 
 for (const p of problems) console.log("✖ " + p);
-console.log(problems.length ? `\n✖ ${problems.length} problem(s). Do not push.` : `✓ Page OK: ${views.length} tabs at default, lowest and highest budget, phone and laptop size, shared-link scratch card, ask chat (phone + laptop), no script errors.`);
+console.log(problems.length ? `\n✖ ${problems.length} problem(s). Do not push.` : `✓ Page OK: ${views.length} tabs at default, lowest and highest budget, phone and laptop size, shared-link scratch card, ask chat (phone + laptop), message-Kalpit form and family link, no script errors.`);
 process.exit(problems.length ? 1 : 0);

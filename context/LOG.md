@@ -352,3 +352,8 @@ Template:
 - 2:10 pm, Kalpit: price checker moved to Sonnet. New Routine wakes a new Sonnet session
   (repo attached, push tested). Old Opus Routine paused, not deleted. A fresh-session
   Routine was tried first and paused: those sessions can't get push access to the repo.
+- 2:40 pm, Kalpit (options A + C): the 👎 card is now a "Send to Kalpit" form, emailed by the
+  Worker (`/msg`) from bbd@kalpit.me. His WhatsApp number is off the page; family get WhatsApp
+  through his private `?f=` link (stored on their phone, stripped from the address bar).
+  Email Routing on kalpit.me done by Kalpit (Porkbun MX/SPF records removed). Waiting on him
+  to add the `MSG_TO` Worker secret (his Gmail) before the form can send.

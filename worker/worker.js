@@ -11,6 +11,7 @@ const DEFAULTS = {
 };
 
 const hits = new Map(); // per-isolate, best-effort rate limit
+const msgHits = new Map(); // "Message Kalpit" form: per-IP daily count, best effort
 let dataCache = { at: 0, text: "", data: null };
 
 export default {
@@ -33,6 +34,7 @@ export default {
 
     let body;
     try { body = await req.json(); } catch { return json({ error: "The question was not sent correctly. Reload the page and try again." }, 400); }
+    if (new URL(req.url).pathname === "/msg") return sendMsg(body, req, env, allowed.includes(origin), json);
     const q = String(body.q || "").trim().slice(0, 400);
     if (q.length < 8) return json({ error: "Write a little more, like who it's for and your budget." }, 400);
 
@@ -108,6 +110,57 @@ export default {
     return json(out);
   },
 };
+
+// "Message Kalpit" form (since 10 Oct): emails Kalpit from bbd@kalpit.me so his number stays private.
+// Needs the MAIL send_email binding (wrangler.toml) and the MSG_TO secret (his verified inbox, set in
+// the Cloudflare dashboard, never in this repo). The visitor's reply contact is only put in the email:
+// never logged or stored (AGENTS rule 5).
+async function sendMsg(body, req, env, fromSite, json) {
+  if (!fromSite) return json({ error: "Messages can only be sent from kalpit.me/BBD." }, 403);
+  if (body.website) return json({ ok: true }); // hidden field only bots fill in
+  const text = String(body.text || "").trim().slice(0, 1000);
+  const reply = String(body.reply || "").trim().slice(0, 100);
+  if (text.length < 5) return json({ error: "Write your question first." }, 400);
+  if (!env.MAIL || !env.MSG_TO) return json({ error: "Messages aren't switched on yet. Try again later." }, 503);
+  const ip = req.headers.get("CF-Connecting-IP") || "unknown";
+  const day = new Date().toISOString().slice(0, 10);
+  const h = msgHits.get(ip);
+  const n = h && h.day === day ? h.n + 1 : 1;
+  msgHits.set(ip, { day, n });
+  if (n > 3) return json({ error: "You've sent 3 messages today. Kalpit will reply to those first." }, 429);
+  const line = s => String(s || "").replace(/[\r\n]+/g, " ").slice(0, 300);
+  const isEmail = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(reply);
+  const lines = [
+    text, "",
+    "Reply to: " + (reply || "(not given)"),
+    "Page: " + line(body.view),
+    "Top pick there: " + line(body.top),
+    body.q ? "They asked the AI: " + line(body.q) : "",
+    body.a ? "The AI said: " + line(body.a) : "",
+    "Link: " + line(body.url),
+  ].filter(Boolean);
+  const b64 = s => btoa(String.fromCharCode(...new TextEncoder().encode(s)));
+  const raw = [
+    "From: Kalpit's festive picks <bbd@kalpit.me>",
+    "To: " + env.MSG_TO,
+    ...(isEmail ? ["Reply-To: " + reply] : []),
+    "Subject: =?UTF-8?B?" + b64("BBD question: " + line(text).slice(0, 60)) + "?=",
+    "Date: " + new Date().toUTCString(),
+    "Message-ID: <" + crypto.randomUUID() + "@kalpit.me>",
+    "MIME-Version: 1.0",
+    "Content-Type: text/plain; charset=utf-8",
+    "Content-Transfer-Encoding: base64",
+    "",
+    b64(lines.join("\n")).replace(/.{76}/g, "$&\r\n"),
+  ].join("\r\n");
+  try {
+    const { EmailMessage } = await import("cloudflare:email");
+    await env.MAIL.send(new EmailMessage("bbd@kalpit.me", env.MSG_TO, raw));
+  } catch (e) {
+    return json({ error: "Couldn't send right now. Try again in a minute." }, 502);
+  }
+  return json({ ok: true });
+}
 
 const SYSTEM = `You are answering on behalf of Kalpit, who shares festive-sale shopping picks (Flipkart Big Billion Days and Amazon Great Indian Festival 2026) with friends and family in India. He is away, so you answer their follow-up questions in his voice.
 

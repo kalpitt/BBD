@@ -157,6 +157,11 @@ html:has(.askdlg:modal){overflow:hidden}
 .wacard{border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:10px;background:var(--diya)}
 .wacard p{margin:0}
 .btn.wa{background:#1F7A45;color:#fff;justify-self:start}
+.msgf{display:grid;gap:6px}
+.msgf textarea,.msgf input:not(.vh){width:100%;font:400 16px/1.4 var(--body);color:var(--ink);background:var(--raise);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.msgf textarea{resize:vertical;min-height:72px}
+.msgf .acts{margin-top:4px}
+.msgf .btn.go[disabled]{opacity:.5;cursor:default}
 .fb{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:14px;color:var(--ink-soft)}
 .fb button{font:500 14px var(--body);color:var(--ink);background:none;border:1px solid var(--line);border-radius:999px;padding:6px 12px;min-height:36px;cursor:pointer}
 .askfoot{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
@@ -406,8 +411,16 @@ dialog .acts{justify-content:flex-end}
     <p class="intro">Describe who it's for and your budget. The answer comes only from my picks on this page.</p>
     <div class="chat" id="chat"></div>
     <div class="wacard" id="waCard" hidden>
-      <p><strong>Still unsure?</strong> Message Kalpit on WhatsApp. He'll reply himself.</p>
-      <button class="btn wa msgK" type="button">Message Kalpit</button>
+      <p><strong>Still unsure?</strong> Ask Kalpit himself. He reads every message.</p>
+      <button class="btn wa msgK" type="button" id="famWa" hidden>Message Kalpit on WhatsApp</button>
+      <form class="msgf" id="msgForm">
+        <label for="mText" class="aff">Your question for Kalpit</label>
+        <textarea id="mText" rows="3" maxlength="1000" placeholder="E.g. Papa wants a big screen. S25 FE or Pixel?"></textarea>
+        <label for="mReply" class="aff">Your WhatsApp number or email, so he can reply (optional, only Kalpit sees it)</label>
+        <input id="mReply" maxlength="100" autocomplete="email">
+        <input id="mHp" name="website" tabindex="-1" autocomplete="off" class="vh" aria-hidden="true">
+        <div class="acts"><button class="btn go" type="submit" id="mSend">Send to Kalpit</button><span class="aff" id="mState" aria-live="polite"></span></div>
+      </form>
     </div>
     <div class="sugs" id="sugs"></div>
   </div>
@@ -876,9 +889,36 @@ if("IntersectionObserver" in window){
 }
 
 /* ---------- message Kalpit (opens WhatsApp with the page context filled in) ---------- */
-const KALPIT_WA=["91","89625","69795"].join(""); // split so simple scrapers don't pick it up
+// Kalpit's WhatsApp is not on this page (Kalpit, 10 Oct: keep it private if the site spreads).
+// His family link carries it as ?f=<code> (the number in base 36, reversed). The page saves it
+// on that phone and removes it from the address bar, so shares from there don't pass it on.
+// Everyone else gets the "Send to Kalpit" form, which the ask Worker emails to him.
+let KALPIT_WA=store.get("bbd-wa")||"";
+(()=>{
+  const sp=new URLSearchParams(location.search),f=sp.get("f");if(!f)return;
+  const n=String(parseInt([...f].reverse().join(""),36));
+  if(/^\d{11,13}$/.test(n)){KALPIT_WA=n;store.set("bbd-wa",n)}
+  sp.delete("f");
+  try{history.replaceState(history.state,"",location.pathname+(String(sp)?"?"+sp:"")+location.hash)}catch(e){}
+})();
+if(KALPIT_WA){$("#famWa").hidden=false;$("#msgForm").hidden=true}
+const msgContext=()=>({view:viewText(),top:lastTop?P.find(x=>x.id===lastTop).n:"none at this budget",q:lastQ,a:lastA?lastA.slice(0,200):"",url:location.href});
+$("#msgForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const text=$("#mText").value.trim(),send=$("#mSend"),ms=$("#mState");
+  if(text.length<5){ms.textContent="Write your question first.";return}
+  send.disabled=true;ms.textContent="Sending…";
+  try{
+    const r=await fetch(D.askUrl.replace(/\/$/,"")+"/msg",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({text,reply:$("#mReply").value.trim(),website:$("#mHp").value,...msgContext()})});
+    const j=await r.json().catch(()=>({}));
+    if(r.ok&&j.ok){$("#msgForm").innerHTML=`<p>Sent ✓ Kalpit will reply${$("#mReply").value.trim()?" on the contact you gave":""} when he can.</p>`;return}
+    ms.textContent=j.error||"Couldn't send. Try again in a minute.";
+  }catch(err){ms.textContent="Couldn't send. Check your connection and try again."}
+  send.disabled=false;
+});
 document.addEventListener("click",e=>{
-  if(!e.target.closest(".msgK"))return;
+  if(!e.target.closest(".msgK")||!KALPIT_WA)return;
   const q=$("#q").value.trim()||lastQ;
   const ai=lastA?`\n\nThe AI said: ${lastA.length>200?lastA.slice(0,200).trim()+"…":lastA}`:"";
   const msg=`Hi Kalpit, a question from your festive picks page.\n\nI was looking at: ${viewText()}\nYour pick there: ${lastTop?P.find(x=>x.id===lastTop).n:"none at this budget"}\n${location.href}`+(q?`\n\nI asked: ${q}`:"")+ai+"\n\nMy question: ";
