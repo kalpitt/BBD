@@ -120,8 +120,9 @@ export default {
     if (!answer) return count(env, ctx, [["ask", "error"]]), json({ error: "The answer didn't come through. Try again in a minute.", ...(body.debug ? { dbg } : {}) }, 502);
 
     answer = fixPrices(answer, picks, dbg);
-    const out = { answer, m: used.split("/").pop(), ...(body.debug ? { dbg } : {}) };
-    ctx.waitUntil(cache.put(cacheKey, new Response(JSON.stringify(out), { headers: { "Cache-Control": "max-age=3600" } })));
+    const out = { answer, m: used.split("/").pop() };
+    ctx.waitUntil(cache.put(cacheKey, new Response(JSON.stringify(out), { headers: { "Cache-Control": "max-age=3600" } }))); // never the debug notes
+    if (body.debug) out.dbg = dbg;
     if (!body.debug) count(env, ctx, [["ask", "answered"]]);
     return json(out);
   },
@@ -131,6 +132,7 @@ export default {
 // is over 10.5 hours old, the scheduled price check has stopped: email Kalpit, at most once a
 // day (an "alarm stale" count in D1 marks the day). The 12:05 am to 9:05 am IST gap is 9 hours.
 async function priceAlarm(env, ctx, cfg) {
+  if (istDay() > "2026-11-08") return; // the price check ends after Diwali (AGENTS rule 6)
   let problem = "";
   try {
     const r = await fetch(cfg.DATA_URL, { cf: { cacheTtl: 0 }, signal: AbortSignal.timeout(8000) });
@@ -304,7 +306,7 @@ async function loadPicks(url) {
     if (!r.ok) throw new Error("data.json " + r.status);
     d = await r.json();
   } catch (e) {
-    if (dataCache.text) return dataCache;
+    if (dataCache.text) { dataCache.at = Date.now() - 4 * 60_000; return dataCache; } // try again in a minute, not on every question
     throw e;
   }
   const fmt = n => "₹" + Number(n).toLocaleString("en-IN");
@@ -367,7 +369,8 @@ function budgetFrom(q) {
   const s = q.toLowerCase()
     .replace(/[०-९]/g, c => String("०१२३४५६७८९".indexOf(c)))
     .replace(/हज़ार|हजार/g, " hazaar").replace(/लाख/g, " lakh")
-    .replace(/(\d),(?=\d)/g, "$1").replace(/\b(rs\.?|inr)(?=\d)/g, "$1 ").replace(/\s+/g, " ");
+    .replace(/\d{1,3}(?:,\d{2})*,\d{3}\b/g, m => m.replace(/,/g, "")) // 1,20,000 -> 120000, but "15,16" stays
+    .replace(/\b(rs\.?|inr)(?=\d)/g, "$1 ").replace(/\s+/g, " ");
   const litres = /geyser|water ?heater|\blit(re|er)s?\b|\bltr\b|fridge|refrigerator|purifier|cooker|kettle|bottle|tank/.test(s);
   let best = 0;
   const take = v => { if (v >= 500 && v <= 300000) best = Math.max(best, Math.round(v)); };
@@ -378,11 +381,16 @@ function budgetFrom(q) {
   for (const m of s.matchAll(/(₹|\brs\.?|\binr\b|\brupees?\b)?\s*(?<![a-z\d.])(\d+(?:\.\d+)?)(\s?)([a-z]+|\/-|"|%)?/g)) {
     const [, cur, num, gap, unit = ""] = m;
     let v = parseFloat(num);
-    if (/^(k|thousand|hazaa?r)$/.test(unit)) v *= 1000;
-    else if (/^(lakh|lac)$/.test(unit) || (unit === "l" && !litres)) v *= 100000;
+    const before = s.slice(0, m.index), after = s.slice(m.index + m[0].length);
+    // "under 4k", "budget 1.5L", "₹2026": money cues next to the number
+    const cue = !!cur || /\b(under|below|within|upto|up to|budget|around|max|less than|tak|between|and)\s*$/.test(before) || /^\s*(budget|tak|ke andar|se kam|rs|rupees?)\b/.test(after);
+    if (/^(k|thousand|hazaa?r)$/.test(unit)) { if (v < 5 && !cue) continue; v *= 1000; } // "4k TV" is a resolution
+    else if (/^(lakh|lac)$/.test(unit)) v *= 100000;
+    else if (unit === "l") { if (litres || !cue) continue; v *= 100000; } // "3 L" is litres unless it reads like a budget
+    else if (!cur && /\b(rtx|gtx|rx|ryzen|core|i[3579]|ultra|snapdragon|exynos|dimensity|helio|tensor|a\d\d|m\d)\s*$/.test(before)) continue; // "RTX 4060"
     else if (/^(rs|rupees?|\/-)$/.test(unit) || cur) { /* money as written */ }
     else if (unit === "l" || NOT_MONEY.test(unit) || /^["%]$/.test(unit) || (unit && !gap)) continue; // a unit or a model name (10a, 5g)
-    else if (v >= 1990 && v <= 2035 && (/\b(of|in|since|from|year|saal|model|launched?)\s*$/.test(s.slice(0, m.index)) || /^\s*(model|edition|version|launch)/.test(s.slice(m.index + m[0].length)))) continue; // a year
+    else if (v >= 1990 && v <= 2035 && !cue) continue; // a year, unless it reads like a budget ("under 2000")
     take(v);
   }
   return best;
@@ -390,8 +398,7 @@ function budgetFrom(q) {
 
 // What kind of product the question is about, as [category, type]. null = can't tell.
 function catFrom(ql) {
-  return /\bgifts?\b|tohfa|\bpresent\b/.test(ql) ? ["gifts"]
-    : /\b(ac|air ?condition(er)?)\b/.test(ql) ? ["home", "ac"] : /washing|kapd[ae]/.test(ql) ? ["home", "washing"]
+  return /\b(ac|air ?condition(er)?)\b/.test(ql) ? ["home", "ac"] : /washing|kapd[ae]/.test(ql) ? ["home", "washing"]
     : /fridge|refrigerator/.test(ql) ? ["home", "fridge"] : /microwave|oven/.test(ql) ? ["home", "microwave"]
     : /chimney/.test(ql) ? ["home", "chimney"] : /dishwasher/.test(ql) ? ["home", "dishwasher"]
     : /air ?purifier|\baqi\b|pollution/.test(ql) ? ["home", "purifier"] : /geyser|water ?heater/.test(ql) ? ["home", "geyser"]
@@ -409,11 +416,12 @@ function catFrom(ql) {
     : /headphone|over[- ]?ear/.test(ql) ? ["audio", "headphones"]
     : /earbud|buds|neckband|\biem\b|earphone/.test(ql) ? ["audio", "earbuds"]
     : /phone|mobile|iphone|samsung|galaxy|pixel|moto|redmi|xiaomi|oneplus|lava|vivo|iqoo|realme|poco|oppo|nothing phone|\bcmf\b|\bhmd\b|nokia|tecno|itel|\bmivi\b/.test(ql) ? ["phones"]
+    : /\bgifts?\b|tohfa|\bpresent\b/.test(ql) ? ["gifts"]
     : null;
 }
-const useFrom = ql => /papa|mummy|mom|dad|parent|maa|mother|father|nani|dadi/.test(ql) ? "parents"
-  : /whatsapp|calls only|only calls|basic/.test(ql) ? "basic" : /battery/.test(ql) ? "battery"
-  : /camera|photo/.test(ql) ? "camera" : /gam(e|ing)|bgmi/.test(ql) ? "gaming"
+const useFrom = ql => /\b(papa|mummy|mom|dad|parents?|maa|mother|father|nani|dadi)\b/.test(ql) ? "parents"
+  : /\b(whatsapp|calls only|only calls|basic)\b/.test(ql) ? "basic" : /\bbattery\b/.test(ql) ? "battery"
+  : /\b(camera|photos?)\b/.test(ql) ? "camera" : /\b(gam(e|es|ing)|bgmi)\b/.test(ql) ? "gaming"
   : /\blast(s|ing)? (long|for|years)|long[- ]?(term|life|lasting)|durable|reliab|saalon/.test(ql) ? "lasts" : null;
 
 // The view the page says the visitor is on, checked against data.json (anything else is dropped)
@@ -585,29 +593,39 @@ function fixPrices(answer, picks, dbg) {
   const text = answer.replace(/[ \t]+/g, " ");
   const hits = mentionHits(text, picks.names);
   const AMT = /(?:₹|\brs\.?|\binr)\s?(\d[\d,]*)(?:\s?(?:–|-|to)\s?(?:₹|rs\.?)?\s?(\d[\d,]*))?(?![\d,]*\s?(?:k\b|lakh|lac|l\b))/gi;
-  const SKIP_BEFORE = /(under|below|within|upto|up to|budget|less than|more than|over|above|save|saves|saving|extra|cheaper|costlier|kam|zyada|than|se|emi|cashback|discount|another|difference|fark|bachat)\s*(of\s*)?$/i;
+  const SKIP_BEFORE = /\b(under|below|within|upto|up to|budget|less than|more than|over|above|save|saves|saving|extra|cheaper|costlier|kam|zyada|than|se|emi|cashback|discount|another|difference|fark|bachat)\s*(of\s*)?$/i;
   const SKIP_AFTER = /^\s*(off|discount|cashback|back|instant|bank|card|offer|coupon|exchange|emi|per|a month|\/month|monthly|mahina|less|more|cheaper|costlier|sasta|sasti|mehenga|mehngi|extra|kam|zyada|tak|se kam|ke andar|budget|savings?|ka fark|difference)\b/i;
   const edits = [];
   hits.forEach((h, k) => {
     const stop = Math.min(k + 1 < hits.length ? hits[k + 1].i : text.length, ...[...text.slice(h.end).matchAll(/(?<!\brs)[.!?](?=\s|$)|\n/gi)].slice(0, 1).map(m => h.end + m.index), text.length);
     const seg = text.slice(h.end, stop);
     const want = priceParts(h.x);
-    // Only the first amount after a name is its price; later ones in the same stretch
-    // ("₹12,999 ya ₹15,499 mein iQOO") may belong to something else, so they're left alone.
-    for (const m of [...seg.matchAll(AMT)].slice(0, 1)) {
+    // For most picks only the first real amount after the name is its price; later ones
+    // ("₹12,999 ya ₹15,499 mein iQOO") may belong to something else. An affiliate pick gets
+    // every amount near its price replaced by the band, whatever words surround it.
+    let checked = false;
+    for (const m of seg.matchAll(AMT)) {
       const at = h.end + m.index;
       const before = text.slice(Math.max(0, at - 30), at), after = text.slice(at + m[0].length, at + m[0].length + 20);
-      if (SKIP_BEFORE.test(before) || SKIP_AFTER.test(after)) continue;
       const nums = [m[1], m[2]].filter(Boolean).map(n => Number(n.replace(/,/g, "")));
+      const affNear = h.x.aff && nums.some(n => n >= h.x.p * 0.5 && n <= h.x.p * 2);
+      if (!affNear && (SKIP_BEFORE.test(before) || SKIP_AFTER.test(after))) continue;
+      if (!h.x.aff && checked) continue;
+      checked = true;
       const right = want.range ? nums.length === 2 && nums[0] === want.ok[0] && nums[1] === want.ok[1]
         : nums.length === 1 && nums[0] === want.ok[0];
       if (right) continue;
       edits.push({ at, len: m[0].length, text: want.text, was: m[0], n: h.x.n });
     }
   });
-  if (!edits.length) return answer;
   let out = text;
   for (const e of edits.sort((a, z) => z.at - a.at)) out = out.slice(0, e.at) + e.text + out.slice(e.at + e.len);
+  // Last net: an affiliate pick's exact price written anywhere ("35240 rupees") becomes its band
+  for (const x of picks.data.products) if (x.aff) {
+    const re = new RegExp("(₹\\s?)?\\b(" + x.p + "|" + x.p.toLocaleString("en-IN") + ")\\b(\\s?(rupees|rs\\.?|/-))?", "gi");
+    if (re.test(out)) { out = out.replace(re, priceParts(x).text); edits.push({ n: x.n, was: String(x.p), text: "band" }); }
+  }
+  if (!edits.length) return answer;
   dbg.push("price fixes: " + edits.map(e => `${e.n}: ${e.was} -> ${e.text}`).join("; "));
   return out;
 }
