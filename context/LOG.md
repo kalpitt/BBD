@@ -205,3 +205,8 @@ Template:
   request; nothing from it was used. Redo it in the next chat.
 - Next: STATE.md "Next steps".
 - 10 Oct 10:10 am: added Xiaomi 55" 4K QLED (29,987 after coupon + SBI) and Bosch 302 L triple-door fridge (22,240), from deal-channel posts. TV slider min 35k → 10k.
+- 10 Oct 10:28 am: affiliate cut-off (Kalpit, option 2). Amazon items keep `aff: true`
+  (price band) only at ~₹600+ commission per sale; 41 picks switched to plain links with
+  exact prices (0% items: MacBook, microwaves, OnePlus/realme earbuds; small earners:
+  chargers, accessories, Echo/Fire TV; ₹250–600: premium audio, chimneys, cheaper washers,
+  monitor, T7, Osmo, WalkPad, Bosch 302 L). 39 affiliate picks left. Rate table in docs/DATA.md.

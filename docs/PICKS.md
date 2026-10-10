@@ -35,7 +35,8 @@ replies "keep" or "remove X". All must hold (the validator enforces the starred 
   still too high. In an empty slot (e.g. 32-inch TVs) it may lead.
 - ★ At most **4 auto picks waiting** at any time, and at most **2 added per run or chat**.
   At 4, only suggest.
-- `aff: true` items show a band, as always. Credit a new source in README → Credits.
+- Amazon picks get `aff: true` only at about ₹600+ commission per sale (`docs/DATA.md`);
+  `aff: true` items show a band. Credit a new source in README → Credits.
 
 ## Kalpit's replies
 - "keep" (no name) = every pick the validator lists as auto: delete their `auto`.

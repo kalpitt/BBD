@@ -66,7 +66,9 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
 
 ## Rules
 1. **Price honesty.**
-   - Phones and Flipkart items show exact prices with plain links.
+   - Phones, Flipkart items and low-commission Amazon items show exact prices with plain links.
+   - Amazon items get `aff: true` only if they earn about **₹600+ per sale** (price × category
+     rate; table in `docs/DATA.md`). Kalpit's call, 10 Oct: exact prices for most items.
    - `aff: true` items (Amazon affiliate, tag `bestdeallive-21`) show a **price band only**.
      Never write an exact ₹ amount in their `why`, `card` or `faq`.
    - Estimates carry `est: true`.
@@ -90,8 +92,8 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
 
 ## Why things are the way they are
 - **Price bands on affiliate items:** Amazon Associates doesn't allow showing hand-typed
-  Amazon prices next to affiliate links. Phones mostly earn no commission, so they use
-  plain links and keep exact prices.
+  Amazon prices next to affiliate links. Phones and other low-commission items (under
+  ~₹600 per sale) use plain links and keep exact prices; only big earners keep the band.
 - **Workers AI (Gemma 4, Llama 3.3 fallback):** ₹0. No key, no card, and Cloudflare
   doesn't train on questions. The free limit is about 10k neurons a day (roughly 80–120
   questions), resetting at 05:30 IST. When it runs out, the page says "used up, try

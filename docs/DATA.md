@@ -16,7 +16,7 @@ about a minute.
 | `est` | | `true` = estimate, shown as "Expected" |
 | `from` | | `true` = shows "From ₹X" |
 | `s` | ✓ | `Flipkart`, `Amazon` or `Both` |
-| `aff` | | `true` = Amazon affiliate link. The page shows a **band** (e.g. ₹15,000–20,000), never the exact price |
+| `aff` | | `true` = Amazon affiliate link. The page shows a **band** (e.g. ₹15,000–20,000), never the exact price. Only for items earning about ₹600+ per sale (see "Which Amazon items are affiliate"); leave it out otherwise for a plain link with the exact price |
 | `card` | | Offer note in green, e.g. `"Includes bank offer"`. Don't put the extra 5% co-branded card price here: the page adds that line itself from `sale.extra`. No ₹ amounts if `aff` |
 | `noExtra` | | `true` = hide the page-wide 5% co-branded card line for this pick (when `card` already names its own card cashback) |
 | `why` | ✓ | One-line verdict in Kalpit's voice. No ₹ amounts if `aff` |
@@ -52,6 +52,26 @@ last time the price checker compared prices, even with no changes. The page show
 "Prices checked 12 min ago", falling back to `updated` if `checked` is missing), `askUrl` (Ask box address), `amazonTag` (don't change), `sale` (dates, `extra` = the year-round 5% co-branded card line per store, and card
 offers), `categories` (slider ranges), `fakeMrp` (the "ignore the % off" table), `removed` (names Kalpit took off; agents must not re-add them, the validator checks) and
 `faq` (quick answers).
+
+## Which Amazon items are affiliate
+Kalpit, 10 Oct: show exact prices on most items; keep the affiliate band only where the
+commission is worth it. Rule: `p × rate ≥ about ₹600` → `aff: true`; otherwise no `aff`.
+Rates from the official Amazon Associates India fee schedule (Oct–Nov 2026,
+affiliate-program.amazon.in/help/node/topic/GRXPHT8U84RAYDXZ); re-check if it changes.
+
+| Rate | Categories |
+|---|---|
+| 0% | Apple products, all microwaves, semi-automatic washing machines, audio under ₹3,000 MRP, earbuds/headsets from OnePlus, realme, Xiaomi, iQOO, Vivo, pTron, Portronics and others |
+| 0–2% | Mobile phones (most 0%) |
+| 2.45% | Computers, tablets, TVs, large appliances (fridge, AC, washing machine, dishwasher, chimney) |
+| 2.63–2.8% | Camera, electronics (headphones, speakers, wearables) |
+| 3.4% | Wireless accessories (chargers, power banks) |
+| 4–4.25% | Home, kitchen, furniture, office |
+| 4.72% | Sports & fitness, personal care appliances |
+| 7.5% | Watches, bags, luggage, clothing |
+
+Rough break-even for 600: about ₹24,500 at 2.45%, ₹21,500 at 2.8%, ₹14,000 at 4.25%,
+₹8,000 at 7.5%. When unsure of the category, use the lower rate.
 
 ## Worked examples
 

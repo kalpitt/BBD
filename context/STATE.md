@@ -7,6 +7,8 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 - https://kalpit.me/BBD/: 138 picks in Phones, TVs, Laptops, Home, Audio & chargers,
   Fitness, Gadgets. Ask box at `askUrl` (workers.dev address off since 10 Oct).
   Sales: Amazon from 8 Oct, Flipkart from 9 Oct.
+- Affiliate cut-off (10 Oct): Amazon `aff: true` only at ~₹600+ commission per sale
+  (docs/DATA.md); 39 affiliate, 101 exact-price picks.
 - Price check: Routine "BBD price check (9:05 am to 12:05 am, every 3h)", IST; the
   12:05 am run catches midnight price changes. Runs `/price-check` in the cloud session
   "BBD price checker", pushes confirmed changes, runs the deal scout, notifies Kalpit.
