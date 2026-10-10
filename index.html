@@ -372,6 +372,7 @@ dialog .acts{justify-content:flex-end}
     <span>Sale dates: Amazon from 8 Oct, Flipkart from 9 Oct (8 Oct for Plus and Black members). Picks and prices updated <span id="updated"></span>. Prices can change during the sale, so check the final price on the payment page.</span>
     <span>Items marked "affiliate link" earn me a small commission at no extra cost to you. As an Amazon Associate I earn from qualifying purchases. All other links are plain links.</span>
     <span><button type="button" id="changeNum">Change my WhatsApp number</button></span>
+    <span id="noStatsNote" hidden>Visits from this browser aren't counted (?nostats). Open kalpit.me/BBD/?nostats=off to count them again.</span>
   </footer>
  </main>
 </div>
@@ -453,14 +454,17 @@ const state={cat:"phones",type:null,use:null,big:false,budget:null};
 
 /* ---------- visit counts: counts only, no ids, cookies or personal data (docs/OPS.md → Traffic) ---------- */
 // Sent to the ask Worker in small batches when the page is hidden. ?nostats turns counting
-// off on this browser (for Kalpit's own visits) and is removed from the address bar.
+// off on this browser (for Kalpit's own visits; kept in localStorage, which works like a
+// cookie but is never sent to any server), ?nostats=off turns it back on. Both leave the address bar.
 const hitQ=[],hitSeen=new Set();
 let noStats=!D.askUrl||store.get("bbd-nostats")==="1";
 (()=>{
   const sp=new URLSearchParams(location.search);if(!sp.has("nostats"))return;
-  store.set("bbd-nostats","1");noStats=true;sp.delete("nostats");
+  if(sp.get("nostats")==="off")store.del("bbd-nostats");else store.set("bbd-nostats","1");
+  noStats=!D.askUrl||store.get("bbd-nostats")==="1";sp.delete("nostats");
   try{history.replaceState(history.state,"",location.pathname+(String(sp)?"?"+sp:"")+location.hash)}catch(e){}
 })();
+$("#noStatsNote").hidden=store.get("bbd-nostats")!=="1";
 function track(ev,k,once){
   if(noStats||!k)return;
   if(once){if(hitSeen.has(ev+" "+k))return;hitSeen.add(ev+" "+k)}
