@@ -39,6 +39,9 @@ Amazon: SBI, sometimes HDFC) and coupons. Do **not** subtract the extra 5% from
 co-branded cards (Flipkart Axis/SBI, Amazon Pay ICICI): the page shows that as its own
 line from `sale.extra`. A listing shows the price before the card offer; subtract only
 the normal card discount shown on that same listing.
+Flipkart's "price with offers" figure (`nepPrice` in the page data) sometimes includes
+only the co-branded 5% (it equals listing × 0.95). In that case the right `p` is the
+listing price, not that figure.
 
 **Discount layers** (`list`, `coupon`, `bank`, `was`; see `docs/DATA.md`): on items
 that have them, also check the listing's sale price, coupon and card offer. If any
