@@ -99,6 +99,9 @@ suggestions, and may add up to 2 picks under `docs/PICKS.md`.
   means no public preview.
 - **Wrong category or junk getting through:** edit `RULES` (first match wins) or `SKIP`.
 
+Price helpers: pricebefore.com pages have `dates`/`prices` arrays; Flipkart pages (mobile
+user-agent curl) have `finalPrice`, `nepPrice` and per-card "₹ X off" offers.
+
 ## Traffic (visit counts, since 10 Oct)
 Two sources, they complement each other:
 - **Cloudflare Web Analytics** (dashboard, filter path `/BBD`): visits, countries, devices.
