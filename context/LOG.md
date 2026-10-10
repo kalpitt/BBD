@@ -386,3 +386,5 @@ Template:
   says to write the final message and notification to Kalpit as "you" (the 3 pm Sonnet run
   wrote about him in the third person). The Routine's own prompt can only be edited from
   the session it posts into, so it was left as is; the skill carries the rule.
+- 3:55 pm, Kalpit: product specs are researched by Haiku subagents only (CLAUDE.md,
+  update-picks and price-check skills). The main session checks the answer and writes `spec`.

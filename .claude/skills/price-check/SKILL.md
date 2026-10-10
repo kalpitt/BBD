@@ -146,3 +146,8 @@ New deals (reply "add X" to list one):
 Exact prices are fine here: this message only goes to Kalpit's phone, not the site.
 If nothing changed, nothing needs Kalpit and no deal made the cut, say exactly:
 "Price check: no changes."
+
+## Specs
+Need a spec (chip, IP rating, frame) for a pick or a suggested deal? Ask a Haiku subagent
+(Agent tool, `model: "haiku"`) for exact values with source URLs. Never research specs
+yourself and never guess (Kalpit, 10 Oct: save money).

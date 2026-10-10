@@ -13,6 +13,10 @@ Claude Code extras:
   tool's `model`: `haiku` for simple lookups and checks (one price, one page, live-site
   checks); `sonnet` for multi-step research (price-history hunts, sale reports). Keep
   code changes, rule calls (price honesty, privacy) and final checks in the main session.
+- **Product specs: Haiku only** (Kalpit, 10 Oct). Chip, IP rating, frame, battery or any
+  other spec lookup goes to an Agent with `model: "haiku"`: ask for exact values with
+  source URLs (two agreeing if possible) and "unknown" rather than a guess. You check the
+  answer and write `spec`; don't research specs yourself.
 - `gh` may be available for checking deploys; see `docs/OPS.md`.
 - Kalpit's global rules may say "never push to main". **This repo is the deliberate
   exception: commit straight to `main`** (see AGENTS.md).

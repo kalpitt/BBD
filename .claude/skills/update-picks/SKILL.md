@@ -21,6 +21,9 @@ description: Change prices, add/remove picks, or edit verdicts and quick answers
      delete `"auto": true`. **"remove X"** / "remove the auto ones": delete the pick(s)
      and add each name to `removed` in data.json. Name the picks in your reply.
      Rules for agent-added picks: `docs/PICKS.md`.
+   - Specs for a new or changed phone (`spec`: chip, IP, frame): get them from a Haiku
+     subagent (Agent tool, `model: "haiku"`) with source URLs; never research specs
+     yourself and never guess (Kalpit, 10 Oct: save money). Missing facts stay out.
    - Bump `updated` to the current IST time, e.g. `"9 Oct, 2:15 pm"`.
 3. `node scripts/check-data.mjs` must print ✓. Read the warnings and fix any that matter.
 4. Optional for layout changes: preview with `python3 -m http.server 8765`.
