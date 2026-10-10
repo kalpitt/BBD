@@ -1,5 +1,5 @@
 ---
-description: Scheduled price check for kalpit.me/BBD during the sale. Compares data.json prices with live Amazon/Flipkart prices and pushes only confirmed changes, then scouts deal channels for new products worth suggesting. Runs every 3 hours from a Routine; can also be run by hand ("check prices", "scout deals").
+description: Scheduled price check for kalpit.me/BBD during the sale. Compares data.json prices with live Amazon/Flipkart prices and pushes only confirmed changes, then scouts deal channels for new products worth suggesting. Runs at 9:05 am, 12:05, 3:05, 6:05, 9:05 pm and 12:05 am IST from a Routine; can also be run by hand ("check prices", "scout deals").
 ---
 
 # Price check (scheduled agent)

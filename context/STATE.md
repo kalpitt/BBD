@@ -1,12 +1,13 @@
 # STATE: where BBD is right now
 
-_Last updated: 10 Oct 2026, 10:30 am IST. Overwrite at the end of every session; keep it
+_Last updated: 10 Oct 2026, 9:48 am IST. Overwrite at the end of every session; keep it
 under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 
 ## Live
 - https://kalpit.me/BBD/: picks in Phones, TVs, Laptops, Home, Audio & chargers,
   Fitness, Gadgets. Ask box at `askUrl`. Sales: Amazon from 8 Oct, Flipkart from 9 Oct.
-- Price check: Routine "BBD price check (every 3h)" runs `/price-check` in the cloud
+- Price check: Routine "BBD price check (9:05 am to 12:05 am, every 3h)", IST; the
+  12:05 am run catches midnight price changes. Runs `/price-check` in the cloud
   session "BBD price checker", pushes confirmed price changes and notifies Kalpit's
   phone. It also runs the deal scout (public Telegram channels). Delete it after the sale.
 - DNS on Cloudflare (DNS-only records; registrar and email forwarding still Porkbun).
@@ -20,10 +21,8 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 
 ## Open asks (waiting on Kalpit)
 1. Cloudflare: set bbd-ask build watch paths to `worker/*` and `wrangler.toml` (IDEAS G3).
-   Optional: change the price-check Routine to every 3 h from 8 am to 11 pm IST only (G11).
 2. Turn on Cloudflare Web Analytics for kalpit.me and share the snippet (IDEAS C1).
-3. Decide: Diwali gift tab (A3), WhatsApp self-send link without the affiliate tag (A5),
-   one dated source enough to move an affiliate band (G6).
+3. Decide: Diwali gift tab (A3), one dated source enough to move an affiliate band (G6).
 4. Turn off workers.dev for bbd-ask; delete the leftover `ccr-*` branches on GitHub.
 5. Confirm `add-bbd-redirect` is merged in the Kalpit.me repo (lowercase /bbd works now).
 6. Real prices for Vivo X200T, Motorola Edge 70 (still `est`), plus Lenovo IdeaPad

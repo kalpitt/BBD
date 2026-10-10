@@ -445,11 +445,13 @@ const row=(x,note,cls)=>`<details class="row ${cls||""}"><summary><span class="n
 
 /* ---------- WhatsApp save to self ---------- */
 let pending=null;
+// Links go to kalpit.me/BBD (the pick's tab and price), never to a store: no affiliate
+// links in WhatsApp (Kalpit, 10 Oct). Affiliate items use the band top, never the exact price.
 function waText(items){
   return items.map(x=>{
-    const l=links(x)[0];
-    return `${big(x)?"🔥 ":""}${x.n}: ${x.est?"expected ":""}${priceText(x)}${x.s==="Both"?"":" on "+x.s}${x.card&&!x.aff?" ("+x.card+")":""}\n${l.u}`;
-  }).join("\n\n")+"\n\nKalpit's picks: kalpit.me/BBD";
+    const at=x.aff?bandRange(x)[1]:x.p;
+    return `${big(x)?"🔥 ":""}${x.n}: ${x.est?"expected ":""}${priceText(x)}${x.s==="Both"?"":" on "+x.s}${x.card&&!x.aff?" ("+x.card+")":""}\nkalpit.me/BBD#${[x.cat,x.type,at].filter(Boolean).join("-")}`;
+  }).join("\n\n");
 }
 function openWa(items,num){
   const t=encodeURIComponent(waText(items));

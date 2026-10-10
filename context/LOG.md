@@ -180,3 +180,11 @@ Template:
   validator now replays the ranking at every budget. A reload skips the scratch card,
   so smoke tests it on a fresh page.
 - Next: Kalpit's dashboard steps; 32/43-inch TVs.
+
+## 2026-10-10 (9:48 am): price-check schedule, WhatsApp links
+- Did: price-check Routine now runs at 9:05 am, 12:05, 3:05, 6:05, 9:05 pm and 12:05 am
+  IST (was every 3 h around the clock). "Send to myself on WhatsApp" now links each pick
+  to its kalpit.me/BBD view (tab + price; band top for affiliate items), no store links.
+- Decided (Kalpit): prices change at midnight, so keep a 12:05 am run; kalpit.me/BBD
+  covers everything, so no Amazon or Flipkart links in WhatsApp; no pre-push hook.
+- Next: Kalpit's Cloudflare steps (build watch paths, Web Analytics snippet).

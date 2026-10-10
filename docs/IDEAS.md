@@ -22,10 +22,10 @@ Status: ✅ done · 🔜 next · 💬 needs Kalpit · ⏸ later / only if data s
 | G8 | **"Good pick" definition and who-decides-what table** in `docs/PICKS.md`; AGENTS.md just points to it | ✅ |
 | G9 | **Validator enforces the auto-add limits**: max 4 waiting, 2 new per change, can't be top pick where one of Kalpit's would lead (sweeps every budget), no `est`, not in `removed`. Plus: affiliate price text is an error (₹, Rs, INR, 1,23,499), exact store hosts, no foreign `tag`/`affid`/`utm` params, `updated`/`checked` format, near-duplicate names, phone numbers or tokens in notes | ✅ |
 | G10 | **Smoke test** covers lowest/highest budget and the shared-link scratch card, and runs in GitHub after each push | ✅ |
-| G11 | Price check: top picks and `est` first; Kalpit's own prices are final; `checked` stamp at most every 6 h; no LOG lines. Optional: run the Routine only 8 am–11 pm | ✅ skill · 💬 schedule |
+| G11 | Price check: top picks and `est` first; Kalpit's own prices are final; `checked` stamp at most every 6 h; no LOG lines. Optional: run the Routine only 8 am–11 pm | ✅ skill; schedule now 9:05 am to 12:05 am IST, every 3 h (catches midnight price changes) |
 | G12 | Clearer replies: "add X", bare "keep", "remove X" (adds to `removed`), "undo" | ✅ |
 | G13 | "Done" checks are GET-only; a real ask-box question only after Worker changes | ✅ |
-| G14 | A Claude hook that runs the validator before every `git push` (project `.claude/settings.json`) | 💬 changes every session's setup |
+| G14 | A Claude hook that runs the validator before every `git push` (project `.claude/settings.json`) | ✖ Kalpit: not needed |
 | G15 | Weekly one-liner to Kalpit: "What did people ask you about on WhatsApp this week?" Feeds picks and FAQ with no tracking | 🔜 |
 | G6 | Amazon evidence bar: affiliate prices need two dated reports, so the 78 banded items rarely get rechecked. Option: let one dated source move a band (bands are ~5–8% wide anyway) | 💬 |
 
@@ -36,7 +36,7 @@ Status: ✅ done · 🔜 next · 💬 needs Kalpit · ⏸ later / only if data s
 | A2 | **Seasonal picks:** air purifiers (Oct–Nov pollution), geysers and room heaters (winter) | What families actually buy this month | 💬 new Home types need his OK; then agents fill them |
 | A3 | **Diwali gifts under ₹1k / ₹2k / ₹5k** (new tab or chips) | Diwali is 8 Nov; gift lists are the most-shared thing | 🔜 💬 (new tab = his call) |
 | A4 | **Check the sale end dates before the 20 Oct sunset** | Amazon's festival often runs until Diwali. Switching off early wastes the best weeks | 🔜 |
-| A5 | **WhatsApp "Send to myself" text carries the Amazon affiliate link**; with no saved number it opens a contact picker, so it can go to any chat. Send the `kalpit.me/BBD#…` link instead | Matches his "no affiliate traffic through WhatsApp" call; avoids an Amazon rules risk | 💬 |
+| A5 | **WhatsApp "Send to myself" text carries the Amazon affiliate link**; with no saved number it opens a contact picker, so it can go to any chat. Send the `kalpit.me/BBD#…` link instead | Matches his "no affiliate traffic through WhatsApp" call; avoids an Amazon rules risk | ✅ 10 Oct: all items link to kalpit.me/BBD (Kalpit: "kalpit.me/BBD covers everything") |
 | A6 | Ask box: when a question names a brand ("Nothing phone under 30k"), lead with that brand's pick | Answers what people actually asked | ⏸ |
 | A7 | Gaming laptops | Gap, but small audience among family | ⏸ |
 | A8 | Ask-box capacity: free limit is ~80–120 questions a day. Workers paid plan is $5/month for the sale | Only if analytics (C1) show it running out | ⏸ |

@@ -99,7 +99,9 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
 - **Gemma answers need `max_tokens` around 1200** because it reasons before replying.
   With less, it returns an empty answer.
 - **"Save to my WhatsApp" opens `wa.me/<their own number>`** (message yourself). It isn't
-  an affiliate workaround. Kalpit rejected routing affiliate traffic through WhatsApp.
+  an affiliate workaround. Kalpit rejected routing affiliate traffic through WhatsApp, so
+  since 10 Oct the message links only to kalpit.me/BBD (the pick's tab and price), never
+  to a store, for Amazon and Flipkart alike.
 - **Lowercase `/bbd`** is a redirect in the Kalpit.me repo (branch `add-bbd-redirect`).
   Share `kalpit.me/BBD`.
 - **The picks are Kalpit's own.** Inspiration and price checks come from the official
