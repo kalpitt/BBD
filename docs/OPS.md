@@ -102,21 +102,32 @@ suggestions, and may add up to 2 picks under `docs/PICKS.md`.
 ## Traffic (visit counts, since 10 Oct)
 Two sources, they complement each other:
 - **Cloudflare Web Analytics** (dashboard, filter path `/BBD`): visits, countries, devices.
-- **Our own counts**: what people *do* on the page. Read them (GET, free, public, counts only):
-  `curl -s "https://ask.kalpit.me/stats?days=7"` (`days` 1–60, IST days).
-  `totals` = per event, most first; `days` = per day. Event list: top of the
-  "Visit counts" block in `worker/worker.js`.
-- How it works: the page batches events (view opened, tab, filter, store tap, share, chat
-  opened, 👍/👎) and sends them with `sendBeacon` to `POST /hit` when it is hidden; the
-  Worker checks each key against `data.json` and adds 1 to a SQLite Durable Object
-  (`STATS`, free plan). The Worker itself counts AI answers (`ask`) and sent messages (`msg`).
-  No IP, id, cookie or question text is stored.
+- **Our own counts**: what people *do* on the page. **Private**: stored in the D1 database
+  `bbd-stats` in Kalpit's Cloudflare account, with no public link.
+  - Agents: Kalpit's Cloudflare connector → `d1_database_query`, database id in
+    `wrangler.toml`. No connector in your session? Say so; don't add a public endpoint.
+  - Kalpit: https://dash.cloudflare.com/?to=/:account/workers/d1 → `bbd-stats` → Console.
+  - Event list: top of the "Visit counts" block in `worker/worker.js`. Handy queries:
+    ```sql
+    -- last 7 days, per event
+    SELECT ev, k, SUM(n) AS n FROM hits WHERE day >= date('now','+5 hours','+30 minutes','-6 days') GROUP BY ev, k ORDER BY ev, n DESC;
+    -- visitors per day (first visit of the day per browser)
+    SELECT day, SUM(n) AS visitors, SUM(CASE WHEN k='back' THEN n END) AS returning FROM hits WHERE ev='visit' GROUP BY day ORDER BY day;
+    -- most tapped picks (key = pick id~store; names are in data.json)
+    SELECT k, SUM(n) AS taps FROM hits WHERE ev='click' GROUP BY k ORDER BY taps DESC LIMIT 20;
+    ```
+- How it works: the page batches events (visit, view opened, tab, filter, store tap, share,
+  chat opened, 👍/👎) and sends them with `sendBeacon` to `POST /hit` when it is hidden; the
+  Worker checks each key against `data.json` and adds 1 to today's row in D1 (binding `DB`).
+  The Worker itself counts AI answers (`ask`) and sent messages (`msg`).
+  No IP, id, cookie or question text is stored. Daily visitors use no id either: the
+  browser keeps only the date of its last counted visit (`bbd-last` in localStorage).
 - Kalpit's own visits: open `kalpit.me/BBD/?nostats` once on each of his devices. That
-  browser stops counting (remembered in localStorage; the `?nostats` leaves the address bar).
+  browser stops counting (localStorage; the footer then says so). `?nostats=off` undoes it.
 - Not counted: visitors who block scripts, store taps opened with a long-press. Counts are
-  a guide, not exact. `click` = store taps, not purchases.
-- `/stats` says "Counting isn't switched on" = the `STATS` binding is missing (check
-  `wrangler.toml` and the Worker build log).
+  a guide, not exact. `click` = store taps, not purchases. Browsers that block storage
+  count as a `new` visitor each day.
+- No new rows = check the `DB` binding in `wrangler.toml` and the Worker build log.
 
 ## Symptom → fix
 | Symptom | Likely cause | Fix |

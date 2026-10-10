@@ -482,6 +482,9 @@ addEventListener("pagehide",flushHits);
 setTimeout(flushHits,5000); // the first view, in case the page is never hidden
 (()=>{
   const nav=(performance.getEntriesByType&&performance.getEntriesByType("navigation")[0]||{}).type;
+  // Daily visitors without an id: the browser keeps only the date (IST) of its last counted day
+  const today=new Date(Date.now()+19800000).toISOString().slice(0,10),last=store.get("bbd-last");
+  if(!noStats&&last!==today){track("visit",last?"back":"new");store.set("bbd-last",today)}
   track("open",nav==="reload"?"reload":location.hash.length>1?"link":"home");
   let ref="";try{ref=new URL(document.referrer).hostname.replace(/^www\./,"").toLowerCase()}catch(e){}
   if(ref&&!/(^|\.)kalpit\.me$/.test(ref))track("ref",ref);

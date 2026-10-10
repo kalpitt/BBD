@@ -1,10 +1,8 @@
 // "Ask Kalpit" answer service for kalpit.me/BBD.
 // Runs on a free Cloudflare Worker and uses Workers AI (no API key).
 // It answers only from the picks in data.json on the live site.
-// It also keeps visit counts for the page (POST /hit, read at GET /stats): counts only,
-// no IPs, ids or question text are stored (AGENTS rule 5).
-
-import { DurableObject } from "cloudflare:workers";
+// It also keeps visit counts for the page (POST /hit) in the private D1 database
+// bbd-stats: counts only, no IPs, ids or question text are stored (AGENTS rule 5).
 
 const DEFAULTS = {
   DATA_URL: "https://kalpit.me/BBD/data.json",
@@ -35,7 +33,6 @@ export default {
 
     const path = new URL(req.url).pathname;
     if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
-    if (req.method === "GET" && path === "/stats") return readStats(req, env, cfg);
     if (req.method !== "POST") return json({ error: "Send a POST request with a question." }, 405);
     if (origin && !allowed.includes(origin)) return json({ error: "This service only answers questions from kalpit.me." }, 403);
 
@@ -175,9 +172,13 @@ async function sendMsg(body, req, env, fromSite, json) {
   return json({ ok: true });
 }
 
-// Visit counts (since 10 Oct). One Durable Object ("all") holds a SQLite table of
-// day (IST) | event | key | count. Nothing that identifies a visitor is stored.
+// Visit counts (since 10 Oct). Table hits in the D1 database bbd-stats (binding DB):
+// day (IST) | event | key | count. Nothing that identifies a visitor is stored, and there
+// is no public read: Kalpit reads it in the Cloudflare dashboard, agents through his
+// Cloudflare connector (docs/OPS.md → Traffic).
 // Events and keys (the page sends all but ask/msg, which this Worker counts itself):
+//   visit new | back              a browser's first visit of the day: first time ever, or returning
+//                                 (the page keeps only the date of its last visit; no id)
 //   open  home | link | reload    page opened: plain link, link to a view (#phones-15000), reload
 //   ref   referrer site           e.g. instagram.com (WhatsApp usually sends none)
 //   tab   cat or cat-type         each view opened, once per page load
@@ -188,34 +189,20 @@ async function sendMsg(body, req, env, fromSite, json) {
 //   fb    y | n                   👍 / 👎 under an AI answer
 //   ask   answered | cached | limit | error | busy   (counted here)
 //   msg   sent                    "Send to Kalpit" emails (counted here)
-export class Stats extends DurableObject {
-  constructor(state, env) {
-    super(state, env);
-    this.sql = state.storage.sql;
-    this.sql.exec("CREATE TABLE IF NOT EXISTS hits (day TEXT NOT NULL, ev TEXT NOT NULL, k TEXT NOT NULL, n INTEGER NOT NULL, PRIMARY KEY (day, ev, k))");
-  }
-  add(day, rows) {
-    for (const [ev, k, n] of rows) this.sql.exec("INSERT INTO hits (day, ev, k, n) VALUES (?, ?, ?, ?) ON CONFLICT (day, ev, k) DO UPDATE SET n = n + excluded.n", day, ev, k, n);
-  }
-  read(since) {
-    return this.sql.exec("SELECT day, ev, k, n FROM hits WHERE day >= ? ORDER BY day", since).toArray();
-  }
-}
-
-const istDay = (offset = 0) => new Date(Date.now() + 5.5 * 3600_000 + offset * 86400_000).toISOString().slice(0, 10);
-const statsDb = env => env.STATS.get(env.STATS.idFromName("all"));
+const istDay = () => new Date(Date.now() + 5.5 * 3600_000).toISOString().slice(0, 10);
 
 // Adds 1 per [event, key] row to today's counts, after the response is sent
 function count(env, ctx, rows) {
-  if (!env.STATS || !rows.length) return;
+  if (!env.DB || !rows.length) return;
   const agg = new Map();
   for (const [ev, k] of rows) agg.set(ev + "\t" + k, (agg.get(ev + "\t" + k) || 0) + 1);
-  const day = istDay(), list = [...agg].map(([ek, n]) => [...ek.split("\t"), n]);
-  ctx.waitUntil(Promise.resolve().then(() => statsDb(env).add(day, list)).catch(() => {}));
+  const day = istDay();
+  const add = env.DB.prepare("INSERT INTO hits (day, ev, k, n) VALUES (?, ?, ?, ?) ON CONFLICT (day, ev, k) DO UPDATE SET n = n + excluded.n");
+  ctx.waitUntil(env.DB.batch([...agg].map(([ek, n]) => add.bind(day, ...ek.split("\t"), n))).catch(() => {}));
 }
 
 const HIT_KEYS = {
-  open: /^(home|link|reload)$/, ref: /^[a-z0-9][a-z0-9.-]{2,59}$/, tab: /^[a-z]+(-[a-z]+)?$/, use: /^[a-z]+-[a-z]+$/,
+  visit: /^(new|back)$/, open: /^(home|link|reload)$/, ref: /^[a-z0-9][a-z0-9.-]{2,59}$/, tab: /^[a-z]+(-[a-z]+)?$/, use: /^[a-z]+-[a-z]+$/,
   click: /^[a-z0-9-]{1,30}~(amazon|flipkart)$/, share: /^(save|tab|status)$/, chat: /^open$/, fb: /^(y|n)$/,
 };
 // POST /hit from the page: {"e": [["tab", "phones"], ["click", "s25fe~amazon"], ...]}
@@ -242,25 +229,6 @@ async function addHits(body, req, env, ctx, cfg, fromSite, cors) {
   };
   count(env, ctx, rows.filter(ok).map(([ev, k]) => [ev, String(k)]));
   return done;
-}
-
-// GET /stats?days=14: totals per event (most first) and per day. Public on purpose: counts only.
-async function readStats(req, env, cfg) {
-  const out = (obj, status = 200) => new Response(JSON.stringify(obj, null, 1), { status, headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", "Access-Control-Allow-Origin": "*" } });
-  if (!env.STATS) return out({ error: "Counting isn't switched on." }, 503);
-  const days = Math.min(60, Math.max(1, parseInt(new URL(req.url).searchParams.get("days")) || 14));
-  let rows;
-  try { rows = await statsDb(env).read(istDay(1 - days)); } catch { return out({ error: "Couldn't read the counts. Try again in a minute." }, 502); }
-  let names = {};
-  try { names = Object.fromEntries((await loadPicks(cfg.DATA_URL)).data.products.map(x => [x.id, x.n])); } catch {}
-  const totals = {}, perDay = {};
-  for (const { day, ev, k, n } of rows) {
-    const label = ev === "click" ? (names[k.split("~")[0]] || k.split("~")[0]) + " (" + (k.endsWith("~amazon") ? "Amazon" : "Flipkart") + ")" : k;
-    (totals[ev] ||= {})[label] = (totals[ev][label] || 0) + n;
-    ((perDay[day] ||= {})[ev] ||= {})[k] = n;
-  }
-  for (const ev in totals) totals[ev] = Object.fromEntries(Object.entries(totals[ev]).sort((a, z) => z[1] - a[1]));
-  return out({ from: istDay(1 - days), to: istDay(), note: "Counts only, IST days. Keys: see worker/worker.js (Visit counts).", totals, days: perDay });
 }
 
 const SYSTEM = `You are answering on behalf of Kalpit, who shares festive-sale shopping picks (Flipkart Big Billion Days and Amazon Great Indian Festival 2026) with friends and family in India. He is away, so you answer their follow-up questions in his voice.

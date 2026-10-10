@@ -16,13 +16,19 @@ name = "MAIL"
 DATA_URL = "https://kalpit.me/BBD/data.json"
 ALLOWED_ORIGINS = "https://kalpit.me,https://www.kalpit.me"
 
-# Visit counts (POST /hit, GET /stats): a SQLite Durable Object, free plan, nothing to set
-# up in the dashboard. The first deploy creates it from the migration below. Never delete
-# or rename the migration: that would wipe the counts.
-[[durable_objects.bindings]]
-name = "STATS"
-class_name = "Stats"
+# Visit counts (POST /hit): the private D1 database bbd-stats (free plan, created 10 Oct,
+# table "hits"). The id is not a secret: only Kalpit's Cloudflare account can use it.
+[[d1_databases]]
+binding = "DB"
+database_name = "bbd-stats"
+database_id = "8df73cd5-6cf6-4ee7-a5ea-d7dc0781f00c"
 
+# History of the first version's counter (a Durable Object, 10 Oct, replaced by D1 the
+# same day). Keep both entries: Cloudflare checks this list on every deploy.
 [[migrations]]
 tag = "v1"
 new_sqlite_classes = ["Stats"]
+
+[[migrations]]
+tag = "v2"
+deleted_classes = ["Stats"]

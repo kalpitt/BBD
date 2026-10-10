@@ -407,3 +407,9 @@ Template:
 - Tested: local wrangler dev (junk keys/origins rejected) and a headless browser end to end;
   `?nostats` opts a browser out. Kalpit set up the Cloudflare connector in parallel.
 - Next: Kalpit opens kalpit.me/BBD/?nostats on his devices; read /stats after a day.
+- Later, Kalpit: keep the counts private. Moved them to the D1 database `bbd-stats`
+  (created through his Cloudflare connector, table `hits`), removed the public `/stats`.
+  The Durable Object is deleted by migration v2 (its counts were copied into D1 first,
+  minus our one test visit). Added daily visitors without an id (`visit` new/back: the
+  browser keeps only the date of its last visit), `?nostats=off`, and a footer note when
+  a browser isn't counted. Kalpit chose no tracking cookies (trust, DPDP/GDPR).
