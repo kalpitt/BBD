@@ -43,7 +43,6 @@ under 50 lines. Round-3 review and what shipped: docs/IDEAS.md → Product revie
 - 7 picks added 8 Oct have one source only (Sony WF-1000XM5, Bose QC Earbuds, Sennheiser
   IE 200, Echo Dot 5th Gen, Fire TV Stick 4K Select, Spinnaker Bradner, Cadola Lydden Hill).
 - `was` on 60 of 182 picks; gift prices are plain listing prices (bank offers unchecked).
-- "Send to Kalpit" rate limit (3/day/visitor) is per Worker instance, best effort.
 - Amazon links: 95 picks still open a search. Add a `/dp/` link only when an amazon.in
   listing title confirms model and variant; never open amazon.in with tools.
 ## Next steps for an agent
