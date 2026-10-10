@@ -302,3 +302,6 @@ Template:
   cashback); IdeaPad Slim 3 → i7-13620H 16/512 ₹66,490 (SBI); Moto G37 Power ₹15,499,
   G06 Power ₹12,999. Motorola Edge 70 doesn't exist: removed, added to `removed`.
 - Unsure: the ₹40,990 TV screenshot had no title; assumed LG NU87.
+
+## 2026-10-10 (12:00 pm): Kalpit keeps all gifts
+- Decided (Kalpit): "keep everything on gifts" (8 new gifts + 6 gift-tagged picks). No `auto` flags, so data.json is unchanged.

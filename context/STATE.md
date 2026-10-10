@@ -25,12 +25,11 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 - "Send to myself on WhatsApp" links only to kalpit.me/BBD views, no store links.
 
 ## Open asks (waiting on Kalpit)
-1. Veto check on the gifts tab (8 new gifts, 6 gift-tagged picks): "keep" or "remove X".
-2. Kalpit's 10 Oct prices are in (no `est` left). Confirm: the ₹40,990 TV screenshot
+1. Kalpit's 10 Oct prices are in (no `est` left). Confirm: the ₹40,990 TV screenshot
    was the LG NU87 (no title visible). IdeaPad now the i7-13620H at ₹66,490; nothing
    under ₹40k in laptops.
-3. `add-bbd-redirect` in Kalpit.me: he'll merge it first thing in that repo.
-4. Optional: EarnKaro links for Flipkart items; Amazon product API (explore in a new chat).
+2. `add-bbd-redirect` in Kalpit.me: he'll merge it first thing in that repo.
+3. Optional: EarnKaro links for Flipkart items; Amazon product API (explore in a new chat).
 
 ## Known gaps
 - No laptop under ₹33k with 512GB and a confirmed price; no gaming laptop (only RTX 3050
