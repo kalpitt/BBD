@@ -269,3 +269,15 @@ Template:
 - 11:14 am follow-up (Kalpit): OnePlus counts as wide service (Oppo merger), IP48 is fine
   for a foldable: `lasts` added to OnePlus 13s, Nord 6, Fold7. Edge 70 Pro stays the pick;
   its verdict now names thin Moto service and the S25 FE stretch.
+
+## 2026-10-10: handoff: phone cards and Lasts long
+- Did: see the 11:10 am entry and its follow-up above (cards, filter, specs, Pixel 10a).
+- Decided (Kalpit): English labels only. "Lasts long" = powerful chip + any IP rating +
+  wide service in tier 2–3 towns; metal a plus, updates matter little. OnePlus counts
+  (Oppo service); IP48 is fine. Pixel 10a: Tensor chip heats up, weak small-town service.
+  Edge 70 Pro may lead, with the service caveat and the S25 FE stretch in its verdict.
+- Gotchas: specs for 2026 phones came from GSMArena/brand pages via a research subagent;
+  sources disagree on some frames, so `frame` is left out when unconfirmed (validator
+  allows that). The page ignores hash-only URL changes (reload to test a #view).
+  The alt cards sit outside the scratch card, so a shared link shows them before the reveal.
+- Next: STATE.md "Next steps".

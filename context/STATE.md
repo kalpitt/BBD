@@ -1,12 +1,13 @@
 # STATE: where BBD is right now
 
-_Last updated: 10 Oct 2026, 11:10 am IST. Overwrite at the end of every session; keep it
+_Last updated: 10 Oct 2026, 11:16 am IST. Overwrite at the end of every session; keep it
 under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 
 ## Live
 - https://kalpit.me/BBD/: 155 picks, 7 tabs (Home now has Air purifier, Geyser). Ask box
-  at `askUrl`. Sales: Amazon from 8 Oct, Flipkart from 9 Oct. Phones (cc130d8, another
-  chat): "Best camera"/"Lasts longest" cards, "Lasts long" filter, `spec` on phones ≥ ₹20k.
+  at `askUrl`. Sales: Amazon from 8 Oct, Flipkart from 9 Oct. Phones: "Best camera" and
+  "Lasts longest" cards under the main pick (no filter), "Lasts long" filter (16 phones;
+  rule in docs/DATA.md → `tags`), checked `spec` (chip, IP, frame) on the 37 phones ≥ ₹20k.
 - Affiliate cut-off (10 Oct): Amazon `aff: true` only at ~₹250+ commission per sale
   (docs/DATA.md, official rate table); 59 affiliate (band), 96 exact-price picks.
 - Price check: Routine "BBD price check (9:05 am to 12:05 am, every 3h)", IST, runs
@@ -25,7 +26,9 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
    enough to move an affiliate band (G6). (A2 purifiers/geysers: done 10 Oct.)
 2. Confirm `add-bbd-redirect` is merged in the Kalpit.me repo (lowercase /bbd works now).
 3. Real prices for Vivo X200T, Motorola Edge 70, IdeaPad Slim 3, the 55-inch TVs (`est`).
-4. Optional: EarnKaro links for Flipkart items; Amazon product API (explore in a new chat).
+4. Phones: frame unknown for Redmi Note 15 Pro+, Redmi Note 17 Pro, Vivo T5 Pro, Nord CE6
+   Lite, iQOO Z11xa. Edge 70 Pro frame: GSMArena says plastic, PhoneArena says metal.
+5. Optional: EarnKaro links for Flipkart items; Amazon product API (explore in a new chat).
 
 ## Known gaps
 - No laptop under ₹33k with 512GB and a confirmed price; no gaming laptop (only RTX 3050
