@@ -423,3 +423,17 @@ Template:
   die between commands: restart them before a test. A Durable Object class can't just be
   removed: `wrangler.toml` keeps the v1 migration plus a v2 `deleted_classes`.
 - Next: STATE.md "Next steps".
+
+## 2026-10-11 (5:40 am): product review round 3, then Kalpit's ticked items
+- Did: six-lens review (page, picks, AI box, trust, engineering, growth) in a private review doc.
+  Kalpit ticked: exact product links, new types, AI prompt change, Channel, Associates question;
+  plus "keep expensive phones, add others" and all no-decision bug fixes.
+- Shipped: 37 exact links (73 of 182); AI box planAnswer/budget/fixPrices fixes, slim prompt,
+  cache before rate limit; card names, budget chips, per-tab FAQ/chips, broken-link fix,
+  FAM_HASH scaffold, Channel button; Worker price-check alarm; validator twin-code check;
+  13 new picks + 3 new types. An independent review found an affiliate-price leak path in
+  fixPrices and budget misreads ("4k TV", "RTX 4060"); fixed before it mattered.
+- Gotchas: Amazon policy item 27 (no software sessions on amazon.in) and 31 (no price alerts).
+  Most ASINs can't be confirmed from search alone, so Amazon links stay partial. Flipkart
+  "bank offer" on many listings doesn't name the bank: those picks say "the listing's card offer".
+- Next: STATE.md open asks.

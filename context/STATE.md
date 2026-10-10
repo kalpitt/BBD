@@ -1,16 +1,17 @@
 # STATE: where BBD is right now
 
-_Last updated: 10 Oct 2026, 9:45 pm IST. Overwrite at the end of every session; keep it
-under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
+_Last updated: 11 Oct 2026, 5:40 am IST. Overwrite at the end of every session; keep it
+under 50 lines. Round-3 review and what shipped: docs/IDEAS.md → Product review, round 3._
 
 ## Live
-- https://kalpit.me/BBD/: 168 picks, 8 tabs incl. "Diwali gifts". 64 affiliate (band),
-  the rest exact prices. "Share this list with family" button.
+- https://kalpit.me/BBD/: 182 picks, 8 tabs; new types Room heater, Tablet, Speakers & soundbars.
+  73 of 182 store buttons open the exact product (`url`), the rest a store search.
+  One-tap budget chips; card named under prices; quick answers and chat ideas follow the tab.
 - Ask box is a chat: floating 💬 button, full screen on phones, side panel on laptops,
   👍/👎 under answers. "Message Kalpit" (header, teaser, after 👎 / 2nd question / errors)
   opens a form the Worker emails to him from bbd@kalpit.me (`MSG_TO` secret). His WhatsApp
   is off the page; family use his private `?f=` link (never in the repo).
-- Phones: S25 FE top ₹45–55k, S25 Ultra top ₹85k–1.3L, Pixel 11 only ₹70–85k. Nothing
+- Phones: S25 FE top ₹45–55k, S25 Ultra top ₹85k–1.25L, S26 Ultra ₹1.25–1.6L (11 Oct), Pixel 11 only ₹70–85k. Nothing
   Phone (4a) Pro (₹49,999) is the "Best camera" card at ₹50–55k via `altScore`.
 - Price check: Routine "BBD price check, Sonnet (9:05 am to 12:05 am, every 3h)" wakes the
   Sonnet session "BBD price checker, Sonnet". Old Opus Routine and a fresh-session test
@@ -21,6 +22,10 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 - Cloudflare: Web Analytics live (filter path `/BBD`); Email Routing on kalpit.me
   (Porkbun MX/SPF removed); Worker rebuilds only when `worker/*` or `wrangler.toml` change.
 
+- Ask box (11 Oct): slim prompt via `planAnswer()` (~1/3 size), typed budget = cap, named
+  products compared, affiliate prices forced to bands in `fixPrices()`. 10 regression Qs pass.
+- Price-check alarm: Worker cron emails Kalpit once a day if `checked` > 10.5 h (stops after 8 Nov).
+
 ## Governance (details in AGENTS.md, docs/IDEAS.md → Governance; sunset: AGENTS rule 6)
 - Goals: (a) friends and family buy well, (c) reach; affiliate is a side effect.
 - Adding picks: veto, not approve (`docs/PICKS.md`; validator enforces the limits).
@@ -28,12 +33,14 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 - Amazon prices need his screenshot or two dated reports (agents can't read Amazon pages).
 
 ## Open asks (waiting on Kalpit)
-1. Nothing (4a) Pro: launch ₹39,999, Jun low ₹44,999 (pricebefore); ₹49,999 now. Keep?
-2. `add-bbd-redirect` in Kalpit.me: he'll merge it first thing in that repo.
-3. Optional: EarnKaro links for Flipkart items; Amazon product API (explore in a new chat).
-4. Open kalpit.me/BBD/?nostats once on each of his devices (his own visits skew counts).
-5. Reach ideas C4 (WhatsApp Channel button, needs his channel link) and C5 (price-drop
-   post line in the price-check notification): he says yes, an agent builds them.
+1. Veto the 13 picks added 11 Oct (reply "remove X"): S26 Ultra, Pixel 11 Pro, Bajaj RX 7, Havells
+   Jade, OnePlus Pad Lite, Tab A11+, JBL Flip Essential 2, Sony HT-S100F, Sony WH-CH520, JBL 770NC,
+   Mi 20000 power bank, Samsung 7 kg semi-auto and top load, LG 185 L.
+2. WhatsApp Channel link ("Kalpit's sale updates") → set `channel` in data.json (button is built).
+3. His family link once, in a private chat → `node scripts/fam-hash.mjs` → `FAM_HASH` in index.html.
+4. Send Amazon Associates India the question (draft in the round-3 review doc).
+5. Older: Nothing (4a) Pro price; `add-bbd-redirect` merge; EarnKaro; `?nostats` on his devices.
+6. Unticked in the review (don't build unless he asks): trust/privacy notes, Gmail step move, cut list.
 
 ## Known gaps
 - Laptops: under ₹40k only the Acer Aspire One 14; no gaming laptop.
@@ -41,6 +48,9 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
   IE 200, Echo Dot 5th Gen, Fire TV Stick 4K Select, Spinnaker Bradner, Cadola Lydden Hill).
 - `was` on 60 of 168 picks; gift prices are plain listing prices (bank offers unchecked).
 - "Send to Kalpit" rate limit (3/day/visitor) is per Worker instance, best effort.
+
+- Amazon links: 95 picks still open a search. Add a `/dp/` link only when an amazon.in
+  listing title confirms model and variant; never open amazon.in with tools.
 
 ## Next steps for an agent
 1. Check the Sonnet price checker's first runs (3:05 pm onward) pushed or reported cleanly.
