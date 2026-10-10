@@ -8,7 +8,7 @@ about a minute.
 | Field | Required | Meaning |
 |---|---|---|
 | `id` | ✓ | Unique, lowercase letters, digits and dashes (e.g. `s25`, `wm-bosch8`) |
-| `cat` | ✓ | `phones`, `tv`, `laptops`, `home`, `audio`, `fitness` or `gadgets` |
+| `cat` | ✓ | `phones`, `tv`, `laptops`, `home`, `audio`, `fitness`, `gadgets` or `gifts` |
 | `type` | home, audio, gadgets | home: `washing`, `fridge`, `ac`, `microwave`, `chimney`, `dishwasher`, `vacuum`, `purifier`, `geyser`; audio: `earbuds`, `headphones`, `chargers`; gadgets: `watches`, `creator`, `desk`, `hometech` |
 | `n` | ✓ | Name shown on the page. Must be unique (the ask box matches by name) |
 | `p` | ✓ | Price in rupees, whole number: the sale price **including** the sale's normal card offer (Flipkart Axis/ICICI, Amazon SBI). Not the extra 5% co-branded card offer |
@@ -28,6 +28,7 @@ about a minute.
 | `list` | | Sale price shown on the listing, before coupon and card offer. When set, `p` must equal `list − coupon − bank.off` (the validator checks) |
 | `coupon` | | Coupon amount in ₹ (mostly Amazon). Needs `list` |
 | `bank` | | Sale card instant discount: `{"name": "SBI", "off": 2000}`. Use `"name": "Bank"` if the card isn't known. Card name only, no amounts in `name` |
+| `gift` | | `true` = also show this pick in the Diwali gifts tab (Kalpit, 10 Oct). For picks from other tabs priced within the gifts slider (max ₹5,000). Picks with `cat: "gifts"` don't need it |
 | `auto` | | `true` = an agent added this pick and Kalpit hasn't said "keep" yet (AGENTS.md → Adding picks). Not shown on the page. Delete it when he approves |
 | `url` | | Direct product link. Not allowed with `aff` (it would drop the affiliate tag) or with `s: "Both"` |
 

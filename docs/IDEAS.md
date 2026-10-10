@@ -27,15 +27,15 @@ Status: ✅ done · 🔜 next · 💬 needs Kalpit · ⏸ later / only if data s
 | G13 | "Done" checks are GET-only; a real ask-box question only after Worker changes | ✅ |
 | G14 | A Claude hook that runs the validator before every `git push` (project `.claude/settings.json`) | ✖ Kalpit: not needed |
 | G15 | Weekly one-liner to Kalpit: "What did people ask you about on WhatsApp this week?" Feeds picks and FAQ with no tracking | 🔜 |
-| G6 | Amazon evidence bar: affiliate prices need two dated reports, so the 78 banded items rarely get rechecked. Option: let one dated source move a band (bands are ~5–8% wide anyway) | 💬 |
+| G6 | Amazon evidence bar: affiliate prices need two dated reports, so the 78 banded items rarely get rechecked. Option: let one dated source move a band (bands are ~5–8% wide anyway) | ✅ 10 Oct (Kalpit: yes): price-check skill step 3 |
 
 ## Helping friends and family (goal a)
 | # | Idea | Why | Status |
 |---|---|---|---|
 | A1 | **32" and 43" TVs**, and lower the TV slider (now starts at ₹35k) | India's best-selling sizes; most TV buyers find nothing today. The deal scout already sees dated prices | ✅ 10 Oct: Samsung 32", Xiaomi and Samsung 43", plus Sony and Samsung 65" for ₹65k–1.3L; slider starts at ₹10k |
 | A2 | **Seasonal picks:** air purifiers (Oct–Nov pollution), geysers and room heaters (winter) | What families actually buy this month | ✅ 10 Oct (Kalpit OK'd): Air purifier (3 Philips) and Geyser (AO Smith 15 L, Havells 3 L) types. Room heaters not yet |
-| A3 | **Diwali gifts under ₹1k / ₹2k / ₹5k** (new tab or chips) | Diwali is 8 Nov; gift lists are the most-shared thing | 🔜 💬 (new tab = his call) |
-| A4 | **Check the sale end dates before the 20 Oct sunset** | Amazon's festival often runs until Diwali. Switching off early wastes the best weeks | 🔜 |
+| A3 | **Diwali gifts under ₹1k / ₹2k / ₹5k** (new tab or chips) | Diwali is 8 Nov; gift lists are the most-shared thing | ✅ 10 Oct (Kalpit: yes, new tab): "Diwali gifts" tab, ₹500–5,000 slider, 8 new Flipkart gifts + 6 picks from other tabs (`gift: true`) |
+| A4 | **Check the sale end dates before the 20 Oct sunset** | Amazon's festival often runs until Diwali. Switching off early wastes the best weeks | ✅ 10 Oct (Kalpit): site and price check stay on through Diwali, 8 Nov (AGENTS rule 6) |
 | A5 | **WhatsApp "Send to myself" text carries the Amazon affiliate link**; with no saved number it opens a contact picker, so it can go to any chat. Send the `kalpit.me/BBD#…` link instead | Matches his "no affiliate traffic through WhatsApp" call; avoids an Amazon rules risk | ✅ 10 Oct: all items link to kalpit.me/BBD (Kalpit: "kalpit.me/BBD covers everything") |
 | A6 | Ask box: when a question names a brand ("Nothing phone under 30k"), lead with that brand's pick | Answers what people actually asked | ⏸ |
 | A7 | Gaming laptops | Gap, but small audience among family | ⏸ 10 Oct: only RTX 3050 models had confirmed prices at ≤₹85k, skipped as poor value. Premium laptops (₹97k, ₹1.24L) added |
@@ -45,8 +45,8 @@ Status: ✅ done · 🔜 next · 💬 needs Kalpit · ⏸ later / only if data s
 | # | Idea | Why | Status |
 |---|---|---|---|
 | C1 | **Cookie-free analytics** (Cloudflare Web Analytics): visits, top tabs, where people come from. Plus click counts per pick (counts only, no personal data) | Today there's no tracking at all, so every other choice is a guess | ✅ 10 Oct: live via Cloudflare's automatic setup (kalpit.me is proxied). Per-pick click counts still to do |
-| C2 | **"Share this list with family" button** per tab: opens WhatsApp with the tab link (`kalpit.me/BBD#tv-50000`), no affiliate link | Turns each happy visitor into a sharer | 🔜 |
-| C3 | Gift lists (A3) double as shareable content | Reach | 🔜 |
+| C2 | **"Share this list with family" button** per tab: opens WhatsApp with the tab link (`kalpit.me/BBD#tv-50000`), no affiliate link | Turns each happy visitor into a sharer | ✅ 10 Oct: one button under "Also good": top 3 picks + tab link, no store links |
+| C3 | Gift lists (A3) double as shareable content | Reach | ✅ via C2 on the gifts tab |
 
 ## Affiliate (side benefit)
 | # | Idea | Status |
