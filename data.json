@@ -1,6 +1,6 @@
 {
-  "updated": "10 Oct, 6:45 pm",
-  "checked": "10 Oct, 6:45 pm",
+  "updated": "10 Oct, 9:10 pm",
+  "checked": "10 Oct, 9:10 pm",
   "askUrl": "https://ask.kalpit.me",
   "amazonTag": "bestdeallive-21",
   "sale": {
@@ -123,7 +123,7 @@
     {"id": "acer-one14", "cat": "laptops", "n": "Acer Aspire One 14 (Ryzen 3 7320U, 8GB/256GB)", "p": 32240, "list": 39490, "coupon": 3000, "bank": {"name": "SBI", "off": 4250}, "aff": true, "s": "Amazon", "card": "After SBI card and coupon offer", "why": "Cheapest sensible Windows laptop for browsing, online classes and Office. Only 256 GB storage and a basic HD screen, so for light use.", "tags": [], "score": 6},
     {"id": "dell15-c3", "cat": "laptops", "n": "Dell 15 (Core 3 100U, 8GB/512GB)", "p": 43490, "list": 49990, "bank": {"name": "SBI", "off": 6500}, "aff": true, "s": "Amazon", "card": "Includes SBI card offer", "why": "Worth the stretch over the Acer: sharper Full HD 120Hz screen, 512 GB storage and Office included. Trusted Dell service.", "tags": [], "score": 7},
     {"id": "gb4i3", "cat": "laptops", "n": "Samsung Galaxy Book4 (Core i3)", "p": 47990, "was": 53990, "s": "Flipkart", "card": "Reported sale price", "why": "Light, good screen. i3 is fine for browsing and Office.", "tags": [], "score": 5},
-    {"id": "vivo15", "cat": "laptops", "n": "ASUS Vivobook 15 (Core 3, 8GB/512GB)", "p": 41740, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Bigger screen and more power for work.", "tags": [], "score": 6},
+    {"id": "vivo15", "cat": "laptops", "n": "ASUS Vivobook 15 (Core 3, 8GB/512GB)", "p": 37740, "aff": true, "s": "Amazon", "card": "After bank offer", "why": "Bigger screen and more power for work.", "tags": [], "score": 6},
     {"id": "gb4i5", "cat": "laptops", "n": "Samsung Galaxy Book4 (Core i5)", "p": 54990, "s": "Flipkart", "card": "Reported sale price", "why": "The sweet spot of the Book4 range. Pairs well with Samsung phones.", "tags": [], "score": 8},
     {"id": "mbneo", "cat": "laptops", "n": "Apple MacBook Neo (256 GB)", "p": 64990, "s": "Amazon", "card": "Includes bank offer", "why": "The cheapest MacBook. Long battery and a great screen for students and office work.", "tags": [], "score": 8},
     {"id": "gb4i7", "cat": "laptops", "n": "Samsung Galaxy Book4 (Core i7)", "p": 64990, "s": "Flipkart", "card": "Reported sale price", "why": "Only if you do heavy work like Excel models or light editing.", "tags": [], "score": 5},
