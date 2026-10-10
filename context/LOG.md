@@ -295,3 +295,10 @@ Template:
 - Gotchas: pricebefore's catalogue is thin for 2026 models; most new picks have no
   Sep history. Gift picks are not `auto` (Kalpit OK'd the batch), but he can still veto.
 - Next: STATE.md "Next steps".
+
+## 2026-10-10 (11:55 am): Kalpit's prices from screenshots
+- Prices (Kalpit, final): Vivo X200T ₹60,000 (no bank offer); LG 55" ₹35,240,
+  Samsung 55" Mini LED ₹39,840, TCL 55" T8D ₹40,490 (SBI + coupon layers, no ₹300
+  cashback); IdeaPad Slim 3 → i7-13620H 16/512 ₹66,490 (SBI); Moto G37 Power ₹15,499,
+  G06 Power ₹12,999. Motorola Edge 70 doesn't exist: removed, added to `removed`.
+- Unsure: the ₹40,990 TV screenshot had no title; assumed LG NU87.
