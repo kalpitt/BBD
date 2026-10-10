@@ -213,3 +213,16 @@ Template:
 - 10 Oct, 10:33 am: Kalpit moved the cut-off back to ~₹250 per sale. The 19 picks earning ₹250–600
   (premium audio, chimneys, cheaper washers, monitor, T7, Osmo, WalkPad, Bosch 302 L)
   are affiliate bands again. 58 affiliate, 82 exact-price picks.
+
+## 2026-10-10 (10:38 am): handoff: affiliate cut-off
+- Did: pulled the official Amazon Associates India fee schedule (Oct–Nov 2026) and sorted
+  all Amazon picks by commission per sale. Tried a ₹600 cut-off, then settled on ₹250:
+  22 picks (0% or small earners) now show exact prices with plain links; 58 keep bands.
+  Rule and rate table in docs/DATA.md; AGENTS rule 1, PICKS.md, update-picks point to it.
+- Decided (Kalpit): exact prices on most items; affiliate band only where an Amazon item
+  earns about ₹250+ per sale. Phones and Flipkart unchanged.
+- Gotchas: 0% surprises: all microwaves, semi-auto washers, Apple, audio under ₹3,000 MRP
+  (MRP, not sale price), and earbuds from OnePlus/realme/Xiaomi and other listed brands.
+  Amazon pays on the whole 24-hour cart after an affiliate click, so a plain link can
+  also lose commission on other items bought in that visit. Echo/Fire rate not listed.
+- Next: STATE.md "Next steps".
