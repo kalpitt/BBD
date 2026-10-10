@@ -349,3 +349,6 @@ Template:
   card at ₹50k–55k while the S25 FE stays the main pick. OnePlus 13s lost its `camera`
   tag ("not a very good camera").
 - 10 Oct 1:45 pm: added (Kalpit) LG 251 L fridge 19,633, Haier 540 L side-by-side 43,640, Whirlpool 8 kg washer 22,990, from deal-channel posts.
+- 2:10 pm, Kalpit: price checker moved to Sonnet. New Routine wakes a new Sonnet session
+  (repo attached, push tested). Old Opus Routine paused, not deleted. A fresh-session
+  Routine was tried first and paused: those sessions can't get push access to the repo.

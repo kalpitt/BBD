@@ -11,9 +11,9 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
   phones ≥ ₹20k (unknown frames = plastic, Kalpit).
 - Affiliate: Amazon `aff: true` only at ~₹250+ commission per sale (docs/DATA.md).
 - Sunset (Kalpit, 10 Oct): site + price check stay on through Diwali, 8 Nov. Ask on 9 Nov.
-- Price check: Routine "BBD price check (9:05 am to 12:05 am, every 3h)", IST, runs
-  `/price-check` in the cloud session "BBD price checker". One dated report now moves
-  an affiliate band (G6).
+- Price check (10 Oct, 2:10 pm): Routine "BBD price check, Sonnet (9:05 am to 12:05 am, every 3h)"
+  wakes the Sonnet session "BBD price checker, Sonnet". The old Opus Routine is paused, not
+  deleted (its session carried ~600k tokens). Fresh-session Routines can't push to the repo.
 - Cloudflare: Web Analytics live (filter path `/BBD`). Worker rebuilds only when
   `worker/*` or `wrangler.toml` change.
 
