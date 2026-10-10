@@ -15,3 +15,14 @@ name = "MAIL"
 [vars]
 DATA_URL = "https://kalpit.me/BBD/data.json"
 ALLOWED_ORIGINS = "https://kalpit.me,https://www.kalpit.me"
+
+# Visit counts (POST /hit, GET /stats): a SQLite Durable Object, free plan, nothing to set
+# up in the dashboard. The first deploy creates it from the migration below. Never delete
+# or rename the migration: that would wipe the counts.
+[[durable_objects.bindings]]
+name = "STATS"
+class_name = "Stats"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Stats"]

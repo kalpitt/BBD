@@ -398,3 +398,12 @@ Template:
 - Gotchas: neither sale has announced an end date yet (checked 10 Oct). Diwali is Sun
   8 Nov, Dhanteras Fri 6 Nov.
 - Next: build C4 and C5 if Kalpit says yes.
+
+## 2026-10-10 (evening): visit counts (IDEAS C1)
+- Did: own counter for what visitors do: views opened, tabs, filters, store taps per pick,
+  shares, chat opens, 👍/👎, AI answers, sent messages. Page → `POST /hit` (sendBeacon) →
+  Worker validates keys against data.json → SQLite Durable Object `STATS` (free plan, no
+  dashboard step). Read at `GET ask.kalpit.me/stats?days=7`. Counts only (AGENTS rule 5).
+- Tested: local wrangler dev (junk keys/origins rejected) and a headless browser end to end;
+  `?nostats` opts a browser out. Kalpit set up the Cloudflare connector in parallel.
+- Next: Kalpit opens kalpit.me/BBD/?nostats on his devices; read /stats after a day.

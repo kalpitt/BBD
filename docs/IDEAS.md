@@ -46,7 +46,7 @@ Status: ✅ done · 🔜 next · 💬 needs Kalpit · ⏸ later / only if data s
 ## Reach beyond the circle (goal c)
 | # | Idea | Why | Status |
 |---|---|---|---|
-| C1 | **Cookie-free analytics** (Cloudflare Web Analytics): visits, top tabs, where people come from. Plus click counts per pick (counts only, no personal data) | Today there's no tracking at all, so every other choice is a guess | ✅ 10 Oct: live via Cloudflare's automatic setup (kalpit.me is proxied). Per-pick click counts still to do |
+| C1 | **Cookie-free analytics** (Cloudflare Web Analytics): visits, top tabs, where people come from. Plus click counts per pick (counts only, no personal data) | Today there's no tracking at all, so every other choice is a guess | ✅ 10 Oct: live via Cloudflare's automatic setup (kalpit.me is proxied). Per-pick click counts, tabs, shares, AI answers: own counter since 10 Oct (`/stats`, docs/OPS.md → Traffic) |
 | C2 | **"Share this list with family" button** per tab: opens WhatsApp with the tab link (`kalpit.me/BBD#tv-50000`), no affiliate link | Turns each happy visitor into a sharer | ✅ 10 Oct: one button under "Also good": top 3 picks + tab link, no store links |
 | C3 | Gift lists (A3) double as shareable content | Reach | ✅ via C2 on the gifts tab |
 | C4 | **"Get price drops on WhatsApp" button** linking to a WhatsApp Channel Kalpit creates (followers can't see his number, he can't see theirs) | Visitors have no way back after Diwali; a channel keeps them for the next big sale | 💬 needs his channel link |

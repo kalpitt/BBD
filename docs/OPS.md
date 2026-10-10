@@ -99,6 +99,25 @@ suggestions, and may add up to 2 picks under `docs/PICKS.md`.
   means no public preview.
 - **Wrong category or junk getting through:** edit `RULES` (first match wins) or `SKIP`.
 
+## Traffic (visit counts, since 10 Oct)
+Two sources, they complement each other:
+- **Cloudflare Web Analytics** (dashboard, filter path `/BBD`): visits, countries, devices.
+- **Our own counts**: what people *do* on the page. Read them (GET, free, public, counts only):
+  `curl -s "https://ask.kalpit.me/stats?days=7"` (`days` 1–60, IST days).
+  `totals` = per event, most first; `days` = per day. Event list: top of the
+  "Visit counts" block in `worker/worker.js`.
+- How it works: the page batches events (view opened, tab, filter, store tap, share, chat
+  opened, 👍/👎) and sends them with `sendBeacon` to `POST /hit` when it is hidden; the
+  Worker checks each key against `data.json` and adds 1 to a SQLite Durable Object
+  (`STATS`, free plan). The Worker itself counts AI answers (`ask`) and sent messages (`msg`).
+  No IP, id, cookie or question text is stored.
+- Kalpit's own visits: open `kalpit.me/BBD/?nostats` once on each of his devices. That
+  browser stops counting (remembered in localStorage; the `?nostats` leaves the address bar).
+- Not counted: visitors who block scripts, store taps opened with a long-press. Counts are
+  a guide, not exact. `click` = store taps, not purchases.
+- `/stats` says "Counting isn't switched on" = the `STATS` binding is missing (check
+  `wrangler.toml` and the Worker build log).
+
 ## Symptom → fix
 | Symptom | Likely cause | Fix |
 |---|---|---|

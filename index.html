@@ -451,6 +451,40 @@ $("#updated").textContent=D.updated;
 const P=D.products;
 const state={cat:"phones",type:null,use:null,big:false,budget:null};
 
+/* ---------- visit counts: counts only, no ids, cookies or personal data (docs/OPS.md → Traffic) ---------- */
+// Sent to the ask Worker in small batches when the page is hidden. ?nostats turns counting
+// off on this browser (for Kalpit's own visits) and is removed from the address bar.
+const hitQ=[],hitSeen=new Set();
+let noStats=!D.askUrl||store.get("bbd-nostats")==="1";
+(()=>{
+  const sp=new URLSearchParams(location.search);if(!sp.has("nostats"))return;
+  store.set("bbd-nostats","1");noStats=true;sp.delete("nostats");
+  try{history.replaceState(history.state,"",location.pathname+(String(sp)?"?"+sp:"")+location.hash)}catch(e){}
+})();
+function track(ev,k,once){
+  if(noStats||!k)return;
+  if(once){if(hitSeen.has(ev+" "+k))return;hitSeen.add(ev+" "+k)}
+  hitQ.push([ev,String(k)]);if(hitQ.length>=40)flushHits();
+}
+function flushHits(){
+  while(hitQ.length){
+    const body=JSON.stringify({e:hitQ.splice(0,50)}),u=D.askUrl.replace(/\/$/,"")+"/hit";
+    try{if(navigator.sendBeacon&&navigator.sendBeacon(u,body))continue}catch(e){}
+    try{fetch(u,{method:"POST",body,keepalive:true,mode:"no-cors"}).catch(()=>{})}catch(e){}
+  }
+}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="hidden")flushHits()});
+addEventListener("pagehide",flushHits);
+setTimeout(flushHits,5000); // the first view, in case the page is never hidden
+(()=>{
+  const nav=(performance.getEntriesByType&&performance.getEntriesByType("navigation")[0]||{}).type;
+  track("open",nav==="reload"?"reload":location.hash.length>1?"link":"home");
+  let ref="";try{ref=new URL(document.referrer).hostname.replace(/^www\./,"").toLowerCase()}catch(e){}
+  if(ref&&!/(^|\.)kalpit\.me$/.test(ref))track("ref",ref);
+})();
+// Store button taps (data-c="<id>~amazon"); sent right away, the store opens in a new tab
+document.addEventListener("click",e=>{const a=e.target.closest("a[data-c]");if(a){track("click",a.dataset.c);flushHits()}});
+
 /* ---------- prices and links ---------- */
 function bandRange(x){
   const p=x.p;
@@ -522,11 +556,11 @@ function offers(x,tag){
 }
 // Top pick: store button and Share as Status side by side, "send to myself" as a quieter link
 function heroButtons(x){
-  return `<div class="acts">${links(x).map(l=>`<a class="btn go" href="${esc(l.u)}" target="_blank" rel="noopener${l.aff?" sponsored":""}">See on ${l.s}</a>`).join("")}<button class="btn save" type="button" data-status="${x.id}">Share as Status</button>${links(x).some(l=>l.aff)?`<span class="aff">Affiliate link</span>`:""}</div>
+  return `<div class="acts">${links(x).map(l=>`<a class="btn go" data-c="${x.id}~${l.s.toLowerCase()}" href="${esc(l.u)}" target="_blank" rel="noopener${l.aff?" sponsored":""}">See on ${l.s}</a>`).join("")}<button class="btn save" type="button" data-status="${x.id}">Share as Status</button>${links(x).some(l=>l.aff)?`<span class="aff">Affiliate link</span>`:""}</div>
     <button class="linkbtn" type="button" data-save="${x.id}">Send to myself on WhatsApp</button>`;
 }
 function buttons(x){
-  return links(x).map(l=>`<a class="btn go" href="${esc(l.u)}" target="_blank" rel="noopener${l.aff?" sponsored":""}">See on ${l.s}</a>`).join("")
+  return links(x).map(l=>`<a class="btn go" data-c="${x.id}~${l.s.toLowerCase()}" href="${esc(l.u)}" target="_blank" rel="noopener${l.aff?" sponsored":""}">See on ${l.s}</a>`).join("")
    +`<button class="btn save" type="button" data-save="${x.id}">Send to myself on WhatsApp</button>`
    +(links(x).some(l=>l.aff)?`<span class="aff">Affiliate link</span>`:"");
 }
@@ -551,6 +585,7 @@ function openWa(items,num){
 }
 function save(id){
   const x=P.find(p=>p.id===id);if(!x)return;
+  track("share","save");
   const num=store.get("waNum");
   if(num){openWa([x],num);return}
   pending=[x];$("#waErr").textContent="";$("#waNum").value="";
@@ -570,6 +605,7 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-save]");if
 
 /* ---------- share this tab with family (WhatsApp, no store links) ---------- */
 $("#shareTab").addEventListener("click",()=>{
+  track("share","tab");
   const c=cat(),t=c.types?c.types.find(x=>x.id===state.type):null,u=(c.uses||[]).find(x=>x.id===state.use);
   const what=c.id==="gifts"?"Diwali gifts":(t||c).label;
   const top=rankAt(pool(),state.budget).slice(0,3);
@@ -695,6 +731,9 @@ function rankAt(list,b){
 function render(force){
   const c=conf(),b=state.budget;
   saveHash();
+  track("tab",[state.cat,state.type].filter(Boolean).join("-"),true);
+  if(state.use)track("use",state.cat+"-"+state.use,true);
+  if(state.big)track("use",state.cat+"-deals",true);
   document.dispatchEvent(new Event("bbd:render"));
   const f=(Math.min(c.max,Math.max(c.min,b))-c.min)/(c.max-c.min);
   $("#fill").style.width=`calc(var(--t)/2 + (100% - var(--t))*${f})`;
@@ -855,6 +894,7 @@ $("#askForm").addEventListener("submit",async e=>{
 chat.addEventListener("click",e=>{
   const b=e.target.closest("[data-fb]");if(!b)return;
   const fb=b.parentElement;
+  track("fb",b.dataset.fb);
   if(b.dataset.fb==="y"){fb.innerHTML="<span>Glad it helped 🙏</span>";return}
   fb.innerHTML="<span>Sorry about that. Kalpit can help you himself 👇</span>";
   offerKalpit();$("#waCard").scrollIntoView({block:"nearest",behavior:reduce?"auto":"smooth"});
@@ -871,6 +911,7 @@ const askCtx=()=>{$("#askCtx").textContent="You're looking at: "+viewText()};
 document.addEventListener("bbd:render",()=>{if(askDlg.open)askCtx()});
 function openAsk(){
   if(askDlg.open)return;
+  track("chat","open",true);
   askCtx();fab.classList.add("open");
   if(wide.matches){askDlg.show();$("#q").focus()}
   else{
@@ -1015,6 +1056,7 @@ function statusImage(x){
 document.addEventListener("click",async e=>{
   const b=e.target.closest("[data-status]");if(!b)return;
   const x=P.find(p=>p.id===b.dataset.status);if(!x)return;
+  track("share","status");
   // Draw and convert synchronously so the share sheet still counts as a tap
   const url=statusImage(x),bin=atob(url.split(",")[1]),u8=new Uint8Array(bin.length);
   for(let i=0;i<bin.length;i++)u8[i]=bin.charCodeAt(i);

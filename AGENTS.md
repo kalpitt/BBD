@@ -86,7 +86,8 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
 5. **Privacy:** a visitor's WhatsApp number lives only in their own browser
    (localStorage). Never log or collect it. The one exception is the reply contact a visitor
    types into the "Send to Kalpit" form on purpose: it goes only into the email to Kalpit.
-   The Worker never logs or stores it.
+   The Worker never logs or stores it. Visit counts (`/stats`, docs/OPS.md → Traffic) store
+   counts per day only: never add an IP, visitor id, cookie or question text to them.
 6. **Sunset (Kalpit, 10 Oct):** the site stays live **through Diwali, 8 Nov 2026**, with
    the 3-hourly price check running until then. On 9 Nov, ask Kalpit: a "Sale's over"
    banner and the ask box off, or take the site down.
@@ -152,7 +153,7 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
 index.html          the page (dial, picks, ask box, WhatsApp save). Reads data.json
 og.png, icon.svg, icon-180.png  WhatsApp link preview image and icons
 data.json           ALL content: picks, prices, verdicts, quick answers. Most edits happen here
-worker/worker.js    ask-box Worker (Cloudflare). Fetches live data.json
+worker/worker.js    ask-box Worker (Cloudflare). Fetches live data.json; also visit counts (/hit, /stats)
 wrangler.toml       Worker config (name bbd-ask, AI binding, vars). Used by Cloudflare's build
 scripts/check-data.mjs  validator: run before every push
 scripts/smoke.mjs   headless-browser check of the page: run before pushing index.html/worker changes
