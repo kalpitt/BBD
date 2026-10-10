@@ -8,9 +8,8 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
   at `askUrl`. Sales: Amazon from 8 Oct, Flipkart from 9 Oct.
 - Affiliate cut-off (10 Oct): Amazon `aff: true` only at ~₹250+ commission per sale
   (docs/DATA.md, official rate table); 59 affiliate (band), 96 exact-price picks.
-- Price check: Routine "BBD price check (9:05 am to 12:05 am, every 3h)", IST; the
-  12:05 am run catches midnight price changes. Runs `/price-check` in the cloud session
-  "BBD price checker", pushes confirmed changes, runs the deal scout, notifies Kalpit.
+- Price check: Routine "BBD price check (9:05 am to 12:05 am, every 3h)", IST, runs
+  `/price-check` in the cloud session "BBD price checker" (prices + deal scout).
 - Cloudflare: kalpit.me is proxied; Web Analytics live for all of kalpit.me (automatic
   setup; filter path `/BBD`). Worker rebuilds only when `worker/*` or `wrangler.toml` change.
 - GitHub: only `main` exists. CI runs the validator and the smoke test after each push.
@@ -47,6 +46,5 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 
 ## Next steps for an agent
 1. Act on Kalpit's keep/remove for the 15 new picks; add `was` for them from pricebefore.
-2. Check the real 2026 sale end dates (Amazon may run to Diwali, 8 Nov) and tell Kalpit
-   before the 20 Oct sunset (AGENTS rule 6, IDEAS A4).
+2. Check the real sale end dates (Amazon may run to 8 Nov); tell Kalpit before 20 Oct.
 3. Ask Kalpit about the open decisions in "Open asks" 1.
