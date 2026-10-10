@@ -82,10 +82,9 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
    Cloudflare or GitHub token to the repo.
 5. **Privacy:** a visitor's WhatsApp number lives only in their own browser
    (localStorage). Never log or collect it.
-6. **Sunset:** the sale ends on **20 Oct** unless a later end date has been checked and
-   written here (Amazon's festival may run to Diwali, 8 Nov). Around 18 Oct, check the
-   real end dates and propose to Kalpit: keep the site on through Diwali with a daily
-   price check, or a "Sale's over" banner and the ask box off. Kalpit decides.
+6. **Sunset (Kalpit, 10 Oct):** the site stays live **through Diwali, 8 Nov 2026**, with
+   the 3-hourly price check running until then. On 9 Nov, ask Kalpit: a "Sale's over"
+   banner and the ask box off, or take the site down.
 7. **Twin code:** `nameIndex()`/`mentions()`, `big()` and the ranking exist in both
    `index.html` and `worker/worker.js` (ranking also in `scripts/check-data.mjs`).
    Change all copies or none.

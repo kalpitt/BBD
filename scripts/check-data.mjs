@@ -78,6 +78,8 @@ for (const [i, x] of (d.products || []).entries()) {
   } else if (x.coupon != null) err(`${at}: coupon needs list (the sale price before the coupon)`);
   if (x.was != null && isNum(x.p) && !(x.was > (x.list || x.p))) err(`${at}: was (normal price) must be higher than the sale price`);
   if ((x.list != null || x.bank != null || x.was != null) && x.est) warn(`${at}: discount layers on an estimate. Remove them or firm up the price`);
+  if (x.gift != null && x.gift !== true) err(`${at}: gift must be true or left out`);
+  if (x.gift && x.cat === "gifts") err(`${at}: products in the gifts tab don't need "gift": true`);
   if (x.auto != null && x.auto !== true) err(`${at}: auto must be true or left out`);
   if (x.faq && !(Array.isArray(x.faq) && x.faq.every(f => Array.isArray(f) && f.length === 2 && f.every(isStr)))) err(`${at}: faq must be [question, answer] pairs`);
 
@@ -109,6 +111,8 @@ for (const [i, x] of (d.products || []).entries()) {
   }
 
   if (isNum(dial.min) && (x.p < dial.min || x.p > dial.max)) warn(`${at}: price ${x.p} is outside the ${c.id}${x.type ? "/" + x.type : ""} slider (${dial.min}–${dial.max}), so it can never be shown`);
+  const g = cats.get("gifts");
+  if (x.gift) { used.add("gifts/"); if (!g) err(`${at}: "gift": true but there's no gifts category`); else if (x.p > g.max) warn(`${at}: gift price ${x.p} is above the gifts slider (max ${g.max})`); }
   if (x.aff) for (const txt of [x.why, x.card, ...(x.faq || []).flat()]) if (money.test(txt || "")) err(`${at}: affiliate item mentions a price ("${txt}"). Amazon policy: no exact prices on affiliate items (say "within budget", or use the band)`);
 }
 for (const c of cats.values()) {
@@ -156,7 +160,7 @@ const topAt = (pool, b) => {
 };
 const leads = new Map();
 for (const c of d.categories || []) for (const t of c.types || [c]) {
-  const all = (d.products || []).filter(x => x.cat === c.id && (!c.types || x.type === t.id));
+  const all = (d.products || []).filter(x => (x.cat === c.id || (c.id === "gifts" && x.gift)) && (!c.types || x.type === t.id));
   if (!all.some(x => x.auto) || !isNum(t.min)) continue;
   const budgets = new Set(all.map(x => x.p));
   for (let b = t.min; b <= t.max; b += t.step) budgets.add(b);

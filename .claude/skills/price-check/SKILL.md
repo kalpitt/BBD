@@ -55,7 +55,8 @@ a `Prices:` commit (his), don't change that item; put the listing price in the r
 
 Change `p` only when ALL of these hold:
 - Seen on the listing page itself, **or** two independent dated sale reports agree
-  on the same effective price.
+  on the same effective price. **Exception (Kalpit, 10 Oct, IDEAS G6):** for `aff: true`
+  items, one sale report dated 8 Oct or later is enough to move the band.
 - Same model and variant as the pick.
 - Difference is at least ₹500, or the item has `est: true` and the price now is real.
 - For `aff: true` items, only change `p` if the page's band would change (see
