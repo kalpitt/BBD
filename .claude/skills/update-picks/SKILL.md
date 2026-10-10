@@ -7,7 +7,7 @@ description: Change prices, add/remove picks, or edit verdicts and quick answers
 1. `git pull --rebase origin main`.
 2. Edit `data.json` only (field guide: `docs/DATA.md`). Keep the rules in mind:
    - `aff: true` items never get exact ₹ amounts in `why`, `card` or `faq`.
-   - New Amazon pick: `aff: true` only if it earns about ₹600+ per sale (`docs/DATA.md` →
+   - New Amazon pick: `aff: true` only if it earns about ₹250+ per sale (`docs/DATA.md` →
      "Which Amazon items are affiliate"); otherwise a plain link with the exact price.
    - Don't invent prices. If Kalpit's message is ambiguous (which variant? card price
      or not?), ask one short question first.

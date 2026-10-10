@@ -210,3 +210,6 @@ Template:
   exact prices (0% items: MacBook, microwaves, OnePlus/realme earbuds; small earners:
   chargers, accessories, Echo/Fire TV; ₹250–600: premium audio, chimneys, cheaper washers,
   monitor, T7, Osmo, WalkPad, Bosch 302 L). 39 affiliate picks left. Rate table in docs/DATA.md.
+- 10 Oct, 10:33 am: Kalpit moved the cut-off back to ~₹250 per sale. The 19 picks earning ₹250–600
+  (premium audio, chimneys, cheaper washers, monitor, T7, Osmo, WalkPad, Bosch 302 L)
+  are affiliate bands again. 58 affiliate, 82 exact-price picks.
