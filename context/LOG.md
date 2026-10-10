@@ -192,3 +192,15 @@ Template:
   (now 404; ask.kalpit.me answers), and found Web Analytics already live for kalpit.me
   via automatic setup (site is now proxied through Cloudflare). He prefers direct links
   when guided through dashboards (AGENTS.md).
+
+## 2026-10-10 (10:08 am): handoff: strategy and governance session
+- Did: strategy review (docs/IDEAS.md); two governance rounds (goals first, docs/PICKS.md,
+  validator-enforced auto-add limits, smoke test in CI, short STATE); price-check schedule
+  9:05 am to 12:05 am; WhatsApp self-send links to kalpit.me/BBD only. Kalpit set the
+  Worker build watch paths, turned off workers.dev, deleted the old branches; Web
+  Analytics turned out to be live already.
+- Decided: goals (a) friends and family, (c) reach; affiliate is a side effect. No
+  pre-push hook. Direct links when guiding Kalpit.
+- Gotchas: TV and sale-date research was started and stopped unfinished at Kalpit's
+  request; nothing from it was used. Redo it in the next chat.
+- Next: STATE.md "Next steps".
