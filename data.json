@@ -1,6 +1,6 @@
 {
-  "updated": "10 Oct, 4:57 pm",
-  "checked": "10 Oct, 1:30 pm",
+  "updated": "10 Oct, 6:45 pm",
+  "checked": "10 Oct, 6:45 pm",
   "askUrl": "https://ask.kalpit.me",
   "amazonTag": "bestdeallive-21",
   "sale": {
@@ -148,7 +148,7 @@
     {"id": "ac-voltas15", "cat": "home", "type": "ac", "n": "Voltas 1.5 ton 3-star inverter", "p": 32990, "was": 33790, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "Lowest-priced good 1.5 ton AC.", "tags": [], "score": 7},
     {"id": "ac-daikin1", "cat": "home", "type": "ac", "n": "Daikin 1 ton 3-star inverter", "p": 32740, "was": 34950, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "Daikin quality for a small room.", "tags": [], "score": 6},
     {"id": "ac-daikin15", "cat": "home", "type": "ac", "n": "Daikin 1.5 ton 3-star inverter", "p": 34740, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "My pick for most bedrooms. Daikin cools well and lasts.", "tags": [], "score": 9},
-    {"id": "ac-pana15", "cat": "home", "type": "ac", "n": "Panasonic 1.5 ton 5-star Wi-Fi", "p": 43990, "was": 46000, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "5-star saves on bills if you run the AC a lot.", "tags": [], "score": 6},
+    {"id": "ac-pana15", "cat": "home", "type": "ac", "n": "Panasonic 1.5 ton 5-star Wi-Fi", "p": 39740, "was": 46000, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "5-star saves on bills if you run the AC a lot.", "tags": [], "score": 6},
     {"id": "ac-daikin155", "cat": "home", "type": "ac", "n": "Daikin 1.5 ton 5-star inverter", "p": 47990, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "Best for daily, long hours of use.", "tags": [], "score": 6},
     {"id": "mw-midea20", "cat": "home", "type": "microwave", "n": "Midea 20 L solo", "p": 4890, "s": "Amazon", "card": "After bank and coupon offer", "why": "Just reheating? This is enough.", "tags": [], "score": 6},
     {"id": "mw-pana20", "cat": "home", "type": "microwave", "n": "Panasonic 20 L solo", "p": 6290, "s": "Amazon", "card": "After bank and coupon offer", "why": "Reheating from a more trusted brand.", "tags": [], "score": 6},
