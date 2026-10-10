@@ -305,3 +305,18 @@ Template:
 
 ## 2026-10-10 (12:00 pm): Kalpit keeps all gifts
 - Decided (Kalpit): "keep everything on gifts" (8 new gifts + 6 gift-tagged picks). No `auto` flags, so data.json is unchanged.
+
+## 2026-10-10 (12:00 pm): handoff: gifts, share button, Kalpit's prices, laptop hunt
+- Did: see the 11:35, 11:55 am and 12:00 pm entries above (gifts tab, share button,
+  Diwali sunset, G6, frames, `was` ×3, Kalpit's screenshot prices, Edge 70 removed).
+- Decided (Kalpit): the untitled ₹40,990 TV screenshot is the LG 55" NU87 (confirmed).
+  Outside phones he prefers Amazon (service, and affiliate as a side benefit).
+- Laptop under ₹40k, must be a big deal: research found none that honestly qualifies.
+  Flipkart card offers are only ~5–6% (test "card > 12%" fails). The 25%-below-`was`
+  candidates fail the `was` rule: HP 15s R5 and IdeaPad 3 i3 sat at MRP on 1–20 Sep;
+  IdeaPad Slim 1 R5's "Sep low" ₹59,671 is above its own MRP (₹47,290), so it's a
+  mismatched or inflated listing, and its ₹38,559 needs a Flipkart co-branded card
+  (₹41,099 otherwise). Amazon: no model had two agreeing dated reports. Nothing added.
+- Gotchas: a pricebefore "Sep low" above MRP or equal to MRP is not a real `was`.
+  Python string replace on STATE's first paragraph broke its header; rewrite STATE whole.
+- Next: STATE.md "Next steps".
