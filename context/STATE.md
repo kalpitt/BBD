@@ -25,14 +25,12 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
   Amazon pages: Amazon prices need his screenshot or two dated reports.
 
 ## Open asks (waiting on Kalpit)
-1. Laptop under ₹40k "that's a big deal": none found that honestly qualifies (LOG 10 Oct
-   12:00 pm). Options: add Lenovo IdeaPad 3 14" i3-1215U 16/512 (Flipkart ₹40,799 −
-   ₹2,000 ICICI/Axis = ₹38,799) as a normal pick, or he sends an Amazon screenshot.
+1. Nothing new. (Laptop under ₹40k: Kalpit sent Acer Aspire One 14 and Dell 15 Core 3.)
 2. `add-bbd-redirect` in Kalpit.me: he'll merge it first thing in that repo.
 3. Optional: EarnKaro links for Flipkart items; Amazon product API (explore in a new chat).
 
 ## Known gaps
-- Laptops: nothing under ₹40k; no gaming laptop (RTX 3050 models were poor value).
+- Laptops: under ₹40k only the Acer Aspire One 14 (256GB, HD screen); no gaming laptop (RTX 3050 models were poor value).
 - 7 picks added 8 Oct have one source only (Sony WF-1000XM5, Bose QC Earbuds, Sennheiser
   IE 200, Echo Dot 5th Gen, Fire TV Stick 4K Select, Spinnaker Bradner, Cadola Lydden Hill).
 - `was` on 60 of 162 picks; pricebefore lacks Sep history for most 2026 models.
@@ -43,6 +41,6 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
   (mobile UA curl) have `finalPrice`, `nepPrice` and per-card "₹ X off" offers.
 
 ## Next steps for an agent
-1. Kalpit's answer on the under-₹40k laptop (open ask 1).
+1. Watch the laptop tab: Acer Aspire One 14 is the only pick under ₹40k.
 2. Gifts: check bank offers on the 8 gift listings.
 3. Ideas still open in docs/IDEAS.md: G15 weekly question, C1 per-pick click counts.

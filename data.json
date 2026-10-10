@@ -1,5 +1,5 @@
 {
-  "updated": "10 Oct, 11:49 am",
+  "updated": "10 Oct, 12:00 pm",
   "checked": "10 Oct, 8:32 am",
   "askUrl": "https://ask.kalpit.me",
   "amazonTag": "bestdeallive-21",
@@ -119,6 +119,8 @@
     {"id": "sam55", "cat": "tv", "n": "Samsung 55-inch Mini LED TV (2026)", "p": 39840, "list": 46990, "coupon": 1700, "bank": {"name": "SBI", "off": 5450}, "aff": true, "s": "Amazon", "card": "After SBI card and coupon offer", "why": "Brighter Mini LED picture. Worth it for a bright living room.", "tags": [], "score": 7},
     {"id": "tcl55", "cat": "tv", "n": "TCL 55-inch QD-Mini LED TV (T8D)", "p": 40490, "list": 54990, "coupon": 4500, "bank": {"name": "SBI", "off": 10000}, "aff": true, "s": "Amazon", "card": "After SBI card and coupon offer", "why": "Best picture quality per rupee if you watch a lot of movies. 144Hz screen, smooth for sports and games.", "tags": [], "score": 7},
     {"id": "ideapad3", "cat": "laptops", "n": "Lenovo IdeaPad Slim 3 (Core i7-13620H, 16GB/512GB)", "p": 66490, "list": 75990, "bank": {"name": "SBI", "off": 9500}, "aff": true, "s": "Amazon", "card": "Includes SBI card offer", "why": "Fast i7 chip, 16 GB RAM, metal lid and Office included. Good for heavy office work and multitasking.", "tags": [], "score": 7},
+    {"id": "acer-one14", "cat": "laptops", "n": "Acer Aspire One 14 (Ryzen 3 7320U, 8GB/256GB)", "p": 32240, "list": 39490, "coupon": 3000, "bank": {"name": "SBI", "off": 4250}, "aff": true, "s": "Amazon", "card": "After SBI card and coupon offer", "why": "Cheapest sensible Windows laptop for browsing, online classes and Office. Only 256 GB storage and a basic HD screen, so for light use.", "tags": [], "score": 6},
+    {"id": "dell15-c3", "cat": "laptops", "n": "Dell 15 (Core 3 100U, 8GB/512GB)", "p": 43490, "list": 49990, "bank": {"name": "SBI", "off": 6500}, "aff": true, "s": "Amazon", "card": "Includes SBI card offer", "why": "Worth the stretch over the Acer: sharper Full HD 120Hz screen, 512 GB storage and Office included. Trusted Dell service.", "tags": [], "score": 7},
     {"id": "gb4i3", "cat": "laptops", "n": "Samsung Galaxy Book4 (Core i3)", "p": 47990, "was": 53990, "s": "Flipkart", "card": "Reported sale price", "why": "Light, good screen. i3 is fine for browsing and Office.", "tags": [], "score": 5},
     {"id": "vivo15", "cat": "laptops", "n": "ASUS Vivobook 15 (Core 3, 8GB/512GB)", "p": 41740, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Bigger screen and more power for work.", "tags": [], "score": 6},
     {"id": "gb4i5", "cat": "laptops", "n": "Samsung Galaxy Book4 (Core i5)", "p": 54990, "s": "Flipkart", "card": "Reported sale price", "why": "The sweet spot of the Book4 range. Pairs well with Samsung phones.", "tags": [], "score": 8},

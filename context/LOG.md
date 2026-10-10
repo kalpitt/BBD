@@ -320,3 +320,6 @@ Template:
 - Gotchas: a pricebefore "Sep low" above MRP or equal to MRP is not a real `was`.
   Python string replace on STATE's first paragraph broke its header; rewrite STATE whole.
 - Next: STATE.md "Next steps".
+
+## 2026-10-10 (12:05 pm): two Amazon laptops from Kalpit
+- Prices (Kalpit, screenshots): Acer Aspire One 14 Ryzen 3 7320U 8/256 (list 39,490, coupon 3,000, SBI 4,250 = 32,240) and Dell 15 Core 3 100U 8/512 + Office (list 49,990, SBI 6,500 = 43,490; card offer >12%, so a big deal). Both `aff`. The Dell shows as the "stretch" row under the Acer.
