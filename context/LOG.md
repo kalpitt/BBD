@@ -226,3 +226,18 @@ Template:
   Amazon pays on the whole 24-hour cart after an affiliate click, so a plain link can
   also lose commission on other items bought in that visit. Echo/Fire rate not listed.
 - Next: STATE.md "Next steps".
+
+## 2026-10-10 (11:15 am): portfolio fill: TVs, laptops, purifiers, geysers
+- Did: on Kalpit's ask ("TVs and other important products for all price ranges"), added
+  15 picks, prices read from the Flipkart/Amazon listing pages: Samsung 32" (11,934),
+  Xiaomi F 43" (19,499), Samsung Crystal 43" (23,540), Sony Bravia 2 II 65" (68,249),
+  Samsung QN70F 65" Mini LED (88,749), HP OmniBook X Flip 14 (Amazon, band), MacBook Air M5
+  16/512 (1,24,380), Philips AC0920/AC1711/AC3221 purifiers, AO Smith 15 L and Havells
+  Carlo 3 L geysers, Eureka Forbes S2 vacuum, Dell SE2726D 27" and Acer SA242Y E 24".
+  New Home types `purifier`, `geyser`; laptop slider max 85k → 1.3L. Worker `catHint` and
+  deal scout now map purifier/geyser/vacuum. All 6 regression questions + 2 new pass.
+- Decided (Kalpit): these count as his picks (no `auto`, no 2-per-chat limit); new types OK.
+- Gotchas: no 512GB laptop under ₹35k had a confirmed price; gaming laptops at ≤85k are
+  RTX 3050 only, skipped as poor value. Amazon blocks scripted /dp/ pages; /gp/aw/d/<ASIN>
+  with an iPhone UA sometimes works. LG C5 OLED's sale listing sat above its Sept price.
+- Next: STATE.md "Next steps".

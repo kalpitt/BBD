@@ -1,14 +1,13 @@
 # STATE: where BBD is right now
 
-_Last updated: 10 Oct 2026, 10:38 am IST. Overwrite at the end of every session; keep it
+_Last updated: 10 Oct 2026, 11:15 am IST. Overwrite at the end of every session; keep it
 under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 
 ## Live
-- https://kalpit.me/BBD/: 140 picks in Phones, TVs, Laptops, Home, Audio & chargers,
-  Fitness, Gadgets. Ask box at `askUrl` (workers.dev address off since 10 Oct).
-  Sales: Amazon from 8 Oct, Flipkart from 9 Oct.
+- https://kalpit.me/BBD/: 155 picks, 7 tabs (Home now has Air purifier, Geyser). Ask box
+  at `askUrl`. Sales: Amazon from 8 Oct, Flipkart from 9 Oct.
 - Affiliate cut-off (10 Oct): Amazon `aff: true` only at ~₹250+ commission per sale
-  (docs/DATA.md, official rate table); 58 affiliate (band), 82 exact-price picks.
+  (docs/DATA.md, official rate table); 59 affiliate (band), 96 exact-price picks.
 - Price check: Routine "BBD price check (9:05 am to 12:05 am, every 3h)", IST; the
   12:05 am run catches midnight price changes. Runs `/price-check` in the cloud session
   "BBD price checker", pushes confirmed changes, runs the deal scout, notifies Kalpit.
@@ -24,26 +23,30 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 - Guide Kalpit through dashboards with direct links, then numbered taps.
 
 ## Open asks (waiting on Kalpit)
-1. Decide: Diwali gifts tab (A3), "Share with family" button (C2), seasonal Home types
-   (A2: air purifiers, geysers), one dated source enough to move an affiliate band (G6).
+0. "keep"/"remove X" on the 15 picks added 10 Oct 11 am (his ask, so no `auto` tag):
+   5 TVs (32", 2×43", Sony 65", Samsung 65" Mini LED), HP OmniBook X Flip, MacBook Air M5
+   16/512, 3 Philips purifiers, 2 geysers, Eureka Forbes S2 vacuum, Dell 27" + Acer 24" monitors.
+1. Decide: Diwali gifts tab (A3), "Share with family" button (C2), one dated source
+   enough to move an affiliate band (G6). (A2 purifiers/geysers: done 10 Oct.)
 2. Confirm `add-bbd-redirect` is merged in the Kalpit.me repo (lowercase /bbd works now).
-3. Real prices for Vivo X200T, Motorola Edge 70, Lenovo IdeaPad Slim 3 and the 55-inch
-   TVs (still `est`). Image versions of the two Flipkart TV/Home cheat sheets help.
+3. Real prices for Vivo X200T, Motorola Edge 70, IdeaPad Slim 3, the 55-inch TVs (`est`).
 4. Optional: EarnKaro links for Flipkart items; Amazon product API (explore in a new chat).
 
 ## Known gaps
-- No 32/43-inch TVs, air purifiers, geysers or gaming laptops yet (IDEAS A1, A2, A7).
+- No laptop under ₹33k with 512GB and a confirmed price; no gaming laptop (only RTX 3050
+  models had confirmed prices, poor value). Laptop slider max now 1,30,000.
+- New picks are Flipkart listing prices only (Amazon pages block scripts); no `was` yet.
 - 7 picks added 8 Oct have one source only (Sony WF-1000XM5, Bose QC Earbuds, Sennheiser
   IE 200, Echo Dot 5th Gen, Fire TV Stick 4K Select, Spinnaker Bradner, Cadola Lydden Hill).
-- `was` on 57 of 140 picks; missing for most Flipkart phones and washing machines.
+- `was` on 57 of 155 picks; missing for most Flipkart picks.
 - Ask box can lead with the shortlist's top pick when a question names a brand (IDEAS A6).
 - Not added (no BBD price found): Poco M8, Oppo K13 / K13 Turbo Pro, Realme P4 Pro.
 - Echo/Fire TV commission rate isn't in Amazon's table (assumed under ₹250, exact price).
-- pricebefore.com helper: curl a product page; daily prices sit in `dates`/`prices` arrays.
+- Price helpers: pricebefore.com pages have `dates`/`prices` arrays; Flipkart pages
+  (mobile UA curl) have `finalPrice` and per-card "₹ X off" offers.
 
 ## Next steps for an agent
-1. Add 32/43-inch TVs under docs/PICKS.md (Kalpit had no preference; this was next).
-   TV slider `min` is already 10,000. Up to 2 per chat, `auto: true`; `aff` per the ₹250 rule.
+1. Act on Kalpit's keep/remove for the 15 new picks; add `was` for them from pricebefore.
 2. Check the real 2026 sale end dates (Amazon may run to Diwali, 8 Nov) and tell Kalpit
    before the 20 Oct sunset (AGENTS rule 6, IDEAS A4).
 3. Ask Kalpit about the open decisions in "Open asks" 1.
