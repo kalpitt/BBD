@@ -9,7 +9,7 @@ as a notification to Kalpit's phone, so keep it short and plain.
 
 ## 0. Stop conditions
 - Today is after the sale end date in AGENTS.md rule 6 → change nothing. Final message:
-  "Sale's over. Delete the BBD price-check Routine and decide on the sunset (AGENTS.md rule 6)."
+  "Sale's over. Delete the BBD price-check Routines (the Sonnet one and the two paused ones) and decide on the sunset (AGENTS.md rule 6)."
 - `node scripts/check-data.mjs` fails before you touch anything → change nothing,
   report it.
 

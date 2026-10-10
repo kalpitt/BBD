@@ -127,6 +127,20 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
 - **Only add a phone with a real price** from a cheat sheet, Kalpit, or a dated sale
   report. A model with no verified BBD price is skipped, or added as `est: true` with
   a `max` range when Kalpit wants it listed (e.g. Vivo X200T, Motorola Edge 70).
+- **Ranking is score + budget fit** (`rankAt()`; twin code, rule 7). A pick's `score` decides
+  where it hands over to the next one on the dial. Before changing a score, simulate every
+  budget in the tab and tell Kalpit what moves (10 Oct: S25 Ultra 10, S25 FE 8; the OnePlus
+  13s lost the ₹53–55k slot). `altScore` (`{"camera": 9}`) changes only the "Best camera" /
+  "Lasts longest" cards, so it isn't twin code (Nothing Phone (4a) Pro, docs/DATA.md).
+- **Ask box is a chat (10 Oct):** floating button, full screen on phones with Back closing it
+  (pushState; the smoke test checks it), side panel on laptops. "Message Kalpit" is
+  deliberately easy to find (header button, teaser link, after 👎 / 2nd question / errors):
+  it goes to email, so volume is fine.
+- **Price check runs on Sonnet (Kalpit, 10 Oct)** in a long-running session the Routine wakes
+  ("BBD price checker, Sonnet"). Routines that start a fresh session each run can't get
+  push access to this repo (tested 10 Oct), so don't switch to that. The old Opus Routine is
+  paused, not deleted. If the Sonnet session's context grows past ~300k tokens, start a new
+  session with the repo attached and point a new Routine at it.
 - **Flipkart has no affiliate setup yet.** EarnKaro was suggested. If Kalpit sends
   converted links, put them in `url` on Flipkart items.
 

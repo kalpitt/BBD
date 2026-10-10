@@ -362,3 +362,21 @@ Template:
 - 3:10 pm, Kalpit: email arrived. "Message Kalpit" made obvious again (it's email now, not his
   WhatsApp): header button in the chat, "Or message me" on the teaser card, and the form shows
   after a 👎, a 2nd question or a failed answer.
+
+## 2026-10-10 (3:20 pm): handoff: ask chat, contact form, ranking, Sonnet price check
+- Did: ask box became a chat (floating button, full screen / side panel, Back closes, 👍/👎);
+  phone ranking fixed (S25 Ultra 10, S25 FE 8); Nothing Phone (4a) Pro added with new
+  `altScore` for the camera card; OnePlus 13s lost `camera`; "Send to Kalpit" email form
+  (Worker `/msg`, `send_email` binding, `MSG_TO` secret) and family `?f=` link; his number
+  removed from the page; price checker moved to Sonnet.
+- Decided (Kalpit): contact by email is fine to make obvious (header button, teaser link,
+  after 👎 / 2nd question / errors); WhatsApp only for family. Sonnet over Haiku for the
+  price check (it pushes live prices and applies price honesty).
+- Gotchas: Cloudflare Email Routing is now under Compute → Email Service (account level),
+  and Porkbun's default MX/SPF records block it until deleted. Routine-started fresh
+  sessions can't get push access (no add_repo, repo not in sources); a session created with
+  the repo as source and woken by a Routine can. A Routine bound to a session keeps that
+  session's model, so changing a model means a new session. Closing the chat calls
+  history.back(), so tests must wait before the next goto. The family code must never be in
+  the repo (smoke test uses a dummy number).
+- Next: STATE.md "Next steps".

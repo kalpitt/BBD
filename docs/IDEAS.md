@@ -39,6 +39,8 @@ Status: ✅ done · 🔜 next · 💬 needs Kalpit · ⏸ later / only if data s
 | A5 | **WhatsApp "Send to myself" text carries the Amazon affiliate link**; with no saved number it opens a contact picker, so it can go to any chat. Send the `kalpit.me/BBD#…` link instead | Matches his "no affiliate traffic through WhatsApp" call; avoids an Amazon rules risk | ✅ 10 Oct: all items link to kalpit.me/BBD (Kalpit: "kalpit.me/BBD covers everything") |
 | A6 | Ask box: when a question names a brand ("Nothing phone under 30k"), lead with that brand's pick | Answers what people actually asked | ⏸ |
 | A7 | Gaming laptops | Gap, but small audience among family | ⏸ 10 Oct: only RTX 3050 models had confirmed prices at ≤₹85k, skipped as poor value. Premium laptops (₹97k, ₹1.24L) added |
+| A9 | **Ask box as a chat:** floating 💬 button (icon near the top, full label once "Also good" scrolls in), full screen on phones (Back closes it), side panel on laptops, "Did this help? 👍/👎" | Easier to find; feels like WhatsApp | ✅ 10 Oct |
+| A10 | **"Send to Kalpit" form instead of his WhatsApp:** emailed by the Worker from bbd@kalpit.me; family keep WhatsApp via his private `?f=` link | Hides his number if the site spreads; email can't flood his phone | ✅ 10 Oct (Kalpit: keep it obvious: header button, teaser link, after 👎 / 2nd question / errors) |
 | A8 | Ask-box capacity: free limit is ~80–120 questions a day. Workers paid plan is $5/month for the sale | Only if analytics (C1) show it running out | ⏸ |
 
 ## Reach beyond the circle (goal c)
