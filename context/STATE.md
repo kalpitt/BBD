@@ -21,9 +21,6 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
 - "Send to myself on WhatsApp" links only to kalpit.me/BBD views, no store links.
 
 ## Open asks (waiting on Kalpit)
-0. "keep"/"remove X" on the 15 picks added 10 Oct 11 am (his ask, so no `auto` tag):
-   5 TVs (32", 2×43", Sony 65", Samsung 65" Mini LED), HP OmniBook X Flip, MacBook Air M5
-   16/512, 3 Philips purifiers, 2 geysers, Eureka Forbes S2 vacuum, Dell 27" + Acer 24" monitors.
 1. Decide: Diwali gifts tab (A3), "Share with family" button (C2), one dated source
    enough to move an affiliate band (G6). (A2 purifiers/geysers: done 10 Oct.)
 2. Confirm `add-bbd-redirect` is merged in the Kalpit.me repo (lowercase /bbd works now).
@@ -44,6 +41,6 @@ under 50 lines. The longer 9 Oct version: `git show 4baae20:context/STATE.md`._
   (mobile UA curl) have `finalPrice` and per-card "₹ X off" offers.
 
 ## Next steps for an agent
-1. Act on Kalpit's keep/remove for the 15 new picks; add `was` for them from pricebefore.
+1. Add `was` (pricebefore, 1–20 Sep) for the 15 picks added 10 Oct (Kalpit: keep).
 2. Check the real sale end dates (Amazon may run to 8 Nov); tell Kalpit before 20 Oct.
 3. Ask Kalpit about the open decisions in "Open asks" 1.

@@ -250,6 +250,7 @@ Template:
 - Gotchas: the previous entry's "11:15 am" was a guess; the real time was about 11:00 am.
   Check `TZ=Asia/Kolkata date` before stamping.
 - Next: STATE.md "Next steps".
+
 ## 2026-10-10 (11:10 am): Best camera / Lasts longest cards, Lasts long filter (Kalpit)
 - Did: phones show two more cards under the main pick when no filter is chosen ("Best
   camera", "Lasts longest"; `alts` on the phones category). New `lasts` tag and filter:
@@ -260,3 +261,8 @@ Template:
   Worker: `lasts` use hint + specs in the product lines. All 6 regression questions pass.
 - My calls, for Kalpit to veto: no `lasts` for OnePlus (thinner service), Motorola, Pixel,
   Nothing, or the Fold7 (IP48, hinge).
+
+## 2026-10-10 (11:15 am): Kalpit kept the 15 new picks
+- Decided (Kalpit): "keep" on all 15 picks from the portfolio fill. They had no `auto`
+  tag, so data.json is unchanged; only the open ask is cleared from STATE.
+- Next: STATE.md "Next steps".
