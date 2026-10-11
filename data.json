@@ -1,6 +1,6 @@
 {
-  "updated": "11 Oct, 5:03 am",
-  "checked": "11 Oct, 9:10 am",
+  "updated": "11 Oct, 6:10 pm",
+  "checked": "11 Oct, 6:10 pm",
   "askUrl": "https://ask.kalpit.me",
   "amazonTag": "bestdeallive-21",
   "sale": {
@@ -181,7 +181,7 @@
     {"id": "buds4pro", "cat": "audio", "n": "OnePlus Nord Buds 4 Pro", "p": 3999, "s": "Amazon", "card": "Sale price", "why": "Proper noise cancelling for cheap.", "tags": [], "gift": true, "score": 8, "type": "earbuds"},
     {"id": "lgc6", "cat": "tv", "n": "LG C6 55-inch OLED evo TV", "p": 131990, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Waiting for an OLED? This is the one. Insane value for an OLED.", "tags": [], "score": 8},
     {"id": "hisense75", "cat": "tv", "n": "Hisense 75-inch E75Q QLED TV (75E75Q)", "p": 64249, "was": 79990, "aff": true, "s": "Amazon", "card": "Sale price", "why": "Huge 75-inch QLED at its lowest price. Great panel for the money.", "tags": [], "score": 7},
-    {"id": "xiaomi65xpro", "cat": "tv", "n": "Xiaomi 65-inch X Pro 4K QLED TV", "p": 45003, "aff": true, "s": "Amazon", "card": "After SBI card offer", "why": "A 65-inch QLED for about the price of a good 55-inch. Big SBI card discount.", "tags": [], "score": 7},
+    {"id": "xiaomi65xpro", "cat": "tv", "n": "Xiaomi 65-inch X Pro 4K QLED TV", "p": 43003, "aff": true, "s": "Amazon", "card": "After SBI card offer", "why": "A 65-inch QLED for about the price of a good 55-inch. Big SBI card discount.", "tags": [], "score": 7},
     {"id": "iffalcon65", "cat": "tv", "n": "iFFALCON 65-inch 4K TV", "p": 35999, "aff": true, "s": "Amazon", "card": "After SBI card offer", "why": "Cheapest 65-inch here, from TCL's budget brand. Basic picture, huge screen.", "tags": [], "score": 6},
     {"id": "xiaomi55qled", "cat": "tv", "n": "Xiaomi 55-inch 4K QLED TV", "p": 29987, "list": 35499, "coupon": 500, "bank": {"name": "SBI", "off": 5012}, "aff": true, "s": "Amazon", "card": "After coupon and SBI card offer", "why": "A 55-inch QLED at an entry-level price. Great for a bedroom or a first big TV.", "tags": [], "score": 7},
     {"id": "tv-samsung32", "cat": "tv", "n": "Samsung 32-inch HD smart TV (2026)", "p": 11934, "list": 14490, "bank": {"name": "Axis or ICICI", "off": 2556}, "s": "Flipkart", "card": "Includes Axis or ICICI card offer", "why": "Simple 32-inch for a bedroom or for parents. Samsung service is everywhere.", "tags": [], "score": 7, "url": "https://www.flipkart.com/samsung-80-cm-32-inch-hd-ready-led-smart-tizen-tv-2026-voice-assistance-remote-control-150-free-channels-hdr-10-support-purcolor-knox-security-object-tracking-sound-lite-adaptive-q-symphony/p/itm005a499c88f8d?pid=TVSHPH2GA9EEGUAS"},
