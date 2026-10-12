@@ -46,7 +46,7 @@ export default {
     if (path === "/hit") return addHits(body, req, env, ctx, cfg, allowed.includes(origin), cors);
     if (path === "/msg") {
       const r = await sendMsg(body, req, env, allowed.includes(origin), json);
-      if (r.status === 200 && !body.website) count(env, ctx, [["msg", "sent"]]);
+      if (r.status === 200 && !body.website) count(env, ctx, [["msg", body.kind === "feedback" ? "feedback" : "sent"]]);
       return r;
     }
     const q = String(body.q || "").trim().slice(0, 400);
@@ -182,7 +182,8 @@ async function sendMsg(body, req, env, fromSite, json) {
   if (body.website) return json({ ok: true }); // hidden field only bots fill in
   const text = String(body.text || "").trim().slice(0, 1000);
   const reply = String(body.reply || "").trim().slice(0, 100);
-  if (text.length < 5) return json({ error: "Write your question first." }, 400);
+  const fbk = body.kind === "feedback", rate = { y: "👍 Yes", meh: "😐 Kind of", n: "👎 No" }[body.rate] || "";
+  if (text.length < 5) return json({ error: fbk ? "Write a few words, or tap Skip." : "Write your question first." }, 400);
   if (!env.MAIL || !env.MSG_TO) return json({ error: "Messages aren't switched on yet. Try again later." }, 503);
   const ip = req.headers.get("CF-Connecting-IP") || "unknown";
   const day = new Date().toISOString().slice(0, 10);
@@ -194,7 +195,7 @@ async function sendMsg(body, req, env, fromSite, json) {
   const isEmail = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(reply);
   const lines = [
     text, "",
-    "Reply to: " + (reply || "(not given)"),
+    ...(fbk ? ["Worth their time? " + (rate || "(no answer)")] : ["Reply to: " + (reply || "(not given)")]),
     "Page: " + line(body.view),
     "Top pick there: " + line(body.top),
     body.q ? "They asked the AI: " + line(body.q) : "",
@@ -206,7 +207,7 @@ async function sendMsg(body, req, env, fromSite, json) {
     "From: Kalpit's festive picks <bbd@kalpit.me>",
     "To: " + env.MSG_TO,
     ...(isEmail ? ["Reply-To: " + reply] : []),
-    "Subject: =?UTF-8?B?" + b64("BBD question: " + line(text).slice(0, 60)) + "?=",
+    "Subject: =?UTF-8?B?" + b64((fbk ? "BBD feedback " + rate.split(" ")[0] + ": " : "BBD question: ") + line(text).slice(0, 60)) + "?=",
     "Date: " + new Date().toUTCString(),
     "Message-ID: <" + crypto.randomUUID() + "@kalpit.me>",
     "MIME-Version: 1.0",
@@ -239,8 +240,9 @@ async function sendMsg(body, req, env, fromSite, json) {
 //   share save | tab | status     Send to myself, Share this list, Share as Status
 //   chat  open                    ask chat opened, once per page load
 //   fb    y | n                   👍 / 👎 under an AI answer
+//   rate  y | meh | n             "Was this page worth your time?" 👍 / 😐 / 👎 (once per browser)
 //   ask   answered | cached | limit | error | busy   (counted here)
-//   msg   sent                    "Send to Kalpit" emails (counted here)
+//   msg   sent | feedback         "Send to Kalpit" emails / comments after a rating (counted here)
 //   alarm stale                   price-check alarm emailed today (priceAlarm, counted here)
 const istDay = () => new Date(Date.now() + 5.5 * 3600_000).toISOString().slice(0, 10);
 
@@ -256,7 +258,7 @@ function count(env, ctx, rows) {
 
 const HIT_KEYS = {
   visit: /^(new|back)$/, open: /^(home|link|reload)$/, ref: /^[a-z0-9][a-z0-9.-]{2,59}$/, tab: /^[a-z]+(-[a-z]+)?$/, use: /^[a-z]+-[a-z]+$/,
-  click: /^[a-z0-9-]{1,30}~(amazon|flipkart)$/, share: /^(save|tab|status)$/, chat: /^open$/, fb: /^(y|n)$/,
+  click: /^[a-z0-9-]{1,30}~(amazon|flipkart)$/, share: /^(save|tab|status)$/, chat: /^open$/, fb: /^(y|n)$/, rate: /^(y|meh|n)$/,
 };
 // POST /hit from the page: {"e": [["tab", "phones"], ["click", "s25fe~amazon"], ...]}
 async function addHits(body, req, env, ctx, cfg, fromSite, cors) {

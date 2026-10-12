@@ -437,3 +437,9 @@ Template:
   Most ASINs can't be confirmed from search alone, so Amazon links stay partial. Flipkart
   "bank offer" on many listings doesn't name the bank: those picks say "the listing's card offer".
 - Next: STATE.md open asks.
+
+## 12 Oct 2026: visitor feedback card
+- Kalpit: no feedback from visitors. Counts so far: 27 visitors, 7 chat opens, 0 👍/👎 (those sit only under AI answers).
+- Added "Was this page worth your time?" card (Kalpit chose: after some use; optional emailed comment).
+  Shows once per browser after 40 s or on return from a store tab; hides the 💬 button while open.
+  Taps → visit count `rate y|meh|n`; comment → /msg with `kind: "feedback"`, subject "BBD feedback 👍: …", counted `msg feedback`.

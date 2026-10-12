@@ -16,6 +16,8 @@ under 50 lines. Round-3 review and what shipped: docs/IDEAS.md → Product revie
 - Price check: Routine "BBD price check, Sonnet (9:05 am to 12:05 am, every 3h)" wakes the
   Sonnet session "BBD price checker, Sonnet". Old Opus Routine and a fresh-session test
   Routine are paused (fresh sessions can't push). Details: AGENTS.md → Why things are.
+- "Was this page worth your time?" card (12 Oct): slides up once per browser after 40 s or on return
+  from a store tab; 👍/😐/👎 counted as `rate`, optional comment emailed via /msg ("BBD feedback").
 - Visit counts: private D1 `bbd-stats` (docs/OPS.md → Traffic). Kalpit: `?nostats` on his devices.
 - Cloudflare: Web Analytics (path `/BBD`), Email Routing; Worker rebuilds only on `worker/*`/`wrangler.toml`.
 - Ask box (11 Oct): slim prompt via `planAnswer()` (~1/3 size), typed budget = cap, named
