@@ -123,7 +123,7 @@ Two sources, they complement each other:
     -- last 7 days, per event
     SELECT ev, k, SUM(n) AS n FROM hits WHERE day >= date('now','+5 hours','+30 minutes','-6 days') GROUP BY ev, k ORDER BY ev, n DESC;
     -- visitors per day (first visit of the day per browser)
-    SELECT day, SUM(n) AS visitors, SUM(CASE WHEN k='back' THEN n END) AS returning FROM hits WHERE ev='visit' GROUP BY day ORDER BY day;
+    SELECT day, SUM(n) AS visitors, SUM(CASE WHEN k='back' THEN n END) AS back FROM hits WHERE ev='visit' GROUP BY day ORDER BY day;
     -- most tapped picks (key = pick id~store; names are in data.json)
     SELECT k, SUM(n) AS taps FROM hits WHERE ev='click' GROUP BY k ORDER BY taps DESC LIMIT 20;
     -- after a store visit, "Did <pick> look right?" (since 12 Oct). key = id~store~ok|bought|oos|price|wrong
