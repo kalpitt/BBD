@@ -120,6 +120,23 @@ try {
     if (/[?&]f=/.test(st.url)) problems.push("message Kalpit: the family code stayed in the address bar");
     await page.close();
   }
+  // Keyboard (12 Oct): the first Tab offers "Skip to my pick", and choosing a category with
+  // Enter keeps focus on that chip (the chip rows are rebuilt)
+  if (!problems.length) {
+    const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    page.on("pageerror", e => problems.push(`keyboard: script error: ${e.message}`));
+    await page.route(u => !u.href.startsWith(base), r => r.abort());
+    await page.goto(base);
+    await heroText(page);
+    await page.keyboard.press("Tab");
+    if (!(await page.evaluate(() => document.activeElement.classList.contains("skip")))) problems.push('keyboard: the first Tab should reach "Skip to my pick"');
+    await page.focus("#cats .chip:nth-child(2)");
+    const label = await page.evaluate(() => document.activeElement.textContent);
+    await page.keyboard.press("Enter");
+    await page.waitForTimeout(200);
+    if (await page.evaluate(l => document.activeElement.textContent !== l, label)) problems.push("keyboard: choosing a category with Enter lost the focus");
+    await page.close();
+  }
   // Visitor feedback (12 Oct): the finder respects a typed budget, "Show me" never puts an
   // affiliate item's exact price in the budget box, a note sends, and coming back from a store
   // asks "Did it look right?" with its two-step answers
@@ -184,5 +201,5 @@ try {
 } finally { await browser.close(); server.close(); }
 
 for (const p of problems) console.log("✖ " + p);
-console.log(problems.length ? `\n✖ ${problems.length} problem(s). Do not push.` : `✓ Page OK: ${views.length} tabs at default, lowest and highest budget, phone and laptop size, shared-link scratch card, ask chat (phone + laptop), message-Kalpit form and family link, visitor feedback, no script errors.`);
+console.log(problems.length ? `\n✖ ${problems.length} problem(s). Do not push.` : `✓ Page OK: ${views.length} tabs at default, lowest and highest budget, phone and laptop size, shared-link scratch card, ask chat (phone + laptop), message-Kalpit form and family link, visitor feedback, keyboard, no script errors.`);
 process.exit(problems.length ? 1 : 0);

@@ -474,3 +474,11 @@ Template:
   Next idea from Kalpit: ask visitors which card they have (step 5, replaces "price without card").
   Noticed: the 3 pm price check found no changes but didn't bump "checked" (page said 5h ago);
   checker session ~360k tokens (AGENTS: new session past ~300k); it awaits Kalpit's "update Vibe2".
+- Price checker rotated (Kalpit OK'd): new session "BBD price checker, Sonnet (2, from 12 Oct)" + Routine
+  "Sonnet 2"; old Routine paused. Each run in one subagent; memory check each run, self-rotation past
+  500k. Skill 3b: stamp `checked` every run (page promises every 3 hours).
+- Step 4 (accessibility) shipped: skip link, h1, lang en-IN, chip rows role=group and keep focus after
+  rebuild, chat role=log + aria-disabled while busy, dialogs named, WhatsApp number error announced,
+  field borders ≥3:1 (--field-line) and visible placeholders, 44px small targets (chips 40px),
+  scroll-padding so the floating button never hides focus, scratch-card focus ring + focus after reveal,
+  footer outside main, quick chips' accessible name = visible label. Smoke test covers skip link + chip focus.

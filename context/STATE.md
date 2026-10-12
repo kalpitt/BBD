@@ -13,9 +13,10 @@ under 50 lines. Round-3 review and what shipped: docs/IDEAS.md → Product revie
   is off the page; family use his private `?f=` link (never in the repo).
 - Phones: S25 FE top ₹45–55k, S25 Ultra top ₹85k–1.25L, S26 Ultra ₹1.25–1.6L (11 Oct), Pixel 11 only ₹70–85k. Nothing
   Phone (4a) Pro (₹49,999) is the "Best camera" card at ₹50–55k via `altScore`.
-- Price check: Routine "BBD price check, Sonnet (9:05 am to 12:05 am, every 3h)" wakes the
-  Sonnet session "BBD price checker, Sonnet". Old Opus Routine and a fresh-session test
-  Routine are paused (fresh sessions can't push). Details: AGENTS.md → Why things are.
+- Price check (from 12 Oct, 6:05 pm): Routine "BBD price check, Sonnet 2 (…every 3h)" wakes the session
+  "BBD price checker, Sonnet (2, from 12 Oct)". Each run happens in one subagent; past 500k tokens the
+  session starts its own successor. Earlier Routines and sessions are paused. Kalpit's replies
+  ("update Vibe2") go to that session.
 - Visitor feedback (12 Oct, rebuilt on shared parts): "Didn't see what you wanted?" box under the list
   (product finder: names/brands + a typed budget via budgetFrom(); note emailed as "BBD wish"); back
   from a store → pop-up card ("nudge", one per visit) "Did <pick> look right?" → Looked right /
@@ -28,6 +29,8 @@ under 50 lines. Round-3 review and what shipped: docs/IDEAS.md → Product revie
   pill says "Offline: saved prices"); fonts don't block the page and are trimmed (no opsz axis);
   "lite" mode for 2 GB / 4-core Android phones and reduced motion (no sparks, still stars and diyas).
   Pick shows in ~1.6 s instead of ~3.2 s on a slow phone over slow 4G.
+- Accessibility (12 Oct, step 4): skip link, h1, chip focus kept, chat answers read out (role log),
+  dialogs named, visible field borders, 44px small targets, footer outside main, lang en-IN.
 - Copy (12 Oct, step 3): "How I pick" line under the title; card lines use 5 wordings and take the
   card name from sale.bankCard (bank.name "Bank"); verdicts say "My pick", no hype words.
 - Visit counts: private D1 `bbd-stats` (docs/OPS.md → Traffic). Kalpit: `?nostats` on his devices.

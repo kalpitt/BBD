@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-IN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
@@ -38,14 +38,17 @@ window.bbdData=(()=>{
   --diya:#FFF1D2; --leaf:#24704F; --line:#D9D8EA; --raise:#FFFFFF; --warn:#9A3B1E;
   --display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
   --body:"Mukta","Noto Sans","Segoe UI",system-ui,sans-serif;
+  --field-line:#7C7FA6;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --night:#14173A;--ink:#FFF1D2;--ink-soft:#A9AACB;--marigold:#F4A51C;--mari-fill:#F4A51C;--diya:#262A5E;--leaf:#6FD3A3;--line:#2C3066;--raise:#1D2150;--warn:#FF9B7A;color-scheme:dark}}
-:root[data-theme="dark"]{--night:#14173A;--ink:#FFF1D2;--ink-soft:#A9AACB;--marigold:#F4A51C;--mari-fill:#F4A51C;--diya:#262A5E;--leaf:#6FD3A3;--line:#2C3066;--raise:#1D2150;--warn:#FF9B7A;color-scheme:dark}
+  --night:#14173A;--ink:#FFF1D2;--ink-soft:#A9AACB;--marigold:#F4A51C;--mari-fill:#F4A51C;--diya:#262A5E;--leaf:#6FD3A3;--line:#2C3066;--raise:#1D2150;--warn:#FF9B7A;--field-line:#6D72B8;color-scheme:dark}}
+:root[data-theme="dark"]{--field-line:#6D72B8;--night:#14173A;--ink:#FFF1D2;--ink-soft:#A9AACB;--marigold:#F4A51C;--mari-fill:#F4A51C;--diya:#262A5E;--leaf:#6FD3A3;--line:#2C3066;--raise:#1D2150;--warn:#FF9B7A;color-scheme:dark}
 
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;scroll-padding-bottom:96px}
+input,textarea{border-color:var(--field-line)!important}
+::placeholder{color:var(--ink-soft);opacity:1}
 body{margin:0;background:var(--night);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;padding-inline:max(16px,env(safe-area-inset-left));padding-block:0 48px;--gut:max(16px,env(safe-area-inset-left))}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--marigold);outline-offset:2px;border-radius:6px}
@@ -53,13 +56,16 @@ a{color:inherit}
 .wrap{max-width:560px;margin:0 auto}
 h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
 
-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+header{display:flex;align-items:center;justify-content:space-between;gap:8px 12px;flex-wrap:wrap}
 .me{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--ink-soft);min-width:0}
+.title{font:inherit;margin:0}
+.skip{position:absolute;left:12px;top:-60px;z-index:50;background:var(--ink);color:var(--night);padding:10px 14px;border-radius:10px;font-weight:600;text-decoration:none}
+.skip:focus{top:12px}
 .mono{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--night);display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:14px;flex:none}
 
-.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-inline:calc(-1*var(--gut));padding-inline:var(--gut);padding-block:2px}
+.chips{display:flex;gap:8px;scroll-padding-inline:40px;overflow-x:auto;scrollbar-width:none;margin-inline:calc(-1*var(--gut));padding-inline:var(--gut);padding-block:2px}
 .chips::-webkit-scrollbar{display:none}
-.chip{flex:none;font:500 15px var(--body);color:var(--ink-soft);background:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer;min-height:36px}
+.chip{flex:none;font:500 15px var(--body);color:var(--ink-soft);background:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer;min-height:40px}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--night);border-color:var(--ink)}
 .chip.use[aria-pressed="true"]{background:var(--diya);color:var(--ink);border-color:var(--mari-fill)}
 .stack{display:grid;gap:10px}
@@ -89,7 +95,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:var(--t);h
 input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--mari-fill);border:4px solid var(--night)}
 .ticks{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
 .chips.quick{margin-top:-2px}
-.chip.q{font-variant-numeric:tabular-nums;min-height:40px}
+.chip.q{font-variant-numeric:tabular-nums;min-height:44px}
 .cardnote{font-size:14px;color:var(--ink-soft);margin:2px 0 0}
 .note{font-size:15px;color:var(--ink-soft);margin:0}
 
@@ -105,13 +111,13 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .btn{font:600 16px var(--body);text-decoration:none;border-radius:12px;padding:10px 16px;cursor:pointer;border:0;min-height:44px;display:inline-flex;align-items:center}
 .btn.go{background:var(--ink);color:var(--night)}
 .btn.save{background:none;color:var(--ink);border:1px solid var(--line)}
-.aff{font-size:13px;color:var(--ink-soft)}
+.aff{font-size:14px;color:var(--ink-soft)}
 .qa{display:grid;gap:4px;margin-top:4px}
 .qa details{border-top:1px solid color-mix(in srgb,var(--ink) 15%,transparent);padding-top:6px}
-.qa summary{cursor:pointer;font-weight:600;list-style:none}
+.qa summary{cursor:pointer;font-weight:600;list-style:none;min-height:44px;display:flex;align-items:center}
 .qa summary::-webkit-details-marker{display:none}
-.qa summary::before{content:"+ ";color:var(--marigold)}
-.qa details[open] summary::before{content:"− "}
+.qa summary::before{content:"+ " / "";color:var(--marigold);white-space:pre}
+.qa details[open] summary::before{content:"− " / ""}
 .qa p{margin:4px 0 6px}
 
 .list h3,.sec h3{font-weight:650;font-size:21px;margin-bottom:6px}
@@ -136,7 +142,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .hero .bf{font-size:14px;color:var(--ink-soft);font-weight:600;margin-top:-6px}
 .hot{display:inline-block;font:700 13px var(--body);color:var(--warn);background:color-mix(in srgb,var(--warn) 12%,transparent);border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:2px;white-space:nowrap}
 .hero .hot{margin-left:8px}
-.how summary{cursor:pointer;font-size:15px;font-weight:600;color:var(--ink-soft)}
+.how summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-size:15px;font-weight:600;color:var(--ink-soft)}
 .how table{border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:15px;width:100%;margin-top:4px}
 .how td{padding:3px 0;border-top:1px solid color-mix(in srgb,var(--ink) 12%,transparent)}
 .how td+td{text-align:right;padding-left:10px;white-space:nowrap}
@@ -146,7 +152,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .empty{color:var(--ink-soft);padding:14px 0;border-top:1px solid var(--line);margin:0}
 
 .share{display:flex;justify-content:center}
-.link{all:unset;cursor:pointer;text-decoration:underline;color:var(--ink);font-weight:600}
+.link{all:unset;cursor:pointer;text-decoration:underline;color:var(--ink);font-weight:600;min-height:44px;display:inline-flex;align-items:center}
 .link:focus-visible{outline:2px solid var(--marigold);outline-offset:2px}
 /* Ask: a short card at the end of the picks, a floating button, and the chat itself */
 .askTeaser{background:var(--raise);border:1px solid var(--line);border-radius:22px;padding:20px;display:grid;gap:10px}
@@ -175,7 +181,8 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .wish .hint{display:grid;gap:6px;font-size:15px}
 .wish .hint:empty{display:none}
 .fab.nudged,.fab.away,.fab.open{opacity:0;transform:translateY(16px);pointer-events:none}
-.feed{padding-bottom:72px}
+.foot{padding-bottom:72px}
+@media (min-width:980px){.foot{grid-column:2;padding:0 40px 80px}}
 /* Phones: full screen, like a WhatsApp chat. Laptops: a panel on the right, picks still usable */
 .askdlg{position:fixed;inset:0;margin:0;padding:0;width:100%;max-width:none;height:100%;height:100dvh;max-height:none;border-radius:0;flex-direction:column;z-index:40}
 .askdlg[open]{display:flex}
@@ -205,7 +212,7 @@ html:has(.askdlg:modal){overflow:hidden}
 .askfoot{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
 .askfoot textarea{width:100%;min-height:48px;max-height:30vh;resize:none;font:400 17px/1.4 var(--body);color:var(--ink);background:var(--night);border:1px solid var(--line);border-radius:14px;padding:11px 12px}
 .askfoot .btn{min-height:48px}
-.askfoot .btn.go[disabled]{opacity:.5;cursor:default}
+.askfoot .btn.go[disabled],.btn[aria-disabled="true"]{opacity:.5;cursor:default}
 .askfoot #askState{grid-column:1/-1}
 .askfoot #askState:empty{display:none}
 @media (min-width:980px){
@@ -220,11 +227,11 @@ html:has(.askdlg:modal){overflow:hidden}
 .truth td+td{text-align:right;padding-left:10px;white-space:nowrap}
 .truth s{color:var(--ink-soft)}
 .faq details{border-top:1px solid var(--line);padding-block:10px}
-.faq summary{cursor:pointer;font-weight:600}
+.faq summary{cursor:pointer;font-weight:600;min-height:44px;display:flex;align-items:center}
 .faq p{margin:6px 0 0}
 .sec ul{margin:0;padding-left:20px;display:grid;gap:6px}
-footer{font-size:13px;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:14px;display:grid;gap:6px}
-footer button{all:unset;cursor:pointer;text-decoration:underline}
+footer{max-width:720px;width:100%;margin:0 auto;box-sizing:border-box;font-size:13px;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:14px;display:grid;gap:6px}
+footer button{all:unset;cursor:pointer;text-decoration:underline;min-height:44px;display:inline-flex;align-items:center}
 
 dialog{border:0;border-radius:20px;padding:20px;max-width:min(420px,calc(100vw - 32px));background:var(--raise);color:var(--ink)}
 dialog::backdrop{background:rgba(10,12,40,.5)}
@@ -263,7 +270,7 @@ dialog .acts{justify-content:flex-end}
 .chip.cat[aria-pressed="true"] svg{color:var(--night);opacity:1}
 
 /* Freshness */
-.fresh{display:inline-flex;align-items:center;gap:8px;flex:none;white-space:nowrap;font-size:13px;color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:3px 12px 3px 10px}
+.fresh{display:inline-flex;align-items:center;gap:8px;flex:0 1 auto;font-size:13px;color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:3px 12px 3px 10px}
 .fresh .dot{position:relative;width:8px;height:8px;border-radius:50%;background:var(--leaf);flex:none}
 .fresh .dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--leaf);animation:ping 1.8s cubic-bezier(0,0,.2,1) infinite}
 .fresh.old .dot{background:var(--ink-soft)}.fresh.old .dot::after{display:none}
@@ -282,6 +289,7 @@ dialog .acts{justify-content:flex-end}
 .scratch{position:absolute;inset:-1.5px;border-radius:inherit;overflow:hidden;z-index:2;transition:opacity .6s}
 .scratch canvas{width:100%;height:100%;display:block;touch-action:pan-y;cursor:grab}
 .scratch .btn{position:absolute;left:50%;transform:translateX(-50%);background:#1B1F4B;color:#FFF1D2}
+.scratch .btn:focus-visible{outline:3px solid #fff;outline-offset:3px;box-shadow:0 0 0 6px #1B1F4B}
 .scratch.done{opacity:0;pointer-events:none}
 
 /* Ask box as a chat */
@@ -332,7 +340,7 @@ dialog .acts{justify-content:flex-end}
 .hero:empty::before{content:"Loading my picks…";color:var(--ink-soft)}
 /* Pick card: one offer line, secondary "send to myself" link */
 .hero .card{line-height:1.4}
-.linkbtn{background:none;border:0;padding:8px 0;font:500 15px var(--body);color:var(--ink-soft);text-decoration:underline;text-underline-offset:3px;cursor:pointer;justify-self:start}
+.linkbtn{background:none;border:0;padding:8px 0;min-height:44px;font:500 15px var(--body);color:var(--ink-soft);text-decoration:underline;text-underline-offset:3px;cursor:pointer;justify-self:start}
 .rangoli{display:none}
 #stDlg img{display:block;max-width:100%;max-height:58vh;margin:0 auto;border-radius:14px}
 @media (min-width:980px){
@@ -343,12 +351,13 @@ dialog .acts{justify-content:flex-end}
 </style>
 </head>
 <body>
+<a class="skip" href="#hero">Skip to my pick</a>
 <div class="wrap">
  <div class="sky" id="sky">
   <canvas class="stars" id="stars" aria-hidden="true"></canvas>
   <canvas class="rangoli" id="rangoli" aria-hidden="true"></canvas>
   <header>
-    <div class="me"><span class="mono" aria-hidden="true">KT</span><span>Kalpit's festive picks</span></div>
+    <div class="me"><span class="mono" aria-hidden="true">KT</span><h1 class="title">Kalpit's festive picks</h1></div>
     <span class="fresh" id="fresh" hidden><span class="dot"></span><span id="freshText"></span></span>
   </header>
   <details class="about">
@@ -357,17 +366,17 @@ dialog .acts{justify-content:flex-end}
   </details>
 
   <div class="stack">
-    <nav class="chips" id="cats" aria-label="Category"></nav>
-    <div class="chips" id="types" aria-label="Appliance type" hidden></div>
+    <div class="chips" id="cats" role="group" aria-label="Categories"></div>
+    <div class="chips" id="types" role="group" aria-label="Type" hidden></div>
   </div>
 
   <section class="dial" aria-label="Your budget">
     <p id="lead">I want a phone under</p>
-    <label class="amount" id="amt"><span class="r">₹</span><input id="budgetText" inputmode="numeric" autocomplete="off" aria-label="Budget in rupees"></label>
+    <label class="amount" id="amt"><span class="r">₹</span><input id="budgetText" inputmode="numeric" autocomplete="off" aria-labelledby="lead"></label>
     <div class="rail" id="rail"><div class="trk"><div class="fill" id="fill"></div></div><div class="dl" id="dots"></div><input id="budget" type="range" step="any" aria-label="Budget slider"></div>
     <div class="ticks" id="ticks"></div>
-    <div class="chips quick" id="quick" aria-label="Quick budgets" hidden></div>
-    <div class="chips" id="uses" aria-label="What matters most"></div>
+    <div class="chips quick" id="quick" role="group" aria-label="Quick budgets" hidden></div>
+    <div class="chips" id="uses" role="group" aria-label="What matters most"></div>
     <p class="note" id="catNote" hidden></p>
   </section>
 
@@ -380,7 +389,7 @@ dialog .acts{justify-content:flex-end}
  </div>
 
  <main class="feed">
-  <section class="hero" id="hero"></section>
+  <section class="hero" id="hero" tabindex="-1" aria-label="My pick"></section>
   <p class="vh" id="pickSay" role="status" aria-live="polite"></p>
   <section class="alts" id="alts" aria-label="Best for camera and long life"></section>
 
@@ -424,32 +433,32 @@ dialog .acts{justify-content:flex-end}
     <ul id="cards"></ul>
   </section>
 
-  <footer>
+ </main>
+<footer class="foot">
     <span>The sale is on: Amazon since 8 Oct, Flipkart since 9 Oct. Picks and prices updated <span id="updated"></span>. Prices can change during the sale, so check the final price on the payment page.</span>
     <span>Items marked "affiliate link" earn me a small commission at no extra cost to you. As an Amazon Associate I earn from qualifying purchases. All other links are plain links.</span>
     <span><button type="button" id="changeNum">Change my WhatsApp number</button></span>
     <span id="noStatsNote" hidden>Visits from this browser aren't counted (?nostats). Open kalpit.me/BBD/?nostats=off to count them again.</span>
-  </footer>
- </main>
+</footer>
 </div>
 <canvas class="fx" id="fx" aria-hidden="true"></canvas>
 
-<dialog id="stDlg">
+<dialog id="stDlg" aria-labelledby="stTitle">
   <form method="dialog">
-    <h3>Your Status image</h3>
+    <h3 id="stTitle">Your Status image</h3>
     <img id="stImg" alt="Kalpit's pick, as an image for WhatsApp Status">
     <p>Press and hold the image to save it, then post it to your WhatsApp Status from your gallery. On a laptop, use Download.</p>
     <div class="acts"><a class="btn save" id="stDl" download="kalpits-pick.png" href="#">Download</a><button class="btn go" value="close">Done</button></div>
   </form>
 </dialog>
 
-<dialog id="waDlg">
+<dialog id="waDlg" aria-labelledby="waTitle">
   <form method="dialog" id="waForm">
-    <h3>Save to your WhatsApp</h3>
+    <h3 id="waTitle">Save to your WhatsApp</h3>
     <p>Enter your number once. It stays only on this phone, so next time the pick goes straight to your "Message yourself" chat.</p>
     <label for="waNum" class="aff">Your WhatsApp number</label>
-    <input id="waNum" inputmode="tel" autocomplete="tel" placeholder="98765 43210">
-    <div class="err-inline" id="waErr"></div>
+    <input id="waNum" inputmode="tel" autocomplete="tel" placeholder="98765 43210" aria-describedby="waErr">
+    <div class="err-inline" id="waErr" role="alert"></div>
     <div class="acts">
       <button class="btn save" value="skip" type="button" id="waSkip">Choose contact instead</button>
       <button class="btn go" value="ok" type="submit">Save pick</button>
@@ -473,7 +482,7 @@ dialog .acts{justify-content:flex-end}
   <div class="askbody" id="askBody">
     <div class="ctx" id="askCtx"></div>
     <p class="intro">Describe who it's for and your budget. The answer comes only from my picks on this page.</p>
-    <div class="chat" id="chat"></div>
+    <div class="chat" id="chat" role="log" aria-live="polite"></div>
     <div class="wacard" id="waCard" hidden>
       <p><strong>Still unsure?</strong> Ask Kalpit himself. He reads every message.</p>
       <button class="btn wa msgK" type="button" id="famWa" hidden>Message Kalpit on WhatsApp</button>
@@ -481,7 +490,7 @@ dialog .acts{justify-content:flex-end}
         <label for="mText" class="aff">Your question for Kalpit</label>
         <textarea id="mText" rows="3" maxlength="1000" placeholder="E.g. Papa wants a big screen. S25 FE or Pixel?"></textarea>
         <label for="mReply" class="aff">Your WhatsApp number or email, so he can reply (optional; Kalpit gets this by email to reply to you)</label>
-        <input id="mReply" maxlength="100" autocomplete="email">
+        <input id="mReply" maxlength="100" autocomplete="off">
         <input id="mHp" name="website" tabindex="-1" autocomplete="off" class="vh" aria-hidden="true">
         <div class="acts"><button class="btn go" type="submit" id="mSend">Send to Kalpit</button><span class="aff" id="mState" aria-live="polite"></span></div>
       </form>
@@ -699,7 +708,7 @@ $("#waForm").addEventListener("submit",e=>{
   let d=$("#waNum").value.replace(/\D/g,"");
   if(d.length===10)d="91"+d;
   if(d.length===12&&d.startsWith("0"))d=d.slice(1);
-  if(d.length<11||d.length>13){$("#waErr").textContent="Enter a 10-digit mobile number, like 98765 43210.";return}
+  if(d.length<11||d.length>13){$("#waErr").textContent="Enter a 10-digit mobile number, like 98765 43210.";$("#waNum").setAttribute("aria-invalid","true");$("#waNum").focus();return}
   store.set("waNum",d);$("#waDlg").close();openWa(pending,d);
 });
 $("#waSkip").addEventListener("click",()=>{$("#waDlg").close();openWa(pending,null)});
@@ -743,6 +752,7 @@ function catChip(c){
 }
 
 function drawCats(){
+  const was=document.activeElement&&document.activeElement.closest?document.activeElement.closest(".chip"):null,key=was&&was.textContent;
   const el=$("#cats");el.replaceChildren(...D.categories.map(catChip));
   const c=cat(),ty=$("#types");
   ty.hidden=!c.types;
@@ -755,6 +765,7 @@ function drawCats(){
   us.replaceChildren(...(deals?[chip("🔥 Big deals",state.big,"use",()=>{state.big=!state.big;drawCats();render(true)})]:[]),
     ...(c.uses||[]).map(u=>chip(u.label,u.id===state.use,"use",()=>{state.use=state.use===u.id?null:u.id;drawCats();render(true)})));
   const n=$("#catNote");n.hidden=!c.note;n.textContent=c.note||"";
+  if(key&&!was.isConnected){const b=[...document.querySelectorAll(".sky .chip")].find(x=>x.textContent===key);if(b)b.focus({preventScroll:true})}
 }
 function setCat(id){
   state.cat=id;state.use=null;state.big=false;state.budget=null;
@@ -803,7 +814,7 @@ function drawQuick(c){
   if(vs.length>5){const k=vs.length;vs=[0,1,2,3,4].map(i=>vs[Math.round(i*(k-1)/4)])}
   const q=$("#quick"),few=vs.length<3;
   q.hidden=few;$("#ticks").hidden=!few;
-  q.replaceChildren(...(few?[]:vs.map(v=>{const b=chip(short(v),false,"q",()=>{snapped=null;setBudget(v)});b.dataset.v=v;b.setAttribute("aria-label","Budget "+fmt(v));return b})));
+  q.replaceChildren(...(few?[]:vs.map(v=>{const b=chip(short(v),false,"q",()=>{snapped=null;setBudget(v)});b.dataset.v=v;return b})));
 }
 let pend=0;
 function setBudget(v){
@@ -986,10 +997,10 @@ $("#q").addEventListener("input",grow);
 // Laptops: Enter sends, Shift+Enter is a new line. Phones keep Enter as a new line.
 $("#q").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey&&matchMedia("(pointer:fine)").matches){e.preventDefault();$("#askForm").requestSubmit()}});
 $("#askForm").addEventListener("submit",async e=>{
-  e.preventDefault();if(askBtn.disabled)return;
+  e.preventDefault();if(askBtn.disabled||askBtn.getAttribute("aria-disabled"))return;
   const q=$("#q").value.trim();
   if(q.length<8){st.textContent="Write a little more, like who it's for and your budget.";return}
-  askBtn.disabled=true;st.textContent="";lastQ=q;lastA="";$("#q").value="";grow();$("#sugs").hidden=true;asked++;
+  askBtn.setAttribute("aria-disabled","true");st.textContent="";lastQ=q;lastA="";$("#q").value="";grow();$("#sugs").hidden=true;asked++;
   // Keep the last three questions in the thread
   while(chat.children.length>=3)chat.firstElementChild.remove();
   const turn=document.createElement("div");turn.className="turn";
@@ -1025,7 +1036,7 @@ $("#askForm").addEventListener("submit",async e=>{
       st.textContent="Answer ready";setTimeout(()=>{if(st.textContent==="Answer ready")st.textContent=""},4000);
     }
   }catch(e){fail(e.name==="AbortError"?"This is taking too long. Try again in a minute.":"Couldn't reach the answer service. Check your connection and try again.")}
-  clearTimeout(timer);askBtn.disabled=false;
+  clearTimeout(timer);askBtn.removeAttribute("aria-disabled");
   if(!ok||asked>=2)offerKalpit();
 });
 chat.addEventListener("click",e=>{
@@ -1119,12 +1130,13 @@ $("#msgForm").addEventListener("submit",async e=>{
   e.preventDefault();
   const text=$("#mText").value.trim(),send=$("#mSend"),ms=$("#mState");
   if(text.length<5){ms.textContent="Write your question first.";return}
-  send.disabled=true;ms.textContent="Sending…";
+  if(send.getAttribute("aria-disabled"))return;
+  send.setAttribute("aria-disabled","true");ms.textContent="Sending…";
   try{
     await sendNote("question",text,{reply:$("#mReply").value.trim(),website:$("#mHp").value});
     $("#msgForm").innerHTML=`<p>Sent ✓ Kalpit will reply${$("#mReply").value.trim()?" on the contact you gave":""} when he can.</p>`;return;
   }catch(err){ms.textContent=netErr(err)}
-  send.disabled=false;
+  send.removeAttribute("aria-disabled");
 });
 document.addEventListener("click",e=>{
   if(!e.target.closest(".msgK")||!KALPIT_WA)return;
@@ -1243,7 +1255,7 @@ function scratchCard(hero){
   btn.style.top=(cy+40)+"px";
   x.globalCompositeOperation="destination-out";
   let down=false,moves=0;
-  const done=()=>{hidden.forEach(el=>el.inert=false);wrap.classList.add("done");setTimeout(()=>wrap.remove(),700)};
+  const done=()=>{hidden.forEach(el=>el.inert=false);wrap.classList.add("done");const f=wrap.contains(document.activeElement);setTimeout(()=>wrap.remove(),700);if(f)hero.focus({preventScroll:true})};
   const check=()=>{const img=x.getImageData(0,0,c.width,c.height).data;let clear=0,n=0;for(let i=3;i<img.length;i+=80){n++;if(img[i]===0)clear++}if(clear/n>.45)done()};
   const scratch=e=>{if(!down)return;const b=c.getBoundingClientRect();x.beginPath();x.arc(e.clientX-b.left,e.clientY-b.top,24,0,6.283);x.fill();if(++moves%30===0)check()};
   c.addEventListener("pointerdown",e=>{down=true;scratch(e)});
@@ -1377,14 +1389,15 @@ function foundHtml(f){
     e.preventDefault();
     const text=inp.value.trim(),send=$("#wSend");
     if(text.length<2){ws.textContent="Type what you were looking for.";inp.focus();return}
-    send.disabled=true;ws.textContent="Sending…";
+    if(send.getAttribute("aria-disabled"))return;
+    send.setAttribute("aria-disabled","true");ws.textContent="Sending…";
     try{
       await sendNote("wish",text,{reply:$("#wReply").value.trim(),website:$("#wHp").value});
       f.querySelector(".wrow").hidden=true;$("#wMore").hidden=true;
       hint.innerHTML=foundHtml(findPicks(text));
       ws.textContent=hint.innerHTML?"Got it ✓ I'll read your note. Meanwhile:":"Got it ✓ I haven't picked one yet. I read every note and add picks during the sale.";
       ws.focus();
-    }catch(err){ws.textContent=netErr(err);send.disabled=false}
+    }catch(err){ws.textContent=netErr(err);send.removeAttribute("aria-disabled")}
   });
 })();
 
