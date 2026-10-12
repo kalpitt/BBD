@@ -589,13 +589,28 @@ setTimeout(flushHits,5000); // the first view, in case the page is never hidden
   let ref="";try{ref=new URL(document.referrer).hostname.replace(/^www\./,"").toLowerCase()}catch(e){}
   if(ref&&!/(^|\.)kalpit\.me$/.test(ref))track("ref",ref);
 })();
+// Per-post link tags (12 Oct): kalpit.me/BBD/?from=ig-12oct counts "from ig-12oct" once, and each
+// store tap in that tab's session as "went ig-12oct". Kalpit makes the links at kalpit.me/BBD/link/;
+// visitors' Share buttons add from=share. &try (the link maker's Test button) counts nothing.
+// The tag leaves the address bar, so a copied link doesn't count as that post again.
+const tagOf=s=>String(s||"").toLowerCase().replace(/[\s_]+/g,"-").replace(/[^a-z0-9-]/g,"").replace(/-+/g,"-").replace(/^-|-$/g,"").slice(0,30);
+let fromTag="";
+(()=>{
+  const sp=new URLSearchParams(location.search);
+  try{fromTag=sessionStorage.getItem("bbd-from")||""}catch(e){}
+  if(!sp.has("from"))return;
+  const t=tagOf(sp.get("from"));
+  if(t&&!sp.has("try")){fromTag=t;track("from",t);try{sessionStorage.setItem("bbd-from",t)}catch(e){}}
+  sp.delete("from");sp.delete("try");
+  try{history.replaceState(history.state,"",location.pathname+(String(sp)?"?"+sp:"")+location.hash)}catch(e){}
+})();
 // Store visits: a tap on any store button (data-c="<id>~amazon") is counted right away (the store
 // opens in a new tab). Coming back after 4 s or more fires "bbd:back" with {id, s}; a quick tab
 // flip isn't a visit. "Did it look right?" listens for it.
 let storeTapped=false,storeVisit=null;
 document.addEventListener("click",e=>{
   const a=e.target.closest("a[data-c]");if(!a)return;
-  track("click",a.dataset.c);flushHits();
+  track("click",a.dataset.c);if(fromTag)track("went",fromTag);flushHits();
   const [id,s]=a.dataset.c.split("~");storeTapped=true;storeVisit={id,s,left:0};
 });
 document.addEventListener("visibilitychange",()=>{
@@ -744,7 +759,7 @@ $("#shareTab").addEventListener("click",()=>{
   const what=c.id==="gifts"?"Diwali gifts":(t||c).label;
   const top=rankAt(pool(),state.budget).slice(0,3);
   const lines=top.map(x=>`• ${x.n}: ${x.est?"expected ":""}${priceText(x)}`).join("\n");
-  const link="kalpit.me/BBD#"+[state.cat,state.type,state.budget,state.use,state.big&&"deals"].filter(Boolean).join("-");
+  const link="kalpit.me/BBD/?from=share#"+[state.cat,state.type,state.budget,state.use,state.big&&"deals"].filter(Boolean).join("-");
   const msg=`Kalpit's festive sale picks: ${what} under ${fmt(state.budget)}${u?" ("+u.label+")":""}\n${lines?lines+"\n":""}\nSee the full list and today's prices: ${link}`;
   openTab(`https://wa.me/?text=${encodeURIComponent(msg)}`);
 });
@@ -1238,7 +1253,7 @@ document.addEventListener("click",async e=>{
   const url=statusImage(x),bin=atob(url.split(",")[1]),u8=new Uint8Array(bin.length);
   for(let i=0;i<bin.length;i++)u8[i]=bin.charCodeAt(i);
   const file=new File([u8],"kalpits-pick.png",{type:"image/png"});
-  const text=`Kalpit's pick under ${fmt(state.budget)}: ${x.n}. Find yours: ${location.href}`;
+  const text=`Kalpit's pick under ${fmt(state.budget)}: ${x.n}. Find yours: ${location.origin+location.pathname}?from=share${location.hash}`;
   if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({files:[file],text})}catch(err){}return}
   // WhatsApp's in-app browser and laptops: show the image to press-and-hold or download
   $("#stImg").src=url;$("#stDl").href=url;$("#stDlg").showModal();

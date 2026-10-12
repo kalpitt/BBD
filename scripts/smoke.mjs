@@ -243,8 +243,42 @@ try {
     if (await page.evaluate(() => document.querySelector("#askDlg").open)) problems.push("ask panel: Escape didn't close it");
     await page.close();
   }
+  // Per-post link tags: ?from= counts "from" once and "went" on a store tap, then leaves the
+  // address bar; &try counts nothing. The link maker builds a link the page reads.
+  if (!problems.length) {
+    const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    page.on("pageerror", e => problems.push(`link tags: script error: ${e.message}`));
+    const sent = [];
+    await page.route(u => !u.href.startsWith(base), r => {
+      if (r.request().url().endsWith("/hit")) { try { sent.push(...JSON.parse(r.request().postData()).e); } catch {} }
+      r.abort();
+    });
+    await page.goto(base + "?from=IG%20Reel_1#phones-25000");
+    await heroText(page);
+    if (/from=/.test(page.url())) problems.push("link tags: ?from= stayed in the address bar");
+    await page.evaluate(() => document.querySelector("a[data-c]").dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true })));
+    await page.waitForTimeout(300);
+    const has = (ev, k) => sent.some(([e, x]) => e === ev && x === k);
+    if (!has("from", "ig-reel-1")) problems.push(`link tags: "from ig-reel-1" not counted (sent: ${JSON.stringify(sent)})`);
+    if (!has("went", "ig-reel-1")) problems.push("link tags: a store tap after a tagged link didn't count \"went\"");
+    sent.length = 0;
+    await page.evaluate(() => sessionStorage.clear());
+    await page.goto(base + "?try&from=ig-test#phones");
+    await heroText(page);
+    await page.evaluate(() => dispatchEvent(new Event("pagehide")));
+    await page.waitForTimeout(300);
+    if (sent.some(([e]) => e === "from")) problems.push("link tags: &try (Test it) still counted a visit");
+    await page.goto(base + "link/");
+    await page.waitForSelector("#view option[value='home-washing']", { state: "attached" });
+    await page.fill("#name", "Reel 2");
+    await page.selectOption("#view", "home-washing");
+    await page.fill("#budget", "25000");
+    const out = await page.textContent("#out");
+    if (out !== "https://kalpit.me/BBD/?from=ig-reel-2#home-washing-25000") problems.push(`link maker: unexpected link ${out}`);
+    await page.close();
+  }
 } finally { await browser.close(); server.close(); }
 
 for (const p of problems) console.log("✖ " + p);
-console.log(problems.length ? `\n✖ ${problems.length} problem(s). Do not push.` : `✓ Page OK: ${views.length} tabs at default, lowest and highest budget, phone and laptop size, shared-link scratch card, ask chat (phone + laptop), message-Kalpit Instagram button and email form, visitor feedback, keyboard, search, card question, price drop, no script errors.`);
+console.log(problems.length ? `\n✖ ${problems.length} problem(s). Do not push.` : `✓ Page OK: ${views.length} tabs at default, lowest and highest budget, phone and laptop size, shared-link scratch card, ask chat (phone + laptop), message-Kalpit Instagram button and email form, visitor feedback, keyboard, search, card question, price drop, per-post link tags and link maker, no script errors.`);
 process.exit(problems.length ? 1 : 0);

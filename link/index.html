@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>BBD link maker</title>
+<meta name="theme-color" content="#12143D">
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<!-- Kalpit's link maker (12 Oct): one tagged link per post, so the visit counts show which post
+     brought people (from <tag>) and store taps (went <tag>). Not linked from the site; it holds
+     nothing private and reads no counts. Results: ask an agent to "check traffic" (docs/OPS.md). -->
+<style>
+:root{--bg:#F1F0F8;--ink:#1B1F4B;--soft:#585C86;--line:#D9D8EA;--raise:#fff;--mari:#F4A51C;--ok:#24704F}
+@media (prefers-color-scheme:dark){:root{--bg:#12143D;--ink:#FFF1D2;--soft:#B9BADB;--line:#2E3166;--raise:#1B1F4B;--mari:#FFC94D;--ok:#7FD1A8}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.45 "Mukta","Noto Sans","Segoe UI",system-ui,sans-serif}
+main{max-width:520px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:24px;margin:0 0 4px}
+p.sub{margin:0 0 20px;color:var(--soft)}
+fieldset{border:0;margin:0 0 18px;padding:0}
+legend,label.l{display:block;font-weight:700;margin-bottom:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{font:inherit;border:1px solid var(--line);background:var(--raise);color:var(--ink);border-radius:999px;padding:8px 16px;min-height:44px}
+.chips button[aria-pressed=true]{background:var(--mari);border-color:var(--mari);color:#1B1F4B;font-weight:700}
+input,select{font:inherit;width:100%;min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--raise);color:var(--ink)}
+.hint{font-size:14px;color:var(--soft);margin-top:4px}
+.out{background:var(--raise);border:2px solid var(--mari);border-radius:14px;padding:14px;margin:8px 0 12px;word-break:break-all;font-weight:700}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.acts button{font:inherit;font-weight:700;flex:1 1 30%;min-height:48px;border-radius:12px;border:1px solid var(--line);background:var(--raise);color:var(--ink)}
+.acts button.main{background:var(--mari);border-color:var(--mari);color:#1B1F4B}
+#done{color:var(--ok);min-height:1.5em;margin:6px 0 0;font-weight:700}
+h2{font-size:18px;margin:28px 0 8px}
+ul{list-style:none;margin:0;padding:0}
+li{display:flex;gap:8px;align-items:center;border-bottom:1px solid var(--line);padding:8px 0}
+li span{flex:1;font-size:14px;word-break:break-all}
+li button{font:inherit;font-size:14px;min-height:40px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:var(--raise);color:var(--ink)}
+</style>
+</head>
+<body>
+<main>
+<h1>Link maker</h1>
+<p class="sub">Make a separate link for each post. Later, "check traffic" shows how many people each one brought and how many tapped a store.</p>
+
+<fieldset><legend>Where are you posting?</legend><div class="chips" id="where"></div></fieldset>
+
+<label class="l" for="name">Post name</label>
+<input id="name" autocomplete="off" placeholder="e.g. reel1, story, family">
+<p class="hint">Optional. Leave blank to use today's date.</p>
+
+<label class="l" for="view" style="margin-top:14px">Open on</label>
+<select id="view"><option value="">Home page</option></select>
+
+<label class="l" for="budget" style="margin-top:14px">Budget (₹)</label>
+<input id="budget" inputmode="numeric" placeholder="Optional, e.g. 25000">
+
+<h2>Your link</h2>
+<div class="out" id="out"></div>
+<div class="acts">
+  <button class="main" id="copy" type="button">Copy</button>
+  <button id="share" type="button">Share</button>
+  <button id="test" type="button">Test it</button>
+</div>
+<p id="done" role="status"></p>
+<p class="hint">"Test it" opens the link without counting your visit.</p>
+
+<h2>Recent links</h2>
+<ul id="recent"></ul>
+<p class="hint" id="none">None yet. Links you copy or share show up here (on this phone only).</p>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+const BASE="https://kalpit.me/BBD/";
+const WHERE=[["ig","Instagram"],["threads","Threads"],["wa","WhatsApp"],["x","X"],["other","Other"]];
+// Same cleanup as tagOf() in index.html, so the tag shown here is the tag counted there
+const tagOf=s=>String(s||"").toLowerCase().replace(/[\s_]+/g,"-").replace(/[^a-z0-9-]/g,"").replace(/-+/g,"-").replace(/^-|-$/g,"").slice(0,30);
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+let where=store.get("bbd-link-where")||"ig";
+
+const today=()=>{const d=new Date(Date.now()+19800000);return d.getUTCDate()+["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"][d.getUTCMonth()]};
+function link(){
+  const tag=tagOf(where+"-"+(tagOf($("#name").value)||today()));
+  const b=parseInt($("#budget").value.replace(/\D/g,""),10);
+  const h=[$("#view").value,$("#view").value&&b>0?b:""].filter(Boolean).join("-");
+  return BASE+"?from="+tag+(h?"#"+h:"");
+}
+function draw(){
+  $("#where").replaceChildren(...WHERE.map(([id,label])=>{
+    const b=document.createElement("button");b.type="button";b.textContent=label;b.setAttribute("aria-pressed",id===where);
+    b.onclick=()=>{where=id;store.set("bbd-link-where",id);draw()};return b}));
+  $("#budget").disabled=!$("#view").value;
+  $("#out").textContent=link();$("#done").textContent="";
+}
+function remember(u){
+  let r=[];try{r=JSON.parse(store.get("bbd-link-recent")||"[]")}catch(e){}
+  r=[u,...r.filter(x=>x!==u)].slice(0,8);store.set("bbd-link-recent",JSON.stringify(r));drawRecent();
+}
+async function copy(u){
+  try{await navigator.clipboard.writeText(u)}catch(e){const t=document.createElement("textarea");t.value=u;document.body.appendChild(t);t.select();document.execCommand("copy");t.remove()}
+  remember(u);$("#done").textContent="Copied. Paste it into your post.";
+}
+function drawRecent(){
+  let r=[];try{r=JSON.parse(store.get("bbd-link-recent")||"[]")}catch(e){}
+  $("#none").hidden=r.length>0;
+  $("#recent").replaceChildren(...r.map(u=>{
+    const li=document.createElement("li"),s=document.createElement("span"),b=document.createElement("button");
+    s.textContent=u.replace(/^https:\/\//,"");b.type="button";b.textContent="Copy";b.onclick=()=>copy(u);li.append(s,b);return li}));
+}
+$("#copy").onclick=()=>copy(link());
+$("#share").onclick=async()=>{const u=link();remember(u);if(navigator.share){try{await navigator.share({url:u})}catch(e){}}else copy(u)};
+$("#test").onclick=()=>{const u=link().replace("?from=","?try&from=");window.open(u,"_blank","noopener")};
+$("#name").oninput=$("#budget").oninput=$("#view").onchange=draw;
+
+fetch("../data.json",{cache:"no-store"}).then(r=>r.json()).then(d=>{
+  for(const c of d.categories){
+    const items=c.types&&c.types.length?c.types.map(t=>[c.id+"-"+t.id,c.label+": "+t.label]):[[c.id,c.label]];
+    for(const [v,l] of items){const o=document.createElement("option");o.value=v;o.textContent=l;$("#view").append(o)}
+  }
+}).catch(()=>{});
+draw();drawRecent();
+</script>
+</body>
+</html>

@@ -130,6 +130,8 @@ Two sources, they complement each other:
     SELECT k, SUM(n) AS n FROM hits WHERE ev='report' AND day >= date('now','+5 hours','+30 minutes','-2 days') GROUP BY k ORDER BY n DESC;
     -- header search hits/misses, card answers, AI 👎 reasons (since 12 Oct)
     SELECT ev, k, SUM(n) AS n FROM hits WHERE ev IN ('find','card','fb') GROUP BY ev, k ORDER BY ev, n DESC;
+    -- per-post link tags (since 12 Oct): visits and store taps per tagged link (links made at kalpit.me/BBD/link/; "share" = visitors' Share buttons)
+    SELECT k AS tag, SUM(CASE WHEN ev='from' THEN n ELSE 0 END) AS visits, SUM(CASE WHEN ev='went' THEN n ELSE 0 END) AS store_taps FROM hits WHERE ev IN ('from','went') GROUP BY k ORDER BY visits DESC;
     -- where people left without tapping a store (view~budget, rounded), since 12 Oct
     SELECT k, SUM(n) AS n FROM hits WHERE ev='left' GROUP BY k ORDER BY n DESC LIMIT 20;
     ```

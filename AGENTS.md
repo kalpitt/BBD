@@ -176,6 +176,7 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
 ## File map
 ```
 index.html          the page (dial, picks, ask box, WhatsApp save). Reads data.json
+link/index.html     Kalpit's link maker (kalpit.me/BBD/link/): one ?from=<tag> link per post, counted as from/went
 og.png, icon.svg, icon-180.png  WhatsApp link preview image and icons
 data.json           ALL content: picks, prices, verdicts, quick answers. Most edits happen here
 worker/worker.js    ask-box Worker (Cloudflare). Fetches live data.json; also visit counts (/hit → D1 bbd-stats)

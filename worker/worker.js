@@ -243,6 +243,9 @@ async function sendMsg(body, req, env, ctx, fromSite, json) {
 //                                 (the page keeps only the date of its last visit; no id)
 //   open  home | link | reload    page opened: plain link, link to a view (#phones-15000), reload
 //   ref   referrer site           e.g. instagram.com (WhatsApp usually sends none)
+//   from  post tag                opened from a tagged link, ?from=ig-12oct (since 12 Oct; links made at
+//                                 kalpit.me/BBD/link/, visitors' Share buttons send "share")
+//   went  post tag                a store tap by someone who came from that tagged link
 //   tab   cat or cat-type         each view opened, once per page load
 //   use   cat-filter | cat-deals  filter chips switched on, once per page load
 //   click id~amazon | id~flipkart store button taps
@@ -276,7 +279,7 @@ function count(env, ctx, rows) {
 }
 
 const HIT_KEYS = {
-  visit: /^(new|back)$/, open: /^(home|link|reload)$/, ref: /^[a-z0-9][a-z0-9.-]{2,59}$/, tab: /^[a-z]+(-[a-z]+)?$/, use: /^[a-z]+-[a-z]+$/,
+  visit: /^(new|back)$/, open: /^(home|link|reload)$/, ref: /^[a-z0-9][a-z0-9.-]{2,59}$/, from: /^[a-z0-9][a-z0-9-]{0,29}$/, went: /^[a-z0-9][a-z0-9-]{0,29}$/, tab: /^[a-z]+(-[a-z]+)?$/, use: /^[a-z]+-[a-z]+$/,
   click: /^[a-z0-9-]{1,30}~(amazon|flipkart)$/, share: /^(save|tab|status)$/, chat: /^open$/, dm: /^ig$/, fb: /^(y|n|n-price|n-product|n-unclear)$/, find: /^(hit|miss)$/, card: /^[a-z-]{2,20}~(y|n)$/,
   report: /^[a-z0-9-]{1,30}~(amazon|flipkart)~(ok|bought|oos|price|wrong)$/, left: /^[a-z]+(-[a-z]+)?~[1-9]\d{0,3}000$/,
 };
