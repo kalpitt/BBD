@@ -134,7 +134,8 @@ Two sources, they complement each other:
 - How it works: the page batches events (visit, view opened, tab, filter, store tap, share,
   chat opened, 👍/👎, store-visit answers, drop-offs) and sends them with `sendBeacon` to `POST /hit` when it is hidden; the
   Worker checks each key against `data.json` and adds 1 to today's row in D1 (binding `DB`).
-  The Worker itself counts AI answers (`ask`) and sent messages (`msg`), and emails Kalpit
+  The Worker itself counts AI answers (`ask`), sent messages (`msg`) and all emails (`mail sent`;
+  `mail()` stops at 40 a day so a script can't flood the inbox, alarms still go out), and emails Kalpit
   ("BBD problem: <pick>") once a day when a pick gets 2+ problem reports (`reportAlarm`).
   "Didn't see what you wanted?" notes arrive as "BBD wish" emails, typed prices as "BBD report".
   No IP, id, cookie or question text is stored. Daily visitors use no id either: the

@@ -456,3 +456,8 @@ Template:
   FAM_HASH set (family link locked). Open: iPhone 16 price/"exchange" unverified (sources disagree:
   71,999 vs 74,999) — needs Kalpit's screenshot. Build plan: 1 safety+cleanup, 2 speed, 3 trust/copy,
   4 accessibility, 5 the 4 features + search.
+- Step 1 (safety + cleanup) shipped: shared parts on the page (storeBtn, openTab, sendNote, store-visit
+  event bbd:back, nudge card, findPicks finder, goTo), Worker mail() helper with a daily cap, reportAlarm
+  claims first, stricter Reply-To, page link checked, `left` keys must be whole thousands; bandRange()
+  and budgetFrom() are twin code (validator); phone-number scan covers code files; smoke test covers
+  the finder, "Show me" band rule, the note, the store card. iPhone 16 → 72,999 from Kalpit's screenshot.

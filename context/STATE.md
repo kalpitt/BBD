@@ -16,10 +16,14 @@ under 50 lines. Round-3 review and what shipped: docs/IDEAS.md → Product revie
 - Price check: Routine "BBD price check, Sonnet (9:05 am to 12:05 am, every 3h)" wakes the
   Sonnet session "BBD price checker, Sonnet". Old Opus Routine and a fresh-session test
   Routine are paused (fresh sessions can't push). Details: AGENTS.md → Why things are.
-- Visitor feedback (12 Oct): "Didn't see what you wanted?" box under the list (shows matching picks
-  as they type; note emailed as "BBD wish"). Back from a store → "Did <pick> look right?" (✅ 🛒 ❌ 💸 🔗,
-  counted as `report`; 2+ problems on a pick in a day email "BBD problem"; ❌ offers the other store
-  and the next pick). Silent drop-offs counted as `left view~budget`. Price check checks flagged picks first.
+- Visitor feedback (12 Oct, rebuilt on shared parts): "Didn't see what you wanted?" box under the list
+  (product finder: names/brands + a typed budget via budgetFrom(); note emailed as "BBD wish"); back
+  from a store → pop-up card ("nudge", one per visit) "Did <pick> look right?" → Looked right /
+  Something's off (out of stock, price, wrong product) / I bought it; counted as `report`, 2+ problems a
+  day email "BBD problem". Drop-offs counted as `left view~budget` (not after a store tap or share).
+- Safety (12 Oct): FAM_HASH set (only Kalpit's family link works); Worker emails go through mail()
+  with a 40/day cap; problem alarm claims its D1 row before sending; visitor emails never trigger
+  commits (price-check skill). Twin check now covers bandRange() and budgetFrom().
 - Visit counts: private D1 `bbd-stats` (docs/OPS.md → Traffic). Kalpit: `?nostats` on his devices.
 - Cloudflare: Web Analytics (path `/BBD`), Email Routing; Worker rebuilds only on `worker/*`/`wrangler.toml`.
 - Ask box (11 Oct): slim prompt via `planAnswer()` (~1/3 size), typed budget = cap, named

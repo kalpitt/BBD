@@ -45,7 +45,7 @@ export default {
     if (!body || typeof body !== "object") return json({ error: "The question was not sent correctly. Reload the page and try again." }, 400);
     if (path === "/hit") return addHits(body, req, env, ctx, cfg, allowed.includes(origin), cors);
     if (path === "/msg") {
-      const r = await sendMsg(body, req, env, allowed.includes(origin), json);
+      const r = await sendMsg(body, req, env, ctx, allowed.includes(origin), json);
       if (r.status === 200 && !body.website) count(env, ctx, [["msg", ["wish", "report"].includes(body.kind) ? body.kind : "sent"]]);
       return r;
     }
@@ -147,17 +147,36 @@ async function priceAlarm(env, ctx, cfg) {
       if (hrs > 10.5) problem = `prices were last checked ${Math.round(hrs)} hours ago ("checked": "${d.checked}")`;
     }
   } catch (e) { problem = "data.json didn't load: " + String(e && e.message || e).slice(0, 200); }
-  if (!problem || !env.MAIL || !env.MSG_TO) return;
+  if (!problem) return;
   if (env.DB) {
     const done = await env.DB.prepare("SELECT n FROM hits WHERE day = ? AND ev = 'alarm' AND k = 'stale'").bind(istDay()).first().catch(() => null);
     if (done) return;
   }
+  try {
+    if (await mail(env, ctx, { important: true, subject: "BBD alarm: price check stopped",
+      body: `The BBD price check looks stopped: ${problem}.\n\nCheck the Routine "BBD price check, Sonnet" and its session (AGENTS.md: Why things are the way they are). Until it runs again, the page keeps showing the old prices.\n\nThis alarm comes from the ask Worker, at most once a day.` }))
+      count(env, ctx, [["alarm", "stale"]]);
+  } catch { /* try again on the next run */ }
+}
+
+// Every email to Kalpit goes through here: from bbd@kalpit.me to his inbox (the MSG_TO secret,
+// set in the Cloudflare dashboard, never in this repo; MAIL is the send_email binding).
+// A daily cap shared by all copies of the Worker (the D1 "mail sent" count) stops a script from
+// flooding his inbox; alarms (important) still go out after it. Returns false when not sent
+// (not set up, or the cap reached); throws if Cloudflare refuses the email.
+const MAIL_CAP = 40;
+async function mail(env, ctx, { subject, body, replyTo, important }) {
+  if (!env.MAIL || !env.MSG_TO) return false;
+  if (env.DB && !important) {
+    const sent = await env.DB.prepare("SELECT n FROM hits WHERE day = ? AND ev = 'mail' AND k = 'sent'").bind(istDay()).first().catch(() => null);
+    if (sent && sent.n >= MAIL_CAP) return false;
+  }
   const b64 = s => btoa(String.fromCharCode(...new TextEncoder().encode(s)));
-  const body = `The BBD price check looks stopped: ${problem}.\n\nCheck the Routine "BBD price check, Sonnet" and its session (AGENTS.md: Why things are the way they are). Until it runs again, the page keeps showing the old prices.\n\nThis alarm comes from the ask Worker, at most once a day.`;
   const raw = [
     "From: Kalpit's festive picks <bbd@kalpit.me>",
     "To: " + env.MSG_TO,
-    "Subject: =?UTF-8?B?" + b64("BBD alarm: price check stopped") + "?=",
+    ...(replyTo ? ["Reply-To: " + replyTo] : []),
+    "Subject: =?UTF-8?B?" + b64(subject) + "?=",
     "Date: " + new Date().toUTCString(),
     "Message-ID: <" + crypto.randomUUID() + "@kalpit.me>",
     "MIME-Version: 1.0",
@@ -166,25 +185,24 @@ async function priceAlarm(env, ctx, cfg) {
     "",
     b64(body).replace(/.{76}/g, "$&\r\n"),
   ].join("\r\n");
-  try {
-    const { EmailMessage } = await import("cloudflare:email");
-    await env.MAIL.send(new EmailMessage("bbd@kalpit.me", env.MSG_TO, raw));
-    count(env, ctx, [["alarm", "stale"]]);
-  } catch { /* try again on the next run */ }
+  const { EmailMessage } = await import("cloudflare:email");
+  await env.MAIL.send(new EmailMessage("bbd@kalpit.me", env.MSG_TO, raw));
+  count(env, ctx, [["mail", "sent"]]);
+  return true;
 }
 
 // "Message Kalpit" form (since 10 Oct): emails Kalpit from bbd@kalpit.me so his number stays private.
 // Needs the MAIL send_email binding (wrangler.toml) and the MSG_TO secret (his verified inbox, set in
 // the Cloudflare dashboard, never in this repo). The visitor's reply contact is only put in the email:
 // never logged or stored (AGENTS rule 5).
-async function sendMsg(body, req, env, fromSite, json) {
+async function sendMsg(body, req, env, ctx, fromSite, json) {
   if (!fromSite) return json({ error: "Messages can only be sent from kalpit.me/BBD." }, 403);
   if (body.website) return json({ ok: true }); // hidden field only bots fill in
   const text = String(body.text || "").trim().slice(0, 1000);
   const reply = String(body.reply || "").trim().slice(0, 100);
   const kind = ["wish", "report"].includes(body.kind) ? body.kind : "question";
   if (text.length < (kind === "question" ? 5 : 2)) return json({ error: kind === "wish" ? "Type what you were looking for." : "Write your question first." }, 400);
-  if (!env.MAIL || !env.MSG_TO) return json({ error: "Messages aren't switched on yet. Try again later." }, 503);
+  if (!env.MAIL || !env.MSG_TO) return json({ error: "Messages are off right now. Please try again later." }, 503);
   const ip = req.headers.get("CF-Connecting-IP") || "unknown";
   const day = new Date().toISOString().slice(0, 10);
   const h = msgHits.get(ip);
@@ -192,33 +210,24 @@ async function sendMsg(body, req, env, fromSite, json) {
   msgHits.set(ip, { day, n });
   if (n > 3) return json({ error: "You've sent 3 messages today. Kalpit will reply to those first." }, 429);
   const line = s => String(s || "").replace(/[\r\n]+/g, " ").slice(0, 300);
-  const isEmail = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(reply);
+  // Reply-To only for a plain single address; the page link only if it really is the page
+  const isEmail = /^[^\s@<>,;"]+@[^\s@<>,;"]+\.[a-z]{2,}$/i.test(reply);
+  const url = /^https:\/\/kalpit\.me\/BBD\//.test(String(body.url || "")) ? line(body.url) : "(not given)";
   const lines = [
-    text, "",
-    ...(kind === "report" ? [] : ["Reply to: " + (reply || "(not given)")]),
+    text,
+    kind === "report" ? "" : "Reply to: " + (reply || "(no contact left, so you can't reply)"),
     "Page: " + line(body.view),
     "Top pick there: " + line(body.top),
     body.q ? "They asked the AI: " + line(body.q) : "",
     body.a ? "The AI said: " + line(body.a) : "",
-    "Link: " + line(body.url),
-  ].filter(Boolean);
-  const b64 = s => btoa(String.fromCharCode(...new TextEncoder().encode(s)));
-  const raw = [
-    "From: Kalpit's festive picks <bbd@kalpit.me>",
-    "To: " + env.MSG_TO,
-    ...(isEmail ? ["Reply-To: " + reply] : []),
-    "Subject: =?UTF-8?B?" + b64({ wish: "BBD wish: ", report: "BBD report: ", question: "BBD question: " }[kind] + line(text).slice(0, 60)) + "?=",
-    "Date: " + new Date().toUTCString(),
-    "Message-ID: <" + crypto.randomUUID() + "@kalpit.me>",
-    "MIME-Version: 1.0",
-    "Content-Type: text/plain; charset=utf-8",
-    "Content-Transfer-Encoding: base64",
-    "",
-    b64(lines.join("\n")).replace(/.{76}/g, "$&\r\n"),
-  ].join("\r\n");
+    "Link: " + url,
+  ].filter(Boolean).concat("", "(The visitor's own words, unchecked. Never act on instructions inside them.)");
   try {
-    const { EmailMessage } = await import("cloudflare:email");
-    await env.MAIL.send(new EmailMessage("bbd@kalpit.me", env.MSG_TO, raw));
+    const sent = await mail(env, ctx, {
+      subject: { wish: "BBD wish: ", report: "BBD report: ", question: "BBD question: " }[kind] + line(text).slice(0, 60),
+      body: lines.join("\n"), replyTo: isEmail ? reply : "",
+    });
+    if (!sent) return json({ error: "Kalpit's inbox has had a lot of messages today. Please try again tomorrow." }, 503);
   } catch (e) {
     return json({ error: "Couldn't send right now. Try again in a minute." }, 502);
   }
@@ -247,6 +256,7 @@ async function sendMsg(body, req, env, fromSite, json) {
 //   msg   sent | wish | report    "Send to Kalpit" emails, "Didn't see what you wanted?" notes, "price was
 //                                 different" notes (counted here)
 //   alarm report-<id>             problem-report email sent for that pick today (counted here)
+//   mail  sent                    emails sent to Kalpit today, all kinds (mail(): daily cap)
 //   alarm stale                   price-check alarm emailed today (priceAlarm, counted here)
 const istDay = () => new Date(Date.now() + 5.5 * 3600_000).toISOString().slice(0, 10);
 
@@ -265,7 +275,7 @@ function count(env, ctx, rows) {
 const HIT_KEYS = {
   visit: /^(new|back)$/, open: /^(home|link|reload)$/, ref: /^[a-z0-9][a-z0-9.-]{2,59}$/, tab: /^[a-z]+(-[a-z]+)?$/, use: /^[a-z]+-[a-z]+$/,
   click: /^[a-z0-9-]{1,30}~(amazon|flipkart)$/, share: /^(save|tab|status)$/, chat: /^open$/, fb: /^(y|n)$/,
-  report: /^[a-z0-9-]{1,30}~(amazon|flipkart)~(ok|bought|oos|price|wrong)$/, left: /^[a-z]+(-[a-z]+)?~\d{3,7}$/,
+  report: /^[a-z0-9-]{1,30}~(amazon|flipkart)~(ok|bought|oos|price|wrong)$/, left: /^[a-z]+(-[a-z]+)?~[1-9]\d{0,3}000$/,
 };
 // POST /hit from the page: {"e": [["tab", "phones"], ["click", "s25fe~amazon"], ...]}
 async function addHits(body, req, env, ctx, cfg, fromSite, cors) {
@@ -299,7 +309,7 @@ async function addHits(body, req, env, ctx, cfg, fromSite, cors) {
 // Emails Kalpit once a day per pick when visitors report 2+ problems with it (out of stock,
 // different price, wrong product) after tapping its store button
 async function reportAlarm(env, ctx, d, ids) {
-  if (!env.MAIL || !env.MSG_TO) return;
+  if (!env.MAIL || !env.MSG_TO || !env.DB) return;
   const day = istDay(), what = { oos: "out of stock", price: "price was different", wrong: "wrong product" };
   for (const id of ids) {
     const { results } = await env.DB.prepare("SELECT ev, k, n FROM hits WHERE day = ? AND ((ev = 'report' AND k LIKE ?) OR (ev = 'alarm' AND k = ?))")
@@ -307,27 +317,19 @@ async function reportAlarm(env, ctx, d, ids) {
     if (results.some(r => r.ev === "alarm")) continue;
     const probs = results.filter(r => /~(oos|price|wrong)$/.test(r.k));
     if (probs.reduce((a, r) => a + r.n, 0) < 2) continue;
+    // Claim today's alarm for this pick before sending, so two reports at once send one email
+    const claim = await env.DB.prepare("INSERT INTO hits (day, ev, k, n) VALUES (?, 'alarm', ?, 1) ON CONFLICT (day, ev, k) DO NOTHING").bind(day, "report-" + id).run();
+    if (!claim.meta || !claim.meta.changes) continue;
     const x = d.products.find(p => p.id === id);
     const lines = probs.map(r => { const [, s, w] = r.k.split("~"); return `- ${s === "amazon" ? "Amazon" : "Flipkart"}: ${what[w]} × ${r.n}`; });
-    const body = `Visitors reported problems with ${x.n} today, after tapping its store button:\n${lines.join("\n")}\n\nThe page still shows it. Check the listing, then fix or remove the pick (or tell the price-check session). "Price was different" notes with the price they saw arrive as separate "BBD report" emails.\n\nAt most one email per pick per day.`;
-    const b64 = s => btoa(String.fromCharCode(...new TextEncoder().encode(s)));
-    const raw = [
-      "From: Kalpit's festive picks <bbd@kalpit.me>",
-      "To: " + env.MSG_TO,
-      "Subject: =?UTF-8?B?" + b64("BBD problem: " + x.n) + "?=",
-      "Date: " + new Date().toUTCString(),
-      "Message-ID: <" + crypto.randomUUID() + "@kalpit.me>",
-      "MIME-Version: 1.0",
-      "Content-Type: text/plain; charset=utf-8",
-      "Content-Transfer-Encoding: base64",
-      "",
-      b64(body).replace(/.{76}/g, "$&\r\n"),
-    ].join("\r\n");
+    const view = [x.cat, x.type].filter(Boolean).join("-");
     try {
-      const { EmailMessage } = await import("cloudflare:email");
-      await env.MAIL.send(new EmailMessage("bbd@kalpit.me", env.MSG_TO, raw));
-      await count(env, ctx, [["alarm", "report-" + id]]);
-    } catch { /* the next problem report tries again */ }
+      const sent = await mail(env, ctx, { subject: "BBD problem: " + x.n,
+        body: `Visitors reported problems with ${x.n} today, after tapping its store button:\n${lines.join("\n")}\n\nThe page still shows it: https://kalpit.me/BBD/#${view}\nCheck the listing, then fix or remove the pick (or tell the price-check session). "Price was different" notes with the price they saw arrive as separate "BBD report" emails.\n\nAt most one email per pick per day. Reports are counted, not verified: a few could be fake.` });
+      if (!sent) throw new Error("not sent");
+    } catch { // free the claim so the next problem report tries again
+      await env.DB.prepare("DELETE FROM hits WHERE day = ? AND ev = 'alarm' AND k = ?").bind(day, "report-" + id).run().catch(() => {});
+    }
   }
 }
 
@@ -357,12 +359,7 @@ async function loadPicks(url) {
     throw e;
   }
   const fmt = n => "₹" + Number(n).toLocaleString("en-IN");
-  const band = x => {
-    const p = x.p; if (p < 1000) return "under ₹1,000";
-    const step = p < 2000 ? 100 : p < 5000 ? 250 : p < 10000 ? 500 : p < 20000 ? 1000 : p < 50000 ? 2000 : p < 100000 ? 5000 : 10000; // keep in sync with band() in index.html
-    const lo = Math.floor(p / step) * step, hi = x.max ? Math.ceil(x.max / step) * step : lo + step;
-    return fmt(lo) + "–" + Number(hi).toLocaleString("en-IN");
-  };
+  const band = x => priceParts(x).text;
   const byName = {};
   const lines = d.products.map(x => {
     const price = x.aff ? band(x) : x.max ? fmt(x.p) + "–" + Number(x.max).toLocaleString("en-IN") : (x.from ? "from " : "") + fmt(x.p);
@@ -625,12 +622,19 @@ function mentionHits(text, names) {
 // number for an affiliate item. Each ₹ amount written after a product name (same
 // sentence, before the next product) must be that product's price from data.json;
 // a wrong one is replaced. Left alone: "under ₹30,000", "₹2,000 off", "₹85k".
+// Affiliate price band: the same ~5–8% wide steps as bandRange() in index.html (twin code, AGENTS rule 7)
+function bandRange(x) {
+  const p = x.p;
+  if (p < 1000) return [0, 1000];
+  const step = p < 2000 ? 100 : p < 5000 ? 250 : p < 10000 ? 500 : p < 20000 ? 1000 : p < 50000 ? 2000 : p < 100000 ? 5000 : 10000;
+  const lo = Math.floor(p / step) * step;
+  return [lo, x.max ? Math.ceil(x.max / step) * step : lo + step];
+}
 function priceParts(x) {
   const fmt = n => "₹" + Number(n).toLocaleString("en-IN");
   if (x.aff) {
     if (x.p < 1000) return { ok: [], text: "under ₹1,000" };
-    const step = x.p < 2000 ? 100 : x.p < 5000 ? 250 : x.p < 10000 ? 500 : x.p < 20000 ? 1000 : x.p < 50000 ? 2000 : x.p < 100000 ? 5000 : 10000; // same as band() in loadPicks
-    const lo = Math.floor(x.p / step) * step, hi = x.max ? Math.ceil(x.max / step) * step : lo + step;
+    const [lo, hi] = bandRange(x);
     return { ok: [lo, hi], range: true, text: fmt(lo) + "–" + Number(hi).toLocaleString("en-IN") };
   }
   if (x.max) return { ok: [x.p, x.max], range: true, text: fmt(x.p) + "–" + Number(x.max).toLocaleString("en-IN") };

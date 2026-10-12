@@ -98,7 +98,8 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
 6. **Sunset (Kalpit, 10 Oct):** the site stays live **through Diwali, 8 Nov 2026**, with
    the 3-hourly price check running until then. On 9 Nov, ask Kalpit: a "Sale's over"
    banner and the ask box off, or take the site down.
-7. **Twin code:** `nameIndex()`/`mentions()`, `big()`, `cardText()` and the ranking (`rankAt()`) exist in both
+7. **Twin code:** `nameIndex()`/`mentions()`, `big()`, `cardText()`, the price band (`bandRange()`), the
+   budget reader (`budgetFrom()` with `HINDI_NUM`/`NOT_MONEY`) and the ranking (`rankAt()`) exist in both
    `index.html` and `worker/worker.js` (ranking also in `scripts/check-data.mjs`).
    Change all copies or none. The validator compares them and fails if they drift.
 8. **Videos (Kalpit, 10 Oct):** every video follows John Lasseter's animation principles

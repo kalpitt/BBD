@@ -154,10 +154,15 @@ try {
   const html = readFileSync(new URL("../index.html", import.meta.url), "utf8"), wk = readFileSync(new URL("../worker/worker.js", import.meta.url), "utf8");
   const fn = (src, name) => { const m = src.match(new RegExp("function " + name + "\\([^)]*\\)\\s*\\{[\\s\\S]*?\\n\\}")); return m ? m[0] : ""; };
   const norm = f => f.replace(/\/\/[^\n]*/g, "").replace(/\s+/g, "");
-  for (const name of ["rankAt", "big", "nameIndex", "cardText"]) {
+  for (const name of ["rankAt", "big", "nameIndex", "cardText", "bandRange", "budgetFrom"]) {
     const a = fn(html, name), b = fn(wk, name);
     if (!a || !b) err(`twin code: function ${name}() is missing from ${a ? "worker/worker.js" : "index.html"}`);
     else if (norm(a) !== norm(b)) err(`twin code: ${name}() differs between index.html and worker/worker.js. Change both the same way`);
+  }
+  // budgetFrom() reads two word lists that must match too
+  for (const name of ["HINDI_NUM", "NOT_MONEY"]) {
+    const line = src => (src.match(new RegExp("const " + name + " = [^\\n]*")) || [""])[0];
+    if (!line(html) || norm(line(html)) !== norm(line(wk))) err(`twin code: const ${name} differs between index.html and worker/worker.js`);
   }
   // The validator's own ranking (topAt, below) must pick the same top pick as the page at every dial step
   const pageRank = new Function(fn(html, "big") + "\n" + fn(html, "rankAt") + "\nreturn rankAt;")();
@@ -211,9 +216,9 @@ for (const c of d.categories || []) for (const t of c.types || [c]) {
 for (const [n, at] of leads) err(`auto pick "${n}" would be the top pick instead of one of Kalpit's at ${at.length} budget(s), e.g. ${at.slice(0, 3).join(", ")}. Lower its score`);
 
 // ---- public repo: no phone numbers or tokens in data or notes ----
-for (const f of ["data.json", "context/STATE.md", "context/LOG.md", "docs/IDEAS.md", "docs/PICKS.md", "docs/DATA.md", "docs/OPS.md", "AGENTS.md", "README.md"]) {
+for (const f of ["data.json", "index.html", "worker/worker.js", "wrangler.toml", "context/STATE.md", "context/LOG.md", "docs/IDEAS.md", "docs/PICKS.md", "docs/DATA.md", "docs/OPS.md", "AGENTS.md", "README.md", ".claude/skills/price-check/SKILL.md"]) {
   let txt = ""; try { txt = readFileSync(new URL("../" + f, import.meta.url), "utf8"); } catch { continue; }
-  if (/(?<![\d.])(\+?91[\s-]?)?[6-9]\d{4}[\s-]?\d{5}(?!\d)/.test(txt)) err(`${f} contains what looks like a phone number. The repo is public`);
+  if (/(?<![\d.])(\+?91[\s-]?)?[6-9]\d{4}[\s-]?\d{5}(?!\d)/.test(txt.replace(/98765 43210/g, ""))) // the placeholder example is fine err(`${f} contains what looks like a phone number. The repo is public`);
   if (/\b(ghp_|github_pat_|sk-[a-z0-9-]{8}|AKIA)[A-Za-z0-9_]{8,}/.test(txt)) err(`${f} contains what looks like a secret token`);
 }
 

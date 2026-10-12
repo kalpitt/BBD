@@ -120,6 +120,52 @@ try {
     if (/[?&]f=/.test(st.url)) problems.push("message Kalpit: the family code stayed in the address bar");
     await page.close();
   }
+  // Visitor feedback (12 Oct): the finder respects a typed budget, "Show me" never puts an
+  // affiliate item's exact price in the budget box, a note sends, and coming back from a store
+  // asks "Did it look right?" with its two-step answers
+  if (!problems.length) {
+    const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    page.on("pageerror", e => problems.push(`feedback: script error: ${e.message}`));
+    await page.route(u => !u.href.startsWith(base), r => r.abort());
+    await page.route(u => u.pathname.endsWith("/msg"), r => r.fulfill({ status: 200, contentType: "application/json", body: '{"ok":true}' }));
+    await page.goto(base + "#laptops-90000");
+    await page.reload();
+    await heroText(page);
+    const affLaptop = data.products.find(x => x.cat === "laptops" && x.aff);
+    const brand = affLaptop.n.split(" ")[0];
+    await page.fill("#wText", `${brand} laptop under 20k`);
+    await page.waitForTimeout(500);
+    const capHint = await page.textContent("#wHint");
+    if (!capHint.includes("Nothing like that under ₹20,000")) problems.push(`feedback: "${brand} laptop under 20k" should say nothing fits that budget, got: ${capHint.slice(0, 80)}`);
+    await page.fill("#wText", brand);
+    await page.waitForTimeout(500);
+    const show = page.locator("#wHint [data-show]").first();
+    if (!(await show.count())) problems.push(`feedback: typing "${brand}" showed no matching pick`);
+    else {
+      const id = await show.getAttribute("data-show"), x = data.products.find(y => y.id === id);
+      await show.click();
+      await page.waitForTimeout(400);
+      const box = +(await page.inputValue("#budgetText")).replace(/\D/g, "");
+      if (x.aff && box === x.p) problems.push(`feedback: "Show me" put ${x.n}'s exact price in the budget box (affiliate item)`);
+    }
+    await page.fill("#wText", "A Sony camera please");
+    await page.click("#wSend");
+    await page.waitForTimeout(400);
+    if (!(await page.textContent("#wState")).includes("Got it")) problems.push("feedback: the 'Didn't see what you wanted?' note didn't confirm");
+    const vis = v => page.evaluate(v => { Object.defineProperty(document, "visibilityState", { value: v, configurable: true }); document.dispatchEvent(new Event("visibilitychange")); }, v);
+    await page.evaluate(() => scrollTo(0, 0));
+    await page.evaluate(() => document.querySelector("#hero a[data-c]").dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true })));
+    await vis("hidden"); await page.waitForTimeout(4200); await vis("visible"); await page.waitForTimeout(300);
+    if (!(await page.locator("#nudge").isVisible())) problems.push("feedback: coming back from a store didn't ask 'Did it look right?'");
+    else {
+      await page.click('#nudge [data-r="off"]');
+      await page.click('#nudge [data-r="oos"]');
+      if (!(await page.textContent("#nudge")).includes("I'll check it")) problems.push("feedback: 'Out of stock' didn't answer");
+      await page.keyboard.press("Escape");
+      if (await page.locator("#nudge").isVisible()) problems.push("feedback: Escape didn't close the card");
+    }
+    await page.close();
+  }
   // Laptop: the chat opens as a side panel
   if (!problems.length) {
     const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
@@ -138,5 +184,5 @@ try {
 } finally { await browser.close(); server.close(); }
 
 for (const p of problems) console.log("✖ " + p);
-console.log(problems.length ? `\n✖ ${problems.length} problem(s). Do not push.` : `✓ Page OK: ${views.length} tabs at default, lowest and highest budget, phone and laptop size, shared-link scratch card, ask chat (phone + laptop), message-Kalpit form and family link, no script errors.`);
+console.log(problems.length ? `\n✖ ${problems.length} problem(s). Do not push.` : `✓ Page OK: ${views.length} tabs at default, lowest and highest budget, phone and laptop size, shared-link scratch card, ask chat (phone + laptop), message-Kalpit form and family link, visitor feedback, no script errors.`);
 process.exit(problems.length ? 1 : 0);

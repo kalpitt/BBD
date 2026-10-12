@@ -140,16 +140,16 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .fab.mini{padding:12px;width:52px;height:52px;justify-content:center;gap:0;font-size:22px}
 .fab.mini .fl{max-width:0;opacity:0}
 @media (prefers-reduced-motion: reduce){.fab,.fab .fl{transition:none}}
-.rate{position:fixed;left:max(16px,env(safe-area-inset-left));right:max(16px,env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:31;max-width:380px;margin-inline:auto;background:var(--raise);color:var(--ink);border:1px solid var(--line);border-radius:18px;padding:14px 14px 12px;box-shadow:0 8px 28px rgba(10,12,40,.35);display:grid;gap:10px;animation:rateIn .3s ease-out}
-.rate[hidden]{display:none}
-@keyframes rateIn{from{opacity:0;transform:translateY(20px)}}
-@media (prefers-reduced-motion: reduce){.rate{animation:none}}
-.rate p{margin:0}
-#rateQ{font-weight:600;padding-right:36px}
-.rate .x{all:unset;position:absolute;top:4px;right:4px;width:44px;height:44px;display:grid;place-items:center;cursor:pointer;color:var(--ink-soft);font-size:18px}
-.rate .acts{display:flex;gap:8px;flex-wrap:wrap}
-.rate .acts .btn{padding:6px 12px;font-size:15px}
-.rate input:not(.vh),.wish input:not(.vh){width:100%;font:400 16px/1.4 var(--body);color:var(--ink);background:var(--night);border:1px solid var(--line);border-radius:12px;padding:10px 12px;box-sizing:border-box;min-height:44px}
+.nudge{position:fixed;left:max(16px,env(safe-area-inset-left));right:max(16px,env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:31;max-width:380px;margin-inline:auto;background:var(--raise);color:var(--ink);border:1px solid var(--line);border-radius:18px;padding:14px 14px 12px;box-shadow:0 8px 28px rgba(10,12,40,.35);display:grid;gap:10px;animation:nudgeIn .3s ease-out}
+.nudge:focus{outline:none}
+@keyframes nudgeIn{from{opacity:0;transform:translateY(20px)}}
+@media (prefers-reduced-motion: reduce){.nudge{animation:none}}
+.nudge p{margin:0}
+#nudgeQ{font-weight:600;padding-right:36px}
+.nudge .x{all:unset;position:absolute;top:4px;right:4px;width:44px;height:44px;display:grid;place-items:center;cursor:pointer;color:var(--ink-soft);font-size:18px}
+.nudge .acts{display:flex;gap:8px;flex-wrap:wrap}
+.nudge .acts .btn{padding:6px 12px;font-size:15px}
+.nudge input:not(.vh),.wish input:not(.vh){width:100%;font:400 16px/1.4 var(--body);color:var(--ink);background:var(--night);border:1px solid var(--line);border-radius:12px;padding:10px 12px;box-sizing:border-box;min-height:44px}
 .alt1{display:grid;gap:4px;padding:10px 12px;border:1px solid var(--line);border-radius:12px}
 .alt1 span{color:var(--ink-soft);font-size:14px}
 .wish{border-top:1px solid var(--line);padding:16px 0 4px;display:grid;gap:8px}
@@ -157,9 +157,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .wish .wrow{display:grid;grid-template-columns:1fr auto;gap:8px}
 .wish .hint{display:grid;gap:6px;font-size:15px}
 .wish .hint:empty{display:none}
-.wish .aff{font-size:13px;color:var(--ink-soft)}
-.rate .aff{font-size:13px;color:var(--ink-soft)}
-.fab.rateup,.fab.away,.fab.open{opacity:0;transform:translateY(16px);pointer-events:none}
+.fab.nudged,.fab.away,.fab.open{opacity:0;transform:translateY(16px);pointer-events:none}
 .feed{padding-bottom:72px}
 /* Phones: full screen, like a WhatsApp chat. Laptops: a panel on the right, picks still usable */
 .askdlg{position:fixed;inset:0;margin:0;padding:0;width:100%;max-width:none;height:100%;height:100dvh;max-height:none;border-radius:0;flex-direction:column;z-index:40}
@@ -367,14 +365,14 @@ dialog .acts{justify-content:flex-end}
     <div id="rows"></div>
     <form class="wish" id="wish">
       <label for="wText"><strong>Didn't see what you wanted?</strong> Tell me. I read every note.</label>
-      <div class="wrow"><input id="wText" maxlength="300" autocomplete="off" placeholder="E.g. an HP laptop, a smaller phone"><button class="btn go" type="submit" id="wSend">Tell Kalpit</button></div>
+      <div class="wrow"><input id="wText" maxlength="300" autocomplete="off"><button class="btn go" type="submit" id="wSend">Send my note</button></div>
       <div class="hint" id="wHint" aria-live="polite"></div>
       <div id="wMore" hidden>
-        <label for="wReply" class="aff">Your email or WhatsApp, if you want a reply (optional, goes only to Kalpit)</label>
-        <input id="wReply" maxlength="100" autocomplete="email">
+        <label for="wReply" class="aff">Your email or WhatsApp number, if you'd like a reply (optional). Only I see it.</label>
+        <input id="wReply" maxlength="100" autocomplete="off">
       </div>
       <input id="wHp" name="website" tabindex="-1" autocomplete="off" class="vh" aria-hidden="true">
-      <span class="aff" id="wState" aria-live="polite"></span>
+      <span class="aff" id="wState" role="status" tabindex="-1"></span>
     </form>
   </section>
 
@@ -437,9 +435,9 @@ dialog .acts{justify-content:flex-end}
 
 <button class="fab" id="askFab" type="button" data-ask hidden><span aria-hidden="true">💬</span><span class="fl">Confused? Ask Kalpit's AI</span></button>
 
-<section class="rate" id="rate" aria-labelledby="rateQ" hidden>
-  <button type="button" class="x" id="rateX" aria-label="Close">✕</button>
-  <div id="rateBody"></div>
+<section class="nudge" id="nudge" role="dialog" aria-modal="false" aria-labelledby="nudgeQ" tabindex="-1" hidden>
+  <button type="button" class="x" id="nudgeX" aria-label="Close this question">✕</button>
+  <div id="nudgeBody"></div>
 </section>
 
 <dialog id="askDlg" class="askdlg" aria-labelledby="askTitle">
@@ -528,8 +526,21 @@ setTimeout(flushHits,5000); // the first view, in case the page is never hidden
   let ref="";try{ref=new URL(document.referrer).hostname.replace(/^www\./,"").toLowerCase()}catch(e){}
   if(ref&&!/(^|\.)kalpit\.me$/.test(ref))track("ref",ref);
 })();
-// Store button taps (data-c="<id>~amazon"); sent right away, the store opens in a new tab
-document.addEventListener("click",e=>{const a=e.target.closest("a[data-c]");if(a){track("click",a.dataset.c);flushHits()}});
+// Store visits: a tap on any store button (data-c="<id>~amazon") is counted right away (the store
+// opens in a new tab). Coming back after 4 s or more fires "bbd:back" with {id, s}; a quick tab
+// flip isn't a visit. "Did it look right?" listens for it.
+let storeTapped=false,storeVisit=null;
+document.addEventListener("click",e=>{
+  const a=e.target.closest("a[data-c]");if(!a)return;
+  track("click",a.dataset.c);flushHits();
+  const [id,s]=a.dataset.c.split("~");storeTapped=true;storeVisit={id,s,left:0};
+});
+document.addEventListener("visibilitychange",()=>{
+  if(!storeVisit)return;
+  if(document.visibilityState==="hidden"){storeVisit.left=Date.now();return}
+  const v=storeVisit;storeVisit=null;
+  if(v.left&&Date.now()-v.left>=4000)document.dispatchEvent(new CustomEvent("bbd:back",{detail:v}));
+});
 
 /* ---------- prices and links ---------- */
 function bandRange(x){
@@ -610,16 +621,20 @@ function cardText(x,D){
 function offers(x,tag){
   return [cardText(x,D),...extras(x)].filter(Boolean).map(c=>`<${tag} class="card">${esc(c)}</${tag}>`).join("");
 }
+// Every store button on the page is built here. data-c="<id>~<store>" is how the page counts the
+// tap and notices the store visit (see "store visits" below).
+const storeBtn=(x,l,label)=>`<a class="btn go" data-c="${x.id}~${l.s.toLowerCase()}" href="${esc(l.u)}" target="_blank" rel="noopener${l.aff?" sponsored":""}">${esc(label||"See on "+l.s)}</a>`;
+const affNote=x=>links(x).some(l=>l.aff)?`<span class="aff">Affiliate link</span>`:"";
 // Top pick: store button and Share as Status side by side, "send to myself" as a quieter link
 function heroButtons(x){
-  return `<div class="acts">${links(x).map(l=>`<a class="btn go" data-c="${x.id}~${l.s.toLowerCase()}" href="${esc(l.u)}" target="_blank" rel="noopener${l.aff?" sponsored":""}">See on ${l.s}</a>`).join("")}<button class="btn save" type="button" data-status="${x.id}">Share as Status</button>${links(x).some(l=>l.aff)?`<span class="aff">Affiliate link</span>`:""}</div>
+  return `<div class="acts">${links(x).map(l=>storeBtn(x,l)).join("")}<button class="btn save" type="button" data-status="${x.id}">Share as Status</button>${affNote(x)}</div>
     <button class="linkbtn" type="button" data-save="${x.id}">Send to myself on WhatsApp</button>`;
 }
 function buttons(x){
-  return links(x).map(l=>`<a class="btn go" data-c="${x.id}~${l.s.toLowerCase()}" href="${esc(l.u)}" target="_blank" rel="noopener${l.aff?" sponsored":""}">See on ${l.s}</a>`).join("")
-   +`<button class="btn save" type="button" data-save="${x.id}">Send to myself on WhatsApp</button>`
-   +(links(x).some(l=>l.aff)?`<span class="aff">Affiliate link</span>`:"");
+  return links(x).map(l=>storeBtn(x,l)).join("")+`<button class="btn save" type="button" data-save="${x.id}">Send to myself on WhatsApp</button>`+affNote(x);
 }
+// Opens WhatsApp (or any link) in a new tab from a tap
+function openTab(u){const a=document.createElement("a");a.href=u;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove()}
 
 const row=(x,note,cls)=>`<details class="row ${cls||""}"><summary><span class="n">${esc(x.n)}${hot(x)}</span><span class="p">${priceText(x)}</span><span class="w">${esc(note||x.why)}</span><span class="s">${x.est?"Expected":x.s==="Both"?"Both":x.s}</span></summary>
    <div class="more">${note?`<span>${esc(x.why)}</span>`:""}${facts(x)}${offers(x,"span")}${how(x)}<div class="acts">${buttons(x)}</div></div></details>`;
@@ -636,8 +651,7 @@ function waText(items){
 }
 function openWa(items,num){
   const t=encodeURIComponent(waText(items));
-  const u=num?`https://wa.me/${num}?text=${t}`:`https://wa.me/?text=${t}`;
-  const a=document.createElement("a");a.href=u;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();
+  openTab(num?`https://wa.me/${num}?text=${t}`:`https://wa.me/?text=${t}`);
 }
 function save(id){
   const x=P.find(p=>p.id===id);if(!x)return;
@@ -668,7 +682,7 @@ $("#shareTab").addEventListener("click",()=>{
   const lines=top.map(x=>`• ${x.n}: ${x.est?"expected ":""}${priceText(x)}`).join("\n");
   const link="kalpit.me/BBD#"+[state.cat,state.type,state.budget,state.use,state.big&&"deals"].filter(Boolean).join("-");
   const msg=`Kalpit's festive sale picks: ${what} under ${fmt(state.budget)}${u?" ("+u.label+")":""}\n${lines?lines+"\n":""}\nSee the full list and today's prices: ${link}`;
-  const a=document.createElement("a");a.href=`https://wa.me/?text=${encodeURIComponent(msg)}`;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();
+  openTab(`https://wa.me/?text=${encodeURIComponent(msg)}`);
 });
 
 /* ---------- category, type, use chips ---------- */
@@ -822,7 +836,7 @@ function render(force){
     hero.innerHTML=cheapest
       ?`<span class="tag">Thoda stretch karo</span><h2>Nothing I'd pick under ${fmt(b)}</h2><p class="why">The cheapest pick here is ${esc(cheapest.n)} at ${priceText(cheapest)}. Slide right to see it.</p>`
       :`<span class="tag">Nothing here yet</span><h2>No picks for this filter</h2><p class="why">Remove the filter above to see all picks.</p>`;
-    rows.innerHTML="";altBox.innerHTML="";lastTop="";lastSig="";return;
+    rows.innerHTML="";altBox.innerHTML="";lastTop="";lastSig="";$("#list h3").hidden=true;return;
   }
   // No filter picked: the best camera phone and the longest-lasting one get their own cards.
   // If the main pick wins one of them too, the main card says so instead.
@@ -843,7 +857,7 @@ function render(force){
     const sw=rows.querySelector(".row.stretch .w");if(sw&&stretch)sw.textContent=stretchNote(stretch,b);
     return;
   }
-  lastSig=sig;
+  lastSig=sig;$("#list h3").hidden=false;
   const qa=(top.faq||[]).map(([q,a])=>`<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join("");
   const changed=lastTop&&top.id!==lastTop;
   hero.innerHTML=`<span class="tag">My pick for ${fmt(b)}${hot(top)}</span>
@@ -1060,18 +1074,23 @@ const showFam=()=>{if(KALPIT_WA){$("#famWa").hidden=false;$("#msgForm").hidden=t
 })();
 showFam();
 const msgContext=()=>({view:viewText(),top:lastTop?P.find(x=>x.id===lastTop).n:"none at this budget",q:lastQ,a:lastA?lastA.slice(0,200):"",url:location.href});
+// Every note to Kalpit (question, wish, report) goes to the ask Worker's /msg, which emails him
+async function sendNote(kind,text,extra){
+  const r=await fetch(D.askUrl.replace(/\/$/,"")+"/msg",{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({kind,text,...msgContext(),...extra})});
+  const j=await r.json().catch(()=>({}));
+  if(!(r.ok&&j.ok))throw new Error(j.error||"Couldn't send. Try again in a minute.");
+}
+const netErr=err=>err instanceof TypeError?"Couldn't send. Check your connection and try again.":err.message;
 $("#msgForm").addEventListener("submit",async e=>{
   e.preventDefault();
   const text=$("#mText").value.trim(),send=$("#mSend"),ms=$("#mState");
   if(text.length<5){ms.textContent="Write your question first.";return}
   send.disabled=true;ms.textContent="Sending…";
   try{
-    const r=await fetch(D.askUrl.replace(/\/$/,"")+"/msg",{method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({text,reply:$("#mReply").value.trim(),website:$("#mHp").value,...msgContext()})});
-    const j=await r.json().catch(()=>({}));
-    if(r.ok&&j.ok){$("#msgForm").innerHTML=`<p>Sent ✓ Kalpit will reply${$("#mReply").value.trim()?" on the contact you gave":""} when he can.</p>`;return}
-    ms.textContent=j.error||"Couldn't send. Try again in a minute.";
-  }catch(err){ms.textContent="Couldn't send. Check your connection and try again."}
+    await sendNote("question",text,{reply:$("#mReply").value.trim(),website:$("#mHp").value});
+    $("#msgForm").innerHTML=`<p>Sent ✓ Kalpit will reply${$("#mReply").value.trim()?" on the contact you gave":""} when he can.</p>`;return;
+  }catch(err){ms.textContent=netErr(err)}
   send.disabled=false;
 });
 document.addEventListener("click",e=>{
@@ -1079,7 +1098,7 @@ document.addEventListener("click",e=>{
   const q=$("#q").value.trim()||lastQ;
   const ai=lastA?`\n\nThe AI said: ${lastA.length>200?lastA.slice(0,200).trim()+"…":lastA}`:"";
   const msg=`Hi Kalpit, a question from your festive picks page.\n\nI was looking at: ${viewText()}\nYour pick there: ${lastTop?P.find(x=>x.id===lastTop).n:"none at this budget"}\n${location.href}`+(q?`\n\nI asked: ${q}`:"")+ai+"\n\nMy question: ";
-  const a=document.createElement("a");a.href=`https://wa.me/${KALPIT_WA}?text=${encodeURIComponent(msg)}`;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove();
+  openTab(`https://wa.me/${KALPIT_WA}?text=${encodeURIComponent(msg)}`);
 });
 
 /* ---------- night sky: twinkling stars (paused when off screen) ---------- */
@@ -1224,6 +1243,165 @@ function edgeFade(el){
 }
 ["#cats","#types","#uses"].forEach(s=>edgeFade($(s)));
 
+/* ---------- visitor feedback (since 12 Oct): one pop-up card, one product finder ---------- */
+// The pop-up card at the bottom ("nudge"): at most one per visit, never over the chat. Slides
+// away after 30 s unless the visitor is using it; Escape or ✕ closes it and focus goes back.
+const nudge=(()=>{
+  const el=$("#nudge"),body=$("#nudgeBody");let used=false,t=0,back=null,busy=false;
+  const hide=()=>{el.hidden=true;fab.classList.remove("nudged");clearTimeout(t);if(back&&back.isConnected)back.focus({preventScroll:true});back=null};
+  const later=ms=>{clearTimeout(t);if(ms)t=setTimeout(()=>{if(!busy)hide();else later(ms)},ms)};
+  el.addEventListener("focusin",()=>busy=true);el.addEventListener("focusout",()=>busy=false);
+  el.addEventListener("pointerenter",()=>busy=true);el.addEventListener("pointerleave",()=>busy=false);
+  el.addEventListener("keydown",e=>{if(e.key==="Escape")hide()});
+  $("#nudgeX").addEventListener("click",hide);
+  return {
+    // Shows html once per visit; false if a card was already shown or the chat is open
+    open(html){
+      if(used||askDlg.open)return false;used=true;back=document.activeElement;
+      body.innerHTML=html;el.hidden=false;fab.classList.add("nudged");el.focus({preventScroll:true});later(30000);return true;
+    },
+    // Replaces the card's content (after an answer); closes itself after ms if given
+    set(html,ms){body.innerHTML=html;el.focus({preventScroll:true});later(ms)},
+    hide,body,
+  };
+})();
+
+// Product finder: picks a note names (by name, or by brand: "HP"), within any budget typed in it.
+// The budget is read the same way as in the ask box (budgetFrom(), twin of worker/worker.js).
+const HINDI_NUM = { ek: 1, do: 2, teen: 3, char: 4, chaar: 4, paanch: 5, panch: 5, chhe: 6, saat: 7, aath: 8, nau: 9, das: 10, gyarah: 11, barah: 12, baarah: 12, terah: 13, chaudah: 14, pandrah: 15, pandra: 15, solah: 16, satrah: 17, atharah: 18, unnees: 19, bees: 20, pachees: 25, pachchees: 25, tees: 30, paintees: 35, chalees: 40, chaalees: 40, pachaas: 50, pachas: 50, saath: 60, sattar: 70, assi: 80, nabbe: 90, dedh: 1.5, dhai: 2.5, dhaai: 2.5, sawa: 1.25 };
+const NOT_MONEY = /^(mah|kg|kgs|w|watts?|gb|tb|mb|inch(es)?|in|hz|tons?|tonnes?|stars?|mp|cm|mm|ft|feet|ltr|litres?|liters?|place|ports?|years?|yrs?|months?|days?|hours?|hrs?|mins?|x|th|st|nd|rd|g|pro|plus|ultra|lite|fe|gen|series|cores?|ghz|nits|fps|mbps|a|s|e|r|t)$/;
+function budgetFrom(q) {
+  const s = q.toLowerCase()
+    .replace(/[०-९]/g, c => String("०१२३४५६७८९".indexOf(c)))
+    .replace(/हज़ार|हजार/g, " hazaar").replace(/लाख/g, " lakh")
+    .replace(/\d{1,3}(?:,\d{2})*,\d{3}\b/g, m => m.replace(/,/g, "")) // 1,20,000 -> 120000, but "15,16" stays
+    .replace(/\b(rs\.?|inr)(?=\d)/g, "$1 ").replace(/\s+/g, " ");
+  const litres = /geyser|water ?heater|\blit(re|er)s?\b|\bltr\b|fridge|refrigerator|purifier|cooker|kettle|bottle|tank/.test(s);
+  let best = 0;
+  const take = v => { if (v >= 500 && v <= 300000) best = Math.max(best, Math.round(v)); };
+  for (const m of s.matchAll(/\b([a-z]+)\s+(hazaa?r|thousand|lakh|lac)\b/g)) {
+    const n = HINDI_NUM[m[1]];
+    if (n) take(n * (/^(lakh|lac)$/.test(m[2]) ? 100000 : 1000));
+  }
+  for (const m of s.matchAll(/(₹|\brs\.?|\binr\b|\brupees?\b)?\s*(?<![a-z\d.])(\d+(?:\.\d+)?)(\s?)([a-z]+|\/-|"|%)?/g)) {
+    const [, cur, num, gap, unit = ""] = m;
+    let v = parseFloat(num);
+    const before = s.slice(0, m.index), after = s.slice(m.index + m[0].length);
+    // "under 4k", "budget 1.5L", "₹2026": money cues next to the number
+    const cue = !!cur || /\b(under|below|within|upto|up to|budget|around|max|less than|tak|between|and)\s*$/.test(before) || /^\s*(budget|tak|ke andar|se kam|rs|rupees?)\b/.test(after);
+    if (/^(k|thousand|hazaa?r)$/.test(unit)) { if (v < 5 && !cue) continue; v *= 1000; } // "4k TV" is a resolution
+    else if (/^(lakh|lac)$/.test(unit)) v *= 100000;
+    else if (unit === "l") { if (litres || !cue) continue; v *= 100000; } // "3 L" is litres unless it reads like a budget
+    else if (!cur && /\b(rtx|gtx|rx|ryzen|core|i[3579]|ultra|snapdragon|exynos|dimensity|helio|tensor|a\d\d|m\d)\s*$/.test(before)) continue; // "RTX 4060"
+    else if (/^(rs|rupees?|\/-)$/.test(unit) || cur) { /* money as written */ }
+    else if (unit === "l" || NOT_MONEY.test(unit) || /^["%]$/.test(unit) || (unit && !gap)) continue; // a unit or a model name (10a, 5g)
+    else if (v >= 1990 && v <= 2035 && !cue) continue; // a year, unless it reads like a budget ("under 2000")
+    take(v);
+  }
+  return best;
+}
+const BRANDS=new Map();
+for(const x of P){const b=x.n.split(" ")[0].toLowerCase();if(b.length>=2&&!/^(amazon|flipkart)$/.test(b))BRANDS.set(b,(BRANDS.get(b)||[]).concat(x))}
+function findPicks(t){
+  const cap=budgetFrom(t),hits=mentions(t,NAMES);
+  for(const w of t.toLowerCase().split(/[^a-z0-9+-]+/))for(const x of BRANDS.get(w)||[])if(!hits.includes(x))hits.push(x);
+  const fits=hits.filter(x=>!cap||x.p<=cap*1.1);
+  // Picks in the open tab first, then the nearest to the budget
+  const near=cap||state.budget;
+  fits.sort((a,z)=>(z.cat===state.cat)-(a.cat===state.cat)||Math.abs(a.p-near)-Math.abs(z.p-near));
+  return {cap,fits:fits.slice(0,2),cheapest:fits.length?null:hits.slice().sort((a,z)=>a.p-z.p)[0]||null};
+}
+// Opens the view where pick x shows: its tab, with the budget at its price. Affiliate items
+// use the top of their band, like the slider dots, so the budget never shows their exact ₹.
+function goTo(x){
+  state.cat=x.cat;state.use=null;state.big=false;
+  const c=cat();state.type=c.types?(x.type||c.types[0].id):null;
+  const cf=conf();state.budget=Math.max(cf.min,Math.min(cf.max,x.aff?bandRange(x)[1]:x.p));
+  drawCats();setupDial();$("#hero").scrollIntoView({block:"start",behavior:reduce?"auto":"smooth"});
+}
+const mini=x=>`<div class="alt1"><strong>${esc(x.n)}</strong><span>${priceText(x)} · ${esc(where(x))}</span><button type="button" class="link" data-show="${x.id}">Show me</button></div>`;
+document.addEventListener("click",e=>{const b=e.target.closest("[data-show]");if(!b)return;const x=P.find(y=>y.id===b.dataset.show);if(x){nudge.hide();goTo(x)}});
+// What the finder found, as a short message with "Show me" links
+function foundHtml(f){
+  if(f.fits.length)return `<span>Good news, I have ${f.fits.length>1?"these":"this"}:</span>${f.fits.map(mini).join("")}`;
+  if(f.cheapest)return `<span>Nothing like that under ${fmt(f.cap)} on my list yet. My cheapest one:</span>${mini(f.cheapest)}`;
+  return "";
+}
+
+// 1. "Didn't see what you wanted?" under the list: shows matching picks as they type, then
+// emails the note to Kalpit (sendNote, kind wish). The example follows the tab.
+(()=>{
+  const f=$("#wish"),inp=$("#wText"),hint=$("#wHint"),ws=$("#wState");
+  if(!D.askUrl){f.hidden=true;return}
+  const EG={phones:"a Redmi phone, a smaller phone",tv:"a 65-inch Sony TV",laptops:"an HP laptop under ₹50k",home:"a 2-ton AC, a front-load washer",audio:"Sony earbuds, a party speaker",fitness:"a cycling watch",gadgets:"an iPad, a mirrorless camera",gifts:"a gift for Papa under ₹3k"};
+  document.addEventListener("bbd:render",()=>{inp.placeholder="E.g. "+(EG[state.cat]||"a brand you trust")});
+  let tT;
+  inp.addEventListener("input",()=>{
+    $("#wMore").hidden=inp.value.trim().length<3;
+    clearTimeout(tT);tT=setTimeout(()=>{hint.innerHTML=inp.value.trim().length>=2?foundHtml(findPicks(inp.value)):""},250);
+  });
+  f.addEventListener("submit",async e=>{
+    e.preventDefault();
+    const text=inp.value.trim(),send=$("#wSend");
+    if(text.length<2){ws.textContent="Type what you were looking for.";inp.focus();return}
+    send.disabled=true;ws.textContent="Sending…";
+    try{
+      await sendNote("wish",text,{reply:$("#wReply").value.trim(),website:$("#wHp").value});
+      f.querySelector(".wrow").hidden=true;$("#wMore").hidden=true;
+      hint.innerHTML=foundHtml(findPicks(text));
+      ws.textContent=hint.innerHTML?"Got it ✓ I'll read your note. Meanwhile:":"Got it ✓ I haven't picked one yet. I read every note and add picks during the sale.";
+      ws.focus();
+    }catch(err){ws.textContent=netErr(err);send.disabled=false}
+  });
+})();
+
+// 2. Back from a store: "Did <pick> look right?" Taps are counted per pick (report
+// id~store~ok|bought|oos|price|wrong); the Worker emails Kalpit at 2 problem reports a day.
+document.addEventListener("bbd:back",({detail:{id,s}})=>{
+  const x=P.find(y=>y.id===id);if(!x||!D.askUrl)return;
+  const S=s==="amazon"?"Amazon":"Flipkart",b=(r,label)=>`<button class="btn save" type="button" data-r="${r}">${label}</button>`;
+  if(!nudge.open(`<p id="nudgeQ">Did <strong>${esc(x.n)}</strong> look right on ${S}?</p>
+    <div class="acts">${b("ok","✅ Looked right")}${b("off","😕 Something's off")}${b("bought","🛒 I bought it!")}</div>`))return;
+  // Next-best pick near its price, in the same tab
+  const instead=()=>rankAt(P.filter(y=>y.id!==x.id&&y.cat===x.cat&&(y.type||"")===(x.type||"")&&y.p>=x.p*0.6),x.p*1.1)[0];
+  nudge.body.onclick=async e=>{
+    const r=e.target.closest("[data-r]")?.dataset.r;if(!r)return;
+    if(r==="off")return nudge.set(`<p id="nudgeQ">Sorry. What was off?</p><div class="acts">${b("oos","Out of stock")}${b("price","Different price")}${b("wrong","Wrong product")}</div>`,30000);
+    if(r==="share"){nudge.hide();return $("#shareTab").click()}
+    track("report",`${x.id}~${s}~${r}`);flushHits();
+    if(r==="ok")return nudge.set(`<p id="nudgeQ">Great, happy shopping 🪔</p>`,2500);
+    if(r==="bought"){
+      nudge.set(`<p id="nudgeQ">🎉 Enjoy your ${esc(x.n)}!</p><p>Know someone else shopping this sale?</p><div class="acts"><button class="btn go" type="button" data-r="share">Share this list with family</button></div>`,15000);
+      return sparks(nudge.body);
+    }
+    if(r==="oos"){
+      const other=links(x).find(l=>l.s!==S),alt=instead();
+      return nudge.set(`<p id="nudgeQ">Sorry about that. I'll check it.</p>${other?`<div class="acts">${storeBtn(x,other,"Try "+other.s)}</div>`:""}${alt?`<p>${other?"Or my":"My"} next pick near this price:</p>${mini(alt)}`:""}`);
+    }
+    if(r==="wrong")return nudge.set(`<p id="nudgeQ">Sorry! I'll fix the link. Meanwhile, search ${S} for it:</p><div class="acts"><a class="btn go" href="${esc(S==="Amazon"?amz(x.n,x.aff):fk(x.n))}" target="_blank" rel="noopener${S==="Amazon"&&x.aff?" sponsored":""}">Search ${S}</a></div>`);
+    // Different price: what they saw is emailed to Kalpit only, never shown on the page
+    nudge.set(`<p id="nudgeQ">Prices move fast in the sale. What price did you see?</p>
+      <form class="acts" id="nPrice"><label for="nP" class="vh">The price you saw, in rupees</label><input id="nP" inputmode="numeric" maxlength="9" placeholder="₹ (optional)" style="flex:1 1 8em"><button class="btn go" type="submit">Send price</button><span class="aff" id="nState" role="status"></span></form>`);
+    $("#nPrice").onsubmit=async ev=>{
+      ev.preventDefault();const v=$("#nP").value.replace(/\D/g,"");
+      if(!v)return nudge.hide();
+      $("#nState").textContent="Sending…";
+      try{await sendNote("report",`Saw ₹${Number(v).toLocaleString("en-IN")} for ${x.n} on ${S}.`);nudge.set(`<p id="nudgeQ">Sent ✓ I'll recheck it.</p>`,2500)}
+      catch(err){$("#nState").textContent=netErr(err)}
+    };
+  };
+});
+
+// 3. Drop-offs: the view and budget (rounded to 1,000s) where someone left without tapping a
+// store button or sharing, once per view per page load. No id, just a daily count (left view~budget).
+let shared=false;
+document.addEventListener("click",e=>{if(e.target.closest("[data-save],[data-status],#shareTab"))shared=true});
+document.addEventListener("visibilitychange",()=>{
+  if(document.visibilityState!=="hidden"||storeTapped||shared||askDlg.open)return;
+  const b=state.budget,st=b<10000?1000:b<50000?5000:10000;
+  track("left",[state.cat,state.type].filter(Boolean).join("-")+"~"+Math.max(st,Math.round(b/st)*st),true);flushHits();
+});
+
 /* ---------- start ---------- */
 let hraw="";try{hraw=decodeURIComponent((location.hash||"").slice(1))}catch(e){} // a broken link opens the default view
 const [hc,...hp]=hraw.toLowerCase().split("-");
@@ -1241,127 +1419,6 @@ else{
   let seen=false;try{seen=!!sessionStorage.getItem("bbd-scratched");sessionStorage.setItem("bbd-scratched","1")}catch(e){}
   if(lastTop&&!seen&&nav!=="reload")document.fonts.ready.then(()=>{if($("#hero").isConnected)scratchCard($("#hero"))});
 }
-/* ---------- Visitor feedback (since 12 Oct): what's missing, and what went wrong at the store ---------- */
-// Opens the view where pick x shows: its tab, with the budget at its price. Affiliate items
-// use the top of their band, like the slider dots, so the budget never shows their exact ₹.
-function goTo(x){
-  state.cat=x.cat;state.use=null;state.big=false;
-  const c=cat();state.type=c.types?(x.type||c.types[0].id):null;
-  const cf=conf();state.budget=Math.max(cf.min,Math.min(cf.max,x.aff?bandRange(x)[1]:x.p));
-  drawCats();setupDial();$("#hero").scrollIntoView({block:"start",behavior:reduce?"auto":"smooth"});
-}
-const mini=x=>`<div class="alt1"><strong>${esc(x.n)}</strong><span>${priceText(x)} · ${esc(where(x))}</span><button type="button" class="link" data-show="${x.id}">Show me</button></div>`;
-document.addEventListener("click",e=>{const b=e.target.closest("[data-show]");if(!b)return;const x=P.find(y=>y.id===b.dataset.show);if(x){hideCheck();goTo(x)}});
-const sendNote=async(kind,text,extra)=>{
-  const r=await fetch(D.askUrl.replace(/\/$/,"")+"/msg",{method:"POST",headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({kind,text,...msgContext(),...extra})});
-  const j=await r.json().catch(()=>({}));
-  if(!(r.ok&&j.ok))throw new Error(j.error||"Couldn't send. Try again in a minute.");
-};
-const netErr=err=>err instanceof TypeError?"Couldn't send. Check your connection and try again.":err.message;
-
-// 1. "Didn't see what you wanted?" under the list. While they type, picks it already has are
-// shown right away (by name, or by brand: "HP"); the note goes to Kalpit by email (/msg, kind wish).
-(()=>{
-  const f=$("#wish"),inp=$("#wText"),hint=$("#wHint"),ws=$("#wState");
-  if(!D.askUrl){f.hidden=true;return}
-  const brands=new Map();
-  for(const x of P){const b=x.n.split(" ")[0].toLowerCase();if(b.length>=2){if(!brands.has(b))brands.set(b,[]);brands.get(b).push(x)}}
-  const found=t=>{
-    const words=t.toLowerCase().split(/[^a-z0-9]+/).filter(Boolean),hits=[...mentions(t,NAMES)];
-    for(const w of words)for(const x of brands.get(w)||[])if(!hits.includes(x))hits.push(x);
-    // Picks in the open tab first, then the closest to the budget
-    return hits.sort((a,z)=>(z.cat===state.cat)-(a.cat===state.cat)||Math.abs(a.p-state.budget)-Math.abs(z.p-state.budget)).slice(0,2);
-  };
-  let tT;
-  inp.addEventListener("input",()=>{
-    $("#wMore").hidden=inp.value.trim().length<3;
-    clearTimeout(tT);tT=setTimeout(()=>{
-      const m=inp.value.trim().length>=2?found(inp.value):[];
-      hint.innerHTML=m.length?`<span>Good news, I have ${m.length>1?"these":"this"}:</span>${m.map(mini).join("")}`:"";
-    },250);
-  });
-  f.addEventListener("submit",async e=>{
-    e.preventDefault();
-    const text=inp.value.trim(),send=$("#wSend");
-    if(text.length<2){ws.textContent="Type what you were looking for.";inp.focus();return}
-    send.disabled=true;ws.textContent="Sending…";
-    try{
-      await sendNote("wish",text,{reply:$("#wReply").value.trim(),website:$("#wHp").value});
-      const m=found(text);
-      f.innerHTML=`<p><strong>Got it ✓</strong> ${m.length?`Kalpit will see your note. Meanwhile, ${m.length>1?"these are":"this is"} on my list:`:"I haven't picked one yet. Kalpit reads every note and adds picks during the sale."}</p>${m.length?`<div class="hint">${m.map(mini).join("")}</div>`:""}`;
-    }catch(err){ws.textContent=netErr(err);send.disabled=false}
-  });
-})();
-
-// 2. Back from a store: "Did <pick> look right?" Once per page load, never over the chat.
-// Answers are counted per pick (report id~store~ok|bought|oos|price|wrong); the Worker emails
-// Kalpit when a pick gets 2 problem reports in a day. Ignored cards slide away after 30 s.
-const card=$("#rate"),cBody=$("#rateBody");
-let hideT;
-function hideCheck(){card.hidden=true;fab.classList.remove("rateup");clearTimeout(hideT)}
-$("#rateX").addEventListener("click",hideCheck);
-(()=>{
-  if(!D.askUrl)return;
-  let last=null,leftAt=0,asked=false;
-  document.addEventListener("click",e=>{
-    const a=e.target.closest("a[data-c]");if(!a||asked)return;
-    const [id,s]=a.dataset.c.split("~"),x=P.find(y=>y.id===id);if(x)last={x,s};
-  });
-  document.addEventListener("visibilitychange",()=>{
-    if(document.visibilityState==="hidden"){if(last)leftAt=Date.now();return}
-    if(!last||asked||askDlg.open||Date.now()-leftAt<4000)return; // a quick tab flip isn't a store visit
-    asked=true;setTimeout(()=>ask(last),600);
-  });
-  // Next-best pick near its price, in the same tab
-  const instead=x=>rankAt(P.filter(y=>y.id!==x.id&&y.cat===x.cat&&(y.type||"")===(x.type||"")&&y.p>=x.p*0.6),x.p*1.1)[0];
-  function ask({x,s}){
-    const S=s==="amazon"?"Amazon":"Flipkart";
-    cBody.innerHTML=`<p id="rateQ">Did <strong>${esc(x.n)}</strong> look right on ${S}?</p>
-      <div class="acts"><button class="btn save" type="button" data-r="ok">✅ Yes</button><button class="btn save" type="button" data-r="bought">🛒 I bought it!</button><button class="btn save" type="button" data-r="oos">❌ Out of stock</button><button class="btn save" type="button" data-r="price">💸 Different price</button><button class="btn save" type="button" data-r="wrong">🔗 Wrong product</button></div>`;
-    card.hidden=false;fab.classList.add("rateup");
-    clearTimeout(hideT);hideT=setTimeout(hideCheck,30000);
-    cBody.onclick=e=>{
-      const b=e.target.closest("[data-r]");if(!b)return;
-      const r=b.dataset.r;clearTimeout(hideT);
-      track("report",`${x.id}~${s}~${r}`);flushHits();
-      const other=links(x).find(l=>l.s!==S),alt=instead(x);
-      if(r==="ok"){cBody.innerHTML=`<p id="rateQ">Great, happy shopping 🪔</p>`;hideT=setTimeout(hideCheck,2500)}
-      else if(r==="bought"){
-        cBody.innerHTML=`<p id="rateQ">🎉 Happy Diwali! Enjoy your ${esc(x.n)}.</p><p>Know someone else shopping this sale?</p><div class="acts"><button class="btn go" type="button" id="rShare">Share this list with family</button></div>`;
-        sparks(card);$("#rShare").onclick=()=>{hideCheck();$("#shareTab").click()};hideT=setTimeout(hideCheck,15000);
-      }
-      else if(r==="oos")cBody.innerHTML=`<p id="rateQ">Sorry about that. Kalpit will check it.</p>
-        ${other?`<div class="acts"><a class="btn go" href="${esc(other.u)}" target="_blank" rel="noopener${other.aff?" sponsored":""}" data-c="${x.id}~${other.s.toLowerCase()}">Try ${other.s}</a></div>`:""}
-        ${alt?`<p>${other?"Or my":"My"} next pick near this price:</p>${mini(alt)}`:""}`;
-      else if(r==="price"){
-        cBody.innerHTML=`<p id="rateQ">Prices move fast in the sale. Thanks for telling me.</p>
-          <form class="acts" id="rPrice"><label for="rP" class="vh">The price you saw</label><input id="rP" inputmode="numeric" maxlength="9" placeholder="Price you saw, ₹ (optional)" style="flex:1 1 10em"><button class="btn go" type="submit">Send</button><span class="aff" id="rState" aria-live="polite"></span></form>`;
-        $("#rPrice").onsubmit=async ev=>{
-          ev.preventDefault();const v=$("#rP").value.replace(/[^\d]/g,"");
-          if(!v){hideCheck();return}
-          $("#rState").textContent="Sending…";
-          try{await sendNote("report",`Saw ₹${Number(v).toLocaleString("en-IN")} for ${x.n} on ${S}.`);cBody.innerHTML=`<p id="rateQ">Sent ✓ Kalpit will recheck it.</p>`;hideT=setTimeout(hideCheck,2500)}
-          catch(err){$("#rState").textContent=netErr(err)}
-        };
-      }
-      else cBody.innerHTML=`<p id="rateQ">Sorry! Kalpit will fix the link. Meanwhile, search ${S} for it:</p>
-        <div class="acts"><a class="btn go" href="${esc(S==="Amazon"?amz(x.n,x.aff):fk(x.n))}" target="_blank" rel="noopener${S==="Amazon"&&x.aff?" sponsored":""}">Search ${S}</a></div>`;
-    };
-  }
-})();
-
-// 3. Silent drop-offs: the view and budget (rounded) where someone left without tapping any
-// store button, once per view per page load. No id, just a daily count (left view~budget).
-(()=>{
-  let tapped=false;
-  document.addEventListener("click",e=>{if(e.target.closest("a[data-c]"))tapped=true});
-  document.addEventListener("visibilitychange",()=>{
-    if(document.visibilityState!=="hidden"||tapped||askDlg.open)return;
-    const b=state.budget,st=b<10000?1000:b<50000?5000:10000;
-    track("left",[state.cat,state.type].filter(Boolean).join("-")+"~"+Math.max(st,Math.round(b/st)*st),true);flushHits();
-  });
-})();
 })();
 
 </script>
