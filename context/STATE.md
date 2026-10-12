@@ -1,77 +1,51 @@
 # STATE: where BBD is right now
 
-_Last updated: 11 Oct 2026, 5:40 am IST. Overwrite at the end of every session; keep it
-under 50 lines. Round-3 review and what shipped: docs/IDEAS.md → Product review, round 3._
+_Last updated: 12 Oct 2026, ~6:15 pm IST. Overwrite at the end of every session; keep it
+under 50 lines. Today's review + 5-step build: context/LOG.md (12 Oct entries)._
 
 ## Live
-- https://kalpit.me/BBD/: 182 picks, 8 tabs; new types Room heater, Tablet, Speakers & soundbars.
-  73 of 182 store buttons open the exact product (`url`), the rest a store search.
-  One-tap budget chips; card named under prices; quick answers and chat ideas follow the tab.
-- Ask box is a chat: floating 💬 button, full screen on phones, side panel on laptops,
-  👍/👎 under answers. "Message Kalpit" (header, teaser, after 👎 / 2nd question / errors)
-  opens a form the Worker emails to him from bbd@kalpit.me (`MSG_TO` secret). His WhatsApp
-  is off the page; family use his private `?f=` link (never in the repo).
-- Phones: S25 FE top ₹45–55k, S25 Ultra top ₹85k–1.25L, S26 Ultra ₹1.25–1.6L (11 Oct), Pixel 11 only ₹70–85k. Nothing
-  Phone (4a) Pro (₹49,999) is the "Best camera" card at ₹50–55k via `altScore`.
-- Price check (from 12 Oct, 6:05 pm): Routine "BBD price check, Sonnet 2 (…every 3h)" wakes the session
-  "BBD price checker, Sonnet (2, from 12 Oct)". Each run happens in one subagent; past 500k tokens the
-  session starts its own successor. Earlier Routines and sessions are paused. Kalpit's replies
-  ("update Vibe2") go to that session.
-- Visitor feedback (12 Oct, rebuilt on shared parts): "Didn't see what you wanted?" box under the list
-  (product finder: names/brands + a typed budget via budgetFrom(); note emailed as "BBD wish"); back
-  from a store → pop-up card ("nudge", one per visit) "Did <pick> look right?" → Looked right /
-  Something's off (out of stock, price, wrong product) / I bought it; counted as `report`, 2+ problems a
-  day email "BBD problem". Drop-offs counted as `left view~budget` (not after a store tap or share).
-- Safety (12 Oct): FAM_HASH set (only Kalpit's family link works); Worker emails go through mail()
-  with a 40/day cap; problem alarm claims its D1 row before sending; visitor emails never trigger
-  commits (price-check skill). Twin check now covers bandRange() and budgetFrom().
-- Speed (12 Oct, step 2): data.json starts loading in <head> (8 s, then the phone's saved copy:
-  pill says "Offline: saved prices"); fonts don't block the page and are trimmed (no opsz axis);
-  "lite" mode for 2 GB / 4-core Android phones and reduced motion (no sparks, still stars and diyas).
-  Pick shows in ~1.6 s instead of ~3.2 s on a slow phone over slow 4G.
-- Accessibility (12 Oct, step 4): skip link, h1, chip focus kept, chat answers read out (role log),
-  dialogs named, visible field borders, 44px small targets, footer outside main, lang en-IN.
-- Copy (12 Oct, step 3): "How I pick" line under the title; card lines use 5 wordings and take the
-  card name from sale.bankCard (bank.name "Bank"); verdicts say "My pick", no hype words.
-- Features (12 Oct, step 5): 🔍 header search (product finder, "Tell me you want it" → BBD wish);
-  empty budget → "Show me the cheapest" / "Tell me what you need"; empty filter → "Clear filters";
-  AI 👎 asks what went wrong; "Do you have an SBI card?" (answer kept on the phone, bbd-cards) →
-  price without the card (band for affiliate items); price drops since the last visit (bbd-seen on the
-  phone; never affiliate items); price fixer keeps a non-affiliate pick's exact price.
-- Visit counts: private D1 `bbd-stats` (docs/OPS.md → Traffic). Kalpit: `?nostats` on his devices.
-- Cloudflare: Web Analytics (path `/BBD`), Email Routing; Worker rebuilds only on `worker/*`/`wrangler.toml`.
-- Ask box (11 Oct): slim prompt via `planAnswer()` (~1/3 size), typed budget = cap, named
-  products compared, affiliate prices forced to bands in `fixPrices()`. 10 regression Qs pass.
-- Price-check alarm: Worker cron emails Kalpit once a day if `checked` > 10.5 h (stops after 8 Nov).
+- https://kalpit.me/BBD/: 182 picks, 8 tabs. Dial ranks picks (`rankAt()`); slider minimums sit just
+  below each tab's cheapest pick. "How I pick" line under the title (Kalpit's words). 🔍 header search.
+- Ask box (chat, Workers AI): slim prompt via `planAnswer()`, typed budget = cap, `fixPrices()` bands
+  affiliate prices but keeps a non-affiliate pick's own exact price. 10 regression Qs pass (12 Oct).
+- Visitor feedback, one set of shared parts in index.html (store buttons, `sendNote`, `nudge` pop-up,
+  `findPicks` finder, `goTo`, store-visit event `bbd:back`):
+  "Didn't see what you wanted?" box; after a store visit "Did it look right?"; AI 👎 reasons;
+  "Do you have an SBI card?" (no-card price); price drops since last visit (never affiliate items);
+  empty budget/filter actions. Notes email Kalpit as "BBD question/wish/report/problem".
+- Card names come from `sale.bankCard` (bank.name "Bank" = the store's sale card): one line to edit.
+- Safety: FAM_HASH set (only Kalpit's family link works); Worker `mail()` caps emails at 40/day
+  (alarms exempt); visitor emails never trigger edits or commits.
+- Speed: data.json loads from <head> with a saved-copy fallback; fonts non-blocking; "lite" mode for
+  cheap phones. Accessibility: skip link, focus kept on chips, chat read out, 44px small targets.
+- Twin code (validator): rankAt, big, nameIndex, cardText, bandRange, budgetFrom (+HINDI_NUM, NOT_MONEY).
+- Smoke test covers feedback, keyboard, search, card question, price drop, family link refusal.
+- Visit counts: private D1 `bbd-stats` (docs/OPS.md → Traffic has queries for report, left, find, card, fb).
 
-## Governance (details in AGENTS.md, docs/IDEAS.md → Governance; sunset: AGENTS rule 6)
-- Goals: (a) friends and family buy well, (c) reach; affiliate is a side effect.
-- Adding picks: veto, not approve (`docs/PICKS.md`; validator enforces the limits).
-- Score changes move dial handovers: simulate every budget first, tell Kalpit what moves.
-- Amazon prices need his screenshot or two dated reports (agents can't read Amazon pages).
+## Price check
+- Routine "BBD price check, Sonnet 2 (…every 3h)" wakes session "BBD price checker, Sonnet (2, from
+  12 Oct)". Each run in one subagent; stamps `checked` every run; past 500k tokens it starts its own
+  successor. Old Routine paused. First run 6:05 pm 12 Oct; this session scheduled a check at ~6:25 pm.
+- Worker alarm emails Kalpit once a day if `checked` > 10.5 h (stops after 8 Nov).
 
 ## Open asks (waiting on Kalpit)
-1. Veto the 13 picks added 11 Oct (reply "remove X"): S26 Ultra, Pixel 11 Pro, Bajaj RX 7, Havells
-   Jade, OnePlus Pad Lite, Tab A11+, JBL Flip Essential 2, Sony HT-S100F, Sony WH-CH520, JBL 770NC,
-   Mi 20000 power bank, Samsung 7 kg semi-auto and top load, LG 185 L.
-2. WhatsApp Channel link ("Kalpit's sale updates") → set `channel` in data.json (button is built).
-3. His family link once, in a private chat → `node scripts/fam-hash.mjs` → `FAM_HASH` in index.html.
-4. Send Amazon Associates India the question (draft in the round-3 review doc).
-5. Older: Nothing (4a) Pro price; `add-bbd-redirect` merge; EarnKaro; `?nostats` on his devices.
-6. Unticked in the review (don't build unless he asks): trust/privacy notes, Gmail step move, cut list.
+1. HMD Vibe2: one report says 11,159 (site 11,999). Reply "update Vibe2" in the new checker session.
+2. Veto the 13 picks added 11 Oct (reply "remove X"); still-open suggestions: Nothing Phone (4b),
+   realme P4x, realme Buds Air 8, Voltas 1.5 ton AC, OnePlus Nord Buds 4 Pro, Sony XM6.
+3. WhatsApp Channel link → `channel` in data.json (button is built).
+4. Amazon Associates India question (draft in the round-3 review doc); EarnKaro; `add-bbd-redirect`.
 
-Price checker open items (12 Oct, carried to the new checker session): HMD Vibe2 one Flipkart
-report says 11,159 (site 11,999), Kalpit to reply "update Vibe2"; still open suggestions: Nothing
-Phone (4b), realme P4x, realme Buds Air 8, Pixel 11, Voltas 1.5 ton AC, OnePlus Nord Buds 4 Pro,
-Sony XM6.
+## Decisions (12 Oct, don't re-raise)
+- Keep all "lowest price / all-time low" claims; Ray-Ban stays on Creator; don't prune phones that never
+  lead (they cover edge cases); Book4 prices confirmed; iPhone 16 72,999 from his screenshot.
 
 ## Known gaps
 - Laptops: under ₹40k only the Acer Aspire One 14; no gaming laptop.
-- 7 picks added 8 Oct have one source only (Sony WF-1000XM5, Bose QC Earbuds, Sennheiser
-  IE 200, Echo Dot 5th Gen, Fire TV Stick 4K Select, Spinnaker Bradner, Cadola Lydden Hill).
-- `was` on 60 of 182 picks; gift prices are plain listing prices (bank offers unchecked).
-- Amazon links: 95 picks still open a search. Add a `/dp/` link only when an amazon.in
-  listing title confirms model and variant; never open amazon.in with tools.
+- 95 picks open a store search (no `/dp/` link yet); 55 of 64 affiliate items among them.
+- Review findings not built (see LOG 12 Oct): share text "who sent this", ask-box chips 44px,
+  Hinglish consistency, 20 cheap phones without `spec`, storage size missing from some phone names.
+
 ## Next steps for an agent
-1. Read `bbd-stats` after a day of counts and tell Kalpit what it says (docs/OPS.md → Traffic).
-2. Ideas still open in docs/IDEAS.md: G15 weekly question, R17 later ideas.
+1. Check the new price checker's first runs went fine (one subagent, `checked` stamped, phone message).
+2. After a day, read `bbd-stats` (report, left, find, card, fb) and tell Kalpit what visitors say.
+3. On 9 Nov ask Kalpit: "Sale's over" banner + ask box off, or take the site down (AGENTS rule 6).

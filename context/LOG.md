@@ -488,3 +488,17 @@ Template:
   nudge now one card at a time and each kind once per visit. Worker: fixPrices safety net keeps a
   non-affiliate pick's own exact price unless the same-priced affiliate pick is also named; friendlier
   405/403 errors; new hit keys find, card, fb reasons. Header pill shortens to "Checked … ago" when narrow.
+
+## 2026-10-12: visitor feedback, full review, 5-step rebuild
+- Did: feedback (wish box, store check, drop-offs); 6-reviewer review (copy, a11y, perf, security,
+  data, product); Kalpit's data calls; then 5 steps: safety + shared parts, speed, trust/copy,
+  accessibility, features (search, card question, price drops, empty-state actions, 👎 reasons).
+  Price checker rotated to a fresh session that works in subagents and self-rotates past 500k.
+- Decided: one shared building block per job (pop-up card, note sender, finder, store-visit event) so
+  features don't add custom code; page speaks as Kalpit ("I"), the AI about him; "My pick" not "Best";
+  card names only in sale.bankCard; price checker stamps `checked` every run.
+- Gotchas: "Show me" once put an affiliate item's exact price in the budget box (use bandRange top);
+  fixPrices' global sweep must keep a non-affiliate pick's own price but band it if the same-priced
+  affiliate pick is named; raising slider min above the cheapest price hides its dot (use floor to step);
+  a pending stylesheet blocks inline scripts, so Google Fonts delayed data.json.
+- Next: verify the new checker's runs; read bbd-stats after a day; 9 Nov sunset question.
