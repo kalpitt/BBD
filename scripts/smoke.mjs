@@ -183,6 +183,58 @@ try {
     }
     await page.close();
   }
+  // Step 5 features (12 Oct): header search, the way out of an empty budget, the card question
+  // (affiliate items stay banded), and the price-drop card (never for affiliate items)
+  if (!problems.length) {
+    const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    page.on("pageerror", e => problems.push(`step 5: script error: ${e.message}`));
+    await page.route(u => !u.href.startsWith(base), r => r.abort());
+    const lap = data.categories.find(c => c.id === "laptops"), cheap = data.products.filter(x => x.cat === "laptops").sort((a, z) => a.p - z.p)[0];
+    await page.goto(base + "#laptops-" + lap.min);
+    await page.reload();
+    await page.waitForSelector("#hero h2");
+    if (cheap.p > lap.min) {
+      const go = page.locator("#hero [data-budget]");
+      if (!(await go.count())) problems.push("step 5: an empty budget has no 'Show me the cheapest' button");
+      else {
+        await go.click(); await page.waitForTimeout(400);
+        const box = +(await page.inputValue("#budgetText")).replace(/\D/g, "");
+        if (cheap.aff && box === cheap.p) problems.push("step 5: 'Show me the cheapest' put an affiliate item's exact price in the budget box");
+        if (!(await page.locator("#hero .price").count())) problems.push("step 5: 'Show me the cheapest' didn't show a pick");
+      }
+    }
+    await page.click("#findBtn");
+    const brand = cheap.n.split(" ")[0];
+    await page.fill("#findText", brand); await page.waitForTimeout(600);
+    if (!(await page.locator("#findOut [data-show]").count())) problems.push(`step 5: searching "${brand}" found nothing`);
+    await page.fill("#findText", "zqxv gadget"); await page.waitForTimeout(600);
+    if (!(await page.textContent("#findOut")).includes("Not on my list")) problems.push("step 5: a search with no match should say 'Not on my list yet'");
+    // The card question on an affiliate pick with a known card offer
+    const affCard = data.products.find(x => x.aff && x.bank && x.cat === "tv");
+    if (affCard) {
+      await page.goto(base + "#tv-" + (Math.ceil(affCard.p / 1000) * 1000 + 2000)); await page.reload(); await page.waitForSelector("#hero h2");
+      const no = page.locator('#hero [data-card][data-has="0"]');
+      if (await no.count()) {
+        await no.click(); await page.waitForTimeout(300);
+        const t = await page.textContent("#hero .cardnote");
+        const heroAff = await page.locator("#hero .aff").count();
+        if (!/Without an .+ card:/.test(t)) problems.push("step 5: answering 'No' to the card question didn't show the price without the card");
+        if (heroAff && !/–/.test(t)) problems.push("step 5: the no-card price of an affiliate item must be a band");
+      }
+    }
+    await page.close();
+    // Price drop since the last visit, on a fresh page
+    const drop = data.products.find(x => x.cat === "phones" && !x.aff && !x.est);
+    const p2 = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    p2.on("pageerror", e => problems.push(`step 5: script error: ${e.message}`));
+    await p2.route(u => !u.href.startsWith(base), r => r.abort());
+    await p2.addInitScript(([id, was]) => { try { localStorage.setItem("bbd-seen", JSON.stringify({ [id]: was })); } catch (e) {} }, [drop.id, drop.p + Math.max(2000, Math.ceil(drop.p * 0.05))]);
+    await p2.goto(base + "#phones");
+    await p2.waitForSelector("#hero h2");
+    await p2.waitForTimeout(3200);
+    if (!(await p2.locator("#nudge").isVisible()) || !(await p2.textContent("#nudge")).includes("cheaper")) problems.push("step 5: a price drop since the last visit wasn't shown");
+    await p2.close();
+  }
   // Laptop: the chat opens as a side panel
   if (!problems.length) {
     const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
@@ -201,5 +253,5 @@ try {
 } finally { await browser.close(); server.close(); }
 
 for (const p of problems) console.log("✖ " + p);
-console.log(problems.length ? `\n✖ ${problems.length} problem(s). Do not push.` : `✓ Page OK: ${views.length} tabs at default, lowest and highest budget, phone and laptop size, shared-link scratch card, ask chat (phone + laptop), message-Kalpit form and family link, visitor feedback, keyboard, no script errors.`);
+console.log(problems.length ? `\n✖ ${problems.length} problem(s). Do not push.` : `✓ Page OK: ${views.length} tabs at default, lowest and highest budget, phone and laptop size, shared-link scratch card, ask chat (phone + laptop), message-Kalpit form and family link, visitor feedback, keyboard, search, card question, price drop, no script errors.`);
 process.exit(problems.length ? 1 : 0);

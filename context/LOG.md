@@ -482,3 +482,9 @@ Template:
   field borders ≥3:1 (--field-line) and visible placeholders, 44px small targets (chips 40px),
   scroll-padding so the floating button never hides focus, scratch-card focus ring + focus after reveal,
   footer outside main, quick chips' accessible name = visible label. Smoke test covers skip link + chip focus.
+- Step 5 (features) shipped: header search (findPicks, 4 results, miss → wish note), empty-budget and
+  empty-filter actions, AI 👎 reasons (fb n-price|n-product|n-unclear), card question (needCard/cardLine,
+  bbd-cards; replaces the vague 10% note), price-drop card (bbd-seen; skips aff + est; ≥₹500 and ≥3%),
+  nudge now one card at a time and each kind once per visit. Worker: fixPrices safety net keeps a
+  non-affiliate pick's own exact price unless the same-priced affiliate pick is also named; friendlier
+  405/403 errors; new hit keys find, card, fb reasons. Header pill shortens to "Checked … ago" when narrow.

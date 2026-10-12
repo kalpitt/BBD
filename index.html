@@ -56,7 +56,7 @@ a{color:inherit}
 .wrap{max-width:560px;margin:0 auto}
 h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
 
-header{display:flex;align-items:center;justify-content:space-between;gap:8px 12px;flex-wrap:wrap}
+header{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .me{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--ink-soft);min-width:0}
 .title{font:inherit;margin:0}
 .skip{position:absolute;left:12px;top:-60px;z-index:50;background:var(--ink);color:var(--night);padding:10px 14px;border-radius:10px;font-weight:600;text-decoration:none}
@@ -69,6 +69,17 @@ header{display:flex;align-items:center;justify-content:space-between;gap:8px 12p
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--night);border-color:var(--ink)}
 .chip.use[aria-pressed="true"]{background:var(--diya);color:var(--ink);border-color:var(--mari-fill)}
 .stack{display:grid;gap:10px}
+.hdr-r{display:flex;align-items:center;gap:8px;margin-left:auto}
+.fresh .narrow{display:none}
+@media (max-width:420px),(min-width:980px) and (max-width:1500px){.fresh .wide{display:none}.fresh .narrow{display:inline}}
+.me{flex:1 1 auto}.title{line-height:1.2}.fresh{white-space:nowrap}
+.srch{all:unset;width:44px;height:44px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--line);color:var(--ink);cursor:pointer}
+.srch[aria-expanded="true"]{background:var(--ink);color:var(--night)}
+.srch:focus-visible{outline:2px solid var(--marigold);outline-offset:2px}
+.find{display:grid;gap:8px}
+.find input{width:100%;font:400 16px/1.4 var(--body);color:var(--ink);background:var(--raise);border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-height:44px;box-sizing:border-box}
+.find .hint{display:grid;gap:6px;font-size:15px}
+.find .hint:empty{display:none}
 .about{font-size:14px;color:var(--ink-soft);margin-top:-6px}
 .about summary{cursor:pointer;list-style:none}
 .about summary::-webkit-details-marker{display:none}
@@ -358,8 +369,13 @@ dialog .acts{justify-content:flex-end}
   <canvas class="rangoli" id="rangoli" aria-hidden="true"></canvas>
   <header>
     <div class="me"><span class="mono" aria-hidden="true">KT</span><h1 class="title">Kalpit's festive picks</h1></div>
-    <span class="fresh" id="fresh" hidden><span class="dot"></span><span id="freshText"></span></span>
+    <span class="hdr-r"><span class="fresh" id="fresh" hidden><span class="dot"></span><span id="freshText"></span></span><button class="srch" id="findBtn" type="button" aria-label="Search my picks" aria-expanded="false" aria-controls="find" hidden><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg></button></span>
   </header>
+  <form class="find" id="find" role="search" hidden>
+    <label for="findText" class="vh">Search my picks</label>
+    <input id="findText" type="search" autocomplete="off" placeholder="Looking for something specific? E.g. HP laptop, Sony TV">
+    <div class="hint" id="findOut" aria-live="polite"></div>
+  </form>
   <details class="about">
     <summary>Picked by me for friends &amp; family · prices checked every 3 hours · <span class="lnk">How I pick</span></summary>
     <p>I'm Kalpit. I list only what I'd buy for myself or my family, one pick per budget. AI agents check the prices every 3 hours during this sale. No one else decides a pick: only I do.</p>
@@ -876,10 +892,13 @@ function render(force){
   const top=ranked[0];
   const hero=$("#hero"),rows=$("#rows"),altBox=$("#alts");
   if(!top){
-    const cheapest=all.slice().sort((a,z)=>a.p-z.p)[0];
+    const cheapest=all.slice().sort((a,z)=>a.p-z.p)[0],at=cheapest&&(cheapest.aff?bandRange(cheapest)[1]:cheapest.p);
+    const filters=[state.big&&"Big deals",state.use&&((cat().uses||[]).find(u=>u.id===state.use)||{}).label].filter(Boolean).join(" + ");
     hero.innerHTML=cheapest
-      ?`<span class="tag">Thoda stretch karo</span><h2>Nothing I'd pick under ${fmt(b)}</h2><p class="why">The cheapest pick here is ${esc(cheapest.n)} at ${priceText(cheapest)}. Slide right to see it.</p>`
-      :`<span class="tag">Nothing here yet</span><h2>No picks for this filter</h2><p class="why">Remove the filter above to see all picks.</p>`;
+      ?`<span class="tag">Thoda stretch karo</span><h2>Nothing I'd pick under ${fmt(b)}</h2><p class="why">The cheapest pick here is ${esc(cheapest.n)} at ${priceText(cheapest)}.</p>
+        <div class="acts">${at<=conf().max?`<button class="btn go" type="button" data-budget="${at}">Show me the cheapest</button>`:""}<button class="btn save" type="button" data-wish="${esc(c.noun+" under "+fmt(b))}">Tell me what you need</button></div>`
+      :`<span class="tag">Nothing here yet</span><h2>No picks for ${esc(filters||"this filter")}</h2><p class="why">I haven't picked one that fits all of these.</p>
+        <div class="acts"><button class="btn go" type="button" data-clear>Clear filters</button></div>`;
     rows.innerHTML="";altBox.innerHTML="";lastTop="";lastSig="";$("#list h3").hidden=true;return;
   }
   // No filter picked: the best camera phone and the longest-lasting one get their own cards.
@@ -909,7 +928,7 @@ function render(force){
     <h2>${esc(top.n)}</h2><p class="why">${esc(top.why)}</p>${facts(top)}
     <div class="price"><strong>${priceText(top)}</strong><span class="est">${top.est?"Expected price · "+where(top):where(top)}</span></div>
     ${[top.card,...extras(top)].filter(Boolean).length?`<div class="card">${[cardText(top,D),...extras(top)].filter(Boolean).map(esc).join(" · ")}</div>`:""}
-    ${/\bcard\b/i.test(cardText(top,D))&&!/^no\b|no card needed/i.test(top.card)?`<p class="cardnote">Without this card, expect to pay up to about 10% more.</p>`:""}
+    ${cardLine(top)}
     ${how(top)}
     ${heroButtons(top)}
     ${qa?`<div class="qa">${qa}</div>`:""}`;
@@ -922,7 +941,7 @@ function render(force){
     <div class="price"><strong>${priceText(x)}</strong><span class="est">${x.est?"Expected price · "+where(x):where(x)}</span></div>
     ${offers(x,"span")}<div class="acts">${buttons(x)}</div></article>`).join("");
   if(!lite&&(force||top.id!==lastTop)){for(const el of [hero,altBox,$("#list")]){el.classList.remove("moving");void el.offsetWidth;el.classList.add("moving")}}
-  lastTop=top.id;
+  lastTop=top.id;remember(top);
   if(changed&&!force)sparks(hero);
   // Screen readers hear a short line when the pick changes, not the whole card
   clearTimeout(sayT);sayT=setTimeout(()=>{$("#pickSay").textContent=`Pick for ${fmt(state.budget)}: ${top.n}, ${priceText(top)}`},600);
@@ -1041,10 +1060,14 @@ $("#askForm").addEventListener("submit",async e=>{
 });
 chat.addEventListener("click",e=>{
   const b=e.target.closest("[data-fb]");if(!b)return;
-  const fb=b.parentElement;
-  track("fb",b.dataset.fb);
-  if(b.dataset.fb==="y"){fb.innerHTML="<span>Glad it helped 🙏</span>";return}
-  fb.innerHTML="<span>Sorry about that. Kalpit can help you himself 👇</span>";
+  const fb=b.parentElement,v=b.dataset.fb;
+  track("fb",v);
+  if(v==="y"){fb.innerHTML="<span>Glad it helped 🙏</span>";return}
+  if(v==="n"){
+    fb.innerHTML=`<span>Sorry about that. What went wrong?</span><button type="button" data-fb="n-price">Wrong price</button><button type="button" data-fb="n-product">Wrong product</button><button type="button" data-fb="n-unclear">Didn't understand me</button>`;
+    return fb.querySelector("button").focus();
+  }
+  fb.innerHTML="<span>Thanks, I'll look at it. Kalpit can help you himself 👇</span>";
   offerKalpit();$("#waCard").scrollIntoView({block:"nearest",behavior:reduce?"auto":"smooth"});
 });
 
@@ -1173,7 +1196,7 @@ document.addEventListener("click",e=>{
   function show(){
     const mins=Math.max(0,Math.round((Date.now()-when)/60000));
     const t=mins<2?"just now":mins<60?mins+" min ago":mins<24*60?Math.round(mins/60)+"h ago":m[1]+" "+m[2];
-    $("#freshText").textContent=(saved?"Offline: saved prices, checked ":"Prices checked ")+t;
+    $("#freshText").innerHTML=(saved?"Offline: saved prices, checked ":'<span class="wide">Prices checked</span><span class="narrow">Checked</span> ')+t;
     $("#fresh").classList.toggle("old",saved||mins>=12*60);
   }
   show();$("#fresh").hidden=false;setInterval(show,60000);
@@ -1292,7 +1315,7 @@ function edgeFade(el){
 // The pop-up card at the bottom ("nudge"): at most one per visit, never over the chat. Slides
 // away after 30 s unless the visitor is using it; Escape or ✕ closes it and focus goes back.
 const nudge=(()=>{
-  const el=$("#nudge"),body=$("#nudgeBody");let used=false,t=0,back=null,busy=false;
+  const el=$("#nudge"),body=$("#nudgeBody"),used=new Set();let t=0,back=null,busy=false;
   const hide=()=>{el.hidden=true;fab.classList.remove("nudged");clearTimeout(t);if(back&&back.isConnected)back.focus({preventScroll:true});back=null};
   const later=ms=>{clearTimeout(t);if(ms)t=setTimeout(()=>{if(!busy)hide();else later(ms)},ms)};
   el.addEventListener("focusin",()=>busy=true);el.addEventListener("focusout",()=>busy=false);
@@ -1300,9 +1323,9 @@ const nudge=(()=>{
   el.addEventListener("keydown",e=>{if(e.key==="Escape")hide()});
   $("#nudgeX").addEventListener("click",hide);
   return {
-    // Shows html once per visit; false if a card was already shown or the chat is open
-    open(html){
-      if(used||askDlg.open)return false;used=true;back=document.activeElement;
+    // Shows html unless a card is open, this kind was already shown this visit, or the chat is open
+    open(html,kind){
+      if(!el.hidden||used.has(kind)||askDlg.open)return false;used.add(kind);back=document.activeElement;
       body.innerHTML=html;el.hidden=false;fab.classList.add("nudged");el.focus({preventScroll:true});later(30000);return true;
     },
     // Replaces the card's content (after an answer); closes itself after ms if given
@@ -1347,14 +1370,14 @@ function budgetFrom(q) {
 }
 const BRANDS=new Map();
 for(const x of P){const b=x.n.split(" ")[0].toLowerCase();if(b.length>=2&&!/^(amazon|flipkart)$/.test(b))BRANDS.set(b,(BRANDS.get(b)||[]).concat(x))}
-function findPicks(t){
+function findPicks(t,n=2){
   const cap=budgetFrom(t),hits=mentions(t,NAMES);
   for(const w of t.toLowerCase().split(/[^a-z0-9+-]+/))for(const x of BRANDS.get(w)||[])if(!hits.includes(x))hits.push(x);
   const fits=hits.filter(x=>!cap||x.p<=cap*1.1);
   // Picks in the open tab first, then the nearest to the budget
   const near=cap||state.budget;
   fits.sort((a,z)=>(z.cat===state.cat)-(a.cat===state.cat)||Math.abs(a.p-near)-Math.abs(z.p-near));
-  return {cap,fits:fits.slice(0,2),cheapest:fits.length?null:hits.slice().sort((a,z)=>a.p-z.p)[0]||null};
+  return {cap,fits:fits.slice(0,n),cheapest:fits.length?null:hits.slice().sort((a,z)=>a.p-z.p)[0]||null};
 }
 // Opens the view where pick x shows: its tab, with the budget at its price. Affiliate items
 // use the top of their band, like the slider dots, so the budget never shows their exact ₹.
@@ -1407,7 +1430,7 @@ document.addEventListener("bbd:back",({detail:{id,s}})=>{
   const x=P.find(y=>y.id===id);if(!x||!D.askUrl)return;
   const S=s==="amazon"?"Amazon":"Flipkart",b=(r,label)=>`<button class="btn save" type="button" data-r="${r}">${label}</button>`;
   if(!nudge.open(`<p id="nudgeQ">Did <strong>${esc(x.n)}</strong> look right on ${S}?</p>
-    <div class="acts">${b("ok","✅ Looked right")}${b("off","😕 Something's off")}${b("bought","🛒 I bought it!")}</div>`))return;
+    <div class="acts">${b("ok","✅ Looked right")}${b("off","😕 Something's off")}${b("bought","🛒 I bought it!")}</div>`,"store"))return;
   // Next-best pick near its price, in the same tab
   const instead=()=>rankAt(P.filter(y=>y.id!==x.id&&y.cat===x.cat&&(y.type||"")===(x.type||"")&&y.p>=x.p*0.6),x.p*1.1)[0];
   nudge.body.onclick=async e=>{
@@ -1447,6 +1470,82 @@ document.addEventListener("visibilitychange",()=>{
   const b=state.budget,st=b<10000?1000:b<50000?5000:10000;
   track("left",[state.cat,state.type].filter(Boolean).join("-")+"~"+Math.max(st,Math.round(b/st)*st),true);flushHits();
 });
+
+// 4. Search 🔍 in the header: the same product finder, open to everyone. Not on my list →
+// one tap tells Kalpit (sendNote, kind wish). Counted once per page load: find hit | miss.
+(()=>{
+  const btn=$("#findBtn"),f=$("#find"),inp=$("#findText"),out=$("#findOut");
+  btn.hidden=false;
+  btn.addEventListener("click",()=>{
+    const open=f.hidden;f.hidden=!open;btn.setAttribute("aria-expanded",open);
+    if(open)inp.focus();else{inp.value="";out.innerHTML="";btn.focus()}
+  });
+  f.addEventListener("submit",e=>e.preventDefault());
+  let tT;
+  inp.addEventListener("input",()=>{
+    clearTimeout(tT);tT=setTimeout(()=>{
+      const t=inp.value.trim();if(t.length<2){out.innerHTML="";return}
+      const r=findPicks(t,4),html=foundHtml(r);
+      track("find",r.fits.length?"hit":"miss",true);
+      out.innerHTML=html||(D.askUrl?`<span>Not on my list yet.</span><div class="acts"><button class="btn save" type="button" id="findAsk">Tell me you want it</button></div>`:"<span>Not on my list yet.</span>");
+    },300);
+  });
+  out.addEventListener("click",async e=>{
+    if(e.target.closest("[data-show]")){f.hidden=true;btn.setAttribute("aria-expanded","false");return}
+    if(!e.target.closest("#findAsk"))return;
+    out.innerHTML="<span>Sending…</span>";
+    try{await sendNote("wish",inp.value.trim(),{});out.innerHTML="<span>Got it ✓ I read every note and add picks during the sale.</span>"}
+    catch(err){out.innerHTML=`<span>${esc(netErr(err))}</span>`}
+  });
+})();
+
+// 5. Empty results: "Show me the cheapest" sets the budget (band top for affiliate items, so the
+// budget never shows their exact ₹), "Tell me what you need" fills the note box, "Clear filters".
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-budget],[data-wish],[data-clear]");if(!b)return;
+  if(b.dataset.budget){snapped=null;setBudget(+b.dataset.budget);return}
+  if(b.dataset.wish!=null){const i=$("#wText");i.value=b.dataset.wish;i.dispatchEvent(new Event("input"));i.scrollIntoView({block:"center",behavior:reduce?"auto":"smooth"});return i.focus({preventScroll:true})}
+  state.use=null;state.big=false;drawCats();render(true);
+});
+
+// 6. "Do you have an SBI card?" A pick whose price needs a store's sale card asks once; the
+// answer stays on this phone (bbd-cards) and applies to every pick needing that card. No →
+// the price without the card (exact when the offer is known; a band for affiliate items).
+function needCard(x){
+  const c=cardText(x,D);
+  if(!/\bcard\b/i.test(c)||/^no\b|no card needed|listing shows|EMI/i.test(c))return "";
+  return x.bank&&x.bank.name!=="Bank"?x.bank.name:(D.sale.bankCard||{})[x.s]||"";
+}
+const myCards=()=>{try{return JSON.parse(store.get("bbd-cards")||"{}")}catch(e){return {}}};
+function cardLine(x){
+  const k=needCard(x);
+  if(!k)return /\bcard\b/i.test(cardText(x,D))&&!/no card needed|^no\b/i.test(x.card||"")?`<p class="cardnote">Without the card, expect to pay up to about 10% more.</p>`:"";
+  const has=myCards()[k];
+  if(has===true)return "";
+  const without=x.bank?(x.aff?band({...x,p:x.p+x.bank.off,max:0}):fmt(x.p+x.bank.off)):"up to about 10% more";
+  if(has===false)return `<p class="cardnote">Without an ${esc(k)} card: ${without}. <button type="button" class="link" data-card="${esc(k)}" data-has="">Change</button></p>`;
+  return `<p class="cardnote">Do you have an ${esc(k)} card? <button type="button" class="link" data-card="${esc(k)}" data-has="1">Yes</button> · <button type="button" class="link" data-card="${esc(k)}" data-has="0">No</button></p>`;
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-card]");if(!b)return;
+  const k=b.dataset.card,cards=myCards();
+  if(b.dataset.has==="")delete cards[k];else{cards[k]=b.dataset.has==="1";track("card",k.toLowerCase().replace(/[^a-z]+/g,"-")+"~"+(cards[k]?"y":"n"))}
+  store.set("bbd-cards",JSON.stringify(cards));render(true);
+  const q=$("#hero [data-card]")||$("#hero .card");if(q)q.focus&&q.focus({preventScroll:true});
+});
+
+// 7. Price drops since this phone's last visit: the top picks someone saw are remembered here
+// only (bbd-seen, no server). Never for Amazon affiliate items (Associates rule: no price
+// alerts on affiliate sites) or estimates. Shown once, in the pop-up card.
+const SEEN=(()=>{try{return JSON.parse(store.get("bbd-seen")||"{}")}catch(e){return {}}})();
+const drops=P.filter(x=>!x.aff&&!x.est&&SEEN[x.id]&&SEEN[x.id]-x.p>=Math.max(500,SEEN[x.id]*0.03))
+  .map(x=>({x,was:SEEN[x.id]})).sort((a,z)=>(z.was-z.x.p)-(a.was-a.x.p));
+function remember(x){
+  if(x.aff||x.est||SEEN[x.id]===x.p)return;
+  delete SEEN[x.id];SEEN[x.id]=x.p;const ks=Object.keys(SEEN);if(ks.length>40)delete SEEN[ks[0]];
+  store.set("bbd-seen",JSON.stringify(SEEN));
+}
+if(drops.length)setTimeout(()=>{const {x,was}=drops[0];nudge.open(`<p id="nudgeQ">Good news: ${esc(x.n)} is ${fmt(was-x.p)} cheaper since you last looked.</p>${mini(x)}`,"drop")},2500);
 
 /* ---------- start ---------- */
 let hraw="";try{hraw=decodeURIComponent((location.hash||"").slice(1))}catch(e){} // a broken link opens the default view

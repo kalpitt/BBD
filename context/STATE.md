@@ -33,6 +33,11 @@ under 50 lines. Round-3 review and what shipped: docs/IDEAS.md → Product revie
   dialogs named, visible field borders, 44px small targets, footer outside main, lang en-IN.
 - Copy (12 Oct, step 3): "How I pick" line under the title; card lines use 5 wordings and take the
   card name from sale.bankCard (bank.name "Bank"); verdicts say "My pick", no hype words.
+- Features (12 Oct, step 5): 🔍 header search (product finder, "Tell me you want it" → BBD wish);
+  empty budget → "Show me the cheapest" / "Tell me what you need"; empty filter → "Clear filters";
+  AI 👎 asks what went wrong; "Do you have an SBI card?" (answer kept on the phone, bbd-cards) →
+  price without the card (band for affiliate items); price drops since the last visit (bbd-seen on the
+  phone; never affiliate items); price fixer keeps a non-affiliate pick's exact price.
 - Visit counts: private D1 `bbd-stats` (docs/OPS.md → Traffic). Kalpit: `?nostats` on his devices.
 - Cloudflare: Web Analytics (path `/BBD`), Email Routing; Worker rebuilds only on `worker/*`/`wrangler.toml`.
 - Ask box (11 Oct): slim prompt via `planAnswer()` (~1/3 size), typed budget = cap, named

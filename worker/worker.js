@@ -37,8 +37,8 @@ export default {
 
     const path = new URL(req.url).pathname;
     if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
-    if (req.method !== "POST") return json({ error: "Send a POST request with a question." }, 405);
-    if (origin && !allowed.includes(origin)) return json({ error: "This service only answers questions from kalpit.me." }, 403);
+    if (req.method !== "POST") return json({ error: "Something went wrong. Reload the page and try again." }, 405);
+    if (origin && !allowed.includes(origin)) return json({ error: "This only works on kalpit.me/BBD. Open the page there and try again." }, 403);
 
     let body;
     try { body = await req.json(); } catch { body = null; }
@@ -248,7 +248,9 @@ async function sendMsg(body, req, env, ctx, fromSite, json) {
 //   click id~amazon | id~flipkart store button taps
 //   share save | tab | status     Send to myself, Share this list, Share as Status
 //   chat  open                    ask chat opened, once per page load
-//   fb    y | n                   👍 / 👎 under an AI answer
+//   fb    y | n | n-price | n-product | n-unclear   👍 / 👎 under an AI answer, and what went wrong
+//   find  hit | miss              header search found a pick or not (once per page load each)
+//   card  sbi~y | axis-or-icici~n "Do you have an SBI card?" answers
 //   report id~store~ok|bought|oos|price|wrong   answer to "Did <pick> look right?" after a store visit
 //                                 (2 problem reports on one pick in a day email Kalpit: reportAlarm)
 //   left  view~budget             left that view (budget rounded) without tapping a store button
@@ -274,7 +276,7 @@ function count(env, ctx, rows) {
 
 const HIT_KEYS = {
   visit: /^(new|back)$/, open: /^(home|link|reload)$/, ref: /^[a-z0-9][a-z0-9.-]{2,59}$/, tab: /^[a-z]+(-[a-z]+)?$/, use: /^[a-z]+-[a-z]+$/,
-  click: /^[a-z0-9-]{1,30}~(amazon|flipkart)$/, share: /^(save|tab|status)$/, chat: /^open$/, fb: /^(y|n)$/,
+  click: /^[a-z0-9-]{1,30}~(amazon|flipkart)$/, share: /^(save|tab|status)$/, chat: /^open$/, fb: /^(y|n|n-price|n-product|n-unclear)$/, find: /^(hit|miss)$/, card: /^[a-z-]{2,20}~(y|n)$/,
   report: /^[a-z0-9-]{1,30}~(amazon|flipkart)~(ok|bought|oos|price|wrong)$/, left: /^[a-z]+(-[a-z]+)?~[1-9]\d{0,3}000$/,
 };
 // POST /hit from the page: {"e": [["tab", "phones"], ["click", "s25fe~amazon"], ...]}
@@ -672,9 +674,21 @@ function fixPrices(answer, picks, dbg) {
   let out = text;
   for (const e of edits.sort((a, z) => z.at - a.at)) out = out.slice(0, e.at) + e.text + out.slice(e.at + e.len);
   // Last net: an affiliate pick's exact price written anywhere ("35240 rupees") becomes its band
+  // Safety net: any affiliate pick's exact price left anywhere becomes its band. Exception: the
+  // answer doesn't name that affiliate pick and the number follows a non-affiliate pick with the
+  // same price (that pick's own exact price, e.g. a ₹8,999 phone next to ₹8,999 earbuds on the list)
+  const near = mentionHits(out, picks.names);
   for (const x of picks.data.products) if (x.aff) {
+    const named = near.some(h => h.x === x);
     const re = new RegExp("(₹\\s?)?\\b(" + x.p + "|" + x.p.toLocaleString("en-IN") + ")\\b(\\s?(rupees|rs\\.?|/-))?", "gi");
-    if (re.test(out)) { out = out.replace(re, priceParts(x).text); edits.push({ n: x.n, was: String(x.p), text: "band" }); }
+    let hit = false;
+    out = out.replace(re, (m, ...a) => {
+      const at = a[a.length - 2], owner = near.filter(h => h.end <= at).pop();
+      if (!named && owner && !owner.x.aff && owner.x.p === x.p) return m;
+      hit = true;
+      return priceParts(x).text;
+    });
+    if (hit) edits.push({ n: x.n, was: String(x.p), text: "band" });
   }
   if (!edits.length) return answer;
   dbg.push("price fixes: " + edits.map(e => `${e.n}: ${e.was} -> ${e.text}`).join("; "));
