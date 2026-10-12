@@ -1242,11 +1242,12 @@ else{
   if(lastTop&&!seen&&nav!=="reload")document.fonts.ready.then(()=>{if($("#hero").isConnected)scratchCard($("#hero"))});
 }
 /* ---------- Visitor feedback (since 12 Oct): what's missing, and what went wrong at the store ---------- */
-// Opens the view where pick x shows: its tab, with the budget at its price
+// Opens the view where pick x shows: its tab, with the budget at its price. Affiliate items
+// use the top of their band, like the slider dots, so the budget never shows their exact ₹.
 function goTo(x){
   state.cat=x.cat;state.use=null;state.big=false;
   const c=cat();state.type=c.types?(x.type||c.types[0].id):null;
-  const cf=conf();state.budget=Math.max(cf.min,Math.min(cf.max,x.p));
+  const cf=conf();state.budget=Math.max(cf.min,Math.min(cf.max,x.aff?bandRange(x)[1]:x.p));
   drawCats();setupDial();$("#hero").scrollIntoView({block:"start",behavior:reduce?"auto":"smooth"});
 }
 const mini=x=>`<div class="alt1"><strong>${esc(x.n)}</strong><span>${priceText(x)} · ${esc(where(x))}</span><button type="button" class="link" data-show="${x.id}">Show me</button></div>`;
