@@ -30,9 +30,9 @@ friends' names, group names or details, phone numbers, chat excerpts, personal p
 or secrets anywhere in the repo.
 Kalpit's WhatsApp number is no longer on the page (10 Oct, in case the site spreads). Since 12 Oct
 "Message Kalpit" is one "DM Kalpit on Instagram" button (@kalpit_tiwari, public) for everyone,
-family included: no email form, no family WhatsApp button. A tap is counted (`dm ig`) and the
+family included, with the email form as a fallback under "No Instagram? Send it by email instead"; no family WhatsApp button. A tap is counted (`dm ig`) and the
 3-hourly price check reports the count. Old family links (`?f=<code>`) still open the page and the
-page strips the code. "Didn't see it?" notes and price reports still email him from bbd@kalpit.me
+page strips the code. Form messages, "Didn't see it?" notes and price reports email him from bbd@kalpit.me
 (inbox = the `MSG_TO` secret in Cloudflare, never in the repo). Never write the family code or his number in the
 repo (older commits still hold the number; leave history alone). The WhatsApp chat export never enters the repo.
 (`_config.yml` keeps docs off the website, but GitHub still shows them.)
@@ -93,7 +93,8 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
    Cloudflare or GitHub token to the repo.
 5. **Privacy:** a visitor's WhatsApp number lives only in their own browser
    (localStorage). Never log or collect it. Instagram DMs happen in Instagram; the page only
-   counts the tap. Visit counts (private D1 `bbd-stats`, docs/OPS.md → Traffic) store
+   counts the tap. The reply contact a visitor types into the email form goes only into the email
+   to Kalpit; the Worker never logs or stores it. Visit counts (private D1 `bbd-stats`, docs/OPS.md → Traffic) store
    counts per day only: never add an IP, visitor id, cookie or question text to them, and
    never add a public way to read them (Kalpit, 10 Oct: keep them private).
 6. **Sunset (Kalpit, 10 Oct):** the site stays live **through Diwali, 8 Nov 2026**, with
@@ -166,8 +167,8 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
 - **Price-check alarm (11 Oct):** the ask Worker runs every 3 hours (`wrangler.toml` `[triggers]`)
   and emails Kalpit (`MSG_TO`, subject "BBD alarm") once a day if `checked` is over 10.5 hours old.
 - **Instagram DM for everyone (Kalpit, 12 Oct):** he wasn't ready to run a WhatsApp Channel, and
-  replaced the email form and the family WhatsApp link (and its `FAM_HASH` check) with one
-  Instagram DM button. Instagram links can't carry text, so a tap copies the page link and the
+  replaced the family WhatsApp link (and its `FAM_HASH` check) with one Instagram DM button. The
+  email form came back the same day as the fallback: Gmail saves, alerts and gets drafted replies. Instagram links can't carry text, so a tap copies the page link and the
   visitor's last question to paste. The DM itself can't be seen or saved; only taps are counted.
 - **Flipkart has no affiliate setup yet.** EarnKaro was suggested. If Kalpit sends
   converted links, put them in `url` on Flipkart items.

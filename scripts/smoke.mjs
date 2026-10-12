@@ -96,7 +96,7 @@ try {
     }
     await page.close();
   }
-  // "Message Kalpit" (12 Oct): everyone gets the Instagram DM button, no form, no WhatsApp.
+  // "Message Kalpit" (12 Oct): everyone gets the Instagram DM button, the email form under "No Instagram?", no WhatsApp.
   // An old family link (?f=code) still opens the page and the code leaves the address bar.
   if (!problems.length) {
     const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
@@ -105,10 +105,12 @@ try {
     await page.goto(base + "?f=ai8j5mmb#phones");
     await heroText(page);
     if (/[?&]f=/.test(page.url())) problems.push("message Kalpit: the old family code stayed in the address bar");
-    if (await page.evaluate(() => !!document.querySelector("#msgForm, #famWa"))) problems.push("message Kalpit: the email form or WhatsApp button is back");
+    if (await page.evaluate(() => !!document.querySelector("#famWa"))) problems.push("message Kalpit: the family WhatsApp button is back");
     await page.locator("#askTeaser .toK").click();
     if (!(await page.locator("#askDlg[open] #igK").isVisible())) problems.push('message Kalpit: "Or message me" didn\'t open the chat at the Instagram button');
     if ((await page.locator("#igK").getAttribute("href")) !== "https://ig.me/m/kalpit_tiwari") problems.push("message Kalpit: the Instagram button has the wrong link");
+    await page.locator("#mailAlt summary").click();
+    if (!(await page.locator("#mText").isVisible())) problems.push('message Kalpit: "No Instagram?" didn\'t open the email form');
     await page.close();
   }
   // Keyboard (12 Oct): the first Tab offers "Skip to my pick", and choosing a category with
@@ -244,5 +246,5 @@ try {
 } finally { await browser.close(); server.close(); }
 
 for (const p of problems) console.log("✖ " + p);
-console.log(problems.length ? `\n✖ ${problems.length} problem(s). Do not push.` : `✓ Page OK: ${views.length} tabs at default, lowest and highest budget, phone and laptop size, shared-link scratch card, ask chat (phone + laptop), message-Kalpit Instagram button, visitor feedback, keyboard, search, card question, price drop, no script errors.`);
+console.log(problems.length ? `\n✖ ${problems.length} problem(s). Do not push.` : `✓ Page OK: ${views.length} tabs at default, lowest and highest budget, phone and laptop size, shared-link scratch card, ask chat (phone + laptop), message-Kalpit Instagram button and email form, visitor feedback, keyboard, search, card question, price drop, no script errors.`);
 process.exit(problems.length ? 1 : 0);

@@ -41,7 +41,7 @@ Status: ✅ done · 🔜 next · 💬 needs Kalpit · ⏸ later / only if data s
 | A7 | Gaming laptops | Gap, but small audience among family | ⏸ 10 Oct: only RTX 3050 models had confirmed prices at ≤₹85k, skipped as poor value. Premium laptops (₹97k, ₹1.24L) added |
 | A9 | **Ask box as a chat:** floating 💬 button (icon near the top, full label once "Also good" scrolls in), full screen on phones (Back closes it), side panel on laptops, "Did this help? 👍/👎" | Easier to find; feels like WhatsApp | ✅ 10 Oct |
 | A10 | **"Send to Kalpit" form instead of his WhatsApp:** emailed by the Worker from bbd@kalpit.me; family keep WhatsApp via his private `?f=` link | Hides his number if the site spreads; email can't flood his phone | ✅ 10 Oct (Kalpit: keep it obvious: header button, teaser link, after 👎 / 2nd question / errors) |
-| A11 | **Instagram DM for everyone:** one "DM Kalpit on Instagram" button replaces the email form and the family WhatsApp link; a tap copies the page link and last question; taps counted and reported by the price check | Kalpit's handle is public; no number or inbox to protect | ✅ 12 Oct |
+| A11 | **Instagram DM for everyone:** one "DM Kalpit on Instagram" button replaces the family WhatsApp link, email form kept as the fallback; a tap copies the page link and last question; taps counted and reported by the price check | Kalpit's handle is public; no number or inbox to protect | ✅ 12 Oct |
 | A8 | Ask-box capacity: free limit is ~80–120 questions a day. Workers paid plan is $5/month for the sale | Only if analytics (C1) show it running out | ⏸ |
 
 ## Reach beyond the circle (goal c)

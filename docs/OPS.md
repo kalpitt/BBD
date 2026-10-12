@@ -156,7 +156,7 @@ subject "BBD alarm: price check stopped", from bbd@kalpit.me to `MSG_TO`. A day 
 `alarm stale` in `bbd-stats`. Fix: check the Routine "BBD price check, Sonnet" and its session.
 
 ## "Message Kalpit" = Instagram DM (since 12 Oct)
-One "DM Kalpit on Instagram" button (`#igK`, `ig.me/m/kalpit_tiwari`) for everyone. Taps count as
+One "DM Kalpit on Instagram" button (`#igK`, `ig.me/m/kalpit_tiwari`) for everyone, with the email form below it (`#mailAlt`). Taps count as
 `dm ig` in `bbd-stats`; the price check reports them. The family link and its check were removed;
 an old `?f=` link opens the page and the code is stripped from the address bar.
 
@@ -171,7 +171,7 @@ an old `?f=` link opens the page and the code is stripped from the address bar.
 | Old price in AI answer | `updated` wasn't bumped, or the edit is under 5 min old | Bump `updated`; or bump `v2` in worker.js |
 | Worker change not live | Cloudflare build failed | Check the commit's check-runs, or ask Kalpit for a screenshot of the build log |
 
-## Visitor notes by email ("Send to Kalpit" form 10–12 Oct; wish and report notes still use it)
+## "Send to Kalpit" email form (since 10 Oct; under "No Instagram?" since 12 Oct)
 - Page posts to `askUrl + "/msg"`; `sendMsg()` in `worker/worker.js` emails Kalpit from
   bbd@kalpit.me through the `MAIL` send_email binding (`wrangler.toml`).
 - Needs: Cloudflare Email Routing on kalpit.me (Compute → Email Service → Email Routing), his

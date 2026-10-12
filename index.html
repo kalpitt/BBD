@@ -214,7 +214,8 @@ html:has(.askdlg:modal){overflow:hidden}
 .btn.wa{background:#1F7A45;color:#fff;justify-self:start}
 .btn.ig{background:#B4306E;color:#fff;justify-self:start;text-decoration:none}
 .wapill{font:600 14px var(--body);color:var(--night);background:var(--ink);border:0;border-radius:999px;padding:6px 12px;min-height:36px;cursor:pointer;white-space:nowrap;flex:none}
-.msgf{display:grid;gap:6px}
+.msgf{display:grid;gap:6px;margin-top:8px}
+.mailalt summary{cursor:pointer;font:500 14px var(--body);text-decoration:underline;min-height:36px;display:flex;align-items:center}
 .msgf textarea,.msgf input:not(.vh){width:100%;font:400 16px/1.4 var(--body);color:var(--ink);background:var(--raise);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
 .msgf textarea{resize:vertical;min-height:72px}
 .msgf .acts{margin-top:4px}
@@ -504,6 +505,17 @@ dialog .acts{justify-content:flex-end}
       <p><strong>Still unsure?</strong> Ask Kalpit himself. He reads every message.</p>
       <a class="btn ig" id="igK" href="https://ig.me/m/kalpit_tiwari" target="_blank" rel="noopener">DM Kalpit on Instagram</a>
       <p class="aff" id="igState">Tapping copies this page's link and your last question, so you can paste them in the chat. @kalpit_tiwari</p>
+      <details class="mailalt" id="mailAlt">
+        <summary>No Instagram? Send it by email instead</summary>
+        <form class="msgf" id="msgForm">
+          <label for="mText" class="aff">Your question for Kalpit</label>
+          <textarea id="mText" rows="3" maxlength="1000" placeholder="E.g. Papa wants a big screen. S25 FE or Pixel?"></textarea>
+          <label for="mReply" class="aff">Your WhatsApp number or email, so he can reply (optional; Kalpit gets this by email to reply to you)</label>
+          <input id="mReply" maxlength="100" autocomplete="off">
+          <input id="mHp" name="website" tabindex="-1" autocomplete="off" class="vh" aria-hidden="true">
+          <div class="acts"><button class="btn go" type="submit" id="mSend">Send to Kalpit</button><span class="aff" id="mState" aria-live="polite"></span></div>
+        </form>
+      </details>
     </div>
     <div class="sugs" id="sugs"></div>
   </div>
@@ -1108,7 +1120,8 @@ if("IntersectionObserver" in window){
 
 /* ---------- message Kalpit (Instagram DM) ---------- */
 // Kalpit, 12 Oct: everyone, family included, messages him on Instagram (@kalpit_tiwari). His
-// WhatsApp number and the email form are gone. Instagram links can't carry text, so a tap copies
+// WhatsApp number is gone; the email form stays as a fallback under "No Instagram?" (12 Oct).
+// Instagram links can't carry text, so a tap copies
 // the page context for the visitor to paste. Taps are counted (dm ig) for the 3-hourly check.
 // Old family links (?f=<code>, before 12 Oct) still open the page; the code leaves the address
 // bar so a share from there doesn't pass it on.
@@ -1123,6 +1136,18 @@ async function sendNote(kind,text,extra){
   if(!(r.ok&&j.ok))throw new Error(j.error||"Couldn't send. Try again in a minute.");
 }
 const netErr=err=>err instanceof TypeError?"Couldn't send. Check your connection and try again.":err.message;
+$("#msgForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const text=$("#mText").value.trim(),send=$("#mSend"),ms=$("#mState");
+  if(text.length<5){ms.textContent="Write your question first.";return}
+  if(send.getAttribute("aria-disabled"))return;
+  send.setAttribute("aria-disabled","true");ms.textContent="Sending…";
+  try{
+    await sendNote("question",text,{reply:$("#mReply").value.trim(),website:$("#mHp").value});
+    $("#msgForm").innerHTML=`<p>Sent ✓ Kalpit will reply${$("#mReply").value.trim()?" on the contact you gave":""} when he can.</p>`;return;
+  }catch(err){ms.textContent=netErr(err)}
+  send.removeAttribute("aria-disabled");
+});
 $("#igK").addEventListener("click",()=>{
   track("dm","ig");flushHits();
   const q=$("#q").value.trim()||lastQ;
