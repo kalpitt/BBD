@@ -24,6 +24,10 @@ under 50 lines. Round-3 review and what shipped: docs/IDEAS.md → Product revie
 - Safety (12 Oct): FAM_HASH set (only Kalpit's family link works); Worker emails go through mail()
   with a 40/day cap; problem alarm claims its D1 row before sending; visitor emails never trigger
   commits (price-check skill). Twin check now covers bandRange() and budgetFrom().
+- Speed (12 Oct, step 2): data.json starts loading in <head> (8 s, then the phone's saved copy:
+  pill says "Offline: saved prices"); fonts don't block the page and are trimmed (no opsz axis);
+  "lite" mode for 2 GB / 4-core Android phones and reduced motion (no sparks, still stars and diyas).
+  Pick shows in ~1.6 s instead of ~3.2 s on a slow phone over slow 4G.
 - Visit counts: private D1 `bbd-stats` (docs/OPS.md → Traffic). Kalpit: `?nostats` on his devices.
 - Cloudflare: Web Analytics (path `/BBD`), Email Routing; Worker rebuilds only on `worker/*`/`wrangler.toml`.
 - Ask box (11 Oct): slim prompt via `planAnswer()` (~1/3 size), typed budget = cap, named

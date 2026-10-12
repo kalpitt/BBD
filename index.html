@@ -2,7 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<script>
+// Start loading the picks while the rest of the page arrives (the main script awaits this).
+// 8 s for fresh prices; if that fails (offline, bad signal), the copy this phone saved last time.
+window.bbdData=(()=>{
+  const get=(cache,ms)=>{const c=new AbortController(),t=setTimeout(()=>c.abort(),ms);
+    return fetch("data.json",{cache,signal:c.signal}).then(r=>{clearTimeout(t);if(!r.ok)throw new Error(r.status);return r.json()})};
+  return get("no-cache",8000).then(d=>({d}),()=>get("force-cache",4000).then(d=>({d,saved:true})));
+})();
+</script>
 <title>Kalpit's Festive Picks 2026</title>
 <meta name="description" content="Kalpit's picks for Flipkart Big Billion Days and Amazon Great Indian Festival 2026. Set your budget, get the best buy.">
 <meta property="og:title" content="Kalpit's Festive Picks 2026">
@@ -19,7 +28,9 @@
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Mukta:wght@400;500;700&display=swap">
+<!-- Fonts load without holding up the page: text shows in the phone's own font first -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wdth,wght@75..100,400..800&family=Mukta:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wdth,wght@75..100,400..800&family=Mukta:wght@400;500;700&display=swap"></noscript>
 <style>
 /* One narrow column. The budget dial is the hero; picks re-rank under it as it moves. */
 :root{
@@ -55,7 +66,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px}
 
 .dial{display:grid;gap:2px}
 .dial p{margin:0;font-size:19px;color:var(--ink-soft)}
-.amount{font-family:var(--display);font-weight:750;font-size:clamp(56px,16vw,96px);line-height:.95;letter-spacing:-.02em;font-variation-settings:"wdth" var(--w,100),"opsz" 96;display:flex;align-items:baseline;gap:.06em;transition:font-variation-settings .15s ease;cursor:text}
+.amount{font-family:var(--display);font-weight:750;font-size:clamp(56px,16vw,96px);line-height:.95;letter-spacing:-.02em;font-variation-settings:"wdth" var(--w,100);display:flex;align-items:baseline;gap:.06em;transition:font-variation-settings .15s ease;cursor:text}
 .amount .r{font-weight:400;font-size:.55em;color:var(--marigold)}
 .amount input{all:unset;width:100%;min-width:0;font:inherit;font-variation-settings:inherit;color:inherit;font-variant-numeric:tabular-nums}
 .rail{--t:30px;position:relative;height:44px;margin-top:2px}
@@ -219,7 +230,7 @@ dialog .acts{justify-content:flex-end}
 .err-inline{color:var(--warn);font-size:14px;min-height:1.2em}
 
 .list.moving .row,.alts.moving .alt{animation:slot .35s ease}
-.hero.moving{animation:slot .35s ease,orbit 6s linear 2}
+.hero.moving{animation:slot .35s ease}
 @keyframes slot{from{opacity:.35;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion: reduce){.list.moving .row,.alts.moving .alt,.hero.moving{animation:none}.amount{transition:none}}
 
@@ -298,18 +309,21 @@ dialog .acts{justify-content:flex-end}
   .feed{width:100%;max-width:720px;margin-inline:auto;padding:40px 40px 48px}
 }
 @media (min-width:980px) and (min-height:640px){.sky{position:sticky;top:0;height:100vh;overflow-y:auto;scrollbar-width:none}.sky::-webkit-scrollbar{display:none}}
-@media (prefers-reduced-motion: reduce){.diya i,.fresh .dot::after,.hero,.hero::after,.typing i{animation:none}.scratch{transition:none}}
+@media (prefers-reduced-motion: reduce){.diya .glow,.diya .flame,.fresh .dot::after,.hero,.hero::after,.typing i{animation:none}.scratch{transition:none}}
+/* Cheap phones ("lite", set by the script): no endless glow, flicker or light orbit */
+.lite .diya .glow,.lite .diya .flame,.lite .fresh .dot::after,.lite .hero,.lite .hero::after{animation:none}
 .sky.still .diya i{animation-play-state:paused}
 /* Stars dim behind the big budget number so the digits stay crisp */
 .sky .stars{-webkit-mask-image:radial-gradient(ellipse 55% 30% at 30% 50%,rgba(0,0,0,.2),#000 75%);mask-image:radial-gradient(ellipse 55% 30% at 30% 50%,rgba(0,0,0,.2),#000 75%)}
 /* Sideways-scrolling chip rows fade at the edge while there's more to see */
 .chips.fade{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent)}
 /* Keep space for content that arrives with data.json, so slow connections don't jump */
-#cats:empty,#uses:empty{min-height:38px}
+#cats:empty{min-height:40px}#uses:empty{min-height:38px}
 /* .chips sets display:flex, which would override the hidden attribute */
 [hidden]{display:none!important}
 #ticks:empty{min-height:20px}
 .hero:empty{min-height:340px}
+.hero:empty::before{content:"Loading my picks…";color:var(--ink-soft)}
 /* Pick card: one offer line, secondary "send to myself" link */
 .hero .card{line-height:1.4}
 .linkbtn{background:none;border:0;padding:8px 0;font:500 15px var(--body);color:var(--ink-soft);text-decoration:underline;text-underline-offset:3px;cursor:pointer;justify-self:start}
@@ -481,9 +495,17 @@ const short=n=>n>=100000?"₹"+(n/100000).toFixed(n%100000?1:0)+"L":"₹"+Math.r
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
 const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-let D;
-try{D=await (await fetch("data.json",{cache:"no-cache"})).json()}
-catch(e){$("#hero").innerHTML="<h2>Couldn't load the picks</h2><p class='why'>Check your connection and reload the page.</p>";return}
+// Cheap phones (2 GB, or an Android with 4 cores or fewer) get the calm version, like reduced
+// motion: no sparks, still stars, answers appear at once. Saves ~40% of the work while sliding.
+const lite=reduce||(navigator.deviceMemory||8)<=2||(/Android/.test(navigator.userAgent)&&(navigator.hardwareConcurrency||8)<=4);
+if(lite)document.documentElement.classList.add("lite");
+
+let D,saved=false;
+try{({d:D,saved=false}=await window.bbdData)}
+catch(e){
+  $("#hero").innerHTML=`<h2>Couldn't load the picks</h2><p class="why">Check your connection, then try again.</p><div class="acts"><button class="btn go" type="button" onclick="location.reload()">Try again</button></div>`;
+  return;
+}
 
 $("#updated").textContent=D.updated;
 const P=D.products;
@@ -877,7 +899,7 @@ function render(force){
     <h3>${esc(x.n)}</h3><p class="why">${esc(x.why)}</p>${facts(x)}
     <div class="price"><strong>${priceText(x)}</strong><span class="est">${x.est?"Expected price · "+where(x):where(x)}</span></div>
     ${offers(x,"span")}<div class="acts">${buttons(x)}</div></article>`).join("");
-  if(!reduce&&(force||top.id!==lastTop)){for(const el of [hero,altBox,$("#list")]){el.classList.remove("moving");void el.offsetWidth;el.classList.add("moving")}}
+  if(!lite&&(force||top.id!==lastTop)){for(const el of [hero,altBox,$("#list")]){el.classList.remove("moving");void el.offsetWidth;el.classList.add("moving")}}
   lastTop=top.id;
   if(changed&&!force)sparks(hero);
   // Screen readers hear a short line when the pick changes, not the whole card
@@ -982,7 +1004,7 @@ $("#askForm").addEventListener("submit",async e=>{
       // Screen readers get the whole answer at once; the visible copy appears word by word
       k.innerHTML=`<span class="lbl">AI answer based on Kalpit's picks. Double-check before buying.</span><p><span class="vh">${esc(j.answer)}</span><span aria-hidden="true"></span></p>`;
       const out=k.querySelector("[aria-hidden]"),words=j.answer.split(/(\s+)/);
-      if(reduce)out.textContent=j.answer;
+      if(lite)out.textContent=j.answer;
       else{const gap=Math.min(40,2500/words.length);for(const w of words){out.textContent+=w;if(w.trim())await sleep(gap)}}
       const m=mentions(j.answer,NAMES).slice(0,4);
       if(m.length){const d=document.createElement("div");d.className="picks";d.innerHTML=m.map(x=>row(x)).join("");k.after(d)}
@@ -1104,13 +1126,13 @@ document.addEventListener("click",e=>{
 /* ---------- night sky: twinkling stars (paused when off screen) ---------- */
 (()=>{
   const c=$("#stars"),x=c.getContext("2d");let W=0,H=0,stars=[],on=true,last=0;
-  // Drawn at 1x and twinkling for the first 20 s only: cheap phones were spending ~19% CPU here
+  // Drawn at 1x and twinkling for the first 8 s only (never on cheap phones): it costs CPU
   function size(){const r=c.getBoundingClientRect();W=r.width;H=r.height;c.width=W;c.height=H;
     stars=Array.from({length:Math.round(W*H/2600)},()=>({x:Math.random()*W,y:Math.random()*H*.85,r:Math.random()*.8+.4,ph:Math.random()*6.3,sp:.5+Math.random()*1.5}))}
-  function draw(t){x.clearRect(0,0,W,H);x.fillStyle="#FFF1D2";for(const s of stars){x.globalAlpha=reduce?.55:.25+.55*Math.abs(Math.sin(s.ph+t/1000*s.sp));x.beginPath();x.arc(s.x,s.y,s.r,0,6.283);x.fill()}x.globalAlpha=1}
-  function loop(t){if(!on||document.hidden||t>20000)return;if(t-last>66){last=t;draw(t)}requestAnimationFrame(loop)}
+  function draw(t){x.clearRect(0,0,W,H);x.fillStyle="#FFF1D2";for(const s of stars){x.globalAlpha=lite?.55:.25+.55*Math.abs(Math.sin(s.ph+t/1000*s.sp));x.beginPath();x.arc(s.x,s.y,s.r,0,6.283);x.fill()}x.globalAlpha=1}
+  function loop(t){if(!on||document.hidden||t>8000)return;if(t-last>66){last=t;draw(t)}requestAnimationFrame(loop)}
   size();draw(0);
-  if(!reduce){
+  if(!lite){
     if("IntersectionObserver" in window)new IntersectionObserver(es=>{on=es[0].isIntersecting;$("#sky").classList.toggle("still",!on);if(on)requestAnimationFrame(loop)}).observe(c);
     document.addEventListener("visibilitychange",()=>{if(!document.hidden&&on)requestAnimationFrame(loop)});
     requestAnimationFrame(loop);
@@ -1128,8 +1150,8 @@ document.addEventListener("click",e=>{
   function show(){
     const mins=Math.max(0,Math.round((Date.now()-when)/60000));
     const t=mins<2?"just now":mins<60?mins+" min ago":mins<24*60?Math.round(mins/60)+"h ago":m[1]+" "+m[2];
-    $("#freshText").textContent="Prices checked "+t;
-    $("#fresh").classList.toggle("old",mins>=12*60);
+    $("#freshText").textContent=(saved?"Offline: saved prices, checked ":"Prices checked ")+t;
+    $("#fresh").classList.toggle("old",saved||mins>=12*60);
   }
   show();$("#fresh").hidden=false;setInterval(show,60000);
 })();
@@ -1141,7 +1163,7 @@ const sparks=(()=>{
     for(const p of ps){p.vy+=.12;p.x+=p.vx;p.y+=p.vy;p.life--;x.globalAlpha=Math.max(0,p.life/70);x.strokeStyle=p.c;x.lineWidth=p.r;x.beginPath();x.moveTo(p.x,p.y);x.lineTo(p.x-p.vx*2.2,p.y-p.vy*2.2);x.stroke()}
     x.globalAlpha=1;raf=ps.length?requestAnimationFrame(loop):0}
   return el=>{
-    const now=performance.now();if(reduce||now-lastBurst<300)return;lastBurst=now;
+    const now=performance.now();if(lite||now-lastBurst<300)return;lastBurst=now;
     const r=el.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;
     if(!raf){const d=Math.min(devicePixelRatio||1,2);c.width=innerWidth*d;c.height=innerHeight*d;x.setTransform(d,0,0,d,0,0)}
     const cols=["#FFC94D","#FFE680","#FF9A1F","#F4A51C"];

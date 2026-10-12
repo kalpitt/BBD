@@ -461,3 +461,9 @@ Template:
   claims first, stricter Reply-To, page link checked, `left` keys must be whole thousands; bandRange()
   and budgetFrom() are twin code (validator); phone-number scan covers code files; smoke test covers
   the finder, "Show me" band rule, the note, the store card. iPhone 16 → 72,999 from Kalpit's screenshot.
+- Step 2 (speed) shipped: early data.json load in <head> with timeout + saved-copy fallback and a Try
+  again button; Google Fonts preloaded (non-blocking), Bricolage without the opsz axis (131 → 78 KB);
+  lite mode (deviceMemory ≤ 2 or Android ≤ 4 cores, or reduced motion); stars twinkle 8 s not 20 s;
+  hero no longer replays its 6 s orbit on every pick change; reduced-motion diya rule fixed; viewport
+  interactive-widget=resizes-content for the chat keyboard. Measured (5× CPU, slow 4G, fonts +800 ms):
+  pick 3.2 s → 1.6 s, first paint 1.4 s → 0.35 s.
