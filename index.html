@@ -63,6 +63,12 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--night);border-color:var(--ink)}
 .chip.use[aria-pressed="true"]{background:var(--diya);color:var(--ink);border-color:var(--mari-fill)}
 .stack{display:grid;gap:10px}
+.about{font-size:14px;color:var(--ink-soft);margin-top:-6px}
+.about summary{cursor:pointer;list-style:none}
+.about summary::-webkit-details-marker{display:none}
+.about .lnk{color:var(--ink);text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.about[open] .lnk{text-decoration:none}
+.about p{margin:6px 0 0;color:var(--ink);font-size:15px}
 
 .dial{display:grid;gap:2px}
 .dial p{margin:0;font-size:19px;color:var(--ink-soft)}
@@ -345,6 +351,10 @@ dialog .acts{justify-content:flex-end}
     <div class="me"><span class="mono" aria-hidden="true">KT</span><span>Kalpit's festive picks</span></div>
     <span class="fresh" id="fresh" hidden><span class="dot"></span><span id="freshText"></span></span>
   </header>
+  <details class="about">
+    <summary>Picked by me for friends &amp; family · prices checked every 3 hours · <span class="lnk">How I pick</span></summary>
+    <p>I'm Kalpit. I list only what I'd buy for myself or my family, one pick per budget. AI agents check the prices every 3 hours during this sale. No one else decides a pick: only I do.</p>
+  </details>
 
   <div class="stack">
     <nav class="chips" id="cats" aria-label="Category"></nav>
@@ -393,7 +403,7 @@ dialog .acts{justify-content:flex-end}
   <div class="share"><button class="btn save" id="shareTab" type="button">Share this list with family</button><a class="btn save" id="chan" target="_blank" rel="noopener" hidden>Get sale updates on WhatsApp</a></div>
 
   <section class="askTeaser" id="askTeaser" aria-labelledby="askTeaserTitle">
-    <h3 id="askTeaserTitle">Still confused? Ask me</h3>
+    <h3 id="askTeaserTitle">Still confused? Ask my AI, or me</h3>
     <p>Tell my AI who it's for and your budget. It answers only from my picks on this page.</p>
     <div class="acts"><button class="btn go" type="button" data-ask>Ask Kalpit's AI</button><button type="button" class="link toK">Or message me</button></div>
   </section>
@@ -415,7 +425,7 @@ dialog .acts{justify-content:flex-end}
   </section>
 
   <footer>
-    <span>Sale dates: Amazon from 8 Oct, Flipkart from 9 Oct (8 Oct for Plus and Black members). Picks and prices updated <span id="updated"></span>. Prices can change during the sale, so check the final price on the payment page.</span>
+    <span>The sale is on: Amazon since 8 Oct, Flipkart since 9 Oct. Picks and prices updated <span id="updated"></span>. Prices can change during the sale, so check the final price on the payment page.</span>
     <span>Items marked "affiliate link" earn me a small commission at no extra cost to you. As an Amazon Associate I earn from qualifying purchases. All other links are plain links.</span>
     <span><button type="button" id="changeNum">Change my WhatsApp number</button></span>
     <span id="noStatsNote" hidden>Visits from this browser aren't counted (?nostats). Open kalpit.me/BBD/?nostats=off to count them again.</span>
@@ -599,7 +609,8 @@ function big(x){
   return "";
 }
 const hot=x=>big(x)?`<span class="hot">🔥 Big deal</span>`:"";
-const cardName=b=>b.name==="Bank"?"Bank card offer":b.name+" card offer";
+// "Bank" = the card the store's sale price assumes (sale.bankCard): one place to update when it changes
+const cardName=x=>(x.bank.name==="Bank"?(D.sale.bankCard||{})[x.s]||"Bank":x.bank.name)+" card offer";
 // "How you get this price". Affiliate items get labels only: Amazon doesn't allow
 // hand-typed prices next to affiliate links, so no ₹ or % for them here.
 function how(x){
@@ -609,12 +620,12 @@ function how(x){
     if(x.was)r.push([b==="was"?"Far below its usual price":"Below its usual price","",b==="was"]);
     if(x.list)r.push(["Sale price",""]);
     if(x.coupon)r.push(["Coupon on the product page",""]);
-    if(x.bank)r.push([b==="bank"?"Extra "+cardName(x.bank)+", much bigger than usual":cardName(x.bank),"",b==="bank"]);
+    if(x.bank)r.push([b==="bank"?"Extra "+cardName(x)+", much bigger than usual":cardName(x),"",b==="bank"]);
   }else{
     if(x.was)r.push(["Normal price",`<s>${fmt(x.was)}</s>`,b==="was"]);
     if(x.list)r.push(["Sale price",fmt(x.list)]);
     if(x.coupon)r.push(["Coupon","−"+fmt(x.coupon)]);
-    if(x.bank)r.push([cardName(x.bank)+(b==="bank"?", bigger than usual":""),"−"+fmt(x.bank.off),b==="bank"]);
+    if(x.bank)r.push([cardName(x)+(b==="bank"?", bigger than usual":""),"−"+fmt(x.bank.off),b==="bank"]);
   }
   r.push(["You pay",priceText(x),false,"pay"]);
   return `<details class="how"><summary>How you get this price</summary><table>${r.map(([l,v,bg,c])=>`<tr class="${bg?"big":c||""}"><td>${esc(l)}</td><td>${v}</td></tr>`).join("")}</table></details>`;
@@ -887,7 +898,7 @@ function render(force){
     <h2>${esc(top.n)}</h2><p class="why">${esc(top.why)}</p>${facts(top)}
     <div class="price"><strong>${priceText(top)}</strong><span class="est">${top.est?"Expected price · "+where(top):where(top)}</span></div>
     ${[top.card,...extras(top)].filter(Boolean).length?`<div class="card">${[cardText(top,D),...extras(top)].filter(Boolean).map(esc).join(" · ")}</div>`:""}
-    ${/\bcard\b/i.test(cardText(top,D))&&!/^no\b/i.test(top.card)?`<p class="cardnote">Without this card, expect to pay up to about 10% more.</p>`:""}
+    ${/\bcard\b/i.test(cardText(top,D))&&!/^no\b|no card needed/i.test(top.card)?`<p class="cardnote">Without this card, expect to pay up to about 10% more.</p>`:""}
     ${how(top)}
     ${heroButtons(top)}
     ${qa?`<div class="qa">${qa}</div>`:""}`;

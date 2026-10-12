@@ -467,3 +467,10 @@ Template:
   hero no longer replays its 6 s orbit on every pick change; reduced-motion diya rule fixed; viewport
   interactive-widget=resizes-content for the chat keyboard. Measured (5× CPU, slow 4G, fonts +800 ms):
   pick 3.2 s → 1.6 s, first paint 1.4 s → 0.35 s.
+- Step 3 (trust + copy) shipped with Kalpit's wording: "How I pick" line under the title (his text);
+  card lines down to 5 standard wordings, card names come from sale.bankCard ("Bank" = the store's
+  sale card; one place to update when the sale's cards change); "Best X" → "My pick" in 17 verdicts;
+  hype words gone (LG C6, Ray-Ban, Bose QC); sale "is on now"; teaser "Ask my AI, or me".
+  Next idea from Kalpit: ask visitors which card they have (step 5, replaces "price without card").
+  Noticed: the 3 pm price check found no changes but didn't bump "checked" (page said 5h ago);
+  checker session ~360k tokens (AGENTS: new session past ~300k); it awaits Kalpit's "update Vibe2".
