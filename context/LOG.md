@@ -447,3 +447,12 @@ Template:
   the generic card. Built: "Didn't see what you wanted?" box (instant matches by name/brand, emailed wish,
   optional reply contact), after-store check per pick with next-best/other-store help and 🛒 celebration,
   `report` counts + `reportAlarm` email at 2 problems/day, `left` drop-off counts. Price check reads reports first.
+- Same day, full review (6 reviewers: copy, accessibility, performance, security, data, product). Kalpit's calls:
+  Book4 prices confirmed ("Sale price"); Pixel 11 card adds the no-exchange price (~76–78k, two sources);
+  Ray-Ban stays on Creator (it's for creators); slider minimums raised to just below each tab's cheapest
+  pick; don't prune phones that never lead (they cover edge cases, reachable via filters/AI/search);
+  OPPO K14 row removed from fakeMrp; KEEP ALL "lowest price"/"all-time low" claims (hisense75, wfxm5,
+  whxm5, fr265, ringair, watch8c, fleuss, sandisk128, t7shield, mxmaster3s, zeno100l) — don't re-raise.
+  FAM_HASH set (family link locked). Open: iPhone 16 price/"exchange" unverified (sources disagree:
+  71,999 vs 74,999) — needs Kalpit's screenshot. Build plan: 1 safety+cleanup, 2 speed, 3 trust/copy,
+  4 accessibility, 5 the 4 features + search.
