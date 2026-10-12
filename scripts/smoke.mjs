@@ -96,7 +96,9 @@ try {
     }
     await page.close();
   }
-  // "Message Kalpit": everyone gets the form; a family link (?f=code; dummy number 911234567890 here) gets WhatsApp and leaves the address bar
+  // "Message Kalpit": everyone gets the form. A family link (?f=code) leaves the address bar; with
+  // FAM_HASH set (since 12 Oct) a wrong code (dummy number 911234567890 here) must keep the form
+  const famSet = /const FAM_HASH="[0-9a-f]{64}"/.test(await readFile(join(root, "index.html"), "utf8"));
   if (!problems.length) {
     const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
     page.on("pageerror", e => problems.push(`message Kalpit: script error: ${e.message}`));
@@ -111,8 +113,10 @@ try {
     await page.goto(base + "?f=ai8j5mmb#phones");
     await page.reload();
     await heroText(page);
+    await page.waitForTimeout(2500); // the code is checked with a slow hash
     const st = await page.evaluate(() => ({ wa: !document.querySelector("#famWa").hidden, form: !document.querySelector("#msgForm").hidden, url: location.href }));
-    if (!st.wa || st.form) problems.push("message Kalpit: the family link didn't switch the card to WhatsApp");
+    if (famSet && (st.wa || !st.form)) problems.push("message Kalpit: a family link with the wrong code switched the card to WhatsApp (FAM_HASH check)");
+    if (!famSet && (!st.wa || st.form)) problems.push("message Kalpit: the family link didn't switch the card to WhatsApp");
     if (/[?&]f=/.test(st.url)) problems.push("message Kalpit: the family code stayed in the address bar");
     await page.close();
   }

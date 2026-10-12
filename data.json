@@ -1,5 +1,5 @@
 {
-  "updated": "12 Oct, 12:10 pm",
+  "updated": "12 Oct, 2:52 pm",
   "checked": "12 Oct, 12:10 pm",
   "askUrl": "https://ask.kalpit.me",
   "amazonTag": "bestdeallive-21",
@@ -32,35 +32,35 @@
       {"use": "camera", "label": "Best camera"},
       {"use": "lasts", "label": "Lasts longest"}
     ]},
-    {"id": "tv", "label": "TVs", "noun": "a TV", "min": 10000, "max": 140000, "step": 1000, "def": 50000, "quick": [15000, 25000, 35000, 50000, 70000], "ask": ["Best 43-inch TV under ₹30k?", "55-inch for a bright living room, ₹40k?", "OLED or Mini LED, which is better?", "Simple TV for my parents?"]},
-    {"id": "laptops", "label": "Laptops", "noun": "a laptop", "min": 30000, "max": 130000, "step": 1000, "def": 55000, "quick": [35000, 45000, 55000, 70000, 100000], "note": "Everyday, office and premium laptops. No gaming laptops yet: the confirmed sale prices were poor value.", "ask": ["Laptop for college under ₹45k?", "Office work and Excel, ₹60k budget?", "MacBook Neo or a Windows laptop?", "Light laptop for travel?"]},
+    {"id": "tv", "label": "TVs", "noun": "a TV", "min": 11000, "max": 140000, "step": 1000, "def": 50000, "quick": [15000, 25000, 35000, 50000, 70000], "ask": ["Best 43-inch TV under ₹30k?", "55-inch for a bright living room, ₹40k?", "OLED or Mini LED, which is better?", "Simple TV for my parents?"]},
+    {"id": "laptops", "label": "Laptops", "noun": "a laptop", "min": 32000, "max": 130000, "step": 1000, "def": 55000, "quick": [35000, 45000, 55000, 70000, 100000], "note": "Everyday, office and premium laptops. No gaming laptops yet: the confirmed sale prices were poor value.", "ask": ["Laptop for college under ₹45k?", "Office work and Excel, ₹60k budget?", "MacBook Neo or a Windows laptop?", "Light laptop for travel?"]},
     {"id": "home", "label": "Home", "noun": "", "ask": ["Which AC for a hot top-floor bedroom?", "Washing machine for a family of 4?", "Fridge for a small family under ₹25k?", "Is an air purifier worth it this winter?"], "types": [
       {"id": "washing", "label": "Washing machine", "noun": "a washing machine", "min": 9000, "max": 70000, "step": 500, "def": 25000},
       {"id": "fridge", "label": "Fridge", "noun": "a fridge", "min": 12500, "max": 80000, "step": 500, "def": 32000},
-      {"id": "ac", "label": "AC", "noun": "an AC", "min": 28000, "max": 60000, "step": 500, "def": 36000},
-      {"id": "microwave", "label": "Microwave", "noun": "a microwave", "min": 4000, "max": 18000, "step": 250, "def": 15000},
-      {"id": "chimney", "label": "Chimney", "noun": "a chimney", "min": 6000, "max": 20000, "step": 250, "def": 15000},
-      {"id": "dishwasher", "label": "Dishwasher", "noun": "a dishwasher", "min": 30000, "max": 60000, "step": 500, "def": 45000},
-      {"id": "vacuum", "label": "Robot vacuum", "noun": "a robot vacuum", "min": 10000, "max": 40000, "step": 500, "def": 16000},
-      {"id": "purifier", "label": "Air purifier", "noun": "an air purifier", "min": 6000, "max": 25000, "step": 250, "def": 12000},
-      {"id": "geyser", "label": "Geyser", "noun": "a geyser", "min": 2000, "max": 12000, "step": 250, "def": 6000},
-      {"id": "heater", "label": "Room heater", "noun": "a room heater", "min": 2500, "max": 12000, "step": 250, "def": 4000}
+      {"id": "ac", "label": "AC", "noun": "an AC", "min": 31000, "max": 60000, "step": 500, "def": 36000},
+      {"id": "microwave", "label": "Microwave", "noun": "a microwave", "min": 4750, "max": 18000, "step": 250, "def": 15000},
+      {"id": "chimney", "label": "Chimney", "noun": "a chimney", "min": 9750, "max": 20000, "step": 250, "def": 15000},
+      {"id": "dishwasher", "label": "Dishwasher", "noun": "a dishwasher", "min": 34000, "max": 60000, "step": 500, "def": 45000},
+      {"id": "vacuum", "label": "Robot vacuum", "noun": "a robot vacuum", "min": 15500, "max": 40000, "step": 500, "def": 16000},
+      {"id": "purifier", "label": "Air purifier", "noun": "an air purifier", "min": 7000, "max": 25000, "step": 250, "def": 12000},
+      {"id": "geyser", "label": "Geyser", "noun": "a geyser", "min": 2500, "max": 12000, "step": 250, "def": 6000},
+      {"id": "heater", "label": "Room heater", "noun": "a room heater", "min": 2750, "max": 12000, "step": 250, "def": 4000}
     ]},
     {"id": "audio", "label": "Audio & chargers", "noun": "", "ask": ["Earbuds for the gym under ₹3k?", "Headphones with noise cancelling for flights?", "Fast charger for my Samsung phone?", "Earbuds for calls in a noisy office?"], "types": [
-      {"id": "earbuds", "label": "Earbuds", "noun": "earbuds", "min": 900, "max": 16000, "step": 100, "def": 3000},
+      {"id": "earbuds", "label": "Earbuds", "noun": "earbuds", "min": 1400, "max": 16000, "step": 100, "def": 3000},
       {"id": "headphones", "label": "Headphones", "noun": "headphones", "min": 2500, "max": 22000, "step": 500, "def": 18000},
       {"id": "speakers", "label": "Speakers & soundbars", "noun": "a speaker or soundbar", "min": 4000, "max": 12000, "step": 250, "def": 5000},
       {"id": "chargers", "label": "Chargers & power banks", "noun": "a charger or power bank", "min": 500, "max": 7000, "step": 100, "def": 5000}
     ]},
-    {"id": "fitness", "label": "Fitness", "noun": "fitness gear", "min": 6000, "max": 30000, "step": 500, "def": 20000, "ask": ["Garmin or Ultrahuman Ring for running?", "Walking pad for a small flat?"]},
+    {"id": "fitness", "label": "Fitness", "noun": "fitness gear", "min": 6500, "max": 30000, "step": 500, "def": 20000, "ask": ["Garmin or Ultrahuman Ring for running?", "Walking pad for a small flat?"]},
     {"id": "gadgets", "label": "Gadgets", "noun": "", "ask": ["Gift for a dad who likes gadgets, ₹5k?", "Tablet for kids' online classes?", "Watch for my husband under ₹10k?", "Fire TV Stick or Echo Dot?"], "types": [
       {"id": "watches", "label": "Watches", "noun": "a watch", "min": 8000, "max": 30000, "step": 500, "def": 16000},
       {"id": "creator", "label": "Camera & creator", "noun": "camera or creator gear", "min": 4000, "max": 22000, "step": 500, "def": 16000},
       {"id": "desk", "label": "Desk", "noun": "a monitor or mouse", "min": 4000, "max": 20000, "step": 500, "def": 18000},
-      {"id": "tablet", "label": "Tablet", "noun": "a tablet", "min": 18000, "max": 35000, "step": 500, "def": 20000},
-      {"id": "hometech", "label": "Smart home", "noun": "a smart home device", "min": 3000, "max": 8000, "step": 250, "def": 4500}
+      {"id": "tablet", "label": "Tablet", "noun": "a tablet", "min": 18500, "max": 35000, "step": 500, "def": 20000},
+      {"id": "hometech", "label": "Smart home", "noun": "a smart home device", "min": 3250, "max": 8000, "step": 250, "def": 4500}
     ]},
-    {"id": "gifts", "label": "Diwali gifts", "noun": "a gift", "min": 500, "max": 5000, "step": 100, "def": 2000, "quick": [1000, 2000, 3000, 5000], "note": "Gifts under ₹1k, ₹2k and ₹5k. Slide to your budget. Includes a few picks from other tabs.", "ask": ["Diwali gift for my sister under ₹2,000?", "Gifts for office colleagues under ₹1k?", "Something useful for parents under ₹5k?", "Gift for a teenager who loves music?"]}
+    {"id": "gifts", "label": "Diwali gifts", "noun": "a gift", "min": 600, "max": 5000, "step": 100, "def": 2000, "quick": [1000, 2000, 3000, 5000], "note": "Gifts under ₹1k, ₹2k and ₹5k. Slide to your budget. Includes a few picks from other tabs.", "ask": ["Diwali gift for my sister under ₹2,000?", "Gifts for office colleagues under ₹1k?", "Something useful for parents under ₹5k?", "Gift for a teenager who loves music?"]}
   ],
   "products": [
     {"id": "ip18p", "cat": "phones", "n": "Apple iPhone 18 Pro", "p": 158900, "s": "Flipkart", "card": "Includes bank offers", "why": "Newest iPhone, barely discounted. Buy only if you want the latest.", "tags": ["iphone", "camera", "lasts"], "spec": {"chip": "A20 Pro", "ip": "IP68", "frame": "metal"}, "score": 3, "url": "https://www.flipkart.com/apple-iphone-18-pro-burgundy-256-gb/p/itm2b2c10b01cc46?pid=MOBHQT5JBPDHYHJM"},
@@ -69,7 +69,7 @@
     {"id": "s25u", "cat": "phones", "n": "Samsung Galaxy S25 Ultra", "p": 84999, "was": 92000, "s": "Amazon", "card": "Sale price, includes coupon offer", "why": "Big screen, S Pen and the best zoom camera here, now under ₹85k.", "tags": ["camera", "lasts"], "spec": {"chip": "Snapdragon 8 Elite", "ip": "IP68", "frame": "metal"}, "score": 10},
     {"id": "ip17", "cat": "phones", "n": "Apple iPhone 17", "p": 81999, "was": 82900, "s": "Flipkart", "card": "Includes bank offer. Extra ₹3,000 cashback with Flipkart Axis card", "noExtra": true, "why": "Only if you're already on iPhone. This year's discount is small, so don't switch just for the deal.", "tags": ["iphone", "camera", "lasts"], "spec": {"chip": "A19", "ip": "IP68", "frame": "metal"}, "score": 6, "url": "https://www.flipkart.com/apple-iphone-17-lavender-256-gb/p/itm5c650337c09ee?pid=MOBHQV9YDG7CGRAM", "faq": [["iPhone 17 or iPhone 16?", "17. The iPhone 16 price on Amazon assumes you exchange an old phone. Without exchange, the 17 is the better buy."]]},
     {"id": "ip16", "cat": "phones", "n": "Apple iPhone 16", "p": 71999, "was": 89900, "s": "Amazon", "card": "Price assumes SBI card plus an exchange", "why": "Small discount, and the price assumes an exchange. Only for iPhone users on a tight budget.", "tags": ["iphone", "lasts"], "spec": {"chip": "A18", "ip": "IP68", "frame": "metal"}, "score": 4},
-    {"id": "px11", "cat": "phones", "n": "Google Pixel 11", "p": 69999, "was": 89999, "s": "Flipkart", "card": "Includes bank and exchange offer", "why": "Newest Pixel: the best camera and cleanest Android at this budget, with long updates.", "tags": ["camera"], "spec": {"chip": "Tensor G6", "ip": "IP68", "frame": "metal"}, "score": 10, "url": "https://www.flipkart.com/google-pixel-11-frost-256-gb/p/itmc51935a8001b1?pid=MOBHPHNVEC2P4WV3"},
+    {"id": "px11", "cat": "phones", "n": "Google Pixel 11", "p": 69999, "was": 89999, "s": "Flipkart", "card": "Includes bank and exchange offer. Without an exchange: about ₹76,000–78,000", "why": "Newest Pixel: the best camera and cleanest Android at this budget, with long updates.", "tags": ["camera"], "spec": {"chip": "Tensor G6", "ip": "IP68", "frame": "metal"}, "score": 10, "url": "https://www.flipkart.com/google-pixel-11-frost-256-gb/p/itmc51935a8001b1?pid=MOBHPHNVEC2P4WV3"},
     {"id": "ip15", "cat": "phones", "n": "Apple iPhone 15", "p": 63999, "s": "Flipkart", "card": "Includes bank offer", "why": "Old model with a small discount. Only if you must have an iPhone under ₹65k.", "tags": ["iphone", "lasts"], "spec": {"chip": "A16 Bionic", "ip": "IP68", "frame": "metal"}, "score": 4, "url": "https://www.flipkart.com/apple-iphone-15-blue-128-gb/p/itm387c20f1f5347?pid=MOBHQV9YZGYG64U7"},
     {"id": "x200t", "cat": "phones", "n": "Vivo X200T", "p": 60000, "s": "Flipkart", "card": "No bank card offer on this phone", "why": "Zeiss 3x zoom camera and 6200 mAh battery. The photographer's pick at ₹60k.", "tags": ["camera", "lasts"], "spec": {"chip": "Dimensity 9400+", "ip": "IP68/IP69", "frame": "metal"}, "score": 8, "url": "https://www.flipkart.com/vivo-x200t-seaside-lilac-256-gb/p/itm1b8452d68859b?pid=MOBHJK5M62ZH9FAM"},
     {"id": "xi17", "cat": "phones", "n": "Xiaomi 17", "p": 59999, "was": 89999, "s": "Amazon", "card": "Includes credit card EMI offer", "why": "Flagship chip and camera under ₹60k.", "tags": ["camera", "gaming", "lasts"], "spec": {"chip": "Snapdragon 8 Elite Gen 5", "ip": "IP68", "frame": "metal"}, "score": 9},
@@ -126,11 +126,11 @@
     {"id": "ideapad3", "cat": "laptops", "n": "Lenovo IdeaPad Slim 3 (Core i7-13620H, 16GB/512GB)", "p": 66490, "list": 75990, "bank": {"name": "SBI", "off": 9500}, "aff": true, "s": "Amazon", "card": "Includes SBI card offer", "why": "Fast i7 chip, 16 GB RAM, metal lid and Office included. Good for heavy office work and multitasking.", "tags": [], "score": 7},
     {"id": "acer-one14", "cat": "laptops", "n": "Acer Aspire One 14 (Ryzen 3 7320U, 8GB/256GB)", "p": 32240, "list": 39490, "coupon": 3000, "bank": {"name": "SBI", "off": 4250}, "aff": true, "s": "Amazon", "card": "After SBI card and coupon offer", "why": "Cheapest sensible Windows laptop for browsing, online classes and Office. Only 256 GB storage and a basic HD screen, so for light use.", "tags": [], "score": 6},
     {"id": "dell15-c3", "cat": "laptops", "n": "Dell 15 (Core 3 100U, 8GB/512GB)", "p": 43490, "list": 49990, "bank": {"name": "SBI", "off": 6500}, "aff": true, "s": "Amazon", "card": "Includes SBI card offer", "why": "Worth the stretch over the Acer: sharper Full HD 120Hz screen, 512 GB storage and Office included. Trusted Dell service.", "tags": [], "score": 7},
-    {"id": "gb4i3", "cat": "laptops", "n": "Samsung Galaxy Book4 (Core i3)", "p": 47990, "was": 53990, "s": "Flipkart", "card": "Reported sale price", "why": "Light, good screen. i3 is fine for browsing and Office.", "tags": [], "score": 5, "url": "https://www.flipkart.com/samsung-galaxy-book4-metal-intel-core-i3-13th-gen-1315u-8-gb-512-gb-ssd-windows-11-home-np750xgj-lg9in-thin-light-laptop/p/itmc29d559898e6f?pid=COMH4Y6KKRC9YSWE"},
+    {"id": "gb4i3", "cat": "laptops", "n": "Samsung Galaxy Book4 (Core i3)", "p": 47990, "was": 53990, "s": "Flipkart", "card": "Sale price", "why": "Light, good screen. i3 is fine for browsing and Office.", "tags": [], "score": 5, "url": "https://www.flipkart.com/samsung-galaxy-book4-metal-intel-core-i3-13th-gen-1315u-8-gb-512-gb-ssd-windows-11-home-np750xgj-lg9in-thin-light-laptop/p/itmc29d559898e6f?pid=COMH4Y6KKRC9YSWE"},
     {"id": "vivo15", "cat": "laptops", "n": "ASUS Vivobook 15 (Core 3, 8GB/512GB)", "p": 37740, "aff": true, "s": "Amazon", "card": "After bank offer", "why": "Bigger screen and more power for work.", "tags": [], "score": 6},
-    {"id": "gb4i5", "cat": "laptops", "n": "Samsung Galaxy Book4 (Core i5)", "p": 54990, "s": "Flipkart", "card": "Reported sale price", "why": "The sweet spot of the Book4 range. Pairs well with Samsung phones.", "tags": [], "score": 8, "url": "https://www.flipkart.com/samsung-galaxy-book4-metal-intel-core-i5-13th-gen-1335u-16-gb-512-gb-ssd-windows-11-home-np750xgj-thin-light-laptop/p/itm1df5212efb9fc?pid=COMGZUYDGFJGHZR4"},
+    {"id": "gb4i5", "cat": "laptops", "n": "Samsung Galaxy Book4 (Core i5)", "p": 54990, "s": "Flipkart", "card": "Sale price", "why": "The sweet spot of the Book4 range. Pairs well with Samsung phones.", "tags": [], "score": 8, "url": "https://www.flipkart.com/samsung-galaxy-book4-metal-intel-core-i5-13th-gen-1335u-16-gb-512-gb-ssd-windows-11-home-np750xgj-thin-light-laptop/p/itm1df5212efb9fc?pid=COMGZUYDGFJGHZR4"},
     {"id": "mbneo", "cat": "laptops", "n": "Apple MacBook Neo (256 GB)", "p": 64990, "s": "Amazon", "card": "Includes bank offer", "why": "The cheapest MacBook. Long battery and a great screen for students and office work.", "tags": [], "score": 8},
-    {"id": "gb4i7", "cat": "laptops", "n": "Samsung Galaxy Book4 (Core i7)", "p": 64990, "s": "Flipkart", "card": "Reported sale price", "why": "Only if you do heavy work like Excel models or light editing.", "tags": [], "score": 5, "url": "https://www.flipkart.com/samsung-galaxy-book4-metal-intel-core-i7-13th-gen-1355u-16-gb-512-gb-ssd-windows-11-home-np750xgj-kg3in-np750xgj-lg3in-np750xgj-lg8in-thin-light-laptop/p/itm1df5212efb9fc?pid=COMGZUYDYPUZAAXD"},
+    {"id": "gb4i7", "cat": "laptops", "n": "Samsung Galaxy Book4 (Core i7)", "p": 64990, "s": "Flipkart", "card": "Sale price", "why": "Only if you do heavy work like Excel models or light editing.", "tags": [], "score": 5, "url": "https://www.flipkart.com/samsung-galaxy-book4-metal-intel-core-i7-13th-gen-1355u-16-gb-512-gb-ssd-windows-11-home-np750xgj-kg3in-np750xgj-lg3in-np750xgj-lg8in-thin-light-laptop/p/itm1df5212efb9fc?pid=COMGZUYDYPUZAAXD"},
     {"id": "wm-bosch8", "cat": "home", "type": "washing", "n": "Bosch 8 kg 5-star", "p": 16240, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "Best value washing machine here. Bosch build quality.", "tags": [], "score": 9},
     {"id": "wm-whirlpool8", "cat": "home", "type": "washing", "n": "Whirlpool 8 kg 5-star fully automatic", "p": 22990, "aff": true, "s": "Amazon", "card": "After SBI card offer", "why": "8 kg with 5-star efficiency from a trusted brand, helped by a big SBI card discount.", "tags": [], "score": 6},
     {"id": "wm-lg8", "cat": "home", "type": "washing", "n": "LG 8 kg 5-star inverter", "p": 17490, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "LG reliability and service network.", "tags": [], "score": 8},
@@ -250,7 +250,6 @@
   "fakeMrp": [
     {"n": "Motorola Edge 70 Pro", "mrp": 89999, "p": 36999},
     {"n": "Poco X8 Power", "mrp": 79999, "p": 29999},
-    {"n": "OPPO K14 Plus 5G", "mrp": 61999, "p": 25999},
     {"n": "Poco M8x 5G", "mrp": 44999, "p": 17999}
   ],
   "faq": [
