@@ -1,6 +1,6 @@
 # STATE: where BBD is right now
 
-_Last updated: 12 Oct 2026, ~6:15 pm IST. Overwrite at the end of every session; keep it
+_Last updated: 12 Oct 2026, ~8 pm IST. Overwrite at the end of every session; keep it
 under 50 lines. Today's review + 5-step build: context/LOG.md (12 Oct entries)._
 
 ## Live
@@ -31,7 +31,7 @@ under 50 lines. Today's review + 5-step build: context/LOG.md (12 Oct entries)._
 1. HMD Vibe2: one report says 11,159 (site 11,999). Reply "update Vibe2" in the new checker session.
 2. Veto the 13 picks added 11 Oct (reply "remove X"); still-open suggestions: Nothing Phone (4b),
    realme P4x, realme Buds Air 8, Voltas 1.5 ton AC, OnePlus Nord Buds 4 Pro, Sony XM6.
-3. WhatsApp Channel link → `channel` in data.json (button is built).
+3. Gmail filter for bbd@kalpit.me (label BBD + alert): steps sent in chat 12 Oct; unconfirmed.
 4. Amazon Associates India question (draft in the round-3 review doc); EarnKaro; `add-bbd-redirect`.
 
 ## Decisions (12 Oct, don't re-raise)
@@ -45,6 +45,7 @@ under 50 lines. Today's review + 5-step build: context/LOG.md (12 Oct entries)._
   Hinglish consistency, 20 cheap phones without `spec`, storage size missing from some phone names.
 
 ## Next steps for an agent
-1. Check the new price checker's first runs went fine (one subagent, `checked` stamped, phone message).
+1. Check the new price checker's first runs went fine (one subagent, `checked` stamped, phone message,
+   new "Instagram" line from `dm ig` taps, skill step 4d).
 2. After a day, read `bbd-stats` (report, left, find, card, fb) and tell Kalpit what visitors say.
 3. On 9 Nov ask Kalpit: "Sale's over" banner + ask box off, or take the site down (AGENTS rule 6).

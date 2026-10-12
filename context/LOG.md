@@ -502,3 +502,15 @@ Template:
   affiliate pick is named; raising slider min above the cheapest price hides its dot (use floor to step);
   a pending stylesheet blocks inline scripts, so Google Fonts delayed data.json.
 - Next: verify the new checker's runs; read bbd-stats after a day; 9 Nov sunset question.
+
+## 2026-10-12: contact channel → Instagram DM
+- Did: tried a WhatsApp Channel button (live, then hidden again the same hour); "Message Kalpit" is now
+  one "DM Kalpit on Instagram" button for everyone (a tap copies page link + last question, counted as
+  `dm ig`), with the email form back under "No Instagram?". Family WhatsApp button, FAM_HASH and
+  scripts/fam-hash.mjs removed; old `?f=` links still strip the code. Price check reports DM taps (4d).
+- Decided: Kalpit not ready to run a Channel or an Instagram community (WIP limits); no login-only
+  inbox portal for now (Gmail already saves, alerts and gets drafted replies; storing question text in
+  D1 would break rule 5). A shared inbox could live in the personal-os console after Diwali.
+- Gotchas: ig.me links can't carry text (hence the clipboard copy); DMs from non-followers land in
+  Instagram "Message requests" without alerts; the site can only count taps, never see DMs.
+- Next: confirm the price-check "Instagram" line appears; Kalpit to set the Gmail BBD filter.
