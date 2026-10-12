@@ -1,6 +1,6 @@
 {
-  "updated": "11 Oct, 11:35 pm",
-  "checked": "12 Oct, 9:10 am",
+  "updated": "12 Oct, 12:10 pm",
+  "checked": "12 Oct, 12:10 pm",
   "askUrl": "https://ask.kalpit.me",
   "amazonTag": "bestdeallive-21",
   "sale": {
@@ -145,7 +145,7 @@
     {"id": "fr-sam256", "cat": "home", "type": "fridge", "n": "Samsung 256 L 3-star inverter", "p": 30490, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "A little more space for 3–4 people.", "tags": [], "score": 8},
     {"id": "fr-haier325", "cat": "home", "type": "fridge", "n": "Haier 325 L 2-star", "p": 32890, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "Biggest double door in this price range.", "tags": [], "score": 6},
     {"id": "fr-sam330", "cat": "home", "type": "fridge", "n": "Samsung 330 L 3-star Wi-Fi", "p": 37490, "was": 42990, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "For a family of 4–5.", "tags": [], "score": 6},
-    {"id": "fr-haier596", "cat": "home", "type": "fridge", "n": "Haier 596 L side-by-side", "p": 61290, "was": 61990, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "Cheapest big side-by-side worth buying.", "tags": [], "score": 7},
+    {"id": "fr-haier596", "cat": "home", "type": "fridge", "n": "Haier 596 L side-by-side", "p": 53390, "was": 61990, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "Cheapest big side-by-side worth buying.", "tags": [], "score": 7},
     {"id": "fr-haier540", "cat": "home", "type": "fridge", "n": "Haier 540 L 3-star side-by-side", "p": 43640, "aff": true, "s": "Amazon", "card": "After SBI card offer", "why": "A big side-by-side for far less than most. Strong SBI card discount.", "tags": [], "score": 7},
     {"id": "fr-lg650", "cat": "home", "type": "fridge", "n": "LG 650 L side-by-side", "p": 69990, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "Premium side-by-side from LG.", "tags": [], "score": 5},
     {"id": "ac-carrier1", "cat": "home", "type": "ac", "n": "Carrier 1 ton 3-star inverter", "p": 31240, "was": 32990, "aff": true, "s": "Amazon", "card": "After bank and coupon offer", "why": "For a small bedroom.", "tags": [], "score": 6},
