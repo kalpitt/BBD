@@ -150,9 +150,12 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
   it goes to email, so volume is fine.
 - **Price check runs on Sonnet (Kalpit, 10 Oct)** in a long-running session the Routine wakes
   ("BBD price checker, Sonnet"). Routines that start a fresh session each run can't get
-  push access to this repo (tested 10 Oct), so don't switch to that. The old Opus Routine is
-  paused, not deleted. If the Sonnet session's context grows past ~300k tokens, start a new
-  session with the repo attached and point a new Routine at it.
+  push access to this repo (tested 10 Oct), so don't switch to that. Old Routines are
+  paused, not deleted. **Since 12 Oct each run happens inside one subagent** and the session
+  keeps only its short report, so its memory grows ~3k tokens per run instead of ~25k.
+  The Routine's prompt has it check its own memory each run and, past 500k tokens, start
+  its own successor (new session + new Routine, old Routine paused) or tell Kalpit if it can't.
+  Rotated by hand on 12 Oct (the first session reached ~360k).
 - **The ask box sends only the picks that fit (11 Oct, Kalpit OK'd):** `planAnswer()` gives the AI
   the picks near the budget (or the products the question names) plus the names of the rest,
   about a third of the old prompt, so the free tier covers roughly 3× more questions. A budget

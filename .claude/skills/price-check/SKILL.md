@@ -89,10 +89,9 @@ list them in the report for Kalpit.
 
 ## 3b. Stamp the check time
 If you compared at least a few prices this run, set `checked` in `data.json` to the
-current IST time, e.g. `"9 Oct, 3:05 pm"` (same shape as `updated`), **only when**
-something changed or the stored `checked` is 6 hours old or more. That halves the empty
-commits, and the page's "Prices checked 5 h ago" stays true. Don't bump it if every
-source was blocked. If nothing else changed, commit just that line as `Price check: no changes`,
+current IST time, e.g. `"9 Oct, 3:05 pm"` (same shape as `updated`), **every run** (Kalpit,
+12 Oct: the page promises "prices checked every 3 hours", so the "Prices checked … ago" pill
+must agree). Don't bump it if every source was blocked. If nothing else changed, commit just that line as `Price check: no changes`,
 then `git pull --rebase origin main && git push origin main`. Don't bump `updated`
 for a no-change run (it retires the Ask box's cached answers).
 

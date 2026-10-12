@@ -52,6 +52,11 @@ under 50 lines. Round-3 review and what shipped: docs/IDEAS.md → Product revie
 5. Older: Nothing (4a) Pro price; `add-bbd-redirect` merge; EarnKaro; `?nostats` on his devices.
 6. Unticked in the review (don't build unless he asks): trust/privacy notes, Gmail step move, cut list.
 
+Price checker open items (12 Oct, carried to the new checker session): HMD Vibe2 one Flipkart
+report says 11,159 (site 11,999), Kalpit to reply "update Vibe2"; still open suggestions: Nothing
+Phone (4b), realme P4x, realme Buds Air 8, Pixel 11, Voltas 1.5 ton AC, OnePlus Nord Buds 4 Pro,
+Sony XM6.
+
 ## Known gaps
 - Laptops: under ₹40k only the Acer Aspire One 14; no gaming laptop.
 - 7 picks added 8 Oct have one source only (Sony WF-1000XM5, Bose QC Earbuds, Sennheiser
