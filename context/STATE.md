@@ -19,7 +19,6 @@ under 50 lines. Today's review + 5-step build: context/LOG.md (12 Oct entries)._
 - Speed: data.json loads from <head> with a saved-copy fallback; fonts non-blocking; "lite" mode for
   cheap phones. Accessibility: skip link, focus kept on chips, chat read out, 44px small targets.
 - Twin code (validator): rankAt, big, nameIndex, cardText, bandRange, budgetFrom (+HINDI_NUM, NOT_MONEY).
-- Smoke test covers feedback, keyboard, search, card question, price drop, family link refusal.
 - Visit counts: private D1 `bbd-stats` (docs/OPS.md → Traffic has queries for report, left, find, card, fb).
 
 ## Price check
