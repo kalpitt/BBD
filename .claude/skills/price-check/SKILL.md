@@ -167,6 +167,13 @@ sends them himself, from `bbd@kalpit.me`.
 6. Label the source thread `BBD drafted`.
 7. Never copy question text, names or contacts into the repo, commits or the phone message.
 
+## 4d. Instagram DM taps (Kalpit, 12 Oct)
+"Message Kalpit" opens his Instagram DMs. The DM itself can't be seen; only taps are counted.
+Query `bbd-stats` (Cloudflare connector, `docs/OPS.md` → Traffic):
+`SELECT day, n FROM hits WHERE ev = 'dm' AND k = 'ig' AND day >= date('now','+5 hours','+30 minutes','-1 day')`.
+Today's count above 0 → the "Instagram" line in section 5 (today and yesterday). No connector →
+"Instagram taps" under "Couldn't check".
+
 ## 5. Final message (max ~11 lines)
 ```
 Price check, 9 Oct 3 pm
@@ -178,10 +185,11 @@ Waiting for your "keep": <every pick check-data.mjs lists as auto, if any>
 New deals (reply "add X" to list one):
 - <product> ₹<price>, <store>; <why: e.g. under its Sep low ₹X, or 15% SBI offer> (<category, or "new type: air purifier">) <post link>
 Questions: 2 reply drafts in Gmail → Drafts (set From: bbd@kalpit.me); 1 left no contact
+Instagram: 3 people tapped "DM Kalpit" today (yesterday 5). Check Message requests too
 ```
 The "Questions" line shows counts only, never names, numbers or question text.
 Exact prices are fine here: this message only goes to Kalpit's phone, not the site.
-If nothing changed, nothing needs Kalpit, no deal made the cut and no reply was drafted, say exactly:
+If nothing changed, nothing needs Kalpit, no deal made the cut, no reply was drafted and nobody tapped the Instagram button today, say exactly:
 "Price check: no changes."
 
 ## Specs

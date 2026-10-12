@@ -248,6 +248,7 @@ async function sendMsg(body, req, env, ctx, fromSite, json) {
 //   click id~amazon | id~flipkart store button taps
 //   share save | tab | status     Send to myself, Share this list, Share as Status
 //   chat  open                    ask chat opened, once per page load
+//   dm    ig                      "DM Kalpit on Instagram" taps (since 12 Oct; the DM itself isn't seen)
 //   fb    y | n | n-price | n-product | n-unclear   👍 / 👎 under an AI answer, and what went wrong
 //   find  hit | miss              header search found a pick or not (once per page load each)
 //   card  sbi~y | axis-or-icici~n "Do you have an SBI card?" answers
@@ -255,7 +256,7 @@ async function sendMsg(body, req, env, ctx, fromSite, json) {
 //                                 (2 problem reports on one pick in a day email Kalpit: reportAlarm)
 //   left  view~budget             left that view (budget rounded) without tapping a store button
 //   ask   answered | cached | limit | error | busy   (counted here)
-//   msg   sent | wish | report    "Send to Kalpit" emails, "Didn't see what you wanted?" notes, "price was
+//   msg   sent | wish | report    "Send to Kalpit" emails (form removed 12 Oct), "Didn't see what you wanted?" notes, "price was
 //                                 different" notes (counted here)
 //   alarm report-<id>             problem-report email sent for that pick today (counted here)
 //   mail  sent                    emails sent to Kalpit today, all kinds (mail(): daily cap)
@@ -276,7 +277,7 @@ function count(env, ctx, rows) {
 
 const HIT_KEYS = {
   visit: /^(new|back)$/, open: /^(home|link|reload)$/, ref: /^[a-z0-9][a-z0-9.-]{2,59}$/, tab: /^[a-z]+(-[a-z]+)?$/, use: /^[a-z]+-[a-z]+$/,
-  click: /^[a-z0-9-]{1,30}~(amazon|flipkart)$/, share: /^(save|tab|status)$/, chat: /^open$/, fb: /^(y|n|n-price|n-product|n-unclear)$/, find: /^(hit|miss)$/, card: /^[a-z-]{2,20}~(y|n)$/,
+  click: /^[a-z0-9-]{1,30}~(amazon|flipkart)$/, share: /^(save|tab|status)$/, chat: /^open$/, dm: /^ig$/, fb: /^(y|n|n-price|n-product|n-unclear)$/, find: /^(hit|miss)$/, card: /^[a-z-]{2,20}~(y|n)$/,
   report: /^[a-z0-9-]{1,30}~(amazon|flipkart)~(ok|bought|oos|price|wrong)$/, left: /^[a-z]+(-[a-z]+)?~[1-9]\d{0,3}000$/,
 };
 // POST /hit from the page: {"e": [["tab", "phones"], ["click", "s25fe~amazon"], ...]}

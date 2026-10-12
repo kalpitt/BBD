@@ -41,6 +41,7 @@ Status: ✅ done · 🔜 next · 💬 needs Kalpit · ⏸ later / only if data s
 | A7 | Gaming laptops | Gap, but small audience among family | ⏸ 10 Oct: only RTX 3050 models had confirmed prices at ≤₹85k, skipped as poor value. Premium laptops (₹97k, ₹1.24L) added |
 | A9 | **Ask box as a chat:** floating 💬 button (icon near the top, full label once "Also good" scrolls in), full screen on phones (Back closes it), side panel on laptops, "Did this help? 👍/👎" | Easier to find; feels like WhatsApp | ✅ 10 Oct |
 | A10 | **"Send to Kalpit" form instead of his WhatsApp:** emailed by the Worker from bbd@kalpit.me; family keep WhatsApp via his private `?f=` link | Hides his number if the site spreads; email can't flood his phone | ✅ 10 Oct (Kalpit: keep it obvious: header button, teaser link, after 👎 / 2nd question / errors) |
+| A11 | **Instagram DM for everyone:** one "DM Kalpit on Instagram" button replaces the email form and the family WhatsApp link; a tap copies the page link and last question; taps counted and reported by the price check | Kalpit's handle is public; no number or inbox to protect | ✅ 12 Oct |
 | A8 | Ask-box capacity: free limit is ~80–120 questions a day. Workers paid plan is $5/month for the sale | Only if analytics (C1) show it running out | ⏸ |
 
 ## Reach beyond the circle (goal c)
@@ -69,7 +70,7 @@ Six specialist reviews (page, picks, AI box, trust, engineering, growth). Kalpit
 | R5 | **One-tap budget chips** under the slider (`quick`), replacing the ₹58k / ₹1.1L tick labels | ✅ 11 Oct |
 | R6 | **Quick answers and chat suggestions follow the tab** (no "iPhone 4G or 5G?" on TVs) | ✅ 11 Oct |
 | R7 | **Price-check alarm:** the Worker emails Kalpit once a day if `checked` is over 10.5 h old | ✅ 11 Oct |
-| R8 | **Family link check** (`FAM_HASH`): a crafted `?f=` link could set a stranger as "Kalpit's WhatsApp" | ✅ built 11 Oct; 💬 needs his family link once to switch on |
+| R8 | **Family link check** (`FAM_HASH`): a crafted `?f=` link could set a stranger as "Kalpit's WhatsApp" | ✖ removed 12 Oct with the family WhatsApp button (Instagram DM for everyone) |
 | R9 | **Broken links** (`#%E0%A4%A`) blanked the page; typed budgets under the slider did nothing; form said "only Kalpit sees it" | ✅ 11 Oct |
 | R10 | **Twin-code check** in the validator (page vs Worker vs validator ranking) | ✅ 11 Oct |
 | R11 | **New types** (room heater, tablet, speakers & soundbars) and gap picks (budget washer and fridge, everyday chargers, budget headphones) | ✅ 11 Oct: 13 picks added (Kalpit vetoes); types Room heater, Tablet, Speakers & soundbars |

@@ -155,11 +155,10 @@ The ask Worker also runs every 3 hours (`wrangler.toml` `[triggers]`, cron `17 *
 subject "BBD alarm: price check stopped", from bbd@kalpit.me to `MSG_TO`. A day it fired shows as
 `alarm stale` in `bbd-stats`. Fix: check the Routine "BBD price check, Sonnet" and its session.
 
-## Family link check (since 11 Oct)
-`?f=` links set "Message Kalpit on WhatsApp" on that phone. `FAM_HASH` in `index.html` makes the page
-accept only Kalpit's real code. While it's empty, any valid-looking code works (the old behaviour).
-Set it with `node scripts/fam-hash.mjs "<his family link>"` and paste the printed hash. The link and
-code never go in the repo.
+## "Message Kalpit" = Instagram DM (since 12 Oct)
+One "DM Kalpit on Instagram" button (`#igK`, `ig.me/m/kalpit_tiwari`) for everyone. Taps count as
+`dm ig` in `bbd-stats`; the price check reports them. The family link and its check were removed;
+an old `?f=` link opens the page and the code is stripped from the address bar.
 
 ## Symptom → fix
 | Symptom | Likely cause | Fix |
@@ -172,7 +171,7 @@ code never go in the repo.
 | Old price in AI answer | `updated` wasn't bumped, or the edit is under 5 min old | Bump `updated`; or bump `v2` in worker.js |
 | Worker change not live | Cloudflare build failed | Check the commit's check-runs, or ask Kalpit for a screenshot of the build log |
 
-## "Send to Kalpit" form (since 10 Oct)
+## Visitor notes by email ("Send to Kalpit" form 10–12 Oct; wish and report notes still use it)
 - Page posts to `askUrl + "/msg"`; `sendMsg()` in `worker/worker.js` emails Kalpit from
   bbd@kalpit.me through the `MAIL` send_email binding (`wrangler.toml`).
 - Needs: Cloudflare Email Routing on kalpit.me (Compute → Email Service → Email Routing), his
@@ -180,8 +179,8 @@ code never go in the repo.
   (Workers & Pages → bbd-ask → Settings → Variables and Secrets). Without `MSG_TO` the form
   says "Messages aren't switched on yet".
 - Limits: 3 messages per visitor per day, hidden bot field, kalpit.me origin only.
-- Test (sends Kalpit a real email, so tell him): open the chat, ask, tap 👎, send the form.
-- Family link: Kalpit has it. It carries his WhatsApp number as a code; never put it in the repo.
+- Test (sends Kalpit a real email, so tell him): search for something not listed and send the "Didn't see it?" note.
+- Old family links carry his WhatsApp number as a code; never put one in the repo.
 - Replies: the 3-hourly price check drafts them in his Gmail (price-check skill → 4c); he sends
   them from bbd@kalpit.me. That needs Gmail "Send mail as" bbd@kalpit.me (SMTP smtp.gmail.com,
   port 587, his Gmail address + an app password) and `include:_spf.google.com` in kalpit.me's

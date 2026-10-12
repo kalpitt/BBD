@@ -28,10 +28,12 @@ keep replies short, and lead with what changed. When guiding him through a dashb
 Anyone can read every file on GitHub, including `context/` and `docs/`. Never write
 friends' names, group names or details, phone numbers, chat excerpts, personal plans,
 or secrets anywhere in the repo.
-Kalpit's WhatsApp number is no longer on the page (10 Oct, in case the site spreads). Family get
-it through his private family link (`?f=<code>`, see `KALPIT_WA` in `index.html`); everyone else
-gets a "Send to Kalpit" form that the ask Worker emails to him from bbd@kalpit.me (inbox = the
-`MSG_TO` secret in Cloudflare, never in the repo). Never write the family code or his number in the
+Kalpit's WhatsApp number is no longer on the page (10 Oct, in case the site spreads). Since 12 Oct
+"Message Kalpit" is one "DM Kalpit on Instagram" button (@kalpit_tiwari, public) for everyone,
+family included: no email form, no family WhatsApp button. A tap is counted (`dm ig`) and the
+3-hourly price check reports the count. Old family links (`?f=<code>`) still open the page and the
+page strips the code. "Didn't see it?" notes and price reports still email him from bbd@kalpit.me
+(inbox = the `MSG_TO` secret in Cloudflare, never in the repo). Never write the family code or his number in the
 repo (older commits still hold the number; leave history alone). The WhatsApp chat export never enters the repo.
 (`_config.yml` keeps docs off the website, but GitHub still shows them.)
 
@@ -90,9 +92,8 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
 4. **No secrets needed, none allowed.** Workers AI needs no API key. Never add a
    Cloudflare or GitHub token to the repo.
 5. **Privacy:** a visitor's WhatsApp number lives only in their own browser
-   (localStorage). Never log or collect it. The one exception is the reply contact a visitor
-   types into the "Send to Kalpit" form on purpose: it goes only into the email to Kalpit.
-   The Worker never logs or stores it. Visit counts (private D1 `bbd-stats`, docs/OPS.md → Traffic) store
+   (localStorage). Never log or collect it. Instagram DMs happen in Instagram; the page only
+   counts the tap. Visit counts (private D1 `bbd-stats`, docs/OPS.md → Traffic) store
    counts per day only: never add an IP, visitor id, cookie or question text to them, and
    never add a public way to read them (Kalpit, 10 Oct: keep them private).
 6. **Sunset (Kalpit, 10 Oct):** the site stays live **through Diwali, 8 Nov 2026**, with
@@ -164,10 +165,10 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
   The SYSTEM prompt now sends outsiders to "Message Kalpit", not the WhatsApp group.
 - **Price-check alarm (11 Oct):** the ask Worker runs every 3 hours (`wrangler.toml` `[triggers]`)
   and emails Kalpit (`MSG_TO`, subject "BBD alarm") once a day if `checked` is over 10.5 hours old.
-- **Family link check (11 Oct):** `?f=` is accepted only if it matches `FAM_HASH` in `index.html`
-  (a slow hash, so the page doesn't reveal the code). Until Kalpit sets it, any valid code works
-  as before. To set it: `node scripts/fam-hash.mjs "<his family link>"`, run by him or in a private
-  chat; never write the link or code in the repo.
+- **Instagram DM for everyone (Kalpit, 12 Oct):** he wasn't ready to run a WhatsApp Channel, and
+  replaced the email form and the family WhatsApp link (and its `FAM_HASH` check) with one
+  Instagram DM button. Instagram links can't carry text, so a tap copies the page link and the
+  visitor's last question to paste. The DM itself can't be seen or saved; only taps are counted.
 - **Flipkart has no affiliate setup yet.** EarnKaro was suggested. If Kalpit sends
   converted links, put them in `url` on Flipkart items.
 
@@ -181,7 +182,6 @@ wrangler.toml       Worker config (name bbd-ask, AI binding, vars). Used by Clou
 scripts/check-data.mjs  validator: run before every push
 scripts/smoke.mjs   headless-browser check of the page: run before pushing index.html/worker changes
 scripts/deal-scout.mjs  lists new deals from public deal channels (used by price-check)
-scripts/fam-hash.mjs    turns Kalpit's family link into FAM_HASH for index.html (link never in the repo)
 docs/DATA.md        every data.json field, with worked examples
 docs/OPS.md         preview, verify deploys, rollback, ask-box testing, symptom → fix
 docs/PICKS.md       what makes a good pick; who may add what; auto-add limits

@@ -212,6 +212,7 @@ html:has(.askdlg:modal){overflow:hidden}
 .wacard{border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:10px;background:var(--diya)}
 .wacard p{margin:0}
 .btn.wa{background:#1F7A45;color:#fff;justify-self:start}
+.btn.ig{background:#B4306E;color:#fff;justify-self:start;text-decoration:none}
 .wapill{font:600 14px var(--body);color:var(--night);background:var(--ink);border:0;border-radius:999px;padding:6px 12px;min-height:36px;cursor:pointer;white-space:nowrap;flex:none}
 .msgf{display:grid;gap:6px}
 .msgf textarea,.msgf input:not(.vh){width:100%;font:400 16px/1.4 var(--body);color:var(--ink);background:var(--raise);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
@@ -501,16 +502,8 @@ dialog .acts{justify-content:flex-end}
     <div class="chat" id="chat" role="log" aria-live="polite"></div>
     <div class="wacard" id="waCard" hidden>
       <p><strong>Still unsure?</strong> Ask Kalpit himself. He reads every message.</p>
-      <button class="btn wa msgK" type="button" id="famWa" hidden>Message Kalpit on WhatsApp</button>
-      <form class="msgf" id="msgForm">
-        <label for="mText" class="aff">Your question for Kalpit</label>
-        <textarea id="mText" rows="3" maxlength="1000" placeholder="E.g. Papa wants a big screen. S25 FE or Pixel?"></textarea>
-        <label for="mReply" class="aff">Your WhatsApp number or email, so he can reply (optional; Kalpit gets this by email to reply to you)</label>
-        <input id="mReply" maxlength="100" autocomplete="off">
-        <input id="mHp" name="website" tabindex="-1" autocomplete="off" class="vh" aria-hidden="true">
-        <div class="acts"><button class="btn go" type="submit" id="mSend">Send to Kalpit</button><span class="aff" id="mState" aria-live="polite"></span></div>
-        <p class="aff">Or DM me on Instagram: <a href="https://ig.me/m/kalpit_tiwari" target="_blank" rel="noopener">@kalpit_tiwari</a></p>
-      </form>
+      <a class="btn ig" id="igK" href="https://ig.me/m/kalpit_tiwari" target="_blank" rel="noopener">DM Kalpit on Instagram</a>
+      <p class="aff" id="igState">Tapping copies this page's link and your last question, so you can paste them in the chat. @kalpit_tiwari</p>
     </div>
     <div class="sugs" id="sugs"></div>
   </div>
@@ -1009,7 +1002,7 @@ function mentions(text,names){
 const NAMES=nameIndex(P);
 let lastQ="",lastA="",asked=0;
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-// "Message Kalpit" card (email form; WhatsApp on his family link): after a 👎, a second
+// "Message Kalpit" card (Instagram DM, Kalpit 12 Oct): after a 👎, a second
 // question or a failed answer, or any time from the header button / "Or message me" link
 const offerKalpit=()=>{$("#waCard").hidden=false};
 const grow=()=>{const t=$("#q");t.style.height="auto";t.style.height=t.scrollHeight+2+"px"};
@@ -1098,7 +1091,7 @@ document.addEventListener("click",e=>{
   if(!e.target.closest(".toK"))return;
   openAsk();offerKalpit();
   $("#waCard").scrollIntoView({block:"nearest",behavior:reduce?"auto":"smooth"});
-  if(!$("#msgForm").hidden&&wide.matches)$("#mText").focus();
+  if(wide.matches)$("#igK").focus();
 });
 $("#askClose").addEventListener("click",()=>askDlg.close());
 askDlg.addEventListener("keydown",e=>{if(e.key==="Escape"&&!askDlg.matches(":modal")&&!document.querySelector("dialog:modal"))askDlg.close()});
@@ -1113,34 +1106,14 @@ if("IntersectionObserver" in window){
   new IntersectionObserver(es=>fab.classList.toggle("mini",es[0].boundingClientRect.top>innerHeight)).observe($("#list"));
 }
 
-/* ---------- message Kalpit (opens WhatsApp with the page context filled in) ---------- */
-// Kalpit's WhatsApp is not on this page (Kalpit, 10 Oct: keep it private if the site spreads).
-// His family link carries it as ?f=<code> (the number in base 36, reversed). The page saves it
-// on that phone and removes it from the address bar, so shares from there don't pass it on.
-// Everyone else gets the "Send to Kalpit" form, which the ask Worker emails to him.
-// Only his real code is accepted: FAM_HASH is a slow hash of it (scripts/fam-hash.mjs), so
-// the page doesn't reveal the code, and a link carrying any other number is ignored. That
-// stops anyone sending his family a kalpit.me link that sets their own number as his.
-// Empty = not set up yet (every valid-looking code is accepted, as before).
-const FAM_HASH="178c3f56eb0962a90bf2d112fc8eb5c987ce1209102089b33a50e2599449db04";
-async function famHash(code){
-  const te=new TextEncoder(),k=await crypto.subtle.importKey("raw",te.encode(code),"PBKDF2",false,["deriveBits"]);
-  const b=await crypto.subtle.deriveBits({name:"PBKDF2",salt:te.encode("kalpit.me/BBD family"),iterations:300000,hash:"SHA-256"},k,256);
-  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("");
-}
-let KALPIT_WA=store.get("bbd-wa")||"";
-const showFam=()=>{if(KALPIT_WA){$("#famWa").hidden=false;$("#msgForm").hidden=true}};
-// Checked in the background: the slow hash must not hold up the picks
-(async()=>{
-  const sp=new URLSearchParams(location.search),f=sp.get("f");if(!f)return;
-  sp.delete("f");
-  try{history.replaceState(history.state,"",location.pathname+(String(sp)?"?"+sp:"")+location.hash)}catch(e){}
-  const n=String(parseInt([...f].reverse().join(""),36));
-  if(!/^\d{11,13}$/.test(n))return;
-  if(FAM_HASH){let h="";try{h=await famHash(f)}catch(e){}if(h!==FAM_HASH)return}
-  KALPIT_WA=n;store.set("bbd-wa",n);showFam();
-})();
-showFam();
+/* ---------- message Kalpit (Instagram DM) ---------- */
+// Kalpit, 12 Oct: everyone, family included, messages him on Instagram (@kalpit_tiwari). His
+// WhatsApp number and the email form are gone. Instagram links can't carry text, so a tap copies
+// the page context for the visitor to paste. Taps are counted (dm ig) for the 3-hourly check.
+// Old family links (?f=<code>, before 12 Oct) still open the page; the code leaves the address
+// bar so a share from there doesn't pass it on.
+(()=>{const sp=new URLSearchParams(location.search);if(!sp.has("f"))return;sp.delete("f");
+  try{history.replaceState(history.state,"",location.pathname+(String(sp)?"?"+sp:"")+location.hash)}catch(e){}})();
 const msgContext=()=>({view:viewText(),top:lastTop?P.find(x=>x.id===lastTop).n:"none at this budget",q:lastQ,a:lastA?lastA.slice(0,200):"",url:location.href});
 // Every note to Kalpit (question, wish, report) goes to the ask Worker's /msg, which emails him
 async function sendNote(kind,text,extra){
@@ -1150,24 +1123,11 @@ async function sendNote(kind,text,extra){
   if(!(r.ok&&j.ok))throw new Error(j.error||"Couldn't send. Try again in a minute.");
 }
 const netErr=err=>err instanceof TypeError?"Couldn't send. Check your connection and try again.":err.message;
-$("#msgForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  const text=$("#mText").value.trim(),send=$("#mSend"),ms=$("#mState");
-  if(text.length<5){ms.textContent="Write your question first.";return}
-  if(send.getAttribute("aria-disabled"))return;
-  send.setAttribute("aria-disabled","true");ms.textContent="Sending…";
-  try{
-    await sendNote("question",text,{reply:$("#mReply").value.trim(),website:$("#mHp").value});
-    $("#msgForm").innerHTML=`<p>Sent ✓ Kalpit will reply${$("#mReply").value.trim()?" on the contact you gave":""} when he can.</p>`;return;
-  }catch(err){ms.textContent=netErr(err)}
-  send.removeAttribute("aria-disabled");
-});
-document.addEventListener("click",e=>{
-  if(!e.target.closest(".msgK")||!KALPIT_WA)return;
+$("#igK").addEventListener("click",()=>{
+  track("dm","ig");flushHits();
   const q=$("#q").value.trim()||lastQ;
-  const ai=lastA?`\n\nThe AI said: ${lastA.length>200?lastA.slice(0,200).trim()+"…":lastA}`:"";
-  const msg=`Hi Kalpit, a question from your festive picks page.\n\nI was looking at: ${viewText()}\nYour pick there: ${lastTop?P.find(x=>x.id===lastTop).n:"none at this budget"}\n${location.href}`+(q?`\n\nI asked: ${q}`:"")+ai+"\n\nMy question: ";
-  openTab(`https://wa.me/${KALPIT_WA}?text=${encodeURIComponent(msg)}`);
+  const msg=`Hi Kalpit, a question from your festive picks page.\nI was looking at: ${viewText()}\nYour pick there: ${lastTop?P.find(x=>x.id===lastTop).n:"none at this budget"}\n${location.href}`+(q?`\nI asked: ${q}`:"")+"\n\nMy question: ";
+  try{navigator.clipboard.writeText(msg).then(()=>{$("#igState").textContent="Copied ✓ Paste it in the Instagram chat and add your question."},()=>{})}catch(e){}
 });
 
 /* ---------- night sky: twinkling stars (paused when off screen) ---------- */

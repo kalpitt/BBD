@@ -14,7 +14,7 @@ under 50 lines. Today's review + 5-step build: context/LOG.md (12 Oct entries)._
   "Do you have an SBI card?" (no-card price); price drops since last visit (never affiliate items);
   empty budget/filter actions. Notes email Kalpit as "BBD question/wish/report/problem".
 - Card names come from `sale.bankCard` (bank.name "Bank" = the store's sale card): one line to edit.
-- Safety: FAM_HASH set (only Kalpit's family link works); Worker `mail()` caps emails at 40/day
+- Contact (12 Oct): "Message Kalpit" = Instagram DM button for everyone (taps counted `dm ig`); no email form, no family WhatsApp, no Channel. Worker `mail()` caps emails at 40/day
   (alarms exempt); visitor emails never trigger edits or commits.
 - Speed: data.json loads from <head> with a saved-copy fallback; fonts non-blocking; "lite" mode for
   cheap phones. Accessibility: skip link, focus kept on chips, chat read out, 44px small targets.

@@ -96,28 +96,19 @@ try {
     }
     await page.close();
   }
-  // "Message Kalpit": everyone gets the form. A family link (?f=code) leaves the address bar; with
-  // FAM_HASH set (since 12 Oct) a wrong code (dummy number 911234567890 here) must keep the form
-  const famSet = /const FAM_HASH="[0-9a-f]{64}"/.test(await readFile(join(root, "index.html"), "utf8"));
+  // "Message Kalpit" (12 Oct): everyone gets the Instagram DM button, no form, no WhatsApp.
+  // An old family link (?f=code) still opens the page and the code leaves the address bar.
   if (!problems.length) {
     const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
     page.on("pageerror", e => problems.push(`message Kalpit: script error: ${e.message}`));
     await page.route(u => !u.href.startsWith(base), r => r.abort());
-    await page.goto(base + "#phones");
-    await heroText(page);
-    if (await page.evaluate(() => document.querySelector("#msgForm").hidden || !document.querySelector("#famWa").hidden)) problems.push("message Kalpit: a normal visitor should get the form, not WhatsApp");
-    await page.locator("#askTeaser .toK").click();
-    if (!(await page.locator("#askDlg[open] #mText").isVisible())) problems.push('message Kalpit: "Or message me" didn\'t open the chat at the form');
-    await page.locator("#askClose").click();
-    await page.waitForTimeout(300); // closing steps the browser history back once
     await page.goto(base + "?f=ai8j5mmb#phones");
-    await page.reload();
     await heroText(page);
-    await page.waitForTimeout(2500); // the code is checked with a slow hash
-    const st = await page.evaluate(() => ({ wa: !document.querySelector("#famWa").hidden, form: !document.querySelector("#msgForm").hidden, url: location.href }));
-    if (famSet && (st.wa || !st.form)) problems.push("message Kalpit: a family link with the wrong code switched the card to WhatsApp (FAM_HASH check)");
-    if (!famSet && (!st.wa || st.form)) problems.push("message Kalpit: the family link didn't switch the card to WhatsApp");
-    if (/[?&]f=/.test(st.url)) problems.push("message Kalpit: the family code stayed in the address bar");
+    if (/[?&]f=/.test(page.url())) problems.push("message Kalpit: the old family code stayed in the address bar");
+    if (await page.evaluate(() => !!document.querySelector("#msgForm, #famWa"))) problems.push("message Kalpit: the email form or WhatsApp button is back");
+    await page.locator("#askTeaser .toK").click();
+    if (!(await page.locator("#askDlg[open] #igK").isVisible())) problems.push('message Kalpit: "Or message me" didn\'t open the chat at the Instagram button');
+    if ((await page.locator("#igK").getAttribute("href")) !== "https://ig.me/m/kalpit_tiwari") problems.push("message Kalpit: the Instagram button has the wrong link");
     await page.close();
   }
   // Keyboard (12 Oct): the first Tab offers "Skip to my pick", and choosing a category with
@@ -253,5 +244,5 @@ try {
 } finally { await browser.close(); server.close(); }
 
 for (const p of problems) console.log("✖ " + p);
-console.log(problems.length ? `\n✖ ${problems.length} problem(s). Do not push.` : `✓ Page OK: ${views.length} tabs at default, lowest and highest budget, phone and laptop size, shared-link scratch card, ask chat (phone + laptop), message-Kalpit form and family link, visitor feedback, keyboard, search, card question, price drop, no script errors.`);
+console.log(problems.length ? `\n✖ ${problems.length} problem(s). Do not push.` : `✓ Page OK: ${views.length} tabs at default, lowest and highest budget, phone and laptop size, shared-link scratch card, ask chat (phone + laptop), message-Kalpit Instagram button, visitor feedback, keyboard, search, card question, price drop, no script errors.`);
 process.exit(problems.length ? 1 : 0);
