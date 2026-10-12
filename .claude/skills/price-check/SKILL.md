@@ -24,6 +24,9 @@ in section 5 for both. No status reports about yourself ("I sent a notification"
 
 ## 2. Check prices (cheapest first)
 Priority order: what friends see first matters most. Check everything if time allows.
+0. Picks visitors flagged in the last 2 days (since 12 Oct): `report` rows ending in `~oos`,
+   `~price` or `~wrong` (query in `docs/OPS.md` → Traffic; needs the Cloudflare connector, else
+   skip). Check those first; a confirmed out-of-stock or wrong link goes in the final message.
 1. The top 3 picks by `score` in every tab (category or type).
 2. Items with `est: true` (try to firm them up) and items whose card offer moved last run.
 3. Other phones, highest `score` first.

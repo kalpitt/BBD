@@ -443,3 +443,7 @@ Template:
 - Added "Was this page worth your time?" card (Kalpit chose: after some use; optional emailed comment).
   Shows once per browser after 40 s or on return from a store tab; hides the 💬 button while open.
   Taps → visit count `rate y|meh|n`; comment → /msg with `kind: "feedback"`, subject "BBD feedback 👍: …", counted `msg feedback`.
+- Same day, Kalpit's scenarios (left at ₹90k without the HP he wanted; Asus link out of stock): replaced
+  the generic card. Built: "Didn't see what you wanted?" box (instant matches by name/brand, emailed wish,
+  optional reply contact), after-store check per pick with next-best/other-store help and 🛒 celebration,
+  `report` counts + `reportAlarm` email at 2 problems/day, `left` drop-off counts. Price check reads reports first.

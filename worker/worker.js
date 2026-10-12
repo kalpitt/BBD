@@ -46,7 +46,7 @@ export default {
     if (path === "/hit") return addHits(body, req, env, ctx, cfg, allowed.includes(origin), cors);
     if (path === "/msg") {
       const r = await sendMsg(body, req, env, allowed.includes(origin), json);
-      if (r.status === 200 && !body.website) count(env, ctx, [["msg", body.kind === "feedback" ? "feedback" : "sent"]]);
+      if (r.status === 200 && !body.website) count(env, ctx, [["msg", ["wish", "report"].includes(body.kind) ? body.kind : "sent"]]);
       return r;
     }
     const q = String(body.q || "").trim().slice(0, 400);
@@ -182,8 +182,8 @@ async function sendMsg(body, req, env, fromSite, json) {
   if (body.website) return json({ ok: true }); // hidden field only bots fill in
   const text = String(body.text || "").trim().slice(0, 1000);
   const reply = String(body.reply || "").trim().slice(0, 100);
-  const fbk = body.kind === "feedback", rate = { y: "👍 Yes", meh: "😐 Kind of", n: "👎 No" }[body.rate] || "";
-  if (text.length < 5) return json({ error: fbk ? "Write a few words, or tap Skip." : "Write your question first." }, 400);
+  const kind = ["wish", "report"].includes(body.kind) ? body.kind : "question";
+  if (text.length < (kind === "question" ? 5 : 2)) return json({ error: kind === "wish" ? "Type what you were looking for." : "Write your question first." }, 400);
   if (!env.MAIL || !env.MSG_TO) return json({ error: "Messages aren't switched on yet. Try again later." }, 503);
   const ip = req.headers.get("CF-Connecting-IP") || "unknown";
   const day = new Date().toISOString().slice(0, 10);
@@ -195,7 +195,7 @@ async function sendMsg(body, req, env, fromSite, json) {
   const isEmail = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(reply);
   const lines = [
     text, "",
-    ...(fbk ? ["Worth their time? " + (rate || "(no answer)")] : ["Reply to: " + (reply || "(not given)")]),
+    ...(kind === "report" ? [] : ["Reply to: " + (reply || "(not given)")]),
     "Page: " + line(body.view),
     "Top pick there: " + line(body.top),
     body.q ? "They asked the AI: " + line(body.q) : "",
@@ -207,7 +207,7 @@ async function sendMsg(body, req, env, fromSite, json) {
     "From: Kalpit's festive picks <bbd@kalpit.me>",
     "To: " + env.MSG_TO,
     ...(isEmail ? ["Reply-To: " + reply] : []),
-    "Subject: =?UTF-8?B?" + b64((fbk ? "BBD feedback " + rate.split(" ")[0] + ": " : "BBD question: ") + line(text).slice(0, 60)) + "?=",
+    "Subject: =?UTF-8?B?" + b64({ wish: "BBD wish: ", report: "BBD report: ", question: "BBD question: " }[kind] + line(text).slice(0, 60)) + "?=",
     "Date: " + new Date().toUTCString(),
     "Message-ID: <" + crypto.randomUUID() + "@kalpit.me>",
     "MIME-Version: 1.0",
@@ -240,25 +240,32 @@ async function sendMsg(body, req, env, fromSite, json) {
 //   share save | tab | status     Send to myself, Share this list, Share as Status
 //   chat  open                    ask chat opened, once per page load
 //   fb    y | n                   👍 / 👎 under an AI answer
-//   rate  y | meh | n             "Was this page worth your time?" 👍 / 😐 / 👎 (once per browser)
+//   report id~store~ok|bought|oos|price|wrong   answer to "Did <pick> look right?" after a store visit
+//                                 (2 problem reports on one pick in a day email Kalpit: reportAlarm)
+//   left  view~budget             left that view (budget rounded) without tapping a store button
 //   ask   answered | cached | limit | error | busy   (counted here)
-//   msg   sent | feedback         "Send to Kalpit" emails / comments after a rating (counted here)
+//   msg   sent | wish | report    "Send to Kalpit" emails, "Didn't see what you wanted?" notes, "price was
+//                                 different" notes (counted here)
+//   alarm report-<id>             problem-report email sent for that pick today (counted here)
 //   alarm stale                   price-check alarm emailed today (priceAlarm, counted here)
 const istDay = () => new Date(Date.now() + 5.5 * 3600_000).toISOString().slice(0, 10);
 
 // Adds 1 per [event, key] row to today's counts, after the response is sent
 function count(env, ctx, rows) {
-  if (!env.DB || !rows.length) return;
+  if (!env.DB || !rows.length) return Promise.resolve();
   const agg = new Map();
   for (const [ev, k] of rows) agg.set(ev + "\t" + k, (agg.get(ev + "\t" + k) || 0) + 1);
   const day = istDay();
   const add = env.DB.prepare("INSERT INTO hits (day, ev, k, n) VALUES (?, ?, ?, ?) ON CONFLICT (day, ev, k) DO UPDATE SET n = n + excluded.n");
-  ctx.waitUntil(env.DB.batch([...agg].map(([ek, n]) => add.bind(day, ...ek.split("\t"), n))).catch(() => {}));
+  const p = env.DB.batch([...agg].map(([ek, n]) => add.bind(day, ...ek.split("\t"), n))).catch(() => {});
+  ctx.waitUntil(p);
+  return p;
 }
 
 const HIT_KEYS = {
   visit: /^(new|back)$/, open: /^(home|link|reload)$/, ref: /^[a-z0-9][a-z0-9.-]{2,59}$/, tab: /^[a-z]+(-[a-z]+)?$/, use: /^[a-z]+-[a-z]+$/,
-  click: /^[a-z0-9-]{1,30}~(amazon|flipkart)$/, share: /^(save|tab|status)$/, chat: /^open$/, fb: /^(y|n)$/, rate: /^(y|meh|n)$/,
+  click: /^[a-z0-9-]{1,30}~(amazon|flipkart)$/, share: /^(save|tab|status)$/, chat: /^open$/, fb: /^(y|n)$/,
+  report: /^[a-z0-9-]{1,30}~(amazon|flipkart)~(ok|bought|oos|price|wrong)$/, left: /^[a-z]+(-[a-z]+)?~\d{3,7}$/,
 };
 // POST /hit from the page: {"e": [["tab", "phones"], ["click", "s25fe~amazon"], ...]}
 async function addHits(body, req, env, ctx, cfg, fromSite, cors) {
@@ -274,16 +281,54 @@ async function addHits(body, req, env, ctx, cfg, fromSite, cors) {
   let d;
   try { d = (await loadPicks(cfg.DATA_URL)).data; } catch { d = null; }
   const ok = ([ev, k]) => {
-    if (!["tab", "use", "click"].includes(ev)) return true;
+    if (!["tab", "use", "click", "report", "left"].includes(ev)) return true;
     if (!d) return false;
-    if (ev === "click") return d.products.some(x => x.id === k.split("~")[0]);
-    const [c, t] = k.split("-"), cat = d.categories.find(x => x.id === c);
+    if (ev === "click" || ev === "report") return d.products.some(x => x.id === k.split("~")[0]);
+    const [c, t] = k.split("~")[0].split("-"), cat = d.categories.find(x => x.id === c);
     if (!cat) return false;
-    if (ev === "tab") return !t || (cat.types || []).some(x => x.id === t);
+    if (ev === "tab" || ev === "left") return !t || (cat.types || []).some(x => x.id === t);
     return t === "deals" || (cat.uses || []).some(x => x.id === t);
   };
-  count(env, ctx, rows.filter(ok).map(([ev, k]) => [ev, String(k)]));
+  const good = rows.filter(ok).map(([ev, k]) => [ev, String(k)]);
+  const saved = count(env, ctx, good);
+  const bad = good.filter(([ev, k]) => ev === "report" && /~(oos|price|wrong)$/.test(k));
+  if (bad.length && d) ctx.waitUntil(saved.then(() => reportAlarm(env, ctx, d, [...new Set(bad.map(([, k]) => k.split("~")[0]))])).catch(() => {}));
   return done;
+}
+
+// Emails Kalpit once a day per pick when visitors report 2+ problems with it (out of stock,
+// different price, wrong product) after tapping its store button
+async function reportAlarm(env, ctx, d, ids) {
+  if (!env.MAIL || !env.MSG_TO) return;
+  const day = istDay(), what = { oos: "out of stock", price: "price was different", wrong: "wrong product" };
+  for (const id of ids) {
+    const { results } = await env.DB.prepare("SELECT ev, k, n FROM hits WHERE day = ? AND ((ev = 'report' AND k LIKE ?) OR (ev = 'alarm' AND k = ?))")
+      .bind(day, id + "~%", "report-" + id).all();
+    if (results.some(r => r.ev === "alarm")) continue;
+    const probs = results.filter(r => /~(oos|price|wrong)$/.test(r.k));
+    if (probs.reduce((a, r) => a + r.n, 0) < 2) continue;
+    const x = d.products.find(p => p.id === id);
+    const lines = probs.map(r => { const [, s, w] = r.k.split("~"); return `- ${s === "amazon" ? "Amazon" : "Flipkart"}: ${what[w]} × ${r.n}`; });
+    const body = `Visitors reported problems with ${x.n} today, after tapping its store button:\n${lines.join("\n")}\n\nThe page still shows it. Check the listing, then fix or remove the pick (or tell the price-check session). "Price was different" notes with the price they saw arrive as separate "BBD report" emails.\n\nAt most one email per pick per day.`;
+    const b64 = s => btoa(String.fromCharCode(...new TextEncoder().encode(s)));
+    const raw = [
+      "From: Kalpit's festive picks <bbd@kalpit.me>",
+      "To: " + env.MSG_TO,
+      "Subject: =?UTF-8?B?" + b64("BBD problem: " + x.n) + "?=",
+      "Date: " + new Date().toUTCString(),
+      "Message-ID: <" + crypto.randomUUID() + "@kalpit.me>",
+      "MIME-Version: 1.0",
+      "Content-Type: text/plain; charset=utf-8",
+      "Content-Transfer-Encoding: base64",
+      "",
+      b64(body).replace(/.{76}/g, "$&\r\n"),
+    ].join("\r\n");
+    try {
+      const { EmailMessage } = await import("cloudflare:email");
+      await env.MAIL.send(new EmailMessage("bbd@kalpit.me", env.MSG_TO, raw));
+      await count(env, ctx, [["alarm", "report-" + id]]);
+    } catch { /* the next problem report tries again */ }
+  }
 }
 
 const SYSTEM = `You are answering on behalf of Kalpit, who shares festive-sale shopping picks (Flipkart Big Billion Days and Amazon Great Indian Festival 2026) with friends and family in India. He is away, so you answer their follow-up questions in his voice.

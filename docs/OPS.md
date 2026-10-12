@@ -126,13 +126,17 @@ Two sources, they complement each other:
     SELECT day, SUM(n) AS visitors, SUM(CASE WHEN k='back' THEN n END) AS returning FROM hits WHERE ev='visit' GROUP BY day ORDER BY day;
     -- most tapped picks (key = pick id~store; names are in data.json)
     SELECT k, SUM(n) AS taps FROM hits WHERE ev='click' GROUP BY k ORDER BY taps DESC LIMIT 20;
-    -- "Was this page worth your time?" (y / meh / n), since 12 Oct; comments arrive by email ("BBD feedback")
-    SELECT k, SUM(n) AS n FROM hits WHERE ev='rate' GROUP BY k;
+    -- after a store visit, "Did <pick> look right?" (since 12 Oct). key = id~store~ok|bought|oos|price|wrong
+    SELECT k, SUM(n) AS n FROM hits WHERE ev='report' AND day >= date('now','+5 hours','+30 minutes','-2 days') GROUP BY k ORDER BY n DESC;
+    -- where people left without tapping a store (view~budget, rounded), since 12 Oct
+    SELECT k, SUM(n) AS n FROM hits WHERE ev='left' GROUP BY k ORDER BY n DESC LIMIT 20;
     ```
 - How it works: the page batches events (visit, view opened, tab, filter, store tap, share,
-  chat opened, 👍/👎, page rating) and sends them with `sendBeacon` to `POST /hit` when it is hidden; the
+  chat opened, 👍/👎, store-visit answers, drop-offs) and sends them with `sendBeacon` to `POST /hit` when it is hidden; the
   Worker checks each key against `data.json` and adds 1 to today's row in D1 (binding `DB`).
-  The Worker itself counts AI answers (`ask`) and sent messages (`msg`).
+  The Worker itself counts AI answers (`ask`) and sent messages (`msg`), and emails Kalpit
+  ("BBD problem: <pick>") once a day when a pick gets 2+ problem reports (`reportAlarm`).
+  "Didn't see what you wanted?" notes arrive as "BBD wish" emails, typed prices as "BBD report".
   No IP, id, cookie or question text is stored. Daily visitors use no id either: the
   browser keeps only the date of its last counted visit (`bbd-last` in localStorage).
 - Kalpit's own visits: open `kalpit.me/BBD/?nostats` once on each of his devices. That
