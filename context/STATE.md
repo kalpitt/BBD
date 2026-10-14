@@ -26,12 +26,14 @@ under 50 lines. Today's review + 5-step build: context/LOG.md (12 Oct entries)._
   successor. Old Routine paused. First run 6:05 pm 12 Oct; this session scheduled a check at ~6:25 pm.
 - Worker alarm emails Kalpit once a day if `checked` > 10.5 h (stops after 8 Nov).
 
-## Open asks (waiting on Kalpit)
-1. HMD Vibe2: one report says 11,159 (site 11,999). Reply "update Vibe2" in the new checker session.
-2. Veto the 13 picks added 11 Oct (reply "remove X"); still-open suggestions: Nothing Phone (4b),
-   realme P4x, realme Buds Air 8, Voltas 1.5 ton AC, OnePlus Nord Buds 4 Pro, Sony XM6.
-3. Gmail filter for bbd@kalpit.me (label BBD + alert): steps sent in chat 12 Oct; unconfirmed.
-4. Amazon Associates India question (draft in the round-3 review doc); EarnKaro; `add-bbd-redirect`.
+## Open asks (waiting on Kalpit), updated 14 Oct
+1. Amazon Creators API (replaces PA API): Kalpit tapped Create App; needs 10+ qualifying sales in 30 days,
+   review up to 48 h. If granted, plan exact prices for `aff` items (keys as Cloudflare secrets, never in
+   the repo, "as of" time shown); if not, keep bands. Ask him on 16 Oct.
+2. Optional: price check as a fresh-run routine (web only; projects can't). Kalpit said "later".
+3. Sony WH-1000XM6: checker may add it only with a real verified price.
+Done 14 Oct: iPhone 17 stays 81,999; Vibe2 13,500; 70 Flipkart picks have `aurl` (EarnKaro); /bbd redirect live;
+Gmail filter dropped; 11 Oct picks kept.
 
 ## Decisions (12 Oct, don't re-raise)
 - Keep all "lowest price / all-time low" claims; Ray-Ban stays on Creator; don't prune phones that never
