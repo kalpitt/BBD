@@ -1,5 +1,5 @@
 {
-  "updated": "14 Oct, 6:10 pm",
+  "updated": "14 Oct, 7:55 pm",
   "checked": "14 Oct, 6:10 pm",
   "askUrl": "https://ask.kalpit.me",
   "amazonTag": "bestdeallive-21",
@@ -114,7 +114,7 @@
     {"id": "g06p", "cat": "phones", "n": "Motorola G06 Power", "p": 12999, "was": 15999, "s": "Flipkart", "card": "Includes bank offer", "why": "Big battery, big screen, simple Android. Great for parents.", "tags": ["parents", "battery", "basic"], "score": 7, "url": "https://www.flipkart.com/motorola-g06-power-pantone-tapestry-64-gb/p/itm29390fa68401d?pid=MOBHN973FFYHGUGG"},
     {"id": "mivi1", "cat": "phones", "n": "Mivi One 5G", "p": 11999, "s": "Flipkart", "card": "Includes offers", "why": "Clean Android with no bloatware, a decent camera and a 6000 mAh battery.", "tags": ["basic", "battery"], "score": 6, "url": "https://www.flipkart.com/mivi-one-5g-green-128-gb/p/itm596121720eed0?pid=MOBHR3ZPGHBTGAUG"},
     {"id": "f07", "cat": "phones", "n": "Samsung Galaxy F07", "p": 11999, "s": "Flipkart", "card": "", "why": "Basic Samsung for calls, WhatsApp and YouTube.", "tags": ["parents", "basic"], "score": 6, "url": "https://www.flipkart.com/samsung-galaxy-f07-green-64-gb/p/itm294cbb65839e6?pid=MOBHMGHHXHYZEAVB"},
-    {"id": "vibe2", "cat": "phones", "n": "HMD Vibe2 5G", "p": 11999, "was": 14999, "s": "Flipkart", "card": "Includes bank offer", "why": "Entry-level 5G for basic use, from the Nokia makers.", "tags": ["basic", "parents"], "score": 6, "url": "https://www.flipkart.com/hmd-vibe2-5g-nordic-blue-128-gb/p/itm71c3ae6df2a26?pid=MOBHN6XYNGZQCBWB"},
+    {"id": "vibe2", "cat": "phones", "n": "HMD Vibe2 5G", "p": 13500, "was": 14999, "s": "Flipkart", "card": "Includes bank offer", "why": "Entry-level 5G for basic use, from the Nokia makers.", "tags": ["basic", "parents"], "score": 6, "url": "https://www.flipkart.com/hmd-vibe2-5g-nordic-blue-128-gb/p/itm71c3ae6df2a26?pid=MOBHN6XYNGZQCBWB"},
     {"id": "sparkgo3", "cat": "phones", "n": "Tecno Spark Go 3", "p": 10999, "was": 12499, "s": "Flipkart", "card": "", "why": "Fine for calls and WhatsApp.", "tags": ["basic"], "score": 4, "url": "https://www.flipkart.com/tecno-spark-go-3-titanium-grey-64-gb/p/itma9c8f128a61c6?pid=MOBHP2QY7GH4XWWS"},
     {"id": "viratv1", "cat": "phones", "n": "Lava Virat V1", "p": 8999, "was": 9999, "s": "Flipkart", "card": "Includes bank offer", "why": "Under ₹9k with Lava's home service.", "tags": ["basic", "parents"], "score": 5, "url": "https://www.flipkart.com/lava-virat-v1-himalayan-silver-64-gb/p/itmed225fe6c3db4?pid=MOBHZ7KNHMYUSZBW"},
     {"id": "pulse2", "cat": "phones", "n": "Ai+ Pulse 2", "p": 8999, "was": 10999, "s": "Flipkart", "card": "", "why": "Basic phone from a new Indian brand.", "tags": ["basic"], "score": 3, "url": "https://www.flipkart.com/ai-pulse-2-purple-64-gb/p/itmdc910ae2ff0c1?pid=MOBHKHPYQHGDVRTG"},
