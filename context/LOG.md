@@ -514,3 +514,8 @@ Template:
 - Gotchas: ig.me links can't carry text (hence the clipboard copy); DMs from non-followers land in
   Instagram "Message requests" without alerts; the site can only count taps, never see DMs.
 - Next: confirm the price-check "Instagram" line appears; Kalpit to set the Gmail BBD filter.
+
+## 2026-10-14: project setup (private Claude project)
+- Did: moved private ops notes (mail setup etc.) out of the repo into the private project notes; added `.claude/settings.json` (deny curl/wget/WebFetch to amazon.in and force-push); replaced the old family code in `scripts/smoke.mjs` with a dummy; privacy sweep of all history found no phone numbers or secrets.
+- Decided (Kalpit): keep the 11 Oct batch of picks. Price check stays as is; a fresh-session repo routine is optional (steps in the private project notes).
+- Next: nothing new for agents; see STATE.md.
