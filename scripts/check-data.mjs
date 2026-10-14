@@ -119,6 +119,8 @@ for (const [i, x] of (d.products || []).entries()) {
     if (u && [...u.searchParams.keys()].some(k => /^(tag|affid|affextparam\d*|ref|utm_\w+)$/i.test(k)) && u.searchParams.get("tag") !== d.amazonTag) err(`${at}: url carries a tracking or affiliate parameter (${u.search.slice(0, 60)}). Use the clean product link`);
   }
 
+  if (x.aurl != null && !(x.s === "Flipkart" && x.url && /^https:\/\/fktr\.in\/[A-Za-z0-9]{5,12}$/.test(x.aurl))) err(`${at}: aurl is only for a Flipkart item that has a url, and must look like https://fktr.in/<code> (Kalpit's EarnKaro link)`);
+
   if (isNum(dial.min) && (x.p < dial.min || x.p > dial.max)) warn(`${at}: price ${x.p} is outside the ${c.id}${x.type ? "/" + x.type : ""} slider (${dial.min}–${dial.max}), so it can never be shown`);
   const g = cats.get("gifts");
   if (x.gift) { used.add("gifts/"); if (!g) err(`${at}: "gift": true but there's no gifts category`); else if (x.p > g.max) warn(`${at}: gift price ${x.p} is above the gifts slider (max ${g.max})`); }

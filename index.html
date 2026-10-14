@@ -454,7 +454,7 @@ dialog .acts{justify-content:flex-end}
  </main>
 <footer class="foot">
     <span>The sale is on: Amazon since 8 Oct, Flipkart since 9 Oct. Picks and prices updated <span id="updated"></span>. Prices can change during the sale, so check the final price on the payment page.</span>
-    <span>Items marked "affiliate link" earn me a small commission at no extra cost to you. As an Amazon Associate I earn from qualifying purchases. All other links are plain links.</span>
+    <span>Items marked "affiliate link" (Amazon or Flipkart) earn me a small commission at no extra cost to you. As an Amazon Associate I earn from qualifying purchases. All other links are plain links.</span>
     <span><button type="button" id="changeNum">Change my WhatsApp number</button></span>
     <span id="noStatsNote" hidden>Visits from this browser aren't counted (?nostats). Open kalpit.me/BBD/?nostats=off to count them again.</span>
 </footer>
@@ -644,7 +644,7 @@ const tagged=(u,aff)=>aff&&D.amazonTag?u+(u.includes("?")?"&":"?")+"tag="+D.amaz
 function links(x){
   if(x.s==="Both")return [{s:"Amazon",u:amz(x.n,x.aff),aff:x.aff},{s:"Flipkart",u:fk(x.n),aff:false}];
   if(x.s==="Amazon")return [{s:"Amazon",u:x.url?tagged(x.url,x.aff):amz(x.n,x.aff),aff:x.aff}];
-  return [{s:"Flipkart",u:x.url||fk(x.n),aff:false}];
+  return [{s:"Flipkart",u:x.aurl||x.url||fk(x.n),aff:!!x.aurl}];
 }
 /* Discount layers: was (normal price) -> list (sale price) - coupon - bank card = p.
    Big deal = card offer above 12% of the price before it, or p at least 25% below was.

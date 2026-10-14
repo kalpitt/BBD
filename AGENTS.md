@@ -170,8 +170,9 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
   replaced the family WhatsApp link (and its `FAM_HASH` check) with one Instagram DM button. The
   email form came back the same day as the fallback: Gmail saves, alerts and gets drafted replies. Instagram links can't carry text, so a tap copies the page link and the
   visitor's last question to paste. The DM itself can't be seen or saved; only taps are counted.
-- **Flipkart has no affiliate setup yet.** EarnKaro was suggested. If Kalpit sends
-  converted links, put them in `url` on Flipkart items.
+- **Flipkart affiliate via EarnKaro (14 Oct):** Kalpit converted the Flipkart links with Affiliaters; each is
+  stored as `aurl` (`fktr.in/<code>`) beside the clean `url`, which the price check keeps using. No API
+  exists for this, so a new Flipkart pick gets `aurl` only when Kalpit sends a converted link.
 
 ## File map
 ```

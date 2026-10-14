@@ -32,6 +32,7 @@ about a minute.
 | `gift` | | `true` = also show this pick in the Diwali gifts tab (Kalpit, 10 Oct). For picks from other tabs priced within the gifts slider (max ₹5,000). Picks with `cat: "gifts"` don't need it |
 | `auto` | | `true` = an agent added this pick and Kalpit hasn't said "keep" yet (AGENTS.md → Adding picks). Not shown on the page. Delete it when he approves |
 | `url` | | Exact product page, so "See on …" opens the product, not a store search (Kalpit, 11 Oct). Flipkart: `https://www.flipkart.com/<slug>/p/<itm id>?pid=<PID>`. Amazon: `https://www.amazon.in/dp/<ASIN>`; `aff` items must use exactly this form, and the page adds the affiliate tag itself. No tracking or affiliate parameters. Not with `s: "Both"`. Only add a link whose model and variant you confirmed (Flipkart page, or an amazon.in listing title in search results); never open amazon.in with tools (Associates policy item 27). No link = store search |
+| `aurl` | | Flipkart only, needs `url`. Kalpit's EarnKaro short link `https://fktr.in/<code>` (14 Oct). The buy button opens it and shows "Affiliate link"; `url` stays the clean product page for the price check. Exact prices stay (rule 1 is about Amazon). The code redirects to the product, so check where it lands before adding one |
 
 ### Discount layers and "Big deal"
 `was → list → coupon → bank` explain how `p` is reached. All optional; `p` stays the
