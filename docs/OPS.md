@@ -183,7 +183,5 @@ an old `?f=` link opens the page and the code is stripped from the address bar.
 - Limits: 3 messages per visitor per day, hidden bot field, kalpit.me origin only.
 - Test (sends Kalpit a real email, so tell him): search for something not listed and send the "Didn't see it?" note.
 - Old family links carry his WhatsApp number as a code; never put one in the repo.
-- Replies: the 3-hourly price check drafts them in his Gmail (price-check skill → 4c); he sends
-  them from bbd@kalpit.me. That needs Gmail "Send mail as" bbd@kalpit.me (SMTP smtp.gmail.com,
-  port 587, his Gmail address + an app password) and `include:_spf.google.com` in kalpit.me's
-  SPF record (Cloudflare DNS), or replies may land in spam.
+- Replies: the 3-hourly price check drafts them in Gmail (price-check skill → 4c); Kalpit sends
+  them from bbd@kalpit.me. The mail setup is in the private project notes (not in this public repo).

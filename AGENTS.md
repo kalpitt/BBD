@@ -34,7 +34,7 @@ family included, with the email form as a fallback under "No Instagram? Send it 
 3-hourly price check reports the count. Old family links (`?f=<code>`) still open the page and the
 page strips the code. Form messages, "Didn't see it?" notes and price reports email him from bbd@kalpit.me
 (inbox = the `MSG_TO` secret in Cloudflare, never in the repo). Never write the family code or his number in the
-repo (older commits still hold the number; leave history alone). The WhatsApp chat export never enters the repo.
+repo. Leave git history alone. The WhatsApp chat export never enters the repo.
 (`_config.yml` keeps docs off the website, but GitHub still shows them.)
 
 ## How to work: intentional differences from Kalpit's other repos
@@ -80,7 +80,7 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
    - Store buttons open the exact product when `url` is set (Kalpit, 11 Oct): affiliate items use a
      clean `amazon.in/dp/<ASIN>` link and the page adds the tag. Add a link only when the model and
      variant are confirmed; otherwise the button opens a store search.
-   - **Never open amazon.in with tools** (curl, WebFetch, a browser): Amazon's Associates policy
+   - **Never open amazon.in with tools** (curl, WebFetch, a browser; `.claude/settings.json` blocks curl, wget and WebFetch, not browsers): Amazon's Associates policy
      item 27 bars software sessions on its site. Item 31 bars price alerts on affiliate sites, so
      the WhatsApp Channel is for sale updates, and price-drop posts skip Amazon affiliate items.
    - Never invent prices, specs or offers. If a price is unverified, say so to Kalpit.

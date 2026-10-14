@@ -76,7 +76,7 @@ Six specialist reviews (page, picks, AI box, trust, engineering, growth). Kalpit
 | R11 | **New types** (room heater, tablet, speakers & soundbars) and gap picks (budget washer and fridge, everyday chargers, budget headphones) | ✅ 11 Oct: 13 picks added (Kalpit vetoes); types Room heater, Tablet, Speakers & soundbars |
 | R12 | **Better phones above ₹1L** (Kalpit: keep expensive phones, add others) so the ₹1.3–1.6L top pick isn't the Fold7 / iPhone 18 Pro | ✅ 11 Oct: Galaxy S26 Ultra leads ₹1.25–1.6L, Pixel 11 Pro added |
 | R13 | Trust line, prominent affiliate note, privacy note (drafts in the review doc) | ⏸ Kalpit left unticked |
-| R14 | Move the Gmail-draft step out of the session that can push | ⏸ Kalpit left unticked |
+| R14 | Separate the reply-drafting step from the session that can push (details in private project notes) | ⏸ Kalpit left unticked |
 | R15 | Cut list (18 weak picks) and folding the Fitness tab | ⏸ Kalpit left unticked |
 | R16 | Ask Amazon Associates India in writing: exact prices next to plain links, and the updates channel | 💬 Kalpit sends (draft in the review doc) |
 | R17 | Later ideas: "Deals I'd skip" + "Before you pay" card, cheat-sheet image per budget, family wishlist link, "My card" chips, real-price calculator, no-AI answers for simple questions, Hindi, parent mode | ⏸ |
