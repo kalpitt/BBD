@@ -102,7 +102,7 @@ try {
     const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
     page.on("pageerror", e => problems.push(`message Kalpit: script error: ${e.message}`));
     await page.route(u => !u.href.startsWith(base), r => r.abort());
-    await page.goto(base + "?f=ai8j5mmb#phones");
+    await page.goto(base + "?f=test1234#phones");
     await heroText(page);
     if (/[?&]f=/.test(page.url())) problems.push("message Kalpit: the old family code stayed in the address bar");
     if (await page.evaluate(() => !!document.querySelector("#famWa"))) problems.push("message Kalpit: the family WhatsApp button is back");
