@@ -519,3 +519,6 @@ Template:
 - Did: moved private ops notes (mail setup etc.) out of the repo into the private project notes; added `.claude/settings.json` (deny curl/wget/WebFetch to amazon.in and force-push); replaced the old family code in `scripts/smoke.mjs` with a dummy; privacy sweep of all history found no phone numbers or secrets.
 - Decided (Kalpit): keep the 11 Oct batch of picks. Price check stays as is; a fresh-session repo routine is optional (steps in the private project notes).
 - Next: nothing new for agents; see STATE.md.
+
+## 20 Oct: live Amazon prices (Creators API)
+- Worker `GET /prices` (needs secrets CREATORS_ID, CREATORS_SECRET; optional var CREATORS_TOKEN_URL, default EU). Page shows live price + time + disclaimer on `aff` items with ASIN; falls back to band. Cached 1 h. Tested with a mock only; no real call yet.

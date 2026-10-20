@@ -76,6 +76,10 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
      rate; table in `docs/DATA.md`). Kalpit's call, 10 Oct: exact prices for most items.
    - `aff: true` items (Amazon affiliate, tag `bestdeallive-21`) show a **price band only**.
      Never write an exact ₹ amount in their `why`, `card` or `faq`.
+   - Exception (20 Oct, Kalpit): the page may show a **live** Amazon price on `aff` items that have a
+     `/dp/<ASIN>` `url`, fetched by the Worker (`GET /prices`, Creators API, cached 1 h) and shown with
+     its "as of" time + the Amazon disclaimer. Never type it into data.json, `why`, `card` or `faq`;
+     the ask box, ranking and share text still use the band. No API answer = band only.
    - Estimates carry `est: true`.
    - Store buttons open the exact product when `url` is set (Kalpit, 11 Oct): affiliate items use a
      clean `amazon.in/dp/<ASIN>` link and the page adds the tag. Add a link only when the model and

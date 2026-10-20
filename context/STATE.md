@@ -27,7 +27,9 @@ under 50 lines. Today's review + 5-step build: context/LOG.md (12 Oct entries)._
 - Worker alarm emails Kalpit once a day if `checked` > 10.5 h (stops after 8 Nov).
 
 ## Open asks (waiting on Kalpit), updated 14 Oct
-1. DROPPED (Kalpit, 14 Oct): Amazon Creators API / exact prices on `aff` items. Keep price bands; don't re-raise.
+1. REVIVED (Kalpit, 20 Oct): live exact prices on `aff` items with a /dp/ link (9 of 64 now). Code is live and
+   dormant until Kalpit adds Worker secrets CREATORS_ID + CREATORS_SECRET (and CREATORS_TOKEN_URL if India isn't EU).
+   Needs 10+ qualifying sales in 30 days. More ASINs needed for the other 55 (can't open amazon.in).
 2. Optional: price check as a fresh-run routine (web only; projects can't). Kalpit said "later".
 3. Sony WH-1000XM6: checker may add it only with a real verified price.
 Done 14 Oct: iPhone 17 stays 81,999; Vibe2 13,500; 70 Flipkart picks have `aurl` (EarnKaro); /bbd redirect live;

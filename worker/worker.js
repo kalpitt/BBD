@@ -27,7 +27,7 @@ export default {
     const allowed = cfg.ALLOWED_ORIGINS.split(",").map(s => s.trim());
     const cors = {
       "Access-Control-Allow-Origin": allowed.includes(origin) ? origin : allowed[0],
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
       "Access-Control-Max-Age": "86400",
       "Vary": "Origin",
@@ -37,6 +37,7 @@ export default {
 
     const path = new URL(req.url).pathname;
     if (req.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
+    if (req.method === "GET" && path === "/prices") return livePrices(env, ctx, cfg, json);
     if (req.method !== "POST") return json({ error: "Something went wrong. Reload the page and try again." }, 405);
     if (origin && !allowed.includes(origin)) return json({ error: "This only works on kalpit.me/BBD. Open the page there and try again." }, 403);
 
@@ -706,4 +707,63 @@ function clean(s) {
 async function sha(s) {
   const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
   return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join("");
+}
+
+// ---- Live Amazon prices (Creators API) for affiliate picks that have a /dp/<ASIN> link ----
+// Secrets (Cloudflare dashboard, never the repo): CREATORS_ID, CREATORS_SECRET. Optional var
+// CREATORS_TOKEN_URL (default: the EU sign-in address; Associates Central says which one India uses).
+// Amazon's rules: Offers data may be cached 1 hour, and the page shows the time next to the price.
+// Anything that goes wrong returns no prices, and the page keeps showing the band.
+const PRICE_TTL = 3600;
+async function livePrices(env, ctx, cfg, json) {
+  if (!env.CREATORS_ID || !env.CREATORS_SECRET) return json({ prices: {}, off: true });
+  const cache = caches.default;
+  const key = new Request("https://bbd-internal.invalid/prices");
+  const hit = await cache.match(key);
+  if (hit) return json(await hit.json());
+  let out = { prices: {}, at: Date.now() };
+  try {
+    const picks = (await loadPicks(cfg.DATA_URL)).data.products.filter(x => x.aff && !x.est && /\/dp\/([A-Z0-9]{10})/.test(x.url || ""));
+    const byAsin = new Map(picks.map(x => [x.url.match(/\/dp\/([A-Z0-9]{10})/)[1], x]));
+    const token = await creatorsToken(env, cache);
+    const asins = [...byAsin.keys()];
+    for (let i = 0; i < asins.length; i += 10) {
+      if (i) await new Promise(r => setTimeout(r, 1100)); // 1 request a second
+      const r = await fetch("https://creatorsapi.amazon/catalog/v1/getItems", {
+        method: "POST",
+        headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json", "x-marketplace": "www.amazon.in" },
+        body: JSON.stringify({ itemIds: asins.slice(i, i + 10), itemIdType: "ASIN", marketplace: "www.amazon.in",
+          partnerTag: (await loadPicks(cfg.DATA_URL)).data.amazonTag, resources: ["offersV2.listings.price"] }),
+      });
+      if (!r.ok) throw new Error("getItems " + r.status);
+      const d = await r.json();
+      for (const it of (d.itemResults || d.itemsResult || {}).items || []) {
+        const x = byAsin.get(it.asin), m = it.offersV2?.listings?.[0]?.price?.money;
+        if (!x || !m || (m.currency && m.currency !== "INR")) continue;
+        const amount = Number(m.amount);
+        // A price far from the pick's own is probably another variant: skip it
+        if (amount > 0 && amount >= x.p * 0.4 && amount <= (x.max || x.p) * 2.5) out.prices[x.id] = amount;
+      }
+    }
+  } catch (e) {
+    out = { prices: {}, at: Date.now(), error: true };
+  }
+  const ttl = out.error ? 300 : PRICE_TTL;
+  ctx.waitUntil(cache.put(key, new Response(JSON.stringify(out), { headers: { "Cache-Control": "max-age=" + ttl } })));
+  return json(out);
+}
+async function creatorsToken(env, cache) {
+  const key = new Request("https://bbd-internal.invalid/creators-token");
+  const hit = await cache.match(key);
+  if (hit) return hit.text();
+  const r = await fetch(env.CREATORS_TOKEN_URL || "https://api.amazon.co.uk/auth/o2/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ grant_type: "client_credentials", client_id: env.CREATORS_ID, client_secret: env.CREATORS_SECRET, scope: "creatorsapi::default" }),
+  });
+  if (!r.ok) throw new Error("token " + r.status);
+  const t = (await r.json()).access_token;
+  if (!t) throw new Error("no token");
+  await cache.put(key, new Response(t, { headers: { "Cache-Control": "max-age=3000" } }));
+  return t;
 }

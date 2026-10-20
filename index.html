@@ -116,6 +116,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .hero .why{margin:0}
 .price{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;font-variant-numeric:tabular-nums}
 .price strong{font-family:var(--display);font-size:28px;font-weight:700}
+.live{font-size:14px;color:var(--ink-soft);margin-top:4px}
 .price .est{font-size:14px;color:var(--ink-soft)}
 .card{font-size:15px;color:var(--leaf);font-weight:500}
 .acts{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:4px}
@@ -455,6 +456,7 @@ dialog .acts{justify-content:flex-end}
 <footer class="foot">
     <span>The sale is on: Amazon since 8 Oct, Flipkart since 9 Oct. Picks and prices updated <span id="updated"></span>. Prices can change during the sale, so check the final price on the payment page.</span>
     <span>Items marked "affiliate link" (Amazon or Flipkart) earn me a small commission at no extra cost to you. As an Amazon Associate I earn from qualifying purchases. All other links are plain links.</span>
+    <span id="liveNote" hidden>Amazon.in prices shown with a time are accurate as of that date and time and are subject to change. The price and availability on Amazon.in at the time of purchase apply to the purchase.</span>
     <span><button type="button" id="changeNum">Change my WhatsApp number</button></span>
     <span id="noStatsNote" hidden>Visits from this browser aren't counted (?nostats). Open kalpit.me/BBD/?nostats=off to count them again.</span>
 </footer>
@@ -635,6 +637,11 @@ function band(x){
 }
 // Affiliate items: count to the top of the band, so the note never reveals the exact price
 const stretchNote=(x,b)=>x.aff?`Worth stretching up to ${fmt(bandRange(x)[1]-b)} more for this.`:`Worth stretching ${fmt(x.p-b)} more for this.`;
+// Live Amazon price from the Worker (Creators API). Ranking and the ask box still use the band.
+const LIVE={};let liveAt=0;
+const liveLine=x=>{const p=LIVE[x.id];if(!p||!x.aff)return "";
+  const d=new Date(liveAt),t=d.toLocaleString("en-IN",{timeZone:"Asia/Kolkata",day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit",hour12:false});
+  return `<div class="live">Amazon.in price: <strong>${fmt(p)}</strong> (as of ${t} IST) <a href="#liveNote">Details</a></div>`};
 const priceText=x=>x.aff?band(x):x.max?fmt(x.p)+"–"+Number(x.max).toLocaleString("en-IN"):(x.from?"From ":"")+fmt(x.p);
 const amz=(name,aff)=>"https://www.amazon.in/s?k="+encodeURIComponent(name)+(aff&&D.amazonTag?"&tag="+D.amazonTag:"");
 const fk=name=>"https://www.flipkart.com/search?q="+encodeURIComponent(name);
@@ -716,7 +723,7 @@ function buttons(x){
 function openTab(u){const a=document.createElement("a");a.href=u;a.target="_blank";a.rel="noopener";document.body.appendChild(a);a.click();a.remove()}
 
 const row=(x,note,cls)=>`<details class="row ${cls||""}"><summary><span class="n">${esc(x.n)}${hot(x)}</span><span class="p">${priceText(x)}</span><span class="w">${esc(note||x.why)}</span><span class="s">${x.est?"Expected":x.s==="Both"?"Both":x.s}</span></summary>
-   <div class="more">${note?`<span>${esc(x.why)}</span>`:""}${facts(x)}${offers(x,"span")}${how(x)}<div class="acts">${buttons(x)}</div></div></details>`;
+   <div class="more">${note?`<span>${esc(x.why)}</span>`:""}${facts(x)}${liveLine(x)}${offers(x,"span")}${how(x)}<div class="acts">${buttons(x)}</div></div></details>`;
 
 /* ---------- WhatsApp save to self ---------- */
 let pending=null;
@@ -947,7 +954,7 @@ function render(force){
   hero.innerHTML=`<span class="tag">My pick for ${fmt(b)}${hot(top)}</span>
     ${topAlso.length?`<span class="bf">Also: ${esc(topAlso.join(" · "))}</span>`:""}
     <h2>${esc(top.n)}</h2><p class="why">${esc(top.why)}</p>${facts(top)}
-    <div class="price"><strong>${priceText(top)}</strong><span class="est">${top.est?"Expected price · "+where(top):where(top)}</span></div>
+    <div class="price"><strong>${priceText(top)}</strong><span class="est">${top.est?"Expected price · "+where(top):where(top)}</span></div>${liveLine(top)}
     ${[top.card,...extras(top)].filter(Boolean).length?`<div class="card">${[cardText(top,D),...extras(top)].filter(Boolean).map(esc).join(" · ")}</div>`:""}
     ${cardLine(top)}
     ${how(top)}
@@ -959,7 +966,7 @@ function render(force){
   rows.innerHTML=h;
   altBox.innerHTML=alts.map(({x,labels})=>`<article class="alt"><span class="tag">${esc(labels.join(" · "))}${hot(x)}</span>
     <h3>${esc(x.n)}</h3><p class="why">${esc(x.why)}</p>${facts(x)}
-    <div class="price"><strong>${priceText(x)}</strong><span class="est">${x.est?"Expected price · "+where(x):where(x)}</span></div>
+    <div class="price"><strong>${priceText(x)}</strong><span class="est">${x.est?"Expected price · "+where(x):where(x)}</span></div>${liveLine(x)}
     ${offers(x,"span")}<div class="acts">${buttons(x)}</div></article>`).join("");
   if(!lite&&(force||top.id!==lastTop)){for(const el of [hero,altBox,$("#list")]){el.classList.remove("moving");void el.offsetWidth;el.classList.add("moving")}}
   lastTop=top.id;remember(top);
@@ -1565,6 +1572,11 @@ else{
   let seen=false;try{seen=!!sessionStorage.getItem("bbd-scratched");sessionStorage.setItem("bbd-scratched","1")}catch(e){}
   if(lastTop&&!seen&&nav!=="reload")document.fonts.ready.then(()=>{if($("#hero").isConnected)scratchCard($("#hero"))});
 }
+// Live Amazon prices: ask the Worker once; on any failure the bands stay
+if(D.askUrl)fetch(D.askUrl.replace(/\/$/,"")+"/prices").then(r=>r.ok?r.json():null).then(j=>{
+  if(!j||!j.prices||!Object.keys(j.prices).length)return;
+  Object.assign(LIVE,j.prices);liveAt=j.at||Date.now();$("#liveNote").hidden=false;render(true);
+}).catch(()=>{});
 })();
 
 </script>
