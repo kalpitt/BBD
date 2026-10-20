@@ -27,8 +27,9 @@ under 50 lines. Today's review + 5-step build: context/LOG.md (12 Oct entries)._
 - Worker alarm emails Kalpit once a day if `checked` > 10.5 h (stops after 8 Nov).
 
 ## Open asks (waiting on Kalpit), updated 14 Oct
-1. REVIVED (Kalpit, 20 Oct): live exact prices on `aff` items with a /dp/ link (9 of 64 now). Code is live and
-   dormant until Kalpit adds Worker secrets CREATORS_ID + CREATORS_SECRET (and CREATORS_TOKEN_URL if India isn't EU).
+1. REVIVED (Kalpit, 20 Oct): live exact prices on `aff` items with a /dp/ link (9 of 64 now). Code is live; secrets CREATORS_ID/SECRET/MSG_TO
+   set as RUNTIME secrets 20 Oct (EU 3.2 token works). Amazon answers 403 AssociateNotEligible (needs 10+ qualifying sales
+   in 30 days): GET /prices shows `why` until it flips on by itself. Re-test now and then.
    Needs 10+ qualifying sales in 30 days. More ASINs needed for the other 55 (can't open amazon.in).
 2. Optional: price check as a fresh-run routine (web only; projects can't). Kalpit said "later".
 3. Sony WH-1000XM6: checker may add it only with a real verified price.

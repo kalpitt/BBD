@@ -522,3 +522,4 @@ Template:
 
 ## 20 Oct: live Amazon prices (Creators API)
 - Worker `GET /prices` (needs secrets CREATORS_ID, CREATORS_SECRET; optional var CREATORS_TOKEN_URL, default EU). Page shows live price + time + disclaimer on `aff` items with ASIN; falls back to band. Cached 1 h. Tested with a mock only; no real call yet.
+- 20 Oct: build-only vars are not runtime; secrets must go in Settings > Runtime variables and secrets. Token OK, getItems 403 AssociateNotEligible.

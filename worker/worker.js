@@ -735,7 +735,7 @@ async function livePrices(env, ctx, cfg, json) {
         body: JSON.stringify({ itemIds: asins.slice(i, i + 10), itemIdType: "ASIN", marketplace: "www.amazon.in",
           partnerTag: (await loadPicks(cfg.DATA_URL)).data.amazonTag, resources: ["offersV2.listings.price"] }),
       });
-      if (!r.ok) throw new Error("getItems " + r.status + " " + (await r.text()).replace(/\s+/g, " ").slice(0, 150));
+      if (!r.ok) throw new Error("getItems " + r.status + " " + ((await r.json().catch(() => ({}))).reason || ""));
       const d = await r.json();
       for (const it of (d.itemResults || d.itemsResult || {}).items || []) {
         const x = byAsin.get(it.asin), m = it.offersV2?.listings?.[0]?.price?.money;
