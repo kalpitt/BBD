@@ -716,7 +716,7 @@ async function sha(s) {
 // Anything that goes wrong returns no prices, and the page keeps showing the band.
 const PRICE_TTL = 3600;
 async function livePrices(env, ctx, cfg, json) {
-  if (!env.CREATORS_ID || !env.CREATORS_SECRET) return json({ prices: {}, off: true, haveId: !!env.CREATORS_ID, haveSecret: !!env.CREATORS_SECRET, vars: Object.keys(env).length });
+  if (!env.CREATORS_ID || !env.CREATORS_SECRET) return json({ prices: {}, off: true, haveId: !!env.CREATORS_ID, haveSecret: !!env.CREATORS_SECRET, vars: Object.keys(env).length, haveMsgTo: !!env.MSG_TO });
   const cache = caches.default;
   const key = new Request("https://bbd-internal.invalid/prices");
   const hit = await cache.match(key);
