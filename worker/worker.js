@@ -718,7 +718,7 @@ const PRICE_TTL = 3600;
 async function livePrices(env, ctx, cfg, json) {
   if (!env.CREATORS_ID || !env.CREATORS_SECRET) return json({ prices: {}, off: true, haveId: !!env.CREATORS_ID, haveSecret: !!env.CREATORS_SECRET, vars: Object.keys(env).length, haveMsgTo: !!env.MSG_TO });
   const cache = caches.default;
-  const key = new Request("https://bbd-internal.invalid/prices");
+  const key = new Request("https://bbd-internal.invalid/prices-v2");
   const hit = await cache.match(key);
   if (hit) return json(await hit.json());
   let out = { prices: {}, at: Date.now() };
@@ -746,7 +746,7 @@ async function livePrices(env, ctx, cfg, json) {
       }
     }
   } catch (e) {
-    out = { prices: {}, at: Date.now(), error: true };
+    out = { prices: {}, at: Date.now(), error: true, why: String(e && e.message || e).slice(0, 80) };
   }
   const ttl = out.error ? 300 : PRICE_TTL;
   ctx.waitUntil(cache.put(key, new Response(JSON.stringify(out), { headers: { "Cache-Control": "max-age=" + ttl } })));
