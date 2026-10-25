@@ -1,6 +1,6 @@
 {
-  "updated": "25 Oct, 9:15 am",
-  "checked": "25 Oct, 3:12 pm",
+  "updated": "25 Oct, 6:10 pm",
+  "checked": "25 Oct, 6:10 pm",
   "askUrl": "https://ask.kalpit.me",
   "amazonTag": "bestdeallive-21",
   "sale": {
@@ -92,7 +92,7 @@
     {"id": "e70f", "cat": "phones", "n": "Motorola Edge 70 Fusion", "p": 28249, "was": 30999, "s": "Flipkart", "card": "Includes bank offer", "why": "Curved display and near-stock Android under ₹30k.", "tags": ["camera"], "spec": {"chip": "Snapdragon 7s Gen 4", "ip": "IP68/IP69", "frame": "plastic"}, "score": 6, "url": "https://www.flipkart.com/motorola-edge-70-fusion-snapdragon-pantone-blue-surf-128-gb/p/itmde3fff77e262b?pid=MOBHN973UHXUTABD", "aurl": "https://fktr.in/8vSjMni"},
     {"id": "n4b", "cat": "phones", "n": "Nothing Phone (4b)", "p": 27999, "was": 34999, "s": "Flipkart", "card": "Includes bank offer", "why": "Nothing's clean software for less.", "tags": [], "spec": {"chip": "Snapdragon 6 Gen 4", "ip": "IP64", "frame": "plastic"}, "score": 5, "url": "https://www.flipkart.com/nothing-phone-4b-white-128-gb/p/itm939608b40adbb?pid=MOBHQENATV85KYCZ", "aurl": "https://fktr.in/dhp0r7p"},
     {"id": "ce6lite", "cat": "phones", "n": "OnePlus Nord CE6 Lite (8 GB / 128 GB)", "p": 27499, "s": "Amazon", "card": "Includes bank offer", "why": "7000 mAh battery and smooth performance.", "tags": ["battery", "gaming"], "spec": {"chip": "Dimensity 7400 Apex", "ip": "IP64", "frame": "plastic"}, "score": 5},
-    {"id": "a36", "cat": "phones", "n": "Samsung Galaxy A36 5G", "p": 25999, "was": 28999, "s": "Flipkart", "card": "Includes bank offer", "why": "Samsung reliability and long updates. My pick for parents at this budget.", "tags": ["parents", "camera"], "spec": {"chip": "Snapdragon 6 Gen 3", "ip": "IP67", "frame": "plastic"}, "score": 8, "url": "https://www.flipkart.com/samsung-a36-5g-dark-green-128-gb/p/itm3ad5f14635fed?pid=MOBHNJ8FASRHRJZS", "aurl": "https://fktr.in/yTn2o3x"},
+    {"id": "a36", "cat": "phones", "n": "Samsung Galaxy A36 5G", "p": 24499, "was": 28999, "s": "Flipkart", "card": "Includes bank offer", "why": "Samsung reliability and long updates. My pick for parents at this budget.", "tags": ["parents", "camera"], "spec": {"chip": "Snapdragon 6 Gen 3", "ip": "IP67", "frame": "plastic"}, "score": 8, "url": "https://www.flipkart.com/samsung-a36-5g-dark-green-128-gb/p/itm3ad5f14635fed?pid=MOBHNJ8FASRHRJZS", "aurl": "https://fktr.in/yTn2o3x"},
     {"id": "m47", "cat": "phones", "n": "Samsung Galaxy M47 5G", "p": 25999, "s": "Amazon", "card": "Includes bank offer", "why": "Long video playback and a bright AMOLED screen.", "tags": ["parents", "battery"], "spec": {"chip": "Snapdragon 6 Gen 3", "ip": "IP64", "frame": "plastic"}, "score": 6},
     {"id": "z11xa", "cat": "phones", "n": "iQOO Z11xa 5G", "p": 24999, "s": "Amazon", "card": "Includes coupon and bank offer", "why": "Fast performance for gaming on a budget.", "tags": ["gaming"], "spec": {"chip": "Dimensity 7400 Turbo", "ip": "IP68/IP69", "frame": "plastic"}, "score": 6},
     {"id": "p4x", "cat": "phones", "n": "realme P4x 5G", "p": 22999, "s": "Flipkart", "card": "Includes bank offer", "why": "7000 mAh battery and a 144Hz screen. Battery and gaming pick under ₹25k.", "tags": ["battery", "gaming"], "spec": {"chip": "Dimensity 7400 Ultra", "ip": "IP64", "frame": "plastic"}, "score": 6, "url": "https://www.flipkart.com/realme-p4x-5g-matte-silver-128-gb/p/itm575b1540859e4?pid=MOBHN7A8H9WAG4PD", "aurl": "https://fktr.in/4D7qtsb"},
