@@ -1,11 +1,11 @@
 {
-  "updated": "25 Oct, 6:10 pm",
+  "updated": "30 Oct, 12:18 am",
   "checked": "30 Oct, 12:20 am",
   "askUrl": "https://ask.kalpit.me",
   "amazonTag": "bestdeallive-21",
   "sale": {
     "amazon": "Amazon Great Indian Festival is on now",
-    "flipkart": "Flipkart Big Billion Days is on now",
+    "flipkart": "Flipkart Big Bang Diwali is on now",
     "cards": [
       "Flipkart: 10% off with Axis or ICICI cards.",
       "Amazon: 10% off with SBI cards (HDFC on some products).",
@@ -145,6 +145,7 @@
     {"id": "hisense75", "cat": "tv", "n": "Hisense 75-inch E75Q QLED TV (75E75Q)", "p": 64249, "was": 79990, "aff": true, "s": "Amazon", "card": "Sale price, no card needed", "why": "Huge 75-inch QLED at its lowest price. Great panel for the money.", "tags": [], "score": 7},
     {"id": "xiaomi65xpro", "cat": "tv", "n": "Xiaomi 65-inch X Pro 4K QLED TV", "p": 43003, "aff": true, "s": "Amazon", "card": "Includes bank offer", "why": "A 65-inch QLED for about the price of a good 55-inch. Big SBI card discount.", "tags": [], "score": 7},
     {"id": "iffalcon65", "cat": "tv", "n": "iFFALCON 65-inch 4K TV", "p": 35999, "aff": true, "s": "Amazon", "card": "Includes bank offer", "why": "Cheapest 65-inch here, from TCL's budget brand. Basic picture, huge screen.", "tags": [], "score": 6},
+    {"id": "hisense55e8s", "cat": "tv", "n": "Hisense 55-inch E8S Mini LED TV (55E8S)", "p": 34999, "aff": true, "s": "Amazon", "card": "Includes HDFC card offer", "why": "A Mini LED 55-inch for the price of a regular 4K TV. Needs the HDFC card offer to hit this price.", "tags": [], "score": 7},
     {"id": "xiaomi55qled", "cat": "tv", "n": "Xiaomi 55-inch 4K QLED TV", "p": 26612, "aff": true, "s": "Amazon", "card": "Includes coupon and bank offer", "why": "A 55-inch QLED at an entry-level price. Great for a bedroom or a first big TV.", "tags": [], "score": 7},
     {"id": "tv-samsung32", "cat": "tv", "n": "Samsung 32-inch HD smart TV (2026)", "p": 11934, "list": 14490, "bank": {"name": "Bank", "off": 2556}, "s": "Flipkart", "card": "Includes bank offer", "why": "Simple 32-inch for a bedroom or for parents. Samsung service is everywhere.", "tags": [], "score": 7, "url": "https://www.flipkart.com/samsung-80-cm-32-inch-hd-ready-led-smart-tizen-tv-2026-voice-assistance-remote-control-150-free-channels-hdr-10-support-purcolor-knox-security-object-tracking-sound-lite-adaptive-q-symphony/p/itm005a499c88f8d?pid=TVSHPH2GA9EEGUAS", "aurl": "https://fktr.in/pO2Rf0T"},
     {"id": "tv-xiaomi-f43", "cat": "tv", "n": "Xiaomi F Series 43-inch 4K Fire TV", "p": 18619, "s": "Flipkart", "card": "Includes bank offer", "why": "The cheapest good 43-inch 4K. Fire TV has every app you need.", "tags": [], "score": 7, "url": "https://www.flipkart.com/xiaomi-f-series-108-cm-43-inch-ultra-hd-4k-led-smart-fire-tv-dolby-audio-box-speakers-alexa-32gb-storage-filmmaker-mode-mi/p/itm9b2211eefe03b?pid=TVSHAVSFGEUJ", "aurl": "https://fktr.in/k3FOjEW"},
