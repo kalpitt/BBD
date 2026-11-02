@@ -1,6 +1,6 @@
 {
-  "updated": "2 Nov, 3:25 pm",
-  "checked": "2 Nov, 6:18 pm",
+  "updated": "2 Nov, 9:40 pm",
+  "checked": "2 Nov, 9:40 pm",
   "askUrl": "https://ask.kalpit.me",
   "amazonTag": "bestdeallive-21",
   "sale": {
@@ -181,7 +181,7 @@
     {"id": "t7shield", "cat": "gadgets", "type": "creator", "n": "Samsung T7 Shield 1TB portable SSD", "p": 16199, "aff": true, "list": 17999, "bank": {"name": "Bank", "off": 1800}, "s": "Amazon", "card": "Includes bank offer", "why": "Rugged, fast and at its all-time low.", "tags": [], "score": 7},
     {"id": "lg27us500", "cat": "gadgets", "type": "desk", "n": "LG 27US500 27-inch 4K monitor", "p": 17399, "aff": true, "was": 19999, "list": 18899, "bank": {"name": "Bank", "off": 1500}, "s": "Amazon", "card": "Includes bank offer", "why": "27-inch 4K IPS with sharp text. Easiest desk upgrade.", "tags": [], "score": 8, "url": "https://www.amazon.in/dp/B0DMWFVQDX"},
     {"id": "mxmaster3s", "cat": "gadgets", "type": "desk", "n": "Logitech MX Master 3S", "p": 4416, "was": 7995, "s": "Amazon", "card": "Sale price, no card needed", "why": "My pick for a work mouse, near its lowest price ever.", "tags": [], "score": 8},
-    {"id": "mon-dell-se2726d", "cat": "gadgets", "type": "desk", "n": "Dell SE2726D 27-inch QHD monitor", "p": 11519, "list": 12799, "bank": {"name": "Bank", "off": 1280}, "s": "Flipkart", "card": "Includes bank offer", "why": "27-inch QHD for work: sharper than Full HD, cheaper than 4K.", "tags": [], "score": 7, "url": "https://www.flipkart.com/dell-se-series-68-58-cm-27-inch-quad-hd-led-backlit-ips-panel-amd-freesync-eye-comfort-technology-flicker-free-hdmi-dp-connectivity-elegant-design-monitor-se2726d/p/itm81d565e52ac95?pid=MONHMGG8ZGGZPCHY", "aurl": "https://fktr.in/l0WRjxx"},
+    {"id": "mon-dell-se2726d", "cat": "gadgets", "type": "desk", "n": "Dell SE2726D 27-inch QHD monitor", "p": 12049, "list": 13299, "bank": {"name": "Bank", "off": 1250}, "s": "Flipkart", "card": "Includes bank offer", "why": "27-inch QHD for work: sharper than Full HD, cheaper than 4K.", "tags": [], "score": 7, "url": "https://www.flipkart.com/dell-se-series-68-58-cm-27-inch-quad-hd-led-backlit-ips-panel-amd-freesync-eye-comfort-technology-flicker-free-hdmi-dp-connectivity-elegant-design-monitor-se2726d/p/itm81d565e52ac95?pid=MONHMGG8ZGGZPCHY", "aurl": "https://fktr.in/l0WRjxx"},
     {"id": "mon-acer-sa242ye", "cat": "gadgets", "type": "desk", "n": "Acer SA242Y E 24-inch Full HD monitor", "p": 5078, "list": 5698, "bank": {"name": "Bank", "off": 620}, "s": "Flipkart", "card": "Includes bank offer", "why": "A basic 24-inch screen for a study table or home office.", "tags": [], "score": 6, "url": "https://www.flipkart.com/acer-sa242y-e-60-45-cm-24-inch-full-hd-led-backlit-ips-panel-monitor-sa242y-e/p/itmdc1e5cf566ab6?pid=MONHQS5SNSGFFM6M", "aurl": "https://fktr.in/o4a0kf3"},
     {"id": "oppad2", "cat": "gadgets", "type": "tablet", "n": "OnePlus Pad 2 (12GB/256GB)", "p": 29999, "list": 31999, "bank": {"name": "Bank", "off": 2000}, "aff": true, "s": "Amazon", "card": "Includes bank offer", "why": "Great screen and great speakers. SBI card knocks it down further.", "tags": [], "score": 8},
     {"id": "echodot5", "cat": "gadgets", "type": "hometech", "n": "Amazon Echo Dot (5th Gen)", "p": 4499, "was": 5499, "s": "Amazon", "card": "Sale price, no card needed", "why": "Cheapest way to get Alexa in a room.", "tags": [], "gift": true, "score": 6, "url": "https://www.amazon.in/dp/B09B8XJDW5"},
