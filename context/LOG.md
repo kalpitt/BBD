@@ -524,3 +524,10 @@ Template:
 - Worker `GET /prices` (needs secrets CREATORS_ID, CREATORS_SECRET; optional var CREATORS_TOKEN_URL, default EU). Page shows live price + time + disclaimer on `aff` items with ASIN; falls back to band. Cached 1 h. Tested with a mock only; no real call yet.
 - 20 Oct: build-only vars are not runtime; secrets must go in Settings > Runtime variables and secrets. Token OK, getItems 403 AssociateNotEligible.
 - 24 Oct: removed 34 Amazon appliance picks (no exact model/link; Kalpit's call): ACs, microwaves, chimneys, dishwashers gone from Home; washing/fridge down to 2/1. Candidate ASINs in project files bbd/asin-candidates.md (unverified). Plan: Kalpit sends copied Amazon links, agent adds /dp/ urls. Ask box on 'AC' now says no picks (may mention purifiers).
+
+## 12 Nov 2026: sale over, price check stopped, site stays up
+- Kalpit: banner + AI chat off, stop the 3-hourly Routine, one last price update, keep the site as a project.
+- Routine disabled. Final refresh e42dd7e (12 Flipkart changes; items without a readable card-offer
+  amount left as they were). Page change f3399d0: `sale.over` banner, AI chat off, contact kept,
+  "Should I wait for the next sale?" FAQ reworded; smoke test follows `sale.over`.
+- 8 to 11 Nov: the checker skipped runs (sale ended 8 Nov); Kalpit's decision arrived 12 Nov.
