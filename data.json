@@ -4,8 +4,9 @@
   "askUrl": "https://ask.kalpit.me",
   "amazonTag": "bestdeallive-21",
   "sale": {
-    "amazon": "Amazon Great Indian Festival is on now",
-    "flipkart": "Flipkart Big Bang Diwali is on now",
+    "over": true,
+    "amazon": "The Amazon Great Indian Festival is over",
+    "flipkart": "Flipkart Big Bang Diwali is over",
     "cards": [
       "Flipkart: bank card offers are smaller now, about ₹500 to ₹7,500 off depending on the product (SBI, HDFC, ICICI or Axis).",
       "Amazon: 10% off with SBI cards (HDFC on some products).",
@@ -217,7 +218,7 @@
   "faq": [
     ["Flipkart or Amazon?", "If the final price is about the same, buy from Amazon. Its delivery, returns and service are generally more reliable. Some phones are sold on only one of them, and each pick here says where."],
     ["Why is everything pricier than July?", "Prices have gone up across phones and laptops this year, mostly because memory chips got costlier with the AI boom. Many models were cheaper in July. These picks are the best value at today's prices.", ["phones", "laptops"]],
-    ["Should I wait for the Diwali sale?", "Don't expect big drops later. Prices are trending up, not down. If you need it, buy now."],
+    ["Should I wait for the next sale?", "Prices were trending up, not down, during this sale, so I would not count on big drops. If you need it, check today's price on the store and decide."],
     ["Is exchange worth it?", "Only if the exchange value beats what Cashify or OLX would give you. Check the quoted value before you place the order."],
     ["Are iPhones a good deal this sale?", "Not really. Discounts on the iPhone 15, 16 and 17 are small this year. Buy only if you're already on iPhone; don't switch for the deal.", ["phones"]],
     ["Is 70% off real?", "Ruko! Many listings show a made-up MRP. Judge the final price, not the percentage."],
