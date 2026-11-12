@@ -90,7 +90,7 @@ try {
     else {
       await fab.click();
       // Sale over (data.json sale.over): the AI chat is off, so the button opens the contact card instead of the text box
-      const over = await page.evaluate(() => document.documentElement.classList.contains("over"));
+      const over = await page.evaluate(() => document.documentElement.classList.contains("aioff"));
       if (!(await page.locator(over ? "#askDlg[open] #igK" : "#askDlg[open] #q").isVisible())) problems.push("ask chat: tapping the floating button didn't open the chat");
       if (over && (await page.locator("#askDlg #q").isVisible())) problems.push("ask chat: the AI text box is still showing after the sale ended");
       await page.goBack();
@@ -109,7 +109,7 @@ try {
     await heroText(page);
     if (/[?&]f=/.test(page.url())) problems.push("message Kalpit: the old family code stayed in the address bar");
     if (await page.evaluate(() => !!document.querySelector("#famWa"))) problems.push("message Kalpit: the family WhatsApp button is back");
-    const over = await page.evaluate(() => document.documentElement.classList.contains("over"));
+    const over = await page.evaluate(() => document.documentElement.classList.contains("aioff"));
     await page.locator(over ? "#askTeaser [data-ask]" : "#askTeaser .toK").click();
     if (!(await page.locator("#askDlg[open] #igK").isVisible())) problems.push('message Kalpit: "Or message me" didn\'t open the chat at the Instagram button');
     if ((await page.locator("#igK").getAttribute("href")) !== "https://ig.me/m/kalpit_tiwari") problems.push("message Kalpit: the Instagram button has the wrong link");

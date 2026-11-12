@@ -5,10 +5,10 @@ _Last updated: 12 Nov 2026, ~9 am IST. Overwrite at the end of every session; ke
 ## The sale is over; the site stays up as a project (Kalpit, 12 Nov)
 - https://kalpit.me/BBD/ stays live. `data.json` has `sale.over: true`, which makes `index.html`:
   show an amber banner ("The festive sale is over… prices last checked <updated>… Message me"),
-  switch the AI chat off (floating button and teaser open the contact card instead), and hide the
+  hide the
   "Didn't see what you wanted?" box. Contact stays: "DM Kalpit on Instagram" + email form.
-- To bring the AI chat back, remove `"over": true` from `data.json`'s `sale` block (the Worker is
-  still deployed; nothing else changed there). `scripts/smoke.mjs` follows `sale.over`.
+- AI chat is ON again (12 Nov, Kalpit). It is controlled by its own flag: add `"aiOff": true` to the `sale`
+  block to switch it off (contact card instead). `scripts/smoke.mjs` follows the `aioff` class.
 - Prices are FROZEN since the final refresh on 12 Nov, 3:25 am (commit e42dd7e, 12 Flipkart changes).
   Not refreshed because Flipkart pages show no readable card-offer amount: iPhones, Vivo X200T,
   Moto G37 Power, Eureka, Philips purifiers, geysers, Samsung TVs, Sony 65", MacBook M5, monitors,

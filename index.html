@@ -365,7 +365,8 @@ dialog .acts{justify-content:flex-end}
 .overbar{margin:14px 0 0;padding:14px 16px;border-radius:16px;background:#F4A51C;color:#1B1F4B;font:600 15px/1.45 var(--body)}
 .overbar .linkbtn{color:#1B1F4B;font-weight:700;min-height:0;padding:4px 0 0}
 /* Sale over: the AI chat is off; the Instagram / email contact stays */
-.over #chat,.over #sugs,.over #askForm,.over #askBody .intro,.over #askBody .ctx,.over .askhead .toK,.over .askTeaser .toK,.over #wish{display:none}
+.aioff #chat,.aioff #sugs,.aioff #askForm,.aioff #askBody .intro,.aioff #askBody .ctx,.aioff .askhead .toK,.aioff .askTeaser .toK{display:none}
+.over #wish{display:none}
 </style>
 </head>
 <body>
@@ -562,12 +563,15 @@ if(D.sale&&D.sale.over){
   const ob=$("#overBar");
   ob.innerHTML=`The festive sale is over (it ended on Diwali, 8 Nov). These picks and prices were last checked on ${esc(D.updated)} and are not updated any more, so prices may have changed. Please check the price on the store before you buy. Need help choosing? <button type="button" class="linkbtn toK">Message me</button>`;
   ob.hidden=false;
+  if(D.sale.aiOff){ // AI chat off (data.json sale.aiOff); remove it to bring the chat back
+  document.documentElement.classList.add("aioff");
   $("#askTitle").textContent="Message Kalpit";
   $("#waCard").hidden=false;
   $("#askTeaserTitle").textContent="Need help choosing? Message me";
   $("#askTeaser p").textContent="The AI helper is switched off now that the sale is over. Message me and I will help you myself.";
   const tb=$("#askTeaser .acts .go");if(tb)tb.textContent="Message me";
   $("#askFab .fl").textContent="Need help? Message Kalpit";
+  }
   $(".about summary").innerHTML='Picked by me for friends &amp; family · prices frozen after the sale · <span class="lnk">How I pick</span>';
   $(".about p").textContent="I'm Kalpit. I list only what I'd buy for myself or my family, one pick per budget. The prices were checked every 3 hours during the sale and are frozen now. No one else decides a pick: only I do.";
   $(".foot span").textContent="The festive sale is over. Picks and prices were last checked "+D.updated+" and are not updated any more. Check the final price on the payment page.";
