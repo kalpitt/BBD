@@ -84,9 +84,9 @@ limits: **`docs/PICKS.md`** (read it before adding). The validator enforces the 
    - Store buttons open the exact product when `url` is set (Kalpit, 11 Oct): affiliate items use a
      clean `amazon.in/dp/<ASIN>` link and the page adds the tag. Add a link only when the model and
      variant are confirmed; otherwise the button opens a store search.
-   - **Never open amazon.in with tools** (curl, WebFetch, a browser; `.claude/settings.json` blocks curl, wget and WebFetch, not browsers): Amazon's Associates policy
-     item 27 bars software sessions on its site. Item 31 bars price alerts on affiliate sites, so
-     the WhatsApp Channel is for sale updates, and price-drop posts skip Amazon affiliate items.
+   - Opening amazon.in with tools (browser) is allowed since 12 Nov (Kalpit lifted the old rule). Still
+     never invent prices; Amazon prices on `aff` items stay as bands in data.json (see exception above).
+     Associates item 31 still bars price alerts on affiliate sites, so price-drop posts skip Amazon affiliate items.
    - Never invent prices, specs or offers. If a price is unverified, say so to Kalpit.
 2. **The AI box recommends only from `data.json`.** Keep the budget cap, the
    over-budget self-correction and the off-list refusal. After any change to

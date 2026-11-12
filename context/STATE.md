@@ -25,5 +25,5 @@ _Last updated: 12 Nov 2026, ~9 am IST. Overwrite at the end of every session; ke
 ## Reminders
 - Pushing to `main` publishes (Pages + Worker build). Run `node scripts/check-data.mjs` (✓) and, for
   index.html changes, `node scripts/smoke.mjs` (✓) first.
-- Repo is PUBLIC: no names, numbers or chat text. Never open amazon.in with tools.
+- Repo is PUBLIC: no names, numbers or chat text. amazon.in may be opened in a browser (rule lifted 12 Nov).
 - Older history: context/LOG.md.

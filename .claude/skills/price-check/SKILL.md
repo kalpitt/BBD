@@ -35,10 +35,7 @@ Priority order: what friends see first matters most. Check everything if time al
 Sources, best first:
 - **Listing page** (Flipkart only): the item's `url`, or a Flipkart search for `n`. Use the
   exact model and the variant that matches the current price (usually the base
-  storage). If the host is blocked or shows a captcha, move on. **Never open amazon.in
-  with tools** (curl, WebFetch, a browser): Amazon's Associates policy item 27 bars
-  software sessions on its site, and it could cost Kalpit his affiliate account. Amazon
-  prices come from his screenshots or dated reports (below).
+  storage). If the host is blocked or shows a captcha, move on. Amazon: opening amazon.in in a browser is allowed (Kalpit lifted the rule, 12 Nov).
 - **Dated 2026 sale reports** (WebSearch): only articles dated 8 Oct 2026 or later
   that quote the live sale price. Ignore 2023–2025 articles and pre-sale "expected"
   prices.
